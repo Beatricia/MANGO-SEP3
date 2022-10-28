@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorLocally", "BlazorLocally\BlazorLocally.csproj", "{0C55EC54-5129-48D4-A81B-5602E4889A32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient", "HttpClient\HttpClient.csproj", "{AEEC28BE-5CF9-42B3-9265-A492604BCCB3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C55EC54-5129-48D4-A81B-5602E4889A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C55EC54-5129-48D4-A81B-5602E4889A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C55EC54-5129-48D4-A81B-5602E4889A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C55EC54-5129-48D4-A81B-5602E4889A32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEEC28BE-5CF9-42B3-9265-A492604BCCB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEEC28BE-5CF9-42B3-9265-A492604BCCB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEEC28BE-5CF9-42B3-9265-A492604BCCB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEEC28BE-5CF9-42B3-9265-A492604BCCB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

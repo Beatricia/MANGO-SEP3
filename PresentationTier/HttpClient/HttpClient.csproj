@@ -8,7 +8,12 @@
 
     <ItemGroup>
       <Folder Include="ClientImplementations" />
-      <Folder Include="ClientInterfaces" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Shared">
+        <HintPath>..\..\LogicTier\Shared\bin\Debug\net6.0\Shared.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

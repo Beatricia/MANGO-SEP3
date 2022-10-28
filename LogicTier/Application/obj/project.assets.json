@@ -1,26 +1,45 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Shared.csproj",
+      "msbuildProject": "../Shared/Shared.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "Shared >= 1.0.0"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\Tropcho\\.nuget\\packages\\": {}
+    "C:\\Users\\nagit\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
-      "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
+      "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+      "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -31,7 +50,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

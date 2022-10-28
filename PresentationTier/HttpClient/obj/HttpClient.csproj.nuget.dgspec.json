@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj": {}
+    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj": {
+    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj",
+        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj",
         "projectName": "HttpClient",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\obj\\",
+        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj",
+        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\HttpClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

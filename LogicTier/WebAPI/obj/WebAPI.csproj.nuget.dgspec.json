@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {}
+    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {
+    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
+        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

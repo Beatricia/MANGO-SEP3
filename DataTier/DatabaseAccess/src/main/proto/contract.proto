@@ -6,3 +6,7 @@ option java_package = "mango.sep3.databaseaccess.protobuf";
 message Farm{
   string name = 1;
 }
+
+message Offer{
+  string name = 1;
+}

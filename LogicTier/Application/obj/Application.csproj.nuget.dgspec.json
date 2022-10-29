@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {}
+    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
+    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
+        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -26,8 +26,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
+              "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
+                "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj"
+              },
+              "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
               }
             }
           }
@@ -61,17 +64,86 @@
         }
       }
     },
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
-        "projectName": "Shared",
-        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
-        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\obj\\",
+        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "projectName": "GprcClients",
+        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.21.9, )"
+            },
+            "Grpc.Net.Client": {
+              "target": "Package",
+              "version": "[2.49.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.50.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
+        "projectName": "Shared",
+        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

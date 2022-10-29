@@ -18,4 +18,80 @@ public interface FarmOrBuilder extends
    */
   com.google.protobuf.ByteString
       getNameBytes();
+
+  /**
+   * <code>string phone = 2;</code>
+   * @return The phone.
+   */
+  java.lang.String getPhone();
+  /**
+   * <code>string phone = 2;</code>
+   * @return The bytes for phone.
+   */
+  com.google.protobuf.ByteString
+      getPhoneBytes();
+
+  /**
+   * <code>string zip = 3;</code>
+   * @return The zip.
+   */
+  java.lang.String getZip();
+  /**
+   * <code>string zip = 3;</code>
+   * @return The bytes for zip.
+   */
+  com.google.protobuf.ByteString
+      getZipBytes();
+
+  /**
+   * <code>string address = 4;</code>
+   * @return The address.
+   */
+  java.lang.String getAddress();
+  /**
+   * <code>string address = 4;</code>
+   * @return The bytes for address.
+   */
+  com.google.protobuf.ByteString
+      getAddressBytes();
+
+  /**
+   * <code>string city = 5;</code>
+   * @return The city.
+   */
+  java.lang.String getCity();
+  /**
+   * <code>string city = 5;</code>
+   * @return The bytes for city.
+   */
+  com.google.protobuf.ByteString
+      getCityBytes();
+
+  /**
+   * <code>optional string farmStatus = 6;</code>
+   * @return Whether the farmStatus field is set.
+   */
+  boolean hasFarmStatus();
+  /**
+   * <code>optional string farmStatus = 6;</code>
+   * @return The farmStatus.
+   */
+  java.lang.String getFarmStatus();
+  /**
+   * <code>optional string farmStatus = 6;</code>
+   * @return The bytes for farmStatus.
+   */
+  com.google.protobuf.ByteString
+      getFarmStatusBytes();
+
+  /**
+   * <code>optional int32 deliveryDistance = 7;</code>
+   * @return Whether the deliveryDistance field is set.
+   */
+  boolean hasDeliveryDistance();
+  /**
+   * <code>optional int32 deliveryDistance = 7;</code>
+   * @return The deliveryDistance.
+   */
+  int getDeliveryDistance();
 }

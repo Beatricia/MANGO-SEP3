@@ -3,8 +3,18 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "mango.sep3.databaseaccess.protobuf";
 
+service FarmService{
+  rpc CreateFarm(Farm) returns(Farm);
+}
+
 message Farm{
   string name = 1;
+  string phone = 2;
+  string zip = 3;
+  string address = 4;
+  string city = 5;
+  optional string farmStatus = 6;
+  optional int32 deliveryDistance = 7;
 }
 
 message Offer{

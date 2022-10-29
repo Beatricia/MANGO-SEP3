@@ -17,6 +17,11 @@ private static final long serialVersionUID = 0L;
   }
   private Farm() {
     name_ = "";
+    phone_ = "";
+    zip_ = "";
+    address_ = "";
+    city_ = "";
+    farmStatus_ = "";
   }
 
   @java.lang.Override
@@ -39,6 +44,7 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
+    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -53,6 +59,41 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             name_ = s;
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            phone_ = s;
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            zip_ = s;
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            address_ = s;
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            city_ = s;
+            break;
+          }
+          case 50: {
+            java.lang.String s = input.readStringRequireUtf8();
+            bitField0_ |= 0x00000001;
+            farmStatus_ = s;
+            break;
+          }
+          case 56: {
+            bitField0_ |= 0x00000002;
+            deliveryDistance_ = input.readInt32();
             break;
           }
           default: {
@@ -89,6 +130,7 @@ private static final long serialVersionUID = 0L;
             mango.sep3.databaseaccess.protobuf.Farm.class, mango.sep3.databaseaccess.protobuf.Farm.Builder.class);
   }
 
+  private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
   private volatile java.lang.Object name_;
   /**
@@ -127,6 +169,223 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int PHONE_FIELD_NUMBER = 2;
+  private volatile java.lang.Object phone_;
+  /**
+   * <code>string phone = 2;</code>
+   * @return The phone.
+   */
+  @java.lang.Override
+  public java.lang.String getPhone() {
+    java.lang.Object ref = phone_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      phone_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string phone = 2;</code>
+   * @return The bytes for phone.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getPhoneBytes() {
+    java.lang.Object ref = phone_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      phone_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int ZIP_FIELD_NUMBER = 3;
+  private volatile java.lang.Object zip_;
+  /**
+   * <code>string zip = 3;</code>
+   * @return The zip.
+   */
+  @java.lang.Override
+  public java.lang.String getZip() {
+    java.lang.Object ref = zip_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      zip_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string zip = 3;</code>
+   * @return The bytes for zip.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getZipBytes() {
+    java.lang.Object ref = zip_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      zip_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int ADDRESS_FIELD_NUMBER = 4;
+  private volatile java.lang.Object address_;
+  /**
+   * <code>string address = 4;</code>
+   * @return The address.
+   */
+  @java.lang.Override
+  public java.lang.String getAddress() {
+    java.lang.Object ref = address_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      address_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string address = 4;</code>
+   * @return The bytes for address.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getAddressBytes() {
+    java.lang.Object ref = address_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      address_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int CITY_FIELD_NUMBER = 5;
+  private volatile java.lang.Object city_;
+  /**
+   * <code>string city = 5;</code>
+   * @return The city.
+   */
+  @java.lang.Override
+  public java.lang.String getCity() {
+    java.lang.Object ref = city_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      city_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string city = 5;</code>
+   * @return The bytes for city.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getCityBytes() {
+    java.lang.Object ref = city_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      city_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int FARMSTATUS_FIELD_NUMBER = 6;
+  private volatile java.lang.Object farmStatus_;
+  /**
+   * <code>optional string farmStatus = 6;</code>
+   * @return Whether the farmStatus field is set.
+   */
+  @java.lang.Override
+  public boolean hasFarmStatus() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+  /**
+   * <code>optional string farmStatus = 6;</code>
+   * @return The farmStatus.
+   */
+  @java.lang.Override
+  public java.lang.String getFarmStatus() {
+    java.lang.Object ref = farmStatus_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      farmStatus_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>optional string farmStatus = 6;</code>
+   * @return The bytes for farmStatus.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getFarmStatusBytes() {
+    java.lang.Object ref = farmStatus_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      farmStatus_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int DELIVERYDISTANCE_FIELD_NUMBER = 7;
+  private int deliveryDistance_;
+  /**
+   * <code>optional int32 deliveryDistance = 7;</code>
+   * @return Whether the deliveryDistance field is set.
+   */
+  @java.lang.Override
+  public boolean hasDeliveryDistance() {
+    return ((bitField0_ & 0x00000002) != 0);
+  }
+  /**
+   * <code>optional int32 deliveryDistance = 7;</code>
+   * @return The deliveryDistance.
+   */
+  @java.lang.Override
+  public int getDeliveryDistance() {
+    return deliveryDistance_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -144,6 +403,24 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(phone_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, phone_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(zip_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, zip_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, address_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(city_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, city_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, farmStatus_);
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      output.writeInt32(7, deliveryDistance_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -155,6 +432,25 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(phone_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, phone_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(zip_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, zip_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, address_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(city_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, city_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, farmStatus_);
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(7, deliveryDistance_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -173,6 +469,24 @@ private static final long serialVersionUID = 0L;
 
     if (!getName()
         .equals(other.getName())) return false;
+    if (!getPhone()
+        .equals(other.getPhone())) return false;
+    if (!getZip()
+        .equals(other.getZip())) return false;
+    if (!getAddress()
+        .equals(other.getAddress())) return false;
+    if (!getCity()
+        .equals(other.getCity())) return false;
+    if (hasFarmStatus() != other.hasFarmStatus()) return false;
+    if (hasFarmStatus()) {
+      if (!getFarmStatus()
+          .equals(other.getFarmStatus())) return false;
+    }
+    if (hasDeliveryDistance() != other.hasDeliveryDistance()) return false;
+    if (hasDeliveryDistance()) {
+      if (getDeliveryDistance()
+          != other.getDeliveryDistance()) return false;
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -186,6 +500,22 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
+    hash = (37 * hash) + PHONE_FIELD_NUMBER;
+    hash = (53 * hash) + getPhone().hashCode();
+    hash = (37 * hash) + ZIP_FIELD_NUMBER;
+    hash = (53 * hash) + getZip().hashCode();
+    hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+    hash = (53 * hash) + getAddress().hashCode();
+    hash = (37 * hash) + CITY_FIELD_NUMBER;
+    hash = (53 * hash) + getCity().hashCode();
+    if (hasFarmStatus()) {
+      hash = (37 * hash) + FARMSTATUS_FIELD_NUMBER;
+      hash = (53 * hash) + getFarmStatus().hashCode();
+    }
+    if (hasDeliveryDistance()) {
+      hash = (37 * hash) + DELIVERYDISTANCE_FIELD_NUMBER;
+      hash = (53 * hash) + getDeliveryDistance();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -321,6 +651,18 @@ private static final long serialVersionUID = 0L;
       super.clear();
       name_ = "";
 
+      phone_ = "";
+
+      zip_ = "";
+
+      address_ = "";
+
+      city_ = "";
+
+      farmStatus_ = "";
+      bitField0_ = (bitField0_ & ~0x00000001);
+      deliveryDistance_ = 0;
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -347,7 +689,22 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public mango.sep3.databaseaccess.protobuf.Farm buildPartial() {
       mango.sep3.databaseaccess.protobuf.Farm result = new mango.sep3.databaseaccess.protobuf.Farm(this);
+      int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       result.name_ = name_;
+      result.phone_ = phone_;
+      result.zip_ = zip_;
+      result.address_ = address_;
+      result.city_ = city_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        to_bitField0_ |= 0x00000001;
+      }
+      result.farmStatus_ = farmStatus_;
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.deliveryDistance_ = deliveryDistance_;
+        to_bitField0_ |= 0x00000002;
+      }
+      result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
@@ -400,6 +757,30 @@ private static final long serialVersionUID = 0L;
         name_ = other.name_;
         onChanged();
       }
+      if (!other.getPhone().isEmpty()) {
+        phone_ = other.phone_;
+        onChanged();
+      }
+      if (!other.getZip().isEmpty()) {
+        zip_ = other.zip_;
+        onChanged();
+      }
+      if (!other.getAddress().isEmpty()) {
+        address_ = other.address_;
+        onChanged();
+      }
+      if (!other.getCity().isEmpty()) {
+        city_ = other.city_;
+        onChanged();
+      }
+      if (other.hasFarmStatus()) {
+        bitField0_ |= 0x00000001;
+        farmStatus_ = other.farmStatus_;
+        onChanged();
+      }
+      if (other.hasDeliveryDistance()) {
+        setDeliveryDistance(other.getDeliveryDistance());
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -428,6 +809,7 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int bitField0_;
 
     private java.lang.Object name_ = "";
     /**
@@ -501,6 +883,432 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       name_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object phone_ = "";
+    /**
+     * <code>string phone = 2;</code>
+     * @return The phone.
+     */
+    public java.lang.String getPhone() {
+      java.lang.Object ref = phone_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        phone_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string phone = 2;</code>
+     * @return The bytes for phone.
+     */
+    public com.google.protobuf.ByteString
+        getPhoneBytes() {
+      java.lang.Object ref = phone_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        phone_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string phone = 2;</code>
+     * @param value The phone to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPhone(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      phone_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string phone = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPhone() {
+      
+      phone_ = getDefaultInstance().getPhone();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string phone = 2;</code>
+     * @param value The bytes for phone to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPhoneBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      phone_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object zip_ = "";
+    /**
+     * <code>string zip = 3;</code>
+     * @return The zip.
+     */
+    public java.lang.String getZip() {
+      java.lang.Object ref = zip_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        zip_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string zip = 3;</code>
+     * @return The bytes for zip.
+     */
+    public com.google.protobuf.ByteString
+        getZipBytes() {
+      java.lang.Object ref = zip_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        zip_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string zip = 3;</code>
+     * @param value The zip to set.
+     * @return This builder for chaining.
+     */
+    public Builder setZip(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      zip_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string zip = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearZip() {
+      
+      zip_ = getDefaultInstance().getZip();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string zip = 3;</code>
+     * @param value The bytes for zip to set.
+     * @return This builder for chaining.
+     */
+    public Builder setZipBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      zip_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object address_ = "";
+    /**
+     * <code>string address = 4;</code>
+     * @return The address.
+     */
+    public java.lang.String getAddress() {
+      java.lang.Object ref = address_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        address_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string address = 4;</code>
+     * @return The bytes for address.
+     */
+    public com.google.protobuf.ByteString
+        getAddressBytes() {
+      java.lang.Object ref = address_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        address_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string address = 4;</code>
+     * @param value The address to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAddress(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      address_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string address = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearAddress() {
+      
+      address_ = getDefaultInstance().getAddress();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string address = 4;</code>
+     * @param value The bytes for address to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAddressBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      address_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object city_ = "";
+    /**
+     * <code>string city = 5;</code>
+     * @return The city.
+     */
+    public java.lang.String getCity() {
+      java.lang.Object ref = city_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        city_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string city = 5;</code>
+     * @return The bytes for city.
+     */
+    public com.google.protobuf.ByteString
+        getCityBytes() {
+      java.lang.Object ref = city_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        city_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string city = 5;</code>
+     * @param value The city to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCity(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      city_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string city = 5;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearCity() {
+      
+      city_ = getDefaultInstance().getCity();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string city = 5;</code>
+     * @param value The bytes for city to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCityBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      city_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object farmStatus_ = "";
+    /**
+     * <code>optional string farmStatus = 6;</code>
+     * @return Whether the farmStatus field is set.
+     */
+    public boolean hasFarmStatus() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>optional string farmStatus = 6;</code>
+     * @return The farmStatus.
+     */
+    public java.lang.String getFarmStatus() {
+      java.lang.Object ref = farmStatus_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        farmStatus_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>optional string farmStatus = 6;</code>
+     * @return The bytes for farmStatus.
+     */
+    public com.google.protobuf.ByteString
+        getFarmStatusBytes() {
+      java.lang.Object ref = farmStatus_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        farmStatus_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>optional string farmStatus = 6;</code>
+     * @param value The farmStatus to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFarmStatus(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+      farmStatus_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string farmStatus = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearFarmStatus() {
+      bitField0_ = (bitField0_ & ~0x00000001);
+      farmStatus_ = getDefaultInstance().getFarmStatus();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string farmStatus = 6;</code>
+     * @param value The bytes for farmStatus to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFarmStatusBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      bitField0_ |= 0x00000001;
+      farmStatus_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int deliveryDistance_ ;
+    /**
+     * <code>optional int32 deliveryDistance = 7;</code>
+     * @return Whether the deliveryDistance field is set.
+     */
+    @java.lang.Override
+    public boolean hasDeliveryDistance() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>optional int32 deliveryDistance = 7;</code>
+     * @return The deliveryDistance.
+     */
+    @java.lang.Override
+    public int getDeliveryDistance() {
+      return deliveryDistance_;
+    }
+    /**
+     * <code>optional int32 deliveryDistance = 7;</code>
+     * @param value The deliveryDistance to set.
+     * @return This builder for chaining.
+     */
+    public Builder setDeliveryDistance(int value) {
+      bitField0_ |= 0x00000002;
+      deliveryDistance_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional int32 deliveryDistance = 7;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearDeliveryDistance() {
+      bitField0_ = (bitField0_ & ~0x00000002);
+      deliveryDistance_ = 0;
       onChanged();
       return this;
     }

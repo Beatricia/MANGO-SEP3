@@ -3,12 +3,14 @@ package mango.sep3.databaseaccess.FileData;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.Offer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class DataContainer
 {
-  public Collection<Farm> farms;
-  public Collection<Offer> offers;
+  public Collection<Farm> farms = new ArrayList<>();
+
+  public Collection<Offer> offers = new ArrayList<>();
 
   public Collection<Farm> getFarms()
   {

@@ -5,12 +5,40 @@ import mango.sep3.databaseaccess.protobuf.Offer;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class FileContext
 {
   private final String filePath = "data.json";
   private DataContainer dataContainer;
+
+  public FileContext()
+  {
+    try
+    {
+      LoadData();
+    }
+    catch (FileNotFoundException e)
+    {
+      e.printStackTrace();
+    }
+    dataContainer = new DataContainer();
+  }
+
+
+  public Collection<Farm> Farms()
+  {
+    try
+    {
+      LoadData();
+    }
+    catch (FileNotFoundException e)
+    {
+      e.printStackTrace();
+    }
+    return dataContainer.getFarms();
+  }
 
   //Taking the data from the file
   public void LoadData() throws FileNotFoundException

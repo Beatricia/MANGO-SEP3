@@ -1,8 +1,6 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
-import mango.sep3.databaseaccess.DAOImplementations.FarmDAO;
-import mango.sep3.databaseaccess.FileData.DataContainer;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;

@@ -7,6 +7,10 @@ service FarmService{
   rpc CreateFarm(Farm) returns(Farm);
 }
 
+service OfferService{
+  rpc GetOffers(Void) returns(OfferItems);
+}
+
 message Farm{
   string name = 1;
   string phone = 2;
@@ -18,5 +22,17 @@ message Farm{
 }
 
 message Offer{
-  string name = 1;
+  string title = 1;
+  optional int32 offerId = 2;
+  string price = 3;
+  string description = 4;
+  string photoPath = 5;
+}
+
+message OfferItems{
+  repeated Offer offers = 1;
+}
+
+message Void{
+
 }

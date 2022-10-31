@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {}
+    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
+    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
         "projectName": "GprcClients",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
+        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

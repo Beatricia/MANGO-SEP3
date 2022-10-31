@@ -1,6 +1,5 @@
 ﻿using Application.LogicInterfaces;
 using Shared.DTOs;
-using Shared.Models;
 
 namespace Application.LogicImplementations;
 public class FarmLogic : IFarmLogic

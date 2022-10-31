@@ -10,3 +10,15 @@ C:\Users\Tropcho\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0
 C:\Users\Tropcho\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\refint\GprcClients.dll
 C:\Users\Tropcho\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.pdb
 C:\Users\Tropcho\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\ref\GprcClients.dll
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\bin\Debug\net6.0\GprcClients.deps.json
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\bin\Debug\net6.0\GprcClients.dll
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\bin\Debug\net6.0\GprcClients.pdb
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.csproj.AssemblyReference.cache
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.AssemblyInfoInputs.cache
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.AssemblyInfo.cs
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.csproj.CoreCompileInputs.cache
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.dll
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\refint\GprcClients.dll
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\GprcClients.pdb
+C:\Users\agata\RiderProjects\MANGO-SEP3\LogicTier\GprcClients\obj\Debug\net6.0\ref\GprcClients.dll

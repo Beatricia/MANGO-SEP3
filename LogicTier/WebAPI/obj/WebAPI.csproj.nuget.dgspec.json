@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {}
+    "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
+    "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
+        "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\agata\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\agata\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -26,11 +26,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
-                "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj"
+              "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
+                "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj"
               },
-              "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
+              "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
               }
             }
           }
@@ -64,17 +64,17 @@
         }
       }
     },
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
+    "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "projectUniqueName": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
         "projectName": "GprcClients",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
+        "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "packagesPath": "C:\\Users\\agata\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\agata\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -133,17 +133,17 @@
         }
       }
     },
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+    "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\obj\\",
+        "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\agata\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\agata\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -186,17 +186,17 @@
         }
       }
     },
-    "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {
+    "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
-        "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
+        "packagesPath": "C:\\Users\\agata\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\agata\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -208,8 +208,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj"
+              "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj"
               }
             }
           }

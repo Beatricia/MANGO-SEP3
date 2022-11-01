@@ -10,7 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IFarmLogic, FarmLogic>();
+builder.Services.AddScoped<IOfferLogic,OfferLogic>();
 builder.Services.AddGrpcClient<FarmService.FarmServiceClient>(o =>
+{
+    o.Address = new Uri("http://localhost:8084");
+});
+builder.Services.AddGrpcClient<OfferService.OfferServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:8084");
 });

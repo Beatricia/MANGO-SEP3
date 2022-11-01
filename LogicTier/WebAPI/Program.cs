@@ -14,6 +14,11 @@ builder.Services.AddGrpcClient<FarmService.FarmServiceClient>(o =>
 {
     o.Address = new Uri("http://localhost:8084");
 });
+builder.Services.AddScoped<IOfferLogic, OfferLogic>();
+builder.Services.AddGrpcClient<OfferService.OfferServiceClient>(o =>
+{
+    o.Address = new Uri("http://localhost:8084");
+});
 
 var app = builder.Build();
 

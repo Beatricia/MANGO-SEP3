@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj": {}
+    "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj": {
+    "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj",
+        "projectUniqueName": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj",
         "projectName": "BlazorLocally",
-        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj",
-        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\obj\\",
+        "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\BlazorLocally.csproj",
+        "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\BlazorLocally\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -46,6 +48,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.8, )"
+            },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[6.0.17, )"
             }
           },
           "imports": [
@@ -62,7 +68,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[6.0.8, 6.0.8]"
+              "version": "[6.0.10, 6.0.10]"
             }
           ],
           "frameworkReferences": {
@@ -70,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

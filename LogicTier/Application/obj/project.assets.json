@@ -249,35 +249,37 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tropcho\\.nuget\\packages\\": {}
+    "C:\\Users\\Simon\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
-      "packagesPath": "C:\\Users\\Tropcho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
+      "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj",
+      "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Tropcho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
-              "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj"
+            "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
+              "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj"
             },
-            "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
-              "projectPath": "C:\\Users\\Tropcho\\RiderProjects\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
+            "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Shared\\Shared.csproj"
             }
           }
         }
@@ -307,7 +309,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

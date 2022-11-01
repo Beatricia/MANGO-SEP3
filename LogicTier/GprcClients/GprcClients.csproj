@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <!-- todo CHANGE NOT TO BE ABSOLUTE PATH!!! -->
-        <Protobuf Include="C:\Users\agata\RiderProjects\MANGO-SEP3\DataTier\DatabaseAccess\src\main\proto\contract.proto" OutputDir="./Proto/Cotract.proto" GrpcServices="Client" />
+        <Protobuf Include="C:\Users\Tropcho\RiderProjects\MANGO-SEP3\DataTier\DatabaseAccess\src\main\proto\contract.proto" OutputDir="./Proto/Cotract.proto" GrpcServices="Client" />
     </ItemGroup>
 
     <ItemGroup>

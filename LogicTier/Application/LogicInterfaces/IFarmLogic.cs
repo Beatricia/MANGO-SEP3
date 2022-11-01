@@ -10,5 +10,5 @@ public interface IFarmLogic
     /// </summary>
     /// <param name="dto">The object holding all the farm information</param>
     /// <returns>The created Farm object</returns>
-    Task<Farm> CreateAsync(FarmCreationDto dto);
+    Task<Shared.Models.Farm> CreateAsync(FarmCreationDto dto);
 }

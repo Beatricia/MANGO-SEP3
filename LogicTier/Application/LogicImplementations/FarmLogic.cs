@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Shared.DTOs;
 using Shared.Models;
+using Farm = Shared.Models.Farm;
 
 namespace Application.LogicImplementations;
 public class FarmLogic : IFarmLogic
@@ -18,10 +19,10 @@ public class FarmLogic : IFarmLogic
     /// </summary>
     /// <param name="dto">The object holding all the farm information</param>
     /// <returns>The created Farm object</returns>
-    public async Task<Farm> CreateAsync(FarmCreationDto dto)
+    public async Task<Shared.Models.Farm> CreateAsync(FarmCreationDto dto)
     {
         ValidateData(dto);
-        Farm toCreate = new Farm
+        var toCreate = new global::Farm
         {
             Name = dto.Name,
             Phone = dto.Phone,
@@ -32,9 +33,20 @@ public class FarmLogic : IFarmLogic
             FarmStatus = dto.FarmStatus,
         };
 
-        Farm created = await farmServiceClient.CreateFarmAsync(toCreate);
+        global::Farm created = await farmServiceClient.CreateFarmAsync(toCreate);
 
-        return created;
+        Shared.Models.Farm farmToSend = new Shared.Models.Farm
+        {
+            Name = created.Name,
+            Phone = created.Phone,
+            ZIP = created.Zip,
+            Address = created.Address,
+            City = created.City,
+            DeliveryDistance = created.DeliveryDistance,
+            FarmStatus = created.FarmStatus,
+        };
+
+        return farmToSend;
     }
 
     private void ValidateData(FarmCreationDto dto)

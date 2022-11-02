@@ -3,42 +3,68 @@
 @using global::Shared.DTOs
 @using HttpClient.ClientImplementations
 @using HttpClient.ClientInterfaces
+@using System.Reflection.Metadata
 
 
 <h3>CreateOffer</h3>
 <div class="form">
-    <InputField Label="Product Name"/>
-    <InputField Label="Quantity"/>
-    <InputField Label="Price"/>
-    <label for="radioGroup">Delivery Option</label>
-    
-    <div id="radioGroup">
-        <input type="radio" value="1" id="delivery" name="deliveryOption"/>
-        <label for="delivery"> Delivery</label>
-        <input type="radio" value="2" id="pickUp" name="deliveryOption"/>
-        <label for="pickUp"> Pick Up</label>
-        <input type="radio" value="3" id="pickYO" name="deliveryOption"/>
-        <label for="pickYO"> Pick Your Own</label>
+    <div class="">
+        <label>Product Name</label>
+        <input type="text" value="@productName"/>
+    </div>
+    <div class="">
+        <label>Quantity</label>
+        <input type="text" value="@quantity"/>
+    </div>
+    <div class="">
+        <label>Price</label>
+        <input type="text" value="@price"/>
     </div>
     
+    <!--radio buttons for delivery option-->
+    <label for="radioGroup">Delivery Option</label>
+    <div id="radioGroup">
+        <input type="radio" value="@delivery" id="delivery"
+               name="deliveryOption"
+        />
+        <label for="delivery"> Delivery</label>
+        <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption"/>
+        <label for="pickUp"> Pick Up</label>
+        <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption"/>
+        <label for="pickYO"> Pick Your Own</label>
+    </div>
+
+    <!--textarea for description-->
     <label for="textarea">Description:</label>
-    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..."></textarea>
-    
+    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ...">@description</textarea>
+    <!--image-->
     <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img"/>
-    
-    <input type="submit" value="CREATE" class="button btn-success"/>
+    <!--submit button-->
+    <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
     
 </div>
 
 @code {
     private IOfferService httpClient;
+    private string productName;
+    private int quantity;
+    private string unit;
+    private string price;
+    private bool delivery;
+    private bool pickUp;
+    private bool pickYO;
+    private string? description;
+    private string imgPath = "Img/default-placeholder.png";
 
 
+    ///summary///
+    /// calls methods ValidateData for data validation and CreateAsync from HttpClient
+    /// summary///
     private async Task Create()
     {
         try
         {
-            OfferCreationDto dto = new OfferCreationDto();
+            OfferCreationDto dto = new();
         }
         catch (Exception e)
         {

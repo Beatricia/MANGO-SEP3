@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "5/UXJZWLX0AsF5XGHnujcVuN5kT9qwr7tVnBOJi1bOl+3FWvmvpzjQURFvrS3dfg19bT5IQ+K5z8uEo1XAKaDQ==",
+  "dgSpecHash": "irHA0Uc/gNRxG/jY/qEVrSfwZ/gW/1bsx/DsDLFZJeZZN4g+CTZFRMtbYKwEnXfSMJffR7Z88wcNtnufEog4aw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+  "projectFilePath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\agata\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
-    "C:\\Users\\agata\\.nuget\\packages\\grpc.core.api\\2.49.0\\grpc.core.api.2.49.0.nupkg.sha512",
-    "C:\\Users\\agata\\.nuget\\packages\\grpc.net.client\\2.49.0\\grpc.net.client.2.49.0.nupkg.sha512",
-    "C:\\Users\\agata\\.nuget\\packages\\grpc.net.common\\2.49.0\\grpc.net.common.2.49.0.nupkg.sha512",
-    "C:\\Users\\agata\\.nuget\\packages\\grpc.tools\\2.50.0\\grpc.tools.2.50.0.nupkg.sha512",
-    "C:\\Users\\agata\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.0.3\\microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512",
-    "C:\\Users\\agata\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\Simon\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\grpc.core.api\\2.49.0\\grpc.core.api.2.49.0.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\grpc.net.client\\2.49.0\\grpc.net.client.2.49.0.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\grpc.net.common\\2.49.0\\grpc.net.common.2.49.0.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\grpc.tools\\2.50.0\\grpc.tools.2.50.0.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.0.3\\microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
   ],
   "logs": []
 }

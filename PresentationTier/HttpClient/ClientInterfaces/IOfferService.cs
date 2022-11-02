@@ -6,7 +6,10 @@ namespace HttpClient.ClientInterfaces;
 
 public interface IOfferService
 {
-    Task CreateAsync(OfferCreationDto dto); //OfferCreation dto
+    ///summary///
+    /// Sends POST request to a WebAPI server
+    /// summary///
+    Task CreateAsync(OfferCreationDto dto);
     Task<ICollection<Offer>> GetAsync();
     
 }

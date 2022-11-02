@@ -14,6 +14,9 @@ public class OfferHttpClient : IOfferService
     {
         this.client = client;
     } 
+    ///summary///
+    /// Sends POST request to a WebAPI server
+    /// summary///
     public async Task CreateAsync(OfferCreationDto dto)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync("/offers", dto);

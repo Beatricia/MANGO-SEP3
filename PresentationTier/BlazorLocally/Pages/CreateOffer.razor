@@ -24,16 +24,20 @@
     <!--radio buttons for delivery option-->
     <label for="radioGroup">Delivery Option</label>
     <div id="radioGroup">
-        <input type="radio" value="@delivery" id="delivery"
-               name="deliveryOption"
+        <input type="radio" value="@delivery" id="delivery" name="deliveryOption"
+               onchange="@(()=> Delivery())"
+               checked="@delivery"
         />
         <label for="delivery"> Delivery</label>
-        <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption"/>
+        <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption"
+               onchange="@(()=> PickUp())"
+        />
         <label for="pickUp"> Pick Up</label>
-        <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption"/>
+        <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption"
+               onchange="@(()=> PickYO())"
+        />
         <label for="pickYO"> Pick Your Own</label>
     </div>
-
     <!--textarea for description-->
     <label for="textarea">Description:</label>
     <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ...">@description</textarea>
@@ -49,8 +53,8 @@
     private string productName;
     private int quantity;
     private string unit;
-    private string price;
-    private bool delivery;
+    private int price;
+    private bool delivery = true;
     private bool pickUp;
     private bool pickYO;
     private string? description;
@@ -64,13 +68,44 @@
     {
         try
         {
-            OfferCreationDto dto = new OfferCreationDto();
+            OfferCreationDto dto = new();
+            dto.Name = productName;
+            dto.Quantity = quantity;
+            dto.Price = price;
+            dto.Delivery = delivery;
+            dto.PickUp = pickUp;
+            dto.PickYourOwn = pickYO;
+            dto.Description = description;
+            dto.ImagePath = imgPath;
+            
+            await httpClient.CreateAsync(dto);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    private void Delivery()
+    {
+        delivery = true;
+        pickUp = false;
+        pickYO = false;
+    }
+    
+    private void PickUp()
+    {
+        delivery = false;
+        pickUp = true;
+        pickYO = false;
+    }
+    
+    private void PickYO()
+    {
+        delivery = false;
+        pickUp = false;
+        pickYO = true;
     }
 
 }

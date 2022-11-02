@@ -3,22 +3,24 @@
 @using HttpClient.ClientInterfaces
 <h3>DisplayOffers</h3>
 
-<div class="card-group">
-    @foreach (var offer in offers)
-    {
-        <div class="card">
-            <div class="card-header">
-                <img src="@offer.ImagePath" alt="offerImage"/>
+@if (offers != null)
+{
+    <div class="card-group">
+        @foreach (var offer in offers)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <img src="@offer.ImagePath" alt="offerImage"/>
+                </div>
+                <div class="card-body">
+                    <h5 class="col-8">@offer.Name</h5>
+                    <h6 class="col-4">@offer.Price</h6>
+                    <span class="col-8">@offer.Description</span>
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="col-8">@offer.Name</h5>
-                <h6 class="col-4">@offer.Price</h6>
-                <span class="col-8">@offer.Description</span>
-            </div>
-        </div>
-    }
-</div>
-
+        }
+    </div>
+}
 
 @if (error || !string.IsNullOrEmpty(msg))
 {
@@ -31,7 +33,7 @@
 
 @code {
     private IOfferService httpClient;
-    private IEnumerable<Offer> offers;
+    private IEnumerable<Offer>? offers;
     private string msg = "";
     private bool error;
 
@@ -40,10 +42,12 @@
     /// summary///
     protected override async Task OnInitializedAsync()
     {
-        try
+        try 
         {
             error = false || !offers.Any();
-            offers = await httpClient.GetAsync();
+            Offer offer = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "BlazorLocally/wwwroot/Img/default-placeholder.png");
+            offers = offers.Concat(new[] { offer });
+    // offers = await httpClient.GetAsync();
         }
         catch (Exception e)
         {

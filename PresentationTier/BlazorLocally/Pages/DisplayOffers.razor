@@ -46,14 +46,19 @@
     {
         try 
         {
+            //hardcoded ----- for testing
             //imgPath works with pictures online but not on the disk. Cause its colling GET requests to localhost
             Offer offer = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
             Offer offer2 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
             Offer offer3 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
             Offer offer4 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
 
+            
             offers = new[] { offer, offer2, offer3 };
-    // offers = await httpClient.GetAsync();
+            
+            //this below will be used to get the offers from server 
+             // offers = await httpClient.GetAsync();
+            
         }
         catch (Exception e)
         {

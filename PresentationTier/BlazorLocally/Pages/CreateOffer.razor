@@ -10,15 +10,15 @@
 <div class="form">
     <div class="">
         <label>Product Name</label>
-        <input type="text" value="@productName"/>
+        <input type="text" @bind="productName"/>
     </div>
     <div class="">
         <label>Quantity</label>
-        <input type="text" value="@quantity"/>
+        <input type="text" @bind="quantity"/>
     </div>
     <div class="">
         <label>Price</label>
-        <input type="text" value="@price"/>
+        <input type="text" @bind="price"/>
     </div>
     
     <!--radio buttons for delivery option-->
@@ -40,7 +40,7 @@
     </div>
     <!--textarea for description-->
     <label for="textarea">Description:</label>
-    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ...">@description</textarea>
+    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
     <!--image-->
     <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img"/>
     <!--submit button-->
@@ -87,6 +87,9 @@
         }
     }
 
+    ///summary///
+    /// sets the delivery boolean to true to simulate 'chosen from the radio'
+    /// summary///
     private void Delivery()
     {
         delivery = true;
@@ -94,6 +97,9 @@
         pickYO = false;
     }
     
+    ///summary///
+    /// sets the pickUp boolean to true to simulate 'chosen from the radio'
+    /// summary///
     private void PickUp()
     {
         delivery = false;
@@ -101,11 +107,19 @@
         pickYO = false;
     }
     
+    ///summary///
+    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
+    /// summary///
     private void PickYO()
     {
         delivery = false;
         pickUp = false;
         pickYO = true;
+    }
+
+    private void ValidateData()
+    {
+        
     }
 
 }

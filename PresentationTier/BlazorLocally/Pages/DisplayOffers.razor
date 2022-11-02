@@ -1,0 +1,55 @@
+﻿@page "/DisplayOffers"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+<h3>DisplayOffers</h3>
+
+<div class="card-group">
+    @foreach (var offer in offers)
+    {
+        <div class="card">
+            <div class="card-header">
+                <img src="@offer.ImagePath" alt="offerImage"/>
+            </div>
+            <div class="card-body">
+                <h5 class="col-8">@offer.Name</h5>
+                <h6 class="col-4">@offer.Price</h6>
+                <span class="col-8">@offer.Description</span>
+            </div>
+        </div>
+    }
+</div>
+
+
+@if (error || !string.IsNullOrEmpty(msg))
+{
+    <div class="errorMsg">
+        <span>@msg</span>
+    </div>
+}
+
+
+
+@code {
+    private IOfferService httpClient;
+    private IEnumerable<Offer> offers;
+    private string msg = "";
+    private bool error;
+
+    ///summary///
+    /// loads all the offers
+    /// summary///
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            error = false || !offers.Any();
+            offers = await httpClient.GetAsync();
+        }
+        catch (Exception e)
+        {
+            error = true;
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}

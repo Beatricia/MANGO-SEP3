@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using Shared.DTOs;
 using Shared.Models;
@@ -27,8 +28,22 @@ public class OfferHttpClient : IOfferService
         }
     }
 
-    public Task<ICollection<Offer>> GetAsync()
+    ///summary///
+    /// Sends GET request to a WebAPI server
+    /// summary///
+    public async Task<ICollection<Offer>> GetAsync()
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await client.GetAsync("/offers");
+        string content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        ICollection<Offer> offers = JsonSerializer.Deserialize<ICollection<Offer>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return offers;
     }
 }

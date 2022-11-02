@@ -2,7 +2,9 @@
 
 @using HttpClient.ClientInterfaces
 @using System.Text.RegularExpressions
+@using global::Shared.DTOs
 @inject IJSRuntime JsRuntime
+@inject IFarmService farmService
 
 
 <div class="center add-farm-root">
@@ -56,16 +58,16 @@
 </div>
 
 @code {
-    private string farmName = "";
-    private string city = "";
-    private string zip = "";
-    private string address = "";
-    private string phone = "";
+    private string farmName = string.Empty;
+    private string city = string.Empty;
+    private string zip = string.Empty;
+    private string address = string.Empty;
+    private string phone = string.Empty;
     private int deliveryDistance = 0;
-    private string status = "";
+    private string status = string.Empty;
 
-    private string zipClasses = "";
-    private string phoneClasses = "";
+    private string zipClasses = string.Empty;
+    private string phoneClasses = string.Empty;
 
     private async Task CreateFarm()
     {
@@ -77,9 +79,20 @@
         {
             return;
         }
+
+        var farmCreationDto = new FarmCreationDto
+        {
+            Name = farmName,
+            City = city,
+            ZIP = zip,
+            Address = address,
+            Phone = phone,
+            DeliveryDistance = deliveryDistance,
+            FarmStatus = status,
+        };
         
-        
-        
+        await farmService.CreateAsync(farmCreationDto);
+
     }
 
     private async Task ValidateData()

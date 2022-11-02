@@ -26,14 +26,19 @@ public static partial class ContractReflection {
           "b25lGAIgASgJEgsKA3ppcBgDIAEoCRIPCgdhZGRyZXNzGAQgASgJEgwKBGNp",
           "dHkYBSABKAkSFwoKZmFybVN0YXR1cxgGIAEoCUgAiAEBEh0KEGRlbGl2ZXJ5",
           "RGlzdGFuY2UYByABKAVIAYgBAUINCgtfZmFybVN0YXR1c0ITChFfZGVsaXZl",
-          "cnlEaXN0YW5jZSIVCgVPZmZlchIMCgRuYW1lGAEgASgJMikKC0Zhcm1TZXJ2",
-          "aWNlEhoKCkNyZWF0ZUZhcm0SBS5GYXJtGgUuRmFybUImCiJtYW5nby5zZXAz",
-          "LmRhdGFiYXNlYWNjZXNzLnByb3RvYnVmUAFiBnByb3RvMw=="));
+          "cnlEaXN0YW5jZSLEAQoFT2ZmZXISCgoCaWQYASABKAUSDAoEbmFtZRgCIAEo",
+          "CRIQCghxdWFudGl0eRgDIAEoBRIMCgR1bml0GAQgASgJEg0KBXByaWNlGAUg",
+          "ASgBEhAKCGRlbGl2ZXJ5GAYgASgIEg4KBnBpY2tVcBgHIAEoCBITCgtwaWNr",
+          "WW91ck93bhgIIAEoCBIYCgtkZXNjcmlwdGlvbhgJIAEoCUgAiAEBEhEKCUlt",
+          "YWdlUGF0aBgKIAEoCUIOCgxfZGVzY3JpcHRpb24yKQoLRmFybVNlcnZpY2US",
+          "GgoKQ3JlYXRlRmFybRIFLkZhcm0aBS5GYXJtMi0KDE9mZmVyU2VydmljZRId",
+          "CgtDcmVhdGVPZmZlchIGLk9mZmVyGgYuT2ZmZXJCJgoibWFuZ28uc2VwMy5k",
+          "YXRhYmFzZWFjY2Vzcy5wcm90b2J1ZlABYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::Farm), global::Farm.Parser, new[]{ "Name", "Phone", "Zip", "Address", "City", "FarmStatus", "DeliveryDistance" }, new[]{ "FarmStatus", "DeliveryDistance" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Offer), global::Offer.Parser, new[]{ "Name" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::Offer), global::Offer.Parser, new[]{ "Id", "Name", "Quantity", "Unit", "Price", "Delivery", "PickUp", "PickYourOwn", "Description", "ImagePath" }, new[]{ "Description" }, null, null, null)
         }));
   }
   #endregion
@@ -512,7 +517,16 @@ public sealed partial class Offer : pb::IMessage<Offer>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public Offer(Offer other) : this() {
+    id_ = other.id_;
     name_ = other.name_;
+    quantity_ = other.quantity_;
+    unit_ = other.unit_;
+    price_ = other.price_;
+    delivery_ = other.delivery_;
+    pickUp_ = other.pickUp_;
+    pickYourOwn_ = other.pickYourOwn_;
+    description_ = other.description_;
+    imagePath_ = other.imagePath_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -522,8 +536,20 @@ public sealed partial class Offer : pb::IMessage<Offer>
     return new Offer(this);
   }
 
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private int id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
   /// <summary>Field number for the "name" field.</summary>
-  public const int NameFieldNumber = 1;
+  public const int NameFieldNumber = 2;
   private string name_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -531,6 +557,114 @@ public sealed partial class Offer : pb::IMessage<Offer>
     get { return name_; }
     set {
       name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "quantity" field.</summary>
+  public const int QuantityFieldNumber = 3;
+  private int quantity_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Quantity {
+    get { return quantity_; }
+    set {
+      quantity_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "unit" field.</summary>
+  public const int UnitFieldNumber = 4;
+  private string unit_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Unit {
+    get { return unit_; }
+    set {
+      unit_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "price" field.</summary>
+  public const int PriceFieldNumber = 5;
+  private double price_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public double Price {
+    get { return price_; }
+    set {
+      price_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "delivery" field.</summary>
+  public const int DeliveryFieldNumber = 6;
+  private bool delivery_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Delivery {
+    get { return delivery_; }
+    set {
+      delivery_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "pickUp" field.</summary>
+  public const int PickUpFieldNumber = 7;
+  private bool pickUp_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool PickUp {
+    get { return pickUp_; }
+    set {
+      pickUp_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "pickYourOwn" field.</summary>
+  public const int PickYourOwnFieldNumber = 8;
+  private bool pickYourOwn_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool PickYourOwn {
+    get { return pickYourOwn_; }
+    set {
+      pickYourOwn_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "description" field.</summary>
+  public const int DescriptionFieldNumber = 9;
+  private string description_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Description {
+    get { return description_ ?? ""; }
+    set {
+      description_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "description" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool HasDescription {
+    get { return description_ != null; }
+  }
+  /// <summary>Clears the value of the "description" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void ClearDescription() {
+    description_ = null;
+  }
+
+  /// <summary>Field number for the "ImagePath" field.</summary>
+  public const int ImagePathFieldNumber = 10;
+  private string imagePath_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string ImagePath {
+    get { return imagePath_; }
+    set {
+      imagePath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -549,7 +683,16 @@ public sealed partial class Offer : pb::IMessage<Offer>
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (Id != other.Id) return false;
     if (Name != other.Name) return false;
+    if (Quantity != other.Quantity) return false;
+    if (Unit != other.Unit) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Price, other.Price)) return false;
+    if (Delivery != other.Delivery) return false;
+    if (PickUp != other.PickUp) return false;
+    if (PickYourOwn != other.PickYourOwn) return false;
+    if (Description != other.Description) return false;
+    if (ImagePath != other.ImagePath) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -557,7 +700,16 @@ public sealed partial class Offer : pb::IMessage<Offer>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (Id != 0) hash ^= Id.GetHashCode();
     if (Name.Length != 0) hash ^= Name.GetHashCode();
+    if (Quantity != 0) hash ^= Quantity.GetHashCode();
+    if (Unit.Length != 0) hash ^= Unit.GetHashCode();
+    if (Price != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Price);
+    if (Delivery != false) hash ^= Delivery.GetHashCode();
+    if (PickUp != false) hash ^= PickUp.GetHashCode();
+    if (PickYourOwn != false) hash ^= PickYourOwn.GetHashCode();
+    if (HasDescription) hash ^= Description.GetHashCode();
+    if (ImagePath.Length != 0) hash ^= ImagePath.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -576,9 +728,45 @@ public sealed partial class Offer : pb::IMessage<Offer>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
+    if (Id != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Id);
+    }
     if (Name.Length != 0) {
-      output.WriteRawTag(10);
+      output.WriteRawTag(18);
       output.WriteString(Name);
+    }
+    if (Quantity != 0) {
+      output.WriteRawTag(24);
+      output.WriteInt32(Quantity);
+    }
+    if (Unit.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(Unit);
+    }
+    if (Price != 0D) {
+      output.WriteRawTag(41);
+      output.WriteDouble(Price);
+    }
+    if (Delivery != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(Delivery);
+    }
+    if (PickUp != false) {
+      output.WriteRawTag(56);
+      output.WriteBool(PickUp);
+    }
+    if (PickYourOwn != false) {
+      output.WriteRawTag(64);
+      output.WriteBool(PickYourOwn);
+    }
+    if (HasDescription) {
+      output.WriteRawTag(74);
+      output.WriteString(Description);
+    }
+    if (ImagePath.Length != 0) {
+      output.WriteRawTag(82);
+      output.WriteString(ImagePath);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -590,9 +778,45 @@ public sealed partial class Offer : pb::IMessage<Offer>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Id != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Id);
+    }
     if (Name.Length != 0) {
-      output.WriteRawTag(10);
+      output.WriteRawTag(18);
       output.WriteString(Name);
+    }
+    if (Quantity != 0) {
+      output.WriteRawTag(24);
+      output.WriteInt32(Quantity);
+    }
+    if (Unit.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(Unit);
+    }
+    if (Price != 0D) {
+      output.WriteRawTag(41);
+      output.WriteDouble(Price);
+    }
+    if (Delivery != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(Delivery);
+    }
+    if (PickUp != false) {
+      output.WriteRawTag(56);
+      output.WriteBool(PickUp);
+    }
+    if (PickYourOwn != false) {
+      output.WriteRawTag(64);
+      output.WriteBool(PickYourOwn);
+    }
+    if (HasDescription) {
+      output.WriteRawTag(74);
+      output.WriteString(Description);
+    }
+    if (ImagePath.Length != 0) {
+      output.WriteRawTag(82);
+      output.WriteString(ImagePath);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -604,8 +828,35 @@ public sealed partial class Offer : pb::IMessage<Offer>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (Id != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+    }
     if (Name.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+    }
+    if (Quantity != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Quantity);
+    }
+    if (Unit.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Unit);
+    }
+    if (Price != 0D) {
+      size += 1 + 8;
+    }
+    if (Delivery != false) {
+      size += 1 + 1;
+    }
+    if (PickUp != false) {
+      size += 1 + 1;
+    }
+    if (PickYourOwn != false) {
+      size += 1 + 1;
+    }
+    if (HasDescription) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
+    }
+    if (ImagePath.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(ImagePath);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -619,8 +870,35 @@ public sealed partial class Offer : pb::IMessage<Offer>
     if (other == null) {
       return;
     }
+    if (other.Id != 0) {
+      Id = other.Id;
+    }
     if (other.Name.Length != 0) {
       Name = other.Name;
+    }
+    if (other.Quantity != 0) {
+      Quantity = other.Quantity;
+    }
+    if (other.Unit.Length != 0) {
+      Unit = other.Unit;
+    }
+    if (other.Price != 0D) {
+      Price = other.Price;
+    }
+    if (other.Delivery != false) {
+      Delivery = other.Delivery;
+    }
+    if (other.PickUp != false) {
+      PickUp = other.PickUp;
+    }
+    if (other.PickYourOwn != false) {
+      PickYourOwn = other.PickYourOwn;
+    }
+    if (other.HasDescription) {
+      Description = other.Description;
+    }
+    if (other.ImagePath.Length != 0) {
+      ImagePath = other.ImagePath;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -637,8 +915,44 @@ public sealed partial class Offer : pb::IMessage<Offer>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 10: {
+        case 8: {
+          Id = input.ReadInt32();
+          break;
+        }
+        case 18: {
           Name = input.ReadString();
+          break;
+        }
+        case 24: {
+          Quantity = input.ReadInt32();
+          break;
+        }
+        case 34: {
+          Unit = input.ReadString();
+          break;
+        }
+        case 41: {
+          Price = input.ReadDouble();
+          break;
+        }
+        case 48: {
+          Delivery = input.ReadBool();
+          break;
+        }
+        case 56: {
+          PickUp = input.ReadBool();
+          break;
+        }
+        case 64: {
+          PickYourOwn = input.ReadBool();
+          break;
+        }
+        case 74: {
+          Description = input.ReadString();
+          break;
+        }
+        case 82: {
+          ImagePath = input.ReadString();
           break;
         }
       }
@@ -656,8 +970,44 @@ public sealed partial class Offer : pb::IMessage<Offer>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
-        case 10: {
+        case 8: {
+          Id = input.ReadInt32();
+          break;
+        }
+        case 18: {
           Name = input.ReadString();
+          break;
+        }
+        case 24: {
+          Quantity = input.ReadInt32();
+          break;
+        }
+        case 34: {
+          Unit = input.ReadString();
+          break;
+        }
+        case 41: {
+          Price = input.ReadDouble();
+          break;
+        }
+        case 48: {
+          Delivery = input.ReadBool();
+          break;
+        }
+        case 56: {
+          PickUp = input.ReadBool();
+          break;
+        }
+        case 64: {
+          PickYourOwn = input.ReadBool();
+          break;
+        }
+        case 74: {
+          Description = input.ReadString();
+          break;
+        }
+        case 82: {
+          ImagePath = input.ReadString();
           break;
         }
       }

@@ -926,34 +926,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Simon\\.nuget\\packages\\": {}
+    "C:\\Users\\agata\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
+      "projectUniqueName": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
       "projectName": "WebAPI",
-      "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
-      "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\WebAPI\\obj\\",
+      "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\WebAPI.csproj",
+      "packagesPath": "C:\\Users\\agata\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\WebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\agata\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
-              "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj"
+            "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\agata\\RiderProjects\\MANGO-SEP3\\LogicTier\\Application\\Application.csproj"
             }
           }
         }
@@ -1000,7 +998,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

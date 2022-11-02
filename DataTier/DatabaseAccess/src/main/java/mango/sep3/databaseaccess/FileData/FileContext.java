@@ -40,6 +40,19 @@ public class FileContext
     return dataContainer.getFarms();
   }
 
+  public Collection<Offer> Offers()
+  {
+    try
+    {
+      LoadData();
+    }
+    catch (FileNotFoundException e)
+    {
+      e.printStackTrace();
+    }
+    return dataContainer.getOffers();
+  }
+
   //Taking the data from the file
   public void LoadData() throws FileNotFoundException
   {

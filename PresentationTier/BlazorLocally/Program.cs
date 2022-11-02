@@ -13,3 +13,6 @@ builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 
 
 await builder.Build().RunAsync();
+
+
+// TODO: https://www.youtube.com/watch?v=iedIu9H982Q

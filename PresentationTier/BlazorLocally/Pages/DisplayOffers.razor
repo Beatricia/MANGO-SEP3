@@ -5,10 +5,10 @@
 
 @if (offers != null)
 {
-    <div class="card-group">
+    <div class="d-flex justify-content-around flex-wrap">
         @foreach (var offer in offers)
         {
-            <div class="card">
+            <div class="card col-5 m-3">
                 <div class="card-header">
                     <img src="@offer.ImagePath" alt="offerImage"/>
                 </div>
@@ -44,9 +44,12 @@
     {
         try 
         {
-            error = false || !offers.Any();
-            Offer offer = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "BlazorLocally/wwwroot/Img/default-placeholder.png");
-            offers = offers.Concat(new[] { offer });
+            Offer offer = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+            Offer offer2 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+            Offer offer3 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+            Offer offer4 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+
+            offers = new[] { offer, offer2, offer3 };
     // offers = await httpClient.GetAsync();
         }
         catch (Exception e)

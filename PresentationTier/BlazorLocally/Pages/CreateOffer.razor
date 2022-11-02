@@ -1,0 +1,125 @@
+﻿@page "/CreateOffer"
+@using Components
+@using global::Shared.DTOs
+@using HttpClient.ClientImplementations
+@using HttpClient.ClientInterfaces
+@using System.Reflection.Metadata
+
+
+<h3>CreateOffer</h3>
+<div class="form">
+    <div class="">
+        <label>Product Name</label>
+        <input type="text" @bind="productName"/>
+    </div>
+    <div class="">
+        <label>Quantity</label>
+        <input type="text" @bind="quantity"/>
+    </div>
+    <div class="">
+        <label>Price</label>
+        <input type="text" @bind="price"/>
+    </div>
+    
+    <!--radio buttons for delivery option-->
+    <label for="radioGroup">Delivery Option</label>
+    <div id="radioGroup">
+        <input type="radio" value="@delivery" id="delivery" name="deliveryOption"
+               onchange="@(()=> Delivery())"
+               checked="@delivery"
+        />
+        <label for="delivery"> Delivery</label>
+        <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption"
+               onchange="@(()=> PickUp())"
+        />
+        <label for="pickUp"> Pick Up</label>
+        <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption"
+               onchange="@(()=> PickYO())"
+        />
+        <label for="pickYO"> Pick Your Own</label>
+    </div>
+    <!--textarea for description-->
+    <label for="textarea">Description:</label>
+    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
+    <!--image-->
+    <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img"/>
+    <!--submit button-->
+    <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
+    
+</div>
+
+@code {
+    private IOfferService httpClient;
+    private string productName;
+    private int quantity;
+    private string unit;
+    private int price;
+    private bool delivery = true;
+    private bool pickUp;
+    private bool pickYO;
+    private string? description;
+    private string imgPath = "Img/default-placeholder.png";
+
+
+    ///summary///
+    /// calls methods ValidateData for data validation and CreateAsync from HttpClient
+    /// summary///
+    private async Task Create()
+    {
+        try
+        {
+            OfferCreationDto dto = new();
+            dto.Name = productName;
+            dto.Quantity = quantity;
+            dto.Price = price;
+            dto.Delivery = delivery;
+            dto.PickUp = pickUp;
+            dto.PickYourOwn = pickYO;
+            dto.Description = description;
+            dto.ImagePath = imgPath;
+            
+            await httpClient.CreateAsync(dto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    ///summary///
+    /// sets the delivery boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void Delivery()
+    {
+        delivery = true;
+        pickUp = false;
+        pickYO = false;
+    }
+    
+    ///summary///
+    /// sets the pickUp boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickUp()
+    {
+        delivery = false;
+        pickUp = true;
+        pickYO = false;
+    }
+    
+    ///summary///
+    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickYO()
+    {
+        delivery = false;
+        pickUp = false;
+        pickYO = true;
+    }
+
+    private void ValidateData()
+    {
+        
+    }
+
+}

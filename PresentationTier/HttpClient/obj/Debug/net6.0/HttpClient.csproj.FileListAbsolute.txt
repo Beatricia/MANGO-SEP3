@@ -1,0 +1,15 @@
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\bin\Debug\net6.0\HttpClient.deps.json
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\bin\Debug\net6.0\HttpClient.dll
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\bin\Debug\net6.0\HttpClient.pdb
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\bin\Debug\net6.0\Shared.dll
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\bin\Debug\net6.0\Shared.pdb
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.csproj.AssemblyReference.cache
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.AssemblyInfoInputs.cache
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.AssemblyInfo.cs
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.csproj.CoreCompileInputs.cache
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.csproj.CopyComplete
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.dll
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\refint\HttpClient.dll
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\HttpClient.pdb
+C:\Users\Simon\Workspace\sep3\MANGO-SEP3\PresentationTier\HttpClient\obj\Debug\net6.0\ref\HttpClient.dll

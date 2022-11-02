@@ -1,0 +1,64 @@
+﻿@page "/DisplayOffers"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+<h3>DisplayOffers</h3>
+@if (offers == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+
+    <div class="d-flex justify-content-around flex-wrap">
+        @foreach (var offer in offers)
+        {
+            <div class="card col-5 m-3">
+                <div class="card-header">
+                    <img src="@offer.ImagePath" alt="offerImage"/>
+                </div>
+                <div class="card-body d-flex justify-content-between flex-wrap">
+                    <h5 class="col-8">@offer.Name</h5>
+                    <h6 class="col-4 d-flex justify-content-end">@offer.Price</h6>
+                    <span class="col-8">@offer.Description</span>
+                </div>
+            </div>
+        }
+    </div>
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <div class="errorMsg">
+        <span>@msg</span>
+    </div>
+}
+
+
+
+@code {
+    private IOfferService httpClient;
+    private IEnumerable<Offer>? offers;
+    private string msg = "";
+
+    ///summary///
+    /// loads all the offers
+    /// summary///
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            //imgPath works with pictures online but not on the disk. Cause its colling GET requests to localhost
+            Offer offer = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+            Offer offer2 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+            Offer offer3 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+            Offer offer4 = new Offer(1, "Name", 1, 20.0, true, false, false, "some description", "../wwwroot/Img/default-placeholder.png");
+
+            offers = new[] { offer, offer2, offer3 };
+    // offers = await httpClient.GetAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+﻿@using BlazorLocally.Pages
+@namespace Components
+
+<div class="">
+    <label>@Label</label>
+    <input type="text" value="@value"/>
+</div>
+@code {
+
+    [Parameter]
+    public string? Label { set; get; }
+    [Parameter]
+    public string? Value { set; get; }
+
+    
+    private string? value;
+
+    
+
+}

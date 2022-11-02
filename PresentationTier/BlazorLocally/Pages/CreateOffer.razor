@@ -1,20 +1,50 @@
 ﻿@page "/CreateOffer"
 @using Components
+@using global::Shared.DTOs
+@using HttpClient.ClientImplementations
+@using HttpClient.ClientInterfaces
 
 
 <h3>CreateOffer</h3>
-<div class="form-group">
+<div class="form">
     <InputField Label="Product Name"/>
     <InputField Label="Quantity"/>
     <InputField Label="Price"/>
-    <label>Delivery Option</label>
-    <InputRadioGroup>
-        <InputRadio>Delivery</InputRadio>
-        <InputRadio>Pick Up</InputRadio>
-        <InputRadio>Pick Your Own</InputRadio>
-    </InputRadioGroup>
+    <label for="radioGroup">Delivery Option</label>
+    
+    <div id="radioGroup">
+        <input type="radio" value="1" id="delivery" name="deliveryOption"/>
+        <label for="delivery"> Delivery</label>
+        <input type="radio" value="2" id="pickUp" name="deliveryOption"/>
+        <label for="pickUp"> Pick Up</label>
+        <input type="radio" value="3" id="pickYO" name="deliveryOption"/>
+        <label for="pickYO"> Pick Your Own</label>
+    </div>
+    
+    <label for="textarea">Description:</label>
+    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..."></textarea>
+    
+    <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img"/>
+    
+    <input type="submit" value="CREATE" class="button btn-success"/>
+    
 </div>
 
 @code {
-    
+    private IOfferService httpClient;
+
+
+    private async Task Create()
+    {
+        try
+        {
+            OfferCreationDto dto = new OfferCreationDto();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
 }

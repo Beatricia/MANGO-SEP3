@@ -1,0 +1,4 @@
+Green Mist - #B7BF96
+Main Color - #fafaf7
+Some Other Green - #6a7246
+Black - #040503

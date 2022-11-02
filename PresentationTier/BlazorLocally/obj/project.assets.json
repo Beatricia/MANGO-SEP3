@@ -409,6 +409,16 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "HttpClient/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/HttpClient.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HttpClient.dll": {}
+        }
       }
     },
     "net6.0/browser-wasm": {
@@ -812,6 +822,16 @@
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "HttpClient/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/HttpClient.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HttpClient.dll": {}
         }
       }
     }
@@ -1596,10 +1616,16 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "HttpClient/1.0.0": {
+      "type": "project",
+      "path": "../HttpClient/HttpClient.csproj",
+      "msbuildProject": "../HttpClient/HttpClient.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "HttpClient >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebAssembly >= 6.0.8",
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 6.0.8",
       "MudBlazor >= 6.0.17"
@@ -1631,7 +1657,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj": {
+              "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\PresentationTier\\HttpClient\\HttpClient.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

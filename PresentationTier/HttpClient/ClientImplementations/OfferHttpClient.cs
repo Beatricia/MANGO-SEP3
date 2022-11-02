@@ -1,4 +1,6 @@
-﻿using HttpClient.ClientInterfaces;
+﻿using System.Net.Http.Json;
+using HttpClient.ClientInterfaces;
+using Shared.DTOs;
 using Shared.Models;
 
 
@@ -6,15 +8,20 @@ namespace HttpClient.ClientImplementations;
 
 public class OfferHttpClient : IOfferService
 {
-    /*private readonly HttpClient client;
+    private readonly System.Net.Http.HttpClient client;
 
-    public OfferHttpClient(HttpClient client)
+    public OfferHttpClient(System.Net.Http.HttpClient client)
     {
         this.client = client;
-    } */
-    public Task CreateAsync()
+    } 
+    public async Task CreateAsync(OfferCreationDto dto)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await client.PostAsJsonAsync("/offers", dto);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 
     public Task<ICollection<Offer>> GetAsync()

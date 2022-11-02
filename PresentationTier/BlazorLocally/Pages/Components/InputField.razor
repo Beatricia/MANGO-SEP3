@@ -2,7 +2,7 @@
 
 <div class="">
     <label>@Label</label>
-    <input type="text"/>
+    <input type="text" value="@value"/>
 </div>
 @code {
 
@@ -10,5 +10,7 @@
     public string? Label { set; get; }
     [Parameter]
     public string? Type { set; get; }
+
+    private string? value;
 
 }

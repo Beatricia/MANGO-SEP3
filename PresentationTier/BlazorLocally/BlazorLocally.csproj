@@ -13,7 +13,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\Images" />
+      <ProjectReference Include="..\HttpClient\HttpClient.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Shared">
+        <HintPath>..\..\LogicTier\Shared\bin\Debug\net6.0\Shared.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\Img\default-placeholder.png" />
     </ItemGroup>
 
 </Project>

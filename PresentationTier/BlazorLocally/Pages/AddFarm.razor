@@ -112,7 +112,7 @@
         // https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
         string? errorMessage = null;
 
-        if (!Regex.IsMatch(zip, "^[0-9]{5}(?:-[0-9]{4})?$"))
+        if (!Regex.IsMatch(zip, "^[0-9]{4}(?:-[0-9]{4})?$"))
         {
             zipClasses = "error-field";
             errorMessage = "Invalid ZIP Code";
@@ -120,12 +120,12 @@
         else zipClasses = "";
 
         phone = phone.Replace(" ", "");
-        if (!Regex.IsMatch(phone, "^\\+?\\d{6, 15}"))
+        /*if (!Regex.IsMatch(phone, "^[+]?\\d{6, 15}"))
         {
             phoneClasses = "error-field";
             errorMessage = "Invalid phone number. Please use a valid format, for example +45012345678";
         }
-        else phoneClasses = "";
+        else phoneClasses = "";*/
 
 
         if (errorMessage is not null)

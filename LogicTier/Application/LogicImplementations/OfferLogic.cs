@@ -58,13 +58,39 @@ public class OfferLogic : IOfferLogic
 
     }
 
-    public Task<IEnumerable<global::Offer>> GetAsync()
+    public async Task<IEnumerable<Shared.Models.Offer>> GetAsync()
     {
-        throw new NotImplementedException();
+        IEnumerable<Shared.Models.Offer> offers = new List<Shared.Models.Offer>();
+        Console.WriteLine("I created offers List");
+
+        //OfferItems is a protobuff thingy 
+        global::
+            OfferItems offersBuff = await offerService.GetOffersAsync(new Void());
+        Console.WriteLine("Created offersBuff");
+        for (int i = 0; i < offersBuff.Offers.Count; i++)
+        {
+            global::Offer created = offersBuff.Offers[i];
+            Shared.Models.Offer offerToPresentationTier = new Shared.Models.Offer
+            {
+                Id = created.Id,
+                Name = created.Name,
+                Quantity = created.Quantity,
+                Unit = created.Unit,
+                Price = created.Price,
+                Delivery = created.Delivery,
+                PickUp = created.PickUp,
+                PickYourOwn = created.PickYourOwn,
+                Description = created.Description,
+                ImagePath = created.ImagePath
+            };
+            offers = offers.Append(offerToPresentationTier);
+            Console.WriteLine("Returning");
+        }
+        return offers;
     }
 
 
-     private void ValidateData(OfferCreationDto dto)
+    private void ValidateData(OfferCreationDto dto)
     {
         
         if (dto.Name.Length > 100)

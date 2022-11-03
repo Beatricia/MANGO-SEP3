@@ -20,7 +20,7 @@ public class OfferHttpClient : IOfferService
     /// summary///
     public async Task CreateAsync(OfferCreationDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/offers", dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/offer", dto);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -33,7 +33,7 @@ public class OfferHttpClient : IOfferService
     /// summary///
     public async Task<ICollection<Offer>> GetAsync()
     {
-        HttpResponseMessage response = await client.GetAsync("/offers");
+        HttpResponseMessage response = await client.GetAsync("/offer");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {

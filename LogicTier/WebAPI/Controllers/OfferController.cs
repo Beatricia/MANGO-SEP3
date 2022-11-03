@@ -37,4 +37,20 @@ public class OfferController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAsync()
+    {
+        try
+        {
+            Console.WriteLine("REQUEST RECEIVED");
+            var created = await offerLogic.GetAsync();
+            return Created($"/offers", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

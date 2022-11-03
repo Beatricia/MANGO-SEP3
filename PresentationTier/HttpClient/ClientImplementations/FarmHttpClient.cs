@@ -18,7 +18,7 @@ public class FarmHttpClient : IFarmService
     
     public async Task CreateAsync(FarmCreationDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/farms", dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/farm", dto);
         string content = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

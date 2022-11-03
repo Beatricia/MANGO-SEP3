@@ -1,9 +1,9 @@
 ﻿@page "/CreateOffer"
 @using Components
 @using global::Shared.DTOs
-@using HttpClient.ClientImplementations
-@using HttpClient.ClientInterfaces
+@inject IOfferService httpClient
 @using System.Reflection.Metadata
+@using HttpClient.ClientInterfaces
 
 
 <h3>CreateOffer</h3>
@@ -76,7 +76,6 @@
 </div>
 
 @code {
-    private IOfferService httpClient;
     private string productName;
     private int quantity;
     private string unit = "kg";
@@ -99,6 +98,7 @@
             OfferCreationDto dto = new();
             dto.Name = productName;
             dto.Quantity = quantity;
+            dto.Unit = unit;
             dto.Price = price;
             dto.Delivery = delivery;
             dto.PickUp = pickUp;

@@ -1,4 +1,5 @@
-﻿using Application.LogicInterfaces;
+﻿using Application.DAOInterfaces;
+using Application.LogicInterfaces;
 using Shared.DTOs;
 using Shared.Models;
 using Farm = Shared.Models.Farm;
@@ -6,11 +7,11 @@ using Farm = Shared.Models.Farm;
 namespace Application.LogicImplementations;
 public class FarmLogic : IFarmLogic
 {
-    private FarmService.FarmServiceClient farmServiceClient;
+    private IFarmDao farmDao;
 
-    public FarmLogic(FarmService.FarmServiceClient farmServiceClient)
+    public FarmLogic(IFarmDao farmDao)
     {
-        this.farmServiceClient = farmServiceClient;
+        this.farmDao = farmDao;
     }
     
     /// <summary>
@@ -19,36 +20,27 @@ public class FarmLogic : IFarmLogic
     /// </summary>
     /// <param name="dto">The object holding all the farm information</param>
     /// <returns>The created Farm object</returns>
-    public async Task<Shared.Models.Farm> CreateAsync(FarmCreationDto dto)
+    public async Task<Farm> CreateAsync(FarmCreationDto dto)
     {
         ValidateData(dto);
-        var toCreate = new global::Farm
-        {
-            Name = dto.Name,
-            Phone = dto.Phone,
-            Zip = dto.ZIP,
-            Address = dto.Address,
-            City = dto.City,
-            DeliveryDistance = dto.DeliveryDistance,
-            FarmStatus = dto.FarmStatus,
-        };
+        
 
-        global::Farm created = await farmServiceClient.CreateFarmAsync(toCreate);
-
-        Shared.Models.Farm farmToSend = new Shared.Models.Farm
+        Farm farmToSend = new Farm
         {
             Name = dto.Name,
             Phone = dto.Phone,
             DeliveryDistance = dto.DeliveryDistance,
             FarmStatus = dto.FarmStatus,
-            Address = new FarmAddress
+            Address = new Address
             {
                 City = dto.City,
                 ZIP = dto.ZIP,
-                Address = dto.Address
+                Street = dto.Address
             },
         };
 
+        await farmDao.CreateAsync(farmToSend);
+        
         return farmToSend;
     }
 

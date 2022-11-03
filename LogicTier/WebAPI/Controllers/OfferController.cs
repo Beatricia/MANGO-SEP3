@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
+/**
+ * Class responsible for handling incoming HTTP requests and send response back to the client 
+ */
 [ApiController]
 [Route("[controller]")]
 public class OfferController : ControllerBase

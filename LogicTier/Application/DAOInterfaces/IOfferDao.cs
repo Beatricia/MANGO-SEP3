@@ -1,7 +1,9 @@
-﻿namespace Application.DAOInterfaces;
+﻿using Shared.Models;
+
+namespace Application.DAOInterfaces;
 
 public interface IOfferDao
 {
-    Task CreateAsync(); //OfferCreation dto
+    Task CreateAsync(Offer offer); 
     Task<IEnumerable<Offer>> GetAsync();
 }

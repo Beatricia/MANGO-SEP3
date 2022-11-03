@@ -5,5 +5,5 @@ namespace Application.DAOInterfaces;
 
 public interface IFarmDao
 {
-    Task<Farm> CreteAsync(Farm farm);
+    Task<Farm> CreateAsync(Farm farm);
 }

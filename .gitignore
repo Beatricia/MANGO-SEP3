@@ -3,6 +3,7 @@
 
 */data.json
 wwwroot/pictures/*
+*/*.sln.DotSettings.user
 
 # User-specific stuff
 .idea/**/workspace.xml

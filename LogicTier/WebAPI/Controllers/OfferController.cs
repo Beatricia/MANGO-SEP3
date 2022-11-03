@@ -24,7 +24,7 @@ public class OfferController : ControllerBase
     /// <param name="dto">A OfferCreationDto containing all information Required to create a Offer object</param>
     /// <returns>Returns the Offer object or a status code to indicate an error</returns>
     [HttpPost]
-    public async Task<ActionResult<Shared.Models.Offer>> CreateAsync(OfferCreationDto dto)
+    public async Task<IActionResult> CreateAsync(OfferCreationDto dto)
     {
         try
         {

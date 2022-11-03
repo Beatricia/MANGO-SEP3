@@ -24,7 +24,7 @@ public class FarmController : ControllerBase
     /// <param name="dto">A FarmCreationDto containing all information Required to create a Farm object</param>
     /// <returns>Returns the farm object or a status code to indicate an error</returns>
     [HttpPost]
-    public async Task<ActionResult<Shared.Models.Farm>> CreateAsync(FarmCreationDto dto)
+    public async Task<IActionResult> CreateAsync(FarmCreationDto dto)
     {
         try
         {

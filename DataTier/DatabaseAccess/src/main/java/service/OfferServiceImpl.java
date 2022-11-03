@@ -2,47 +2,46 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.FileData.FileContext;
+import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.Offer;
-import mango.sep3.databaseaccess.protobuf.OfferItems;
 import mango.sep3.databaseaccess.protobuf.OfferServiceGrpc;
-import mango.sep3.databaseaccess.protobuf.Void;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
-  private final FileContext fileContext;
+  private FileContext context;
 
-  public OfferServiceImpl(FileContext context){
-    fileContext = context;
-  }
-  @Override public void getOffers(Void request,
-      StreamObserver<OfferItems> responseObserver)
+  public OfferServiceImpl(FileContext context)
   {
-    //Creating the proto OfferItems
-    OfferItems.Builder response = OfferItems.newBuilder();
-    //Creating the Offers from the model
-    ArrayList<Offer> offers = (ArrayList<Offer>) fileContext.Offers();
+    this.context = context;
+  }
 
-    Collection<Offer> offersList = new ArrayList<>();
+  /**
+   * The method creates a grpc Offer object using the parameters send in the
+   * request. Then directly calls the FileContext instance to write the object to
+   * the file and save the changes (this will be changed when the DB is implemented).
+   * Finally returns the created object.
+   * @param request  the Offer object send from the Logic Tier
+   * @param responseObserver the object returned to the Logic Tier
+   */
+  @Override public void createOffer(Offer request, StreamObserver<Offer> responseObserver)
+  {
+    Offer offer = Offer.newBuilder()
+        .setId(request.getId())
+        .setName(request.getName())
+        .setQuantity(request.getQuantity())
+        .setUnit(request.getUnit())
+        .setPrice(request.getPrice())
+        .setDelivery(request.getDelivery())
+        .setPickUp(request.getPickUp())
+        .setPickYourOwn(request.getPickYourOwn())
+        .setDescription(request.getDescription())
+        .setImagePath(request.getImagePath())
+        .build();
 
-    for (int i = 0; i < offers.size(); i++)
-    {
-      Offer off = Offer.newBuilder()
-      .setOfferId(offers.get(i).getOfferId())
-      .setTitle(offers.get(i).getTitle())
-      .setPrice(offers.get(i).getPrice())
-      .setPhotoPath(offers.get(i).getPhotoPath())
-          .build();
+    context.Offers().add(offer);
+    context.SaveChanges();
 
-      offersList.add(off);
-    }
-
-    response.addAllOffers(offersList);
-
-    //sending back data to the client
-    responseObserver.onNext(response.build());
+    responseObserver.onNext(offer);
     responseObserver.onCompleted();
   }
 }

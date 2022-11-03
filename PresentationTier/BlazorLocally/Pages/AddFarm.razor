@@ -1,0 +1,137 @@
+﻿@page "/farms/add"
+
+@using HttpClient.ClientInterfaces
+@using System.Text.RegularExpressions
+@using global::Shared.DTOs
+@inject IJSRuntime JsRuntime
+@inject IFarmService farmService
+
+
+<div class="center add-farm-root">
+    <div class="title">Create Farm</div>
+    <form class="form">
+        <div class="left">
+            <div>
+                <label for="farmName" class="required">Farm name</label>
+                <input @bind="farmName" type="text" name="farmName" id="farmName" style="--width-ratio: 1" required placeholder="Jakob's .Net Farm">
+            </div>
+            <div class="address-wrapper">
+                <label for="city" class="required">City</label>
+                <input @bind="city" type="text" name="city" id="city" style="--width-ratio: 1/2" required placeholder="Farmville"><br>
+                <label for="zip" class="label-zip required" style="--width-ratio: 1/4; text-align: center">ZIP</label>
+                <input @bind="zip" type="text" name="zip" id="zip" class="@zipClasses" style="--width-ratio: 1/4;" required placeholder="0000">
+            </div>
+            <div>
+                <label for="address" class="required">Address</label>
+                <input @bind="address" type="text" name="address" id="address" style="--width-ratio: 1;" required placeholder="Farm street 1">
+            </div>
+            <div>
+                <label for="phone" class="required">Phone</label>
+                <input @bind="phone" type="text" name="phone" id="phone" class="@phoneClasses" style="--width-ratio: 1/2; --margin-right-ratio: 1/2;" required placeholder="+4501234567">
+            </div>
+            <div>
+                <label for="distance">Delivery Distance <span class="distance-km-label">(@deliveryDistance km)</span></label>
+                <input @bind="deliveryDistance" type="range" name="distance" id="distance" class="distance-slider" min="0" max="100" step="1" data-display-value="0 km" style="--width-ratio: 2/3; --margin-right-ratio: 1/3;"
+                       onmousemove="this.setAttribute('data-display-value', this.value + ' km');this.style.setProperty('--translateX', this.value);">
+            </div>
+            <div class="status-area">
+                <label for="status">Status</label>
+                <textarea @bind="status" name="status" id="status" style="--width-ratio: 3/4; --margin-right-ratio: 1/4;" placeholder="Today the farm is open from..."></textarea>
+            </div>
+
+        </div>
+        <div class="right">
+            <div>
+                <div class="image-container" title="Upload an image">
+                    <label for="image">
+                        <img src="https://img.freepik.com/free-vector/farm-scene-nature-with-barn_1308-32159.jpg" width="200" height="200">
+                        <div class="upload-button">Upload</div>
+                    </label>
+                    <input id="image" type="file" alt="Submit">
+                </div>
+                <div class="submit-container">
+                    <input type="button" class="submit-button" value="Submit" @onclick="CreateFarm">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@code {
+    private string farmName = string.Empty;
+    private string city = string.Empty;
+    private string zip = string.Empty;
+    private string address = string.Empty;
+    private string phone = string.Empty;
+    private int deliveryDistance = 0;
+    private string status = string.Empty;
+
+    private string zipClasses = string.Empty;
+    private string phoneClasses = string.Empty;
+
+    private async Task CreateFarm()
+    {
+        try
+        {
+            await ValidateData();
+        }
+        catch
+        {
+            return;
+        }
+
+        var farmCreationDto = new FarmCreationDto
+        {
+            Name = farmName,
+            City = city,
+            ZIP = zip,
+            Address = address,
+            Phone = phone,
+            DeliveryDistance = deliveryDistance,
+            FarmStatus = status,
+        };
+        
+        await farmService.CreateAsync(farmCreationDto);
+
+    }
+
+    private async Task ValidateData()
+    {
+        farmName = farmName.Trim();
+        city = city.Trim();
+        zip = zip.Trim();
+        address = address.Trim();
+        phone = phone.Trim();
+        status = status.Trim();
+
+        if (deliveryDistance < 0)
+            deliveryDistance = 0;
+        if (deliveryDistance > 100)
+            deliveryDistance = 100;
+        
+        // https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s14.html
+        string? errorMessage = null;
+
+        if (!Regex.IsMatch(zip, "^[0-9]{5}(?:-[0-9]{4})?$"))
+        {
+            zipClasses = "error-field";
+            errorMessage = "Invalid ZIP Code";
+        }
+        else zipClasses = "";
+
+        phone = phone.Replace(" ", "");
+        if (!Regex.IsMatch(phone, "^\\+?\\d{6, 15}"))
+        {
+            phoneClasses = "error-field";
+            errorMessage = "Invalid phone number. Please use a valid format, for example +45012345678";
+        }
+        else phoneClasses = "";
+
+
+        if (errorMessage is not null)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", errorMessage);
+            throw new Exception(errorMessage);
+        }
+    }
+}

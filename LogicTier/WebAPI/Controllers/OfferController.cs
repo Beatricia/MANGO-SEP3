@@ -1,16 +1,13 @@
-﻿using Application.DAOInterfaces;
-using Application.LogicInterfaces;
+﻿using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DTOs;
 
 namespace WebAPI.Controllers;
 
-/**
- * Class responsible for handling incoming HTTP requests and send response back to the client 
- */
 [ApiController]
 [Route("[controller]")]
-public class OfferController : ControllerBase
 
+public class OfferController : ControllerBase
 {
     private readonly IOfferLogic offerLogic;
 
@@ -18,14 +15,21 @@ public class OfferController : ControllerBase
     {
         this.offerLogic = offerLogic;
     }
-
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Offer>>> GetAsync()
+    
+    /// <summary>
+    /// The method asynchronously creates a Offer object. If the object is correctly
+    /// created them it is returned, and if not the exception is caught and a status code
+    /// is sent to the user. 
+    /// </summary>
+    /// <param name="dto">A OfferCreationDto containing all information Required to create a Offer object</param>
+    /// <returns>Returns the Offer object or a status code to indicate an error</returns>
+    [HttpPost]
+    public async Task<ActionResult<Shared.Models.Offer>> CreateAsync(OfferCreationDto dto)
     {
         try
         {
-            var offers = await offerLogic.GetAsync();
-            return Ok(offers);
+            Shared.Models.Offer created = await offerLogic.CreateAsync(dto);
+            return Created($"/offers/{created.Id}", created);
         }
         catch (Exception e)
         {

@@ -1,0 +1,366 @@
+﻿/*
+        -----------------------------
+                  General
+        -----------------------------
+        */
+.add-farm-root{
+    --unit: 2px; /* unit of measurement */
+
+    --input-full-width: 200;  /* Full width of the left panel measured in --unit */
+    --width-ratio: 1;  /* --input-full-width * --width-ratio = input width */
+    --margin-right-ratio: 0;  /* --input-full-width * --margin-right-ratio = input margin right */
+
+    --translateX: 0; /* for the distance slider */
+
+
+    --required-star-color: red;
+    --slider-thumb-color: blue;
+    --slider-data-bg-color: #ffb9cb;
+    --shadow-color: #b7b7b7;
+    
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.center{
+    width: 100%;
+    min-height: 600px;
+    background: #e3e3e3;
+}
+
+.title{
+    font-size: calc(20 * var(--unit));
+    margin-bottom: calc(10 * var(--unit));
+    font-weight: 800;
+}
+
+@media screen and (min-width: 1150px){
+    .center{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/*
+-----------------------------
+             Form
+-----------------------------
+*/
+.form{
+    font-size: calc(11 * var(--unit));
+    width: 100%;
+    margin: 20px 0 100px 0;
+}
+
+@media screen and (min-width: 1150px){
+    .form{
+        flex-direction: row;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+.label-zip{
+    text-align: center;
+}
+
+
+
+/*
+-----------------------------
+           Inputs
+-----------------------------
+*/
+
+
+.left input[type="text"], .upload-button{
+    height: calc(20 * var(--unit));
+}
+
+.left input, .label-zip, .left textarea {
+    width: 70%;
+    margin-right: 0;
+}
+
+input, textarea, button, .upload-button{
+    border: none;
+    box-shadow: 2px 2px 5px var(--shadow-color);
+    border-radius: calc(1 * var(--unit));
+    transition: transform 100ms, box-shadow 100ms;
+    font-size: calc(9 * var(--unit));
+
+    max-width: 80% !important;
+}
+
+input:not(.distance-slider), textarea{
+    padding: 0 5px 0 5px;
+}
+
+input:not(.distance-slider):hover, textarea:hover, .upload-button:hover{
+    transform: translateY(-2px);
+    box-shadow: 2px 4px 5px var(--shadow-color);
+}
+
+input:not(.distance-slider):not(input[type='button']):focus, textarea:focus, .upload-button:focus{
+    outline: none;
+    transform: translateY(0) !important;
+    box-shadow: inset 1px 1px 5px #9f9f9f, 2px 2px 5px #b7b7b7 !important;
+}
+
+
+@media screen and (min-width: 1150px){
+    .left input, .label-zip, .left textarea {
+        width: calc(var(--input-full-width) * calc(var(--width-ratio) * var(--unit)));
+        margin-right: calc(var(--input-full-width) * calc(var(--margin-right-ratio) * var(--unit)));
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .left input, .label-zip, .left textarea {
+        width: 100% !important;
+        margin: 0 !important;
+        text-align: left !important;
+    }
+}
+
+.error-field{
+    border: red 2px dashed !important;
+}
+
+/*
+-----------------------------
+          Labels
+-----------------------------
+*/
+
+.required{
+    position: relative;
+}
+.required::after{
+    content: "*";
+    position: absolute;
+    font-size: calc(12 * var(--unit));
+    color: var(--required-star-color);
+}
+
+.left label:not(.label-zip){
+    margin-right: calc(10 * var(--unit));
+}
+
+
+/*
+-----------------------------
+    Inputs and Labels
+-----------------------------
+*/
+
+
+
+.left > div{
+    margin-bottom: calc(10 * var(--unit));
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    flex-direction: column;
+}
+
+.right{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.right > div{
+    height: 100%;
+    width: 70%;
+    position: relative;
+
+}
+
+@media screen and (max-width: 1150px) {
+    .form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left{
+        width: 100%;
+        transform: translateX(10%);
+    }
+
+    .left > div{
+        margin-bottom: calc(10 * var(--unit));
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 1150px){
+
+    .left > div{
+        flex-direction: row;
+        margin-bottom: calc(6 * var(--unit));
+    }
+
+    .right{
+        width: 220px;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    .right > div{
+        height: 100%;
+        width: 90%;
+        position: relative;
+    }
+}
+
+/*
+-----------------------------
+       Custom styles
+-----------------------------
+*/
+
+/* Status input */
+.status-area{
+    margin-top: calc(30 * var(--unit));
+}
+
+.status-area textarea{
+    resize: none;
+    height: calc(70 * var(--unit));
+    padding: calc(3 * var(--unit));
+}
+
+/* Slider input */
+.distance-slider{
+    -webkit-appearance: none;
+    position: relative;
+    height: calc(5 * var(--unit));
+    border-radius: calc(5 * var(--unit));
+
+    cursor: pointer;
+}
+
+.distance-slider[type="range"]::-webkit-slider-thumb{
+    appearance: none;
+    background: var(--slider-thumb-color);
+    height: calc(10 * var(--unit)) !important;
+    width: calc(10 * var(--unit)) !important;
+    border-radius: 50%;
+    transition: transform 100ms;
+}
+
+.distance-slider[type="range"]:hover::-webkit-slider-thumb{
+    transform: scale(1.2);
+}
+
+@media screen and (min-width: 1150px){
+    .distance-slider[data-display-value]:before{
+        content: attr(data-display-value);
+        position: absolute;
+        left: 0;
+        bottom: calc(-18 * var(--unit));
+        width: calc(40 * var(--unit));
+        height: calc(15 * var(--unit));
+        background: var(--slider-data-bg-color);
+
+        box-shadow: 2px 2px 5px #9b9b9b;
+        border-radius: calc(5 * var(--unit));
+
+        transition: transform 100ms ease-out;
+        transform: translateX(calc(var(--translateX) * (var(--input-full-width) / 220 * var(--unit))));
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .distance-km-label{
+        display: none;
+    }
+}
+
+
+/* right */
+.image-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+image-container img{
+    width: 200px;
+    height: auto;
+    cursor: pointer;
+}
+
+.upload-button{
+    background: #f6f6f6;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container label{
+    cursor: pointer;
+}
+
+.image-container input{
+    display: none;
+
+}
+
+.submit-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+input[type='submit']{
+    height: 50px;
+    width: 100px;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1150px){
+    .image-container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: relative;
+    }
+
+    .image-container img{
+        width: 200px;
+        height: auto;
+    }
+
+
+
+    .submit-container{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: right;
+    }
+    .submit-button{
+        height: 50px;
+        width: 100px;
+        cursor: pointer;
+    }
+}

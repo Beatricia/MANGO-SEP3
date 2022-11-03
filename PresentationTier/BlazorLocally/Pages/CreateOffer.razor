@@ -1,0 +1,170 @@
+﻿@page "/CreateOffer"
+@using Components
+@using global::Shared.DTOs
+@using HttpClient.ClientImplementations
+@using HttpClient.ClientInterfaces
+@using System.Reflection.Metadata
+
+
+<h3>CreateOffer</h3>
+<div class="form d-flex flex-wrap flex-column">
+    <div class="col-6">
+        <label>Product Name <span class="required">*</span></label>
+        <input type="text" @bind="productName" required="required"/>
+    </div>
+    
+    <!--image-->
+    <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0"> 
+        <div class=" d-flex flex-column">
+            <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img col-3 me-4"/>
+            <input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>
+        </div>
+</div>
+    
+    <div class="col-6" >
+            <label>Quantity <span class="required">*</span></label>
+            
+            <div class="col-9 d-flex flex-nowrap">
+            <input type="text" @bind="quantity" required="required" />
+             <!--dropdown menu-->
+            <div class="dropdown col-2 ms-1">
+                <button onclick="@(() => DropDownVisible())" class="dropbtn">@unit</button>
+                <div id="myDropdown" class="dropdown-content" style="display: @displayDropdown">
+                    <span onclick="@(() => SetUnit("kg"))">kg</span>
+                    <span onclick="@(() => SetUnit("l"))">l</span>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+       
+    
+
+    <div class="col-6">
+        <label>Price <span class="required">*</span></label>
+        <input type="text" @bind="price" required="required"/>
+    </div>
+    
+    <!--radio buttons for delivery option-->
+    <label class="col-6" for="radioGroup">Delivery Option:</label>
+    <div id="radioGroup" class="d-flex flex-column">
+        <div class="col-4 d-flex flex-nowrap">
+            <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
+                   onchange="@(() => Delivery())"
+                   checked="@delivery"/>
+            <label for="delivery"> Delivery</label>
+        </div>
+        <div class="col-4 d-flex flex-nowrap">
+            <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
+                   onchange="@(() => PickUp())"/>
+            <label for="pickUp"> Pick Up</label>
+        </div>
+        <div class="col-4 d-flex flex-nowrap">
+            <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
+                   onchange="@(() => PickYO())"/>
+            <label for="pickYO"> Pick Your Own</label>
+        </div>
+        
+    </div>
+    <!--textarea for description-->
+    <label for="textarea">Description:</label>
+    <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
+    
+    <!--submit button-->
+    <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
+    
+</div>
+
+@code {
+    private IOfferService httpClient;
+    private string productName;
+    private int quantity;
+    private string unit = "kg";
+    private int price;
+    private bool delivery = true;
+    private bool pickUp;
+    private bool pickYO;
+    private string? description;
+    private string imgPath = "Img/default-placeholder.png";
+    private string displayDropdown = "none";
+
+
+    ///summary///
+    /// calls methods ValidateData for data validation and CreateAsync from HttpClient
+    /// summary///
+    private async Task Create()
+    {
+        try
+        {
+            OfferCreationDto dto = new();
+            dto.Name = productName;
+            dto.Quantity = quantity;
+            dto.Price = price;
+            dto.Delivery = delivery;
+            dto.PickUp = pickUp;
+            dto.PickYourOwn = pickYO;
+            dto.Description = description;
+            dto.ImagePath = imgPath;
+            
+            await httpClient.CreateAsync(dto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    ///summary///
+    /// sets the delivery boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void Delivery()
+    {
+        delivery = true;
+        pickUp = false;
+        pickYO = false;
+    }
+    
+    ///summary///
+    /// sets the pickUp boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickUp()
+    {
+        delivery = false;
+        pickUp = true;
+        pickYO = false;
+    }
+    
+    ///summary///
+    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickYO()
+    {
+        delivery = false;
+        pickUp = false;
+        pickYO = true;
+    }
+
+    private void SetUnit(string unit)
+    {
+        this.unit = unit;
+    }
+
+    private void DropDownVisible()
+    {
+        if (displayDropdown.Equals("none"))
+        {
+            displayDropdown = "block";
+        }
+        else
+        {
+            displayDropdown = "none";
+        }
+    }
+
+    private void ValidateData()
+    {
+        
+    }
+
+}

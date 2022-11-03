@@ -8,61 +8,91 @@ public interface OfferOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string title = 1;</code>
-   * @return The title.
+   * <code>int32 id = 1;</code>
+   * @return The id.
    */
-  java.lang.String getTitle();
+  int getId();
+
   /**
-   * <code>string title = 1;</code>
-   * @return The bytes for title.
+   * <code>string name = 2;</code>
+   * @return The name.
+   */
+  java.lang.String getName();
+  /**
+   * <code>string name = 2;</code>
+   * @return The bytes for name.
    */
   com.google.protobuf.ByteString
-      getTitleBytes();
+      getNameBytes();
 
   /**
-   * <code>optional int32 offerId = 2;</code>
-   * @return Whether the offerId field is set.
+   * <code>int32 quantity = 3;</code>
+   * @return The quantity.
    */
-  boolean hasOfferId();
-  /**
-   * <code>optional int32 offerId = 2;</code>
-   * @return The offerId.
-   */
-  int getOfferId();
+  int getQuantity();
 
   /**
-   * <code>string price = 3;</code>
+   * <code>string unit = 4;</code>
+   * @return The unit.
+   */
+  java.lang.String getUnit();
+  /**
+   * <code>string unit = 4;</code>
+   * @return The bytes for unit.
+   */
+  com.google.protobuf.ByteString
+      getUnitBytes();
+
+  /**
+   * <code>double price = 5;</code>
    * @return The price.
    */
-  java.lang.String getPrice();
-  /**
-   * <code>string price = 3;</code>
-   * @return The bytes for price.
-   */
-  com.google.protobuf.ByteString
-      getPriceBytes();
+  double getPrice();
 
   /**
-   * <code>string description = 4;</code>
+   * <code>bool delivery = 6;</code>
+   * @return The delivery.
+   */
+  boolean getDelivery();
+
+  /**
+   * <code>bool pickUp = 7;</code>
+   * @return The pickUp.
+   */
+  boolean getPickUp();
+
+  /**
+   * <code>bool pickYourOwn = 8;</code>
+   * @return The pickYourOwn.
+   */
+  boolean getPickYourOwn();
+
+  /**
+   * <code>optional string description = 9;</code>
+   * @return Whether the description field is set.
+   */
+  boolean hasDescription();
+  /**
+   * <code>optional string description = 9;</code>
    * @return The description.
    */
   java.lang.String getDescription();
   /**
-   * <code>string description = 4;</code>
+   * <code>optional string description = 9;</code>
    * @return The bytes for description.
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();
 
   /**
-   * <code>string photoPath = 5;</code>
-   * @return The photoPath.
+   * <code>string ImagePath = 10;</code>
+   * @return The imagePath.
    */
-  java.lang.String getPhotoPath();
+  java.lang.String getImagePath();
   /**
-   * <code>string photoPath = 5;</code>
-   * @return The bytes for photoPath.
+   * <code>string ImagePath = 10;</code>
+   * @return The bytes for imagePath.
    */
   com.google.protobuf.ByteString
-      getPhotoPathBytes();
+      getImagePathBytes();
 }

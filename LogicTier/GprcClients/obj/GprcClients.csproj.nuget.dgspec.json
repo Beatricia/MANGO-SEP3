@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {}
+    "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
+    "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "projectUniqueName": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
         "projectName": "GprcClients",
-        "projectPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
-        "packagesPath": "C:\\Users\\nagit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nagit\\RiderProjects\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
+        "projectPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\GprcClients.csproj",
+        "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Simon\\Workspace\\sep3\\MANGO-SEP3\\LogicTier\\GprcClients\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nagit\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -69,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

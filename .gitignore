@@ -4,6 +4,7 @@
 */data.json
 wwwroot/pictures/*
 */*.sln.DotSettings.user
+.idea/*
 
 # User-specific stuff
 .idea/**/workspace.xml

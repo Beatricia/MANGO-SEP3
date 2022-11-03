@@ -37,13 +37,16 @@ public class FarmLogic : IFarmLogic
 
         Shared.Models.Farm farmToSend = new Shared.Models.Farm
         {
-            Name = created.Name,
-            Phone = created.Phone,
-            ZIP = created.Zip,
-            Address = created.Address,
-            City = created.City,
-            DeliveryDistance = created.DeliveryDistance,
-            FarmStatus = created.FarmStatus,
+            Name = dto.Name,
+            Phone = dto.Phone,
+            DeliveryDistance = dto.DeliveryDistance,
+            FarmStatus = dto.FarmStatus,
+            Address = new FarmAddress
+            {
+                City = dto.City,
+                ZIP = dto.ZIP,
+                Address = dto.Address
+            },
         };
 
         return farmToSend;

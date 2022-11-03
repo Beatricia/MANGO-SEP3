@@ -10,6 +10,10 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new System.Net.Http.HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IOfferService, OfferHttpClient>();
+builder.Services.AddScoped<IFarmService, FarmHttpClient>();
 
 
 await builder.Build().RunAsync();
+
+
+// TODO: https://www.youtube.com/watch?v=iedIu9H982Q

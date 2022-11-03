@@ -26,6 +26,8 @@ public class OfferCreationDto
         PickYourOwn = pickYourOwn;
         ImagePath = imagePath;
     }
+    
+    public OfferCreationDto(){}
 
     public string Name { get; set; }
 

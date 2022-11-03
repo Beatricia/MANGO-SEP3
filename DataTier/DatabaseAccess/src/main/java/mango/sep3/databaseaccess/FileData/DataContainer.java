@@ -22,12 +22,12 @@ public class DataContainer
     this.farms = farms;
   }
 
-  public Collection<Offer> getOffers()
+  public Collection<mango.sep3.databaseaccess.protobuf.Offer> getOffers()
   {
     return offers;
   }
 
-  public void setOffers(Collection<Offer> offers)
+  public void setOffers(Collection<mango.sep3.databaseaccess.protobuf.Offer> offers)
   {
     this.offers = offers;
   }

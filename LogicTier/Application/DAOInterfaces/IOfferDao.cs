@@ -1,6 +1,4 @@
-﻿using Shared.Models;
-
-namespace Application.DAOInterfaces;
+﻿namespace Application.DAOInterfaces;
 
 public interface IOfferDao
 {

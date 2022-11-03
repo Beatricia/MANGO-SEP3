@@ -24,6 +24,16 @@ public final class Contract {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Offer_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_OfferItems_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_OfferItems_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Void_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Void_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -42,11 +52,13 @@ public final class Contract {
       " \001(\005\022\014\n\004unit\030\004 \001(\t\022\r\n\005price\030\005 \001(\001\022\020\n\010del" +
       "ivery\030\006 \001(\010\022\016\n\006pickUp\030\007 \001(\010\022\023\n\013pickYourO" +
       "wn\030\010 \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tIm" +
-      "agePath\030\n \001(\tB\016\n\014_description2)\n\013FarmSer" +
-      "vice\022\032\n\nCreateFarm\022\005.Farm\032\005.Farm2-\n\014Offe" +
-      "rService\022\035\n\013CreateOffer\022\006.Offer\032\006.OfferB" +
-      "&\n\"mango.sep3.databaseaccess.protobufP\001b" +
-      "\006proto3"
+      "agePath\030\n \001(\tB\016\n\014_description\"$\n\nOfferIt" +
+      "ems\022\026\n\006offers\030\001 \003(\0132\006.Offer\"\006\n\004Void2)\n\013F" +
+      "armService\022\032\n\nCreateFarm\022\005.Farm\032\005.Farm2N" +
+      "\n\014OfferService\022\035\n\013CreateOffer\022\006.Offer\032\006." +
+      "Offer\022\037\n\tGetOffers\022\005.Void\032\013.OfferItemsB&" +
+      "\n\"mango.sep3.databaseaccess.protobufP\001b\006" +
+      "proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -64,6 +76,18 @@ public final class Contract {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Offer_descriptor,
         new java.lang.String[] { "Id", "Name", "Quantity", "Unit", "Price", "Delivery", "PickUp", "PickYourOwn", "Description", "ImagePath", "Description", });
+    internal_static_OfferItems_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_OfferItems_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_OfferItems_descriptor,
+        new java.lang.String[] { "Offers", });
+    internal_static_Void_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_Void_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Void_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -2,9 +2,11 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.FileData.FileContext;
-import mango.sep3.databaseaccess.protobuf.Farm;
-import mango.sep3.databaseaccess.protobuf.Offer;
-import mango.sep3.databaseaccess.protobuf.OfferServiceGrpc;
+import mango.sep3.databaseaccess.protobuf.*;
+import mango.sep3.databaseaccess.protobuf.Void;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
@@ -42,6 +44,40 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     context.SaveChanges();
 
     responseObserver.onNext(offer);
+    responseObserver.onCompleted();
+  }
+
+  @Override public void getOffers(Void request,
+      StreamObserver<OfferItems> responseObserver)
+  {
+    //Creating the proto OfferItems
+    OfferItems.Builder response = OfferItems.newBuilder();
+    //Creating the Offers from the model
+    ArrayList<Offer> offers = (ArrayList<Offer>) context.Offers();
+
+    Collection<Offer> offersList = new ArrayList<>();
+
+    for (int i = 0; i < offers.size(); i++)
+    {
+      Offer off = Offer.newBuilder()
+          .setId(offers.get(i).getId())
+          .setName(offers.get(i).getName())
+          .setQuantity(offers.get(i).getQuantity())
+          .setUnit(offers.get(i).getUnit())
+          .setPrice(offers.get(i).getPrice())
+          .setDelivery(offers.get(i).getDelivery())
+          .setPickUp(offers.get(i).getPickUp())
+          .setPickYourOwn(offers.get(i).getPickYourOwn())
+          .setDescription(offers.get(i).getDescription())
+          .setImagePath(offers.get(i).getImagePath())
+          .build();
+
+      offersList.add(off);
+    }
+
+    response.addAllOffers(offersList);
+    //sending back data to the client
+    responseObserver.onNext(response.build());
     responseObserver.onCompleted();
   }
 }

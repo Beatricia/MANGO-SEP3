@@ -9,6 +9,7 @@ service FarmService{
 
 service OfferService{
   rpc CreateOffer(Offer) returns(Offer);
+  rpc GetOffers(Void) returns(OfferItems);
 }
 
 message Farm{
@@ -34,3 +35,9 @@ message Offer{
   optional string description = 9;
   string ImagePath = 10;
 }
+
+message OfferItems{
+  repeated Offer offers = 1;
+}
+
+message Void{}

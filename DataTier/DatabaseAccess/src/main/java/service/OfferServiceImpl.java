@@ -8,6 +8,10 @@ import mango.sep3.databaseaccess.protobuf.Void;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * A class responsable for taking the data from the database (currently from
+ * a textFile) and sending it to the Logic Tier
+ */
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
   private FileContext context;
@@ -47,6 +51,11 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     responseObserver.onCompleted();
   }
 
+  /**
+   * Getting the offers from the database(currently from the file context)
+   * @param request is a Void object that contains null
+   * @param responseObserver the object returned to the Logic Tier
+   */
   @Override public void getOffers(Void request,
       StreamObserver<OfferItems> responseObserver)
   {

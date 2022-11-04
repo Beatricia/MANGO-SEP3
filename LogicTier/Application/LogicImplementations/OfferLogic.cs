@@ -5,10 +5,17 @@ using Offer = Shared.Models.Offer;
 
 namespace Application.LogicImplementations;
 
+/// <summary>
+/// Offer logic that implements from <see cref="IOfferDao"/> that is responsible for checking and validating data
+/// </summary>
 public class OfferLogic : IOfferLogic
 {
     private IOfferDao offerDao;
 
+    /// <summary>
+    /// Initializing the OfferLogic with the given IOfferDao
+    /// </summary>
+    /// <param name="offerDao"></param>
     public OfferLogic(IOfferDao offerDao)
     {
         this.offerDao = offerDao;
@@ -45,12 +52,21 @@ public class OfferLogic : IOfferLogic
         return offerToSend;
     }
 
+    /// <summary>
+    /// Getting asynchronously all the offers through the IOfferDao
+    /// </summary>
+    /// <returns>A Collection of Offers</returns>
     public async Task<IEnumerable<Offer>> GetAsync()
     {
         return await offerDao.GetAsync();
     }
 
 
+    /// <summary>
+    /// Validating the data when creating an offer
+    /// </summary>
+    /// <param name="dto">The offer to be created</param>
+    /// <exception cref="Exception"></exception>
     private void ValidateData(OfferCreationDto dto)
     {
         

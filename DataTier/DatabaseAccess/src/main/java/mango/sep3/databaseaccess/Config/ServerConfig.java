@@ -15,4 +15,5 @@ public class ServerConfig {
     @Bean public FarmServiceImpl getFarmServiceImpl(){
         return new FarmServiceImpl();
     }
+
 }

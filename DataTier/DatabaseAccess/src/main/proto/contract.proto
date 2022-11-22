@@ -22,7 +22,6 @@ message Farm{
   optional int32 deliveryDistance = 7;
 }
 
-
 message Offer{
   int32 id = 1;
   string name = 2;
@@ -41,3 +40,26 @@ message OfferItems{
 }
 
 message Void{}
+
+message CartOffer{
+  int32 id = 1;
+  Offer offer = 2;
+  int32 quantity = 3;
+  string username = 4;
+  string collectionOption = 5;
+}
+
+message CartOffers{
+  repeated CartOffer cartOffers = 1;
+}
+
+message Username{
+  string username = 1;
+}
+
+service CartOfferService{
+  //change it so it returns the user (Bety)
+  rpc AddToCart(CartOffer) returns(Void);
+  rpc GetAllCartOffers(Username) returns(CartOffers);
+  rpc DeleteAllCartOffers(Username) returns(Void);
+}

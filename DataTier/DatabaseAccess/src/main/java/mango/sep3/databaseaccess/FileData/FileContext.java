@@ -1,5 +1,6 @@
 package mango.sep3.databaseaccess.FileData;
 
+import mango.sep3.databaseaccess.protobuf.CartOffer;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.Offer;
 
@@ -53,6 +54,16 @@ public class FileContext
     return dataContainer.getOffers();
   }
 
+  public Collection<CartOffer> CartOffers(){
+    try{
+      LoadData();
+    }
+    catch (FileNotFoundException e){
+      e.printStackTrace();
+    }
+    return dataContainer.getCartOffers();
+  }
+
   //Taking the data from the file
   public void LoadData() throws FileNotFoundException
   {
@@ -69,6 +80,7 @@ public class FileContext
       {{
         setFarms(new ArrayList<>());
         setOffers(new ArrayList<>());
+        setCartOffers(new ArrayList<>());
       }};
     }
   }

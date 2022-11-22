@@ -1,7 +1,11 @@
 ﻿@page "/DisplayOffers"
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
-@inject IOfferService httpClient
+@inject IOfferService httpOfferClient
+@inject ICartService HttpCartClient
+@using Components
+@using System.Diagnostics.CodeAnalysis
+
 <h3>DisplayOffers</h3>
 @if (offers == null)
 {
@@ -11,7 +15,7 @@
 }
 
 @if(offers!=null){
-<div class="d-flex justify-content-around flex-wrap">
+    <div class="d-flex justify-content-around flex-wrap">
         @foreach (var offer in offers)
         {
             <div class="card col-5 m-3">
@@ -23,9 +27,12 @@
                     <h6 class="col-4 d-flex justify-content-end">@offer.Price</h6>
                     <span class="col-8">@offer.Description</span>
                 </div>
+                <button type="button" @onclick="() => OpenPopUpAddToCart(offer.Id)"> Add 
+                </button>
             </div>
         }
     </div>
+
 }
 @if (!string.IsNullOrEmpty(msg))
 {
@@ -34,12 +41,69 @@
     </div>
 }
 
-
+<button type="button" @onclick="OpenPopUpAddToCart"> Add to cart
+</button>
+@if (showAddToCartComponent)
+{
+    <div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Order info</h4>
+        </div>
+            
+        <div class="quantity">
+            <div class="col-6" >
+                <label>Quantity:<span class="required">*</span></label>
+                <div class="col-9 d-flex flex-nowrap">
+                    <input type="text" @bind="quantity" required="required" />
+                </div>
+            </div>
+        </div>
+        <div class="delivery">
+            <!--radio buttons for delivery option-->
+            <label class="col-6" for="radioGroup">Delivery Option:<span class="required">*</span></label>
+            <div id="radioGroup" class="d-flex flex-column">
+                <div class="col-4 d-flex flex-nowrap">
+                    <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
+                           onchange="@(() => Delivery())"
+                           checked="@delivery"/>
+                    <label for="delivery"> Delivery</label>
+                </div>
+                <div class="col-4 d-flex flex-nowrap">
+                    <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
+                           onchange="@(() => PickUp())"/>
+                    <label for="pickUp"> Pick Up</label>
+                </div>
+                <div class="col-4 d-flex flex-nowrap">
+                    <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
+                           onchange="@(() => PickYO())"/>
+                    <label for="pickYO"> Pick Your Own</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <div class="col-4"><button class="addToCartBtn" @onclick= "AddToCart">ADD TO CART</button> </div>
+            <div class="col-4"><button class="cancel" @onclick="Cancel">CANCEL</button></div>
+            </div>
+    </div>
+</div>
+</div>
+}
+}
 
 @code {
     private IEnumerable<Offer>? offers;
     private string msg = "";
+    private int quantity;
+    private bool delivery = true;
+    private bool pickUp;
+    private bool pickYO;
+    private int offerId;
 
+    bool showAddToCartComponent;
+    
     ///summary///
     /// loads all the offers
     /// summary///
@@ -49,7 +113,7 @@
         {
 
     //this below will be used to get the offers from server 
-              offers = await httpClient.GetAsync();
+              offers = await httpOfferClient.GetAsync();
             
         }
         catch (Exception e)
@@ -58,4 +122,117 @@
             msg = e.Message;
         }
     }
+    
+    private async Task CreateCartOffer(CartOfferDto dto)
+    {
+        try
+        {
+            await ValidateData();
+        }
+        catch
+        {
+            return;
+        }
+
+        var cartOfferDto = new CartOfferDto()
+        {
+
+        };
+    }
+    
+    private void OpenPopUpAddToCart(int offerId)
+    {
+        this.offerId = offerId;
+        showAddToCartComponent = true;
+    }
+    
+    private void OpenPopUpAddToCart()
+    {
+        showAddToCartComponent = true;
+    }
+
+    public async void OnAddToCartButton(bool accepted, CartOfferDto dto)
+    {
+        await CreateCartOffer(dto);
+        showAddToCartComponent = false;
+        StateHasChanged();
+    }
+
+    public void OnCancelDialog(bool accepted)
+    {
+        showAddToCartComponent = false;
+        StateHasChanged();
+    }
+    private async Task AddToCart()
+    {
+        try
+        {
+            CartOfferDto dto = new();
+            dto.Quantity = quantity;
+            if (pickUp.Equals(true))
+            {
+                dto.CollectOption = "pick up";
+            }
+            else if (pickYO.Equals(true))
+            {
+                dto.CollectOption = "pick your own";
+            }
+            else
+            {dto.CollectOption = "delivery";
+            }
+            dto.OfferId = offerId;
+            
+            await HttpCartClient.AddToCartAsync(dto);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        showAddToCartComponent = false;
+    }
+
+    private Task Cancel()
+    {
+        showAddToCartComponent = false;
+        return null;
+    }
+    
+    
+    private async Task ValidateData()
+    {
+        
+    }
+    
+    ///summary///
+    /// sets the delivery boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void Delivery()
+    {
+        delivery = true;
+        pickUp = false;
+        pickYO = false;
+    }
+
+    ///summary///
+    /// sets the pickUp boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickUp()
+    {
+        delivery = false;
+        pickUp = true;
+        pickYO = false;
+    }
+
+    ///summary///
+    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickYO()
+    {
+        delivery = false;
+        pickUp = false;
+        pickYO = true;
+    }
+
 }

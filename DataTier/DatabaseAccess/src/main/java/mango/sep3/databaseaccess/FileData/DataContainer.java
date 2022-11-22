@@ -1,5 +1,6 @@
 package mango.sep3.databaseaccess.FileData;
 
+import mango.sep3.databaseaccess.protobuf.CartOffer;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.Offer;
 
@@ -11,6 +12,8 @@ public class DataContainer
   public Collection<Farm> farms = new ArrayList<>();
 
   public Collection<Offer> offers = new ArrayList<>();
+
+  public Collection<CartOffer> cartOffers = new ArrayList<>();
 
   public Collection<Farm> getFarms()
   {
@@ -30,5 +33,10 @@ public class DataContainer
   public void setOffers(Collection<mango.sep3.databaseaccess.protobuf.Offer> offers)
   {
     this.offers = offers;
+  }
+
+  public Collection<CartOffer> getCartOffers(){ return cartOffers;}
+  public void setCartOffers(Collection<CartOffer> cartOffers){
+    this.cartOffers = cartOffers;
   }
 }

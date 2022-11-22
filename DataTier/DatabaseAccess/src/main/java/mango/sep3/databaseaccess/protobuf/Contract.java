@@ -34,6 +34,21 @@ public final class Contract {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Void_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_CartOffer_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_CartOffer_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_CartOffers_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_CartOffers_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Username_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Username_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -53,12 +68,20 @@ public final class Contract {
       "ivery\030\006 \001(\010\022\016\n\006pickUp\030\007 \001(\010\022\023\n\013pickYourO" +
       "wn\030\010 \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tIm" +
       "agePath\030\n \001(\tB\016\n\014_description\"$\n\nOfferIt" +
-      "ems\022\026\n\006offers\030\001 \003(\0132\006.Offer\"\006\n\004Void2)\n\013F" +
-      "armService\022\032\n\nCreateFarm\022\005.Farm\032\005.Farm2N" +
-      "\n\014OfferService\022\035\n\013CreateOffer\022\006.Offer\032\006." +
-      "Offer\022\037\n\tGetOffers\022\005.Void\032\013.OfferItemsB&" +
-      "\n\"mango.sep3.databaseaccess.protobufP\001b\006" +
-      "proto3"
+      "ems\022\026\n\006offers\030\001 \003(\0132\006.Offer\"\006\n\004Void\"l\n\tC" +
+      "artOffer\022\n\n\002id\030\001 \001(\005\022\025\n\005offer\030\002 \001(\0132\006.Of" +
+      "fer\022\020\n\010quantity\030\003 \001(\005\022\020\n\010username\030\004 \001(\t\022" +
+      "\030\n\020collectionOption\030\005 \001(\t\",\n\nCartOffers\022" +
+      "\036\n\ncartOffers\030\001 \003(\0132\n.CartOffer\"\034\n\010Usern" +
+      "ame\022\020\n\010username\030\001 \001(\t2)\n\013FarmService\022\032\n\n" +
+      "CreateFarm\022\005.Farm\032\005.Farm2N\n\014OfferService" +
+      "\022\035\n\013CreateOffer\022\006.Offer\032\006.Offer\022\037\n\tGetOf" +
+      "fers\022\005.Void\032\013.OfferItems2\207\001\n\020CartOfferSe" +
+      "rvice\022\036\n\tAddToCart\022\n.CartOffer\032\005.Void\022*\n" +
+      "\020GetAllCartOffers\022\t.Username\032\013.CartOffer" +
+      "s\022\'\n\023DeleteAllCartOffers\022\t.Username\032\005.Vo" +
+      "idB&\n\"mango.sep3.databaseaccess.protobuf" +
+      "P\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -88,6 +111,24 @@ public final class Contract {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Void_descriptor,
         new java.lang.String[] { });
+    internal_static_CartOffer_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_CartOffer_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_CartOffer_descriptor,
+        new java.lang.String[] { "Id", "Offer", "Quantity", "Username", "CollectionOption", });
+    internal_static_CartOffers_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_CartOffers_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_CartOffers_descriptor,
+        new java.lang.String[] { "CartOffers", });
+    internal_static_Username_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_Username_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Username_descriptor,
+        new java.lang.String[] { "Username", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

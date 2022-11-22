@@ -1,18 +1,28 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOImplementations.FarmDAO;
 import mango.sep3.databaseaccess.FileData.FileContext;
+import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;
+import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@GRpcService
 public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
 {
 
+  @Autowired
   private FileContext fileContext;
+  @Autowired
+  private FarmDAO farmDAO;
 
-  public FarmServiceImpl(FileContext fileContext)
+  private FarmRepository farmRepository;
+
+  public FarmServiceImpl()
   {
-    this.fileContext = fileContext;
   }
 
   /**
@@ -35,6 +45,8 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
         .setFarmStatus(request.getFarmStatus())
         .setDeliveryDistance(request.getDeliveryDistance())
         .build();
+
+        farmDAO.CreateFarm(farm);
 
         fileContext.Farms().add(farm);
         fileContext.SaveChanges();

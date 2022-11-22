@@ -1,12 +1,13 @@
 using Application.LogicInterfaces;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrderController
+public class OrderController : ControllerBase
 {
     private readonly IOrderLogic orderLogic;
 
@@ -21,12 +22,12 @@ public class OrderController
         try
         {
             await orderLogic.CreateOrderAsync(username);
-            //return
+            return Ok();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            //return StatusCode(e.Message);
+            return StatusCode(500,e.Message);
         }
     }
     
@@ -36,7 +37,7 @@ public class OrderController
         try
         {
             var created = await orderLogic.GetAllOrders(username);
-            return created($"/orders", created);
+            return Created($"/orders", created);
         }
         catch (Exception e)
         {

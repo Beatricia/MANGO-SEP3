@@ -5,5 +5,5 @@ namespace Application.DAOInterfaces;
 public interface IOrderDao
 {
     Task CreateOrderAsync(List<OrderOffer> order);
-    Task<List<Order>> GetAllOrdersAsync(string Username);
+    Task<IEnumerable<Order>> GetAllOrdersAsync(string Username);
 }

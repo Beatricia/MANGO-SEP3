@@ -18,7 +18,7 @@ public class OrderLogic : IOrderLogic
         throw new NotImplementedException();
     }
 
-    public Task<List<Order>> GetAllOrders(string Username)
+    public Task<IEnumerable<Order>> GetAllOrders(string Username)
     {
         throw new NotImplementedException();
     }

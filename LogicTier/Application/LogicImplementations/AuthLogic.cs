@@ -34,7 +34,7 @@ public class AuthLogic : IAuthLogic
         if (passwordPlain.Length < 8)
             throw new Exception("Password must be at least 8 characters");
 
-        string? saltString = CreateSalt();
+        string saltString = CreateSalt();
         string hashPass = HashPassword(passwordPlain, saltString);
 
         var authUser = new UserAuth
@@ -47,12 +47,22 @@ public class AuthLogic : IAuthLogic
         return await authDao.RegisterAsync(authUser);
     }
 
+    /// <summary>
+    /// Create salt for password
+    /// </summary>
+    /// <returns></returns>
     private static string CreateSalt()
     {
         byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
         return Convert.ToBase64String(salt);
     }
     
+    /// <summary>
+    /// Hash password with salt
+    /// </summary>
+    /// <param name="password">the password to hash</param>
+    /// <param name="saltString">salt value to hash with</param>
+    /// <returns></returns>
     private static string HashPassword(string password, string saltString)
     {
         // for more please check https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-7.0

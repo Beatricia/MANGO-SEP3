@@ -23,7 +23,7 @@ public class AuthLogic : IAuthLogic
         string username = dto.Username;
         string passwordPlain = dto.Password;
         
-        var user = await authDao.GetAuthUserAsync(username);
+        UserAuth? user = await authDao.GetAuthUserAsync(username);
         
         // if user exists
         if (user != null)
@@ -33,35 +33,40 @@ public class AuthLogic : IAuthLogic
         // check if password length at least 8 character
         if (passwordPlain.Length < 8)
             throw new Exception("Password must be at least 8 characters");
-        
-        HashPassword(passwordPlain, out string hashString, out string saltString);
+
+        string? saltString = CreateSalt();
+        string hashPass = HashPassword(passwordPlain, saltString);
 
         var authUser = new UserAuth
         {
             Username = username,
-            HashPassword = hashString,
+            HashPassword = hashPass,
             Salt = saltString
         };
 
         return await authDao.RegisterAsync(authUser);
     }
+
+    private static string CreateSalt()
+    {
+        byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+        return Convert.ToBase64String(salt);
+    }
     
-    
-    private static void HashPassword(string password, out string hashString, out string saltString)
+    private static string HashPassword(string password, string saltString)
     {
         // for more please check https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-7.0
-        
-        // Generate a 128-bit salt using a sequence of
-        // cryptographically strong random bytes.
-        byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); // divide by 8 to convert bits to bytes
-        saltString = Convert.ToBase64String(salt);
 
+        byte[] salt = Convert.FromBase64String(saltString);
+        
         // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
-        hashString = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+        string hashString = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password,
             salt: salt,
             prf: KeyDerivationPrf.HMACSHA256,
             iterationCount: 100000,
             numBytesRequested: 256 / 8));
+
+        return hashString;
     }
 }

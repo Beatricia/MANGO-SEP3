@@ -16,13 +16,11 @@ public class GrpcServer
   public static void main(String[] args)
       throws IOException, InterruptedException
   {
-    FileContext context = new FileContext();
-    FarmDAO farmDAO = new FarmDAO(context);
 
     Server server = ServerBuilder
         .forPort(8084)
-        .addService(new FarmServiceImpl(context, farmDAO))
-        .addService(new OfferServiceImpl(context)).build();
+        .addService(new FarmServiceImpl())
+        .build();
 
    server.start();
 

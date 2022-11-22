@@ -19,24 +19,6 @@ import java.util.EnumSet;
   {
     SpringApplication.run(DatabaseAccessApplication.class, args);
 
-    //GRPC SERVER
-    try{
-      FileContext context = new FileContext();
-      FarmDAO farmDAO = new FarmDAO(context);
-
-      Server server = ServerBuilder
-              .forPort(8084)
-              .addService(new FarmServiceImpl(context, farmDAO))
-              .addService(new OfferServiceImpl(context)).build();
-
-      server.start();
-
-      //keep the server running in the foreground blocking the prompt
-      server.awaitTermination();
-    }catch (IOException | InterruptedException e){
-      e.printStackTrace();
-    }
-
   }
 
 }

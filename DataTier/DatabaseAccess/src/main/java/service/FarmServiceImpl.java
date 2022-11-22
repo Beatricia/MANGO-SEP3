@@ -6,21 +6,23 @@ import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;
+import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@GRpcService
 public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
 {
 
+  @Autowired
   private FileContext fileContext;
+  @Autowired
   private FarmDAO farmDAO;
 
   private FarmRepository farmRepository;
 
-  public FarmServiceImpl(FileContext fileContext, FarmDAO farmDAO)
+  public FarmServiceImpl()
   {
-    this.fileContext = fileContext;
-    this.farmDAO = farmDAO;
   }
 
   /**
@@ -44,10 +46,7 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
         .setDeliveryDistance(request.getDeliveryDistance())
         .build();
 
-    mango.sep3.databaseaccess.Shared.Farm farm1 = new mango.sep3.databaseaccess.Shared.Farm();
-    farm1.setName(farm.getName());
-
-        farmRepository.save(farm1);
+        farmDAO.CreateFarm(farm);
 
         fileContext.Farms().add(farm);
         fileContext.SaveChanges();

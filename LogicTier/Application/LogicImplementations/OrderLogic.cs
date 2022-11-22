@@ -7,6 +7,7 @@ namespace Application.LogicImplementations;
 public class OrderLogic : IOrderLogic
 {
     private readonly IOrderDao dao;
+    // we need ICartDao!!!
 
     public OrderLogic(IOrderDao dao)
     {

@@ -1,0 +1,128 @@
+﻿@using Shared.Models
+@namespace Components
+
+<h3>PopUpAddToCart</h3>
+
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Order info</h4>
+        </div>
+            
+        <div class="quantity">
+            <div class="col-6" >
+                <label>Quantity:<span class="required">*</span></label>
+                <div class="col-9 d-flex flex-nowrap">
+                    <input type="text" @bind="quantity" required="required" />
+                </div>
+            </div>
+        </div>
+        <div class="delivery">
+            <!--radio buttons for delivery option-->
+            <label class="col-6" for="radioGroup">Delivery Option:<span class="required">*</span></label>
+            <div id="radioGroup" class="d-flex flex-column">
+                <div class="col-4 d-flex flex-nowrap">
+                    <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
+                           onchange="@(() => Delivery())"
+                           checked="@delivery"/>
+                    <label for="delivery"> Delivery</label>
+                </div>
+                <div class="col-4 d-flex flex-nowrap">
+                    <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
+                           onchange="@(() => PickUp())"/>
+                    <label for="pickUp"> Pick Up</label>
+                </div>
+                <div class="col-4 d-flex flex-nowrap">
+                    <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
+                           onchange="@(() => PickYO())"/>
+                    <label for="pickYO"> Pick Your Own</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <div class="col-4"><button class="addToCartBtn" @onclick= "AddToCart">ADD TO CART</button> </div>
+            <div class="col-4"><button class="cancel" @onclick="Cancel">CANCEL</button></div>
+            </div>
+    </div>
+</div>
+</div>
+
+@code {
+    
+    private int quantity;
+    private bool delivery = true;
+    private bool pickUp;
+    private bool pickYO;
+
+    [Parameter]
+    public EventCallback<bool>OnAddToCartButton { get; set; }
+    [Parameter]
+    public EventCallback<bool>OnCancelDialog { get; set; }
+    
+    
+    ///summary///
+    /// sets the delivery boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void Delivery()
+    {
+        delivery = true;
+        pickUp = false;
+        pickYO = false;
+    }
+
+    ///summary///
+    /// sets the pickUp boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickUp()
+    {
+        delivery = false;
+        pickUp = true;
+        pickYO = false;
+    }
+
+    ///summary///
+    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
+    /// summary///
+    private void PickYO()
+    {
+        delivery = false;
+        pickUp = false;
+        pickYO = true;
+    }
+
+    private Task AddToCart()
+    {
+        try
+        {
+            CartOfferDto dto = new();
+            dto.Quantity = quantity;
+            if (pickUp.Equals(true))
+            {
+                dto.CollectOption = "pick up";
+            }
+            else if (pickYO.Equals(true))
+            {
+                dto.CollectOption = "pick your own";
+            }
+            else
+            {
+                dto.CollectOption = "delivery";
+            }
+
+            OnAddToCartButton.InvokeAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        return OnAddToCartButton.InvokeAsync(true);
+    }
+
+    private Task Cancel()
+    {
+        return OnCancelDialog.InvokeAsync(true);
+    }
+}

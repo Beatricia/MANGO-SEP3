@@ -15,6 +15,9 @@ public class Farm implements Serializable
     @Column(nullable = false, length = 100, name = "name")
     private String name;
 
+
+    @Column(name = "iconpath")
+    private String iconPath;
     //if column in database table is called differently
     // just add @Column('attribute' = "'nameOfTheColumn'")
 
@@ -39,5 +42,13 @@ public class Farm implements Serializable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 }

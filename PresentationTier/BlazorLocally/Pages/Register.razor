@@ -1,0 +1,106 @@
+﻿@page "/Register"
+@using global::Shared.DTOs
+@using HttpClient.ClientInterfaces
+@inject IAuthService AuthService
+@inject NavigationManager NavManager
+
+
+<div class="register-wrapper">
+    <div class="register-text">
+        Register
+    </div>
+    <div class="register-body">
+        <div class="row">
+            <div class="error">
+                @errorMessage
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-text">Username</div>
+            <div class="row-input">
+                <input type="text" @bind="username">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-text">Password</div>
+            <div class="row-input">
+                <input type="password" @bind="password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-text">Repeat Password</div>
+            <div class="row-input">
+                <input type="password" @bind="repeatPassword">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-input user-type-choose">
+                <div class="user-type-input">
+                    <input @onchange="() => isFarmer = true" type="radio" name="user-type-chooser" id="farmer-option">
+                    <label for="farmer-option"><span class="farmer-text">Farmer</span></label>
+                </div>
+                <div class="user-type-input">
+                    <input @onchange="() => isFarmer = false" type="radio" name="user-type-chooser" id="customer-option">
+                    <label for="customer-option"><span class="customer-text">Customer</span></label>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-input register-button">
+                <button @onclick="RegisterUser">Register</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-login-link">
+                <a href="">Log In</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    string username = "";
+    string password = "";
+    string repeatPassword = "";
+    bool? isFarmer = null;
+    string errorMessage = "";
+
+    
+    private void TrimUsername()
+    {
+        username = username.Trim();
+    }
+    
+    private async Task RegisterUser()
+    {
+        errorMessage = "";
+
+        TrimUsername();
+        
+        if (username == "" || password == "" || repeatPassword == "" || isFarmer == null)
+        {
+            errorMessage = "All fields are required";
+            return;
+        }
+        
+        if (password != repeatPassword)
+        {
+            errorMessage = "Passwords do not match";
+            return;
+        }
+
+        try
+        {
+            await AuthService.RegisterAsync(username, password, isFarmer.Value);
+            NavManager.NavigateTo("/Login");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorMessage = e.Message;
+        }
+    }
+    
+    
+}

@@ -13,6 +13,7 @@ builder.Services.AddSingleton(new ApiInformation{ BaseAddress = "https://localho
 builder.Services.AddScoped(sp => new System.Net.Http.HttpClient { BaseAddress = new Uri(sp.GetRequiredService<ApiInformation>().BaseAddress) });
 builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
+builder.Services.AddScoped<IAuthService, AuthHttpClient>();
 
 var app = builder.Build();
 

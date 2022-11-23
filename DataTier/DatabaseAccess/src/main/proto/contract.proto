@@ -12,6 +12,23 @@ service OfferService{
   rpc GetOffers(Void) returns(OfferItems);
 }
 
+service UserService{
+  rpc RegisterUser(UserAuth) returns (User);
+  rpc GetUserByUsername(Text) returns (User);
+}
+
+message UserAuth{
+  string username = 1;
+  string hash = 2;
+  string salt = 3;
+}
+
+message User{
+  string username = 1;
+  string firstname = 2;
+  string lastname = 3;
+}
+
 message Farm{
   string name = 1;
   string phone = 2;
@@ -42,3 +59,7 @@ message OfferItems{
 }
 
 message Void{}
+
+message Text{
+  string text = 1;
+}

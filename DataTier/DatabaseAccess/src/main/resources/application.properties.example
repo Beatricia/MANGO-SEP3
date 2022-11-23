@@ -1,0 +1,26 @@
+server.port = 8084
+
+#Spring Datasource
+#spring.jpa.properties.hibernate.format_sql=true
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres?currentSchema=locally
+spring.datasource.username=postgres
+spring.datasource.password=tvojemama
+
+# JPA-Hibernate
+spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.database=POSTGRESQL
+spring.jpa.show-sql=true
+spring.jpa.open-in-view=true
+
+# Hibernate ddl auto (create, create-drop, validate, update). DDL -Data Definition Language
+# ----
+spring.jpa.generate-ddl=true
+spring.jpa.hibernate.ddl-auto=update
+
+#grpc
+grpc.server.security.enabled=false
+
+
+

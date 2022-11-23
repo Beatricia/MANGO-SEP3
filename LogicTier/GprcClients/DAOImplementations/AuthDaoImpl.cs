@@ -35,10 +35,13 @@ public class AuthDaoImpl : IAuthDao
     {
         // create text object
         var text = new Text { Text_ = username };
-        
-        User user = await client.GetUserByUsernameAsync(text);
 
-        return ConvertGrpcUserToSharedUser(user);
+        try
+        {
+            User user = await client.GetUserByUsernameAsync(text);
+            return ConvertGrpcUserToSharedUser(user);
+        }
+        catch { return null; }
     }
     
     // create method to convert grpc user to shared User with username first and last name

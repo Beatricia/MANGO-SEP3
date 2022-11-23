@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 Action<GrpcClientFactoryOptions> grpcOptions = options =>
 {
-    options.Address = new Uri("http://localhost:8084");
+    options.Address = new Uri("http://localhost:6565");
 };
 
 // add here the dependency injections

@@ -5,6 +5,7 @@ using Shared.DTOs;
 namespace WebAPI.Controllers;
 
 [ApiController]
+[Route("[controller]")]
 public class AuthController : ControllerBase
 {
     private IAuthLogic authLogic;
@@ -15,6 +16,7 @@ public class AuthController : ControllerBase
     }
     
     
+    [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
         try

@@ -23,7 +23,7 @@ public class AuthLogic : IAuthLogic
         string username = dto.Username;
         string passwordPlain = dto.Password;
         
-        UserAuth? user = await authDao.GetAuthUserAsync(username);
+        User? user = await authDao.GetUserAsync(username);
         
         // if user exists
         if (user != null)

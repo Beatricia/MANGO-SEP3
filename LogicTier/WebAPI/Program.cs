@@ -2,6 +2,7 @@ using Application.DAOInterfaces;
 using Application.LogicImplementations;
 using Application.LogicInterfaces;
 using GprcClients.DAOImplementations;
+using Grpc.Net.ClientFactory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,20 +13,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+Action<GrpcClientFactoryOptions> grpcOptions = options =>
+{
+    options.Address = new Uri("http://localhost:8084");
+};
 
 // add here the dependency injections
-builder.Services.AddGrpcClient<FarmService.FarmServiceClient>(o =>
-{
-    o.Address = new Uri("http://localhost:8084");
-});
-builder.Services.AddGrpcClient<OfferService.OfferServiceClient>(o =>
-{
-    o.Address = new Uri("http://localhost:8084");
-});
+builder.Services.AddGrpcClient<FarmService.FarmServiceClient>(grpcOptions);
 builder.Services.AddScoped<IFarmDao, FarmDaoImpl>();
-builder.Services.AddScoped<IOfferDao, OfferDaoImpl>();
 builder.Services.AddScoped<IFarmLogic, FarmLogic>();
+
+builder.Services.AddGrpcClient<OfferService.OfferServiceClient>(grpcOptions);
+builder.Services.AddScoped<IOfferDao, OfferDaoImpl>();
 builder.Services.AddScoped<IOfferLogic,OfferLogic>();
+
+builder.Services.AddGrpcClient<UserService.UserServiceClient>(grpcOptions);
+builder.Services.AddScoped<IAuthDao, AuthDaoImpl>();
+builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 
 
 var app = builder.Build();
@@ -34,7 +38,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => options.EnableTryItOutByDefault());
 }
 
 app.UseHttpsRedirection();

@@ -6,4 +6,5 @@ public interface IAuthDao
 {
     Task<User> RegisterAsync(UserAuth user);
     Task<UserAuth?> GetAuthUserAsync(string username);
+    Task<User?> GetUserAsync(string username);
 }

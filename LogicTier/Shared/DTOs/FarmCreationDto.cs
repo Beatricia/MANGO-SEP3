@@ -15,4 +15,5 @@ public class FarmCreationDto
     public int DeliveryDistance { get; set; }
     
     public string? FarmStatus { get; set; }
+    public string? FarmIcon { get; set; }
 }

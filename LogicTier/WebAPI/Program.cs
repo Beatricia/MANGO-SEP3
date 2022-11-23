@@ -2,6 +2,7 @@ using Application.DAOInterfaces;
 using Application.LogicImplementations;
 using Application.LogicInterfaces;
 using GprcClients.DAOImplementations;
+using WebAPI.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddScoped<IOfferDao, OfferDaoImpl>();
 builder.Services.AddScoped<IFarmLogic, FarmLogic>();
 builder.Services.AddScoped<IOfferLogic,OfferLogic>();
 
+builder.Services.AddScoped<IFarmIconDao, FarmIconResource>();
+
 
 var app = builder.Build();
 
@@ -38,6 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

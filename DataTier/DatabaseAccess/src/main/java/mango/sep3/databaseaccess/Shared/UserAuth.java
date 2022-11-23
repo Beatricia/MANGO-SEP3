@@ -1,10 +1,11 @@
 package mango.sep3.databaseaccess.Shared;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="UserAuth", schema = "locally")
-public class UserAuth {
+public class UserAuth implements Serializable {
     @Id
     @Column(name = "username")
     private String username;
@@ -14,6 +15,8 @@ public class UserAuth {
 
     @Column(name = "salt")
     private String salt;
+
+    public UserAuth(){}
 
     public String getUsername() {
         return username;

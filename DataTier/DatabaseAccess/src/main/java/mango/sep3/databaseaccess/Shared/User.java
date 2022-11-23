@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name="User", schema = "locally")
-public class User {
+public class User implements Serializable {
     @Id
     @Column(name = "username")
     private String username;
@@ -17,6 +18,9 @@ public class User {
 
     @Column(name = "lastname")
     private String lastName;
+
+
+    public User(){}
 
     public String getUsername() {
         return username;

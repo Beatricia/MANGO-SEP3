@@ -21,11 +21,13 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public User registerUser(UserAuth userAuth) {
+
         userAuthRepository.save(userAuth);
 
-        var user = new User(){{
-            setUsername(userAuth.getUsername());
-        }};
+        var user = new User();
+        user.setUsername(userAuth.getUsername());
+        user.setFirstName("");
+        user.setLastName("");
 
         userRepository.save(user);
 

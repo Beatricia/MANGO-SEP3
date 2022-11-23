@@ -2,6 +2,9 @@
 
 namespace GprcClients.DAOImplementations;
 
+/// <summary>
+/// Grpc implementation of the Authentication DAO
+/// </summary>
 public class AuthDaoImpl : IAuthDao
 {
     private UserService.UserServiceClient client;
@@ -44,7 +47,11 @@ public class AuthDaoImpl : IAuthDao
         catch { return null; }
     }
     
-    // create method to convert grpc user to shared User with username first and last name
+    /// <summary>
+    /// Converts a grpc User to a shared User
+    /// </summary>
+    /// <param name="grpcUser">the grpc user to convert</param>
+    /// <returns></returns>
     private Shared.Models.User ConvertGrpcUserToSharedUser(User grpcUser)
     {
         var sharedUser = new Shared.Models.User

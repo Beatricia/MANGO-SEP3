@@ -5,6 +5,9 @@ using Shared.Models;
 
 namespace HttpClient.ClientImplementations;
 
+/// <summary>
+/// Http implementation of the <see cref="IAuthService"/> interface.
+/// </summary>
 public class AuthHttpClient : IAuthService
 {
     // accept httpclient from constructor to field
@@ -15,12 +18,13 @@ public class AuthHttpClient : IAuthService
         client = httpClient;
     }
     
-    
-    public Task<User> LoginAsync(string username, string password)
+    /// <inheritdoc/>
+    public Task<LoginResponse> LoginAsync(string username, string password)
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc/>
     public async Task<User> RegisterAsync(string username, string password, bool isFarmer)
     {
         RegisterDto dto = new RegisterDto()

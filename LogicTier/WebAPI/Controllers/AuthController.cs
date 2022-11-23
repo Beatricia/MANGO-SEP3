@@ -4,6 +4,9 @@ using Shared.DTOs;
 
 namespace WebAPI.Controllers;
 
+/// <summary>
+/// Authentication controller.
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class AuthController : ControllerBase
@@ -16,6 +19,11 @@ public class AuthController : ControllerBase
     }
     
     
+    /// <summary>
+    /// Registers a new user to the system
+    /// </summary>
+    /// <param name="dto">user registration data</param>
+    /// <returns></returns>
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {

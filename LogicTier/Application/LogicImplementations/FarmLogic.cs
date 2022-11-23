@@ -42,6 +42,7 @@ public class FarmLogic : IFarmLogic
                 ZIP = dto.ZIP,
                 Street = dto.Address
             },
+            FarmIcon = dto.FarmIcon
         };
 
         await farmDao.CreateAsync(farmToSend);

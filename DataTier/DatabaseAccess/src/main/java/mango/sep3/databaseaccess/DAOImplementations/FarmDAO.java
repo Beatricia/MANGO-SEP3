@@ -34,6 +34,7 @@ public class FarmDAO implements FarmDaoInterface
   @Override public void CreateFarm(Farm farm)
   {
     mango.sep3.databaseaccess.Shared.Farm farm2 =new mango.sep3.databaseaccess.Shared.Farm(farm.getName());
+    farm2.setIconPath(farm.getIconPath());
 
     farmRepository.save(farm2);
 

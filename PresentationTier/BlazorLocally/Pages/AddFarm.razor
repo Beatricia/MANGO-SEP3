@@ -1,10 +1,12 @@
-﻿@page "/farms/add"
+﻿@page "/AddFarm"
 
 @using HttpClient.ClientInterfaces
 @using System.Text.RegularExpressions
+@using BlazorLocally.Utils
 @using global::Shared.DTOs
 @inject IJSRuntime JsRuntime
 @inject IFarmService farmService
+@inject ApiInformation ApiInformation
 
 
 <div class="center add-farm-root">
@@ -44,10 +46,20 @@
             <div>
                 <div class="image-container" title="Upload an image">
                     <label for="image">
-                        <img src="https://img.freepik.com/free-vector/farm-scene-nature-with-barn_1308-32159.jpg" width="200" height="200">
-                        <div class="upload-button">Upload</div>
+                        <img src="@iconToLoad" width="200" height="200">
                     </label>
-                    <input id="image" type="file" alt="Submit">
+                    @if (icons is not null)
+                    {
+                        <select @onchange="(eventArgs) => SelectIcon(eventArgs.Value)">
+                            @foreach (var image in icons)
+                            {
+                                var displayValue = image[(image.LastIndexOf("/") + 1)..];
+                                displayValue = displayValue[0..displayValue.IndexOf(".", StringComparison.Ordinal)].Replace('-', ' ');
+                                
+                                <option value="@image">@displayValue</option>
+                            }
+                        </select>
+                    }
                 </div>
                 <div class="submit-container">
                     <input type="button" class="submit-button" value="Submit" @onclick="CreateFarm">
@@ -69,6 +81,42 @@
     private string zipClasses = string.Empty;
     private string phoneClasses = string.Empty;
 
+    private ICollection<string>? icons;
+    private string selectedIconName = "";
+    private string iconToLoad = "";
+    private string selectedIcon = "";
+
+    private void SelectIcon(object? obj)
+    {
+        if (obj is not string icon)
+        {
+            return;
+        }
+
+        iconToLoad = ApiInformation.BaseAddress + icon;
+        selectedIcon = icon;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var tempIcons = (await farmService.GetAllIconsAsync()).ToList();
+            var defaultIcon = tempIcons.First(icon => icon.Contains("default.png"));
+
+            tempIcons.Remove(defaultIcon);
+            tempIcons.Insert(0, defaultIcon);
+
+            icons = tempIcons;
+            
+            SelectIcon(defaultIcon);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
     private async Task CreateFarm()
     {
         try
@@ -89,6 +137,7 @@
             Phone = phone,
             DeliveryDistance = deliveryDistance,
             FarmStatus = status,
+            FarmIcon = selectedIcon
         };
         
         await farmService.CreateAsync(farmCreationDto);

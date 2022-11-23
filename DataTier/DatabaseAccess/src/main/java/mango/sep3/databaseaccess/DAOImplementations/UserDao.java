@@ -8,6 +8,9 @@ import mango.sep3.databaseaccess.Shared.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Data access object accessing user related data.
+ */
 @Repository
 public class UserDao implements UserDaoInterface {
     @Autowired

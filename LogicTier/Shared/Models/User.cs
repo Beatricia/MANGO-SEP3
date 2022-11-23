@@ -2,12 +2,7 @@
 
 public class User
 {
-    public string Username { get; set; }
-    public string Firstname { get; set; }
-    public string Lastname { get; set; }
-
-    public User(string username)
-    {
-        this.Username = username;
-    }
+    public string Username { get; set; } = string.Empty;
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
 }

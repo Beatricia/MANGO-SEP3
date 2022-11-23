@@ -145,26 +145,28 @@
         pickYO = true;
     }
 
+    ///summary///
+    /// sets variable unit 
+    /// summary///
     private void SetUnit(string unit)
     {
         this.unit = unit;
     }
 
+    ///summary///
+    /// displays or hides the drop down menu based on the current value 
+    /// summary///
     private void DropDownVisible()
     {
-        if (displayDropdown.Equals("none"))
-        {
-            displayDropdown = "block";
-        }
-        else
-        {
-            displayDropdown = "none";
-        }
+        displayDropdown = displayDropdown.Equals("none") ? "block" : "none";
     }
 
+    ///summary///
+    /// validates inputted data
+    /// summary///
     private void ValidateData()
     {
-        
+        //check if required fields are empty nothing too bad
     }
 
 }

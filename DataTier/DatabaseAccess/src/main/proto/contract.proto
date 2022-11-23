@@ -11,6 +11,22 @@ service OfferService{
   rpc CreateOffer(Offer) returns(Offer);
   rpc GetOffers(Void) returns(OfferItems);
 }
+service UserService{
+  rpc RegisterUser(UserAuth) returns (User);
+  rpc GetUserByUsername(Text) returns (User);
+}
+
+message UserAuth{
+  string username = 1;
+  string hash = 2;
+  string salt = 3;
+}
+
+message User{
+  string username = 1;
+  string firstname = 2;
+  string lastname = 3;
+}
 
 message Farm{
   string name = 1;
@@ -21,6 +37,7 @@ message Farm{
   optional string farmStatus = 6;
   optional int32 deliveryDistance = 7;
 }
+
 
 message Offer{
   int32 id = 1;
@@ -40,7 +57,6 @@ message OfferItems{
 }
 
 message Void{}
-
 message CartOffer{
   int32 id = 1;
   Offer offer = 2;

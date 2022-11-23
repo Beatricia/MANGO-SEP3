@@ -259,9 +259,9 @@ public static partial class OfferService
   }
 
 }
-public static partial class CartOfferService
+public static partial class UserService
 {
-  static readonly string __ServiceName = "CartOfferService";
+  static readonly string __ServiceName = "UserService";
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
   static void __Helper_SerializeMessage(global::Google.Protobuf.IMessage message, grpc::SerializationContext context)
@@ -297,37 +297,27 @@ public static partial class CartOfferService
   }
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Marshaller<global::CartOffer> __Marshaller_CartOffer = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::CartOffer.Parser));
+  static readonly grpc::Marshaller<global::UserAuth> __Marshaller_UserAuth = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::UserAuth.Parser));
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Marshaller<global::Void> __Marshaller_Void = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Void.Parser));
+  static readonly grpc::Marshaller<global::User> __Marshaller_User = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.Parser));
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Marshaller<global::Username> __Marshaller_Username = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Username.Parser));
-  [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Marshaller<global::CartOffers> __Marshaller_CartOffers = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::CartOffers.Parser));
+  static readonly grpc::Marshaller<global::Text> __Marshaller_Text = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Text.Parser));
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Method<global::CartOffer, global::Void> __Method_AddToCart = new grpc::Method<global::CartOffer, global::Void>(
+  static readonly grpc::Method<global::UserAuth, global::User> __Method_RegisterUser = new grpc::Method<global::UserAuth, global::User>(
       grpc::MethodType.Unary,
       __ServiceName,
-      "AddToCart",
-      __Marshaller_CartOffer,
-      __Marshaller_Void);
+      "RegisterUser",
+      __Marshaller_UserAuth,
+      __Marshaller_User);
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Method<global::Username, global::CartOffers> __Method_GetAllCartOffers = new grpc::Method<global::Username, global::CartOffers>(
+  static readonly grpc::Method<global::Text, global::User> __Method_GetUserByUsername = new grpc::Method<global::Text, global::User>(
       grpc::MethodType.Unary,
       __ServiceName,
-      "GetAllCartOffers",
-      __Marshaller_Username,
-      __Marshaller_CartOffers);
-
-  [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Method<global::Username, global::Void> __Method_DeleteAllCartOffers = new grpc::Method<global::Username, global::Void>(
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "DeleteAllCartOffers",
-      __Marshaller_Username,
-      __Marshaller_Void);
+      "GetUserByUsername",
+      __Marshaller_Text,
+      __Marshaller_User);
 
   /// <summary>Service descriptor</summary>
   public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -335,126 +325,78 @@ public static partial class CartOfferService
     get { return global::ContractReflection.Descriptor.Services[2]; }
   }
 
-  /// <summary>Client for CartOfferService</summary>
-  public partial class CartOfferServiceClient : grpc::ClientBase<CartOfferServiceClient>
+  /// <summary>Client for UserService</summary>
+  public partial class UserServiceClient : grpc::ClientBase<UserServiceClient>
   {
-    /// <summary>Creates a new client for CartOfferService</summary>
+    /// <summary>Creates a new client for UserService</summary>
     /// <param name="channel">The channel to use to make remote calls.</param>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public CartOfferServiceClient(grpc::ChannelBase channel) : base(channel)
+    public UserServiceClient(grpc::ChannelBase channel) : base(channel)
     {
     }
-    /// <summary>Creates a new client for CartOfferService that uses a custom <c>CallInvoker</c>.</summary>
+    /// <summary>Creates a new client for UserService that uses a custom <c>CallInvoker</c>.</summary>
     /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public CartOfferServiceClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+    public UserServiceClient(grpc::CallInvoker callInvoker) : base(callInvoker)
     {
     }
     /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    protected CartOfferServiceClient() : base()
+    protected UserServiceClient() : base()
     {
     }
     /// <summary>Protected constructor to allow creation of configured clients.</summary>
     /// <param name="configuration">The client configuration.</param>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    protected CartOfferServiceClient(ClientBaseConfiguration configuration) : base(configuration)
+    protected UserServiceClient(ClientBaseConfiguration configuration) : base(configuration)
     {
     }
 
-    /// <summary>
-    ///change it so it returns the user (Bety)
-    /// </summary>
-    /// <param name="request">The request to send to the server.</param>
-    /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
-    /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
-    /// <param name="cancellationToken">An optional token for canceling the call.</param>
-    /// <returns>The response received from the server.</returns>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Void AddToCart(global::CartOffer request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::User RegisterUser(global::UserAuth request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
-      return AddToCart(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    /// <summary>
-    ///change it so it returns the user (Bety)
-    /// </summary>
-    /// <param name="request">The request to send to the server.</param>
-    /// <param name="options">The options for the call.</param>
-    /// <returns>The response received from the server.</returns>
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Void AddToCart(global::CartOffer request, grpc::CallOptions options)
-    {
-      return CallInvoker.BlockingUnaryCall(__Method_AddToCart, null, options, request);
-    }
-    /// <summary>
-    ///change it so it returns the user (Bety)
-    /// </summary>
-    /// <param name="request">The request to send to the server.</param>
-    /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
-    /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
-    /// <param name="cancellationToken">An optional token for canceling the call.</param>
-    /// <returns>The call object.</returns>
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Void> AddToCartAsync(global::CartOffer request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-    {
-      return AddToCartAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    /// <summary>
-    ///change it so it returns the user (Bety)
-    /// </summary>
-    /// <param name="request">The request to send to the server.</param>
-    /// <param name="options">The options for the call.</param>
-    /// <returns>The call object.</returns>
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Void> AddToCartAsync(global::CartOffer request, grpc::CallOptions options)
-    {
-      return CallInvoker.AsyncUnaryCall(__Method_AddToCart, null, options, request);
+      return RegisterUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::CartOffers GetAllCartOffers(global::Username request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::User RegisterUser(global::UserAuth request, grpc::CallOptions options)
     {
-      return GetAllCartOffers(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      return CallInvoker.BlockingUnaryCall(__Method_RegisterUser, null, options, request);
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::CartOffers GetAllCartOffers(global::Username request, grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::User> RegisterUserAsync(global::UserAuth request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
-      return CallInvoker.BlockingUnaryCall(__Method_GetAllCartOffers, null, options, request);
+      return RegisterUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::CartOffers> GetAllCartOffersAsync(global::Username request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::User> RegisterUserAsync(global::UserAuth request, grpc::CallOptions options)
     {
-      return GetAllCartOffersAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      return CallInvoker.AsyncUnaryCall(__Method_RegisterUser, null, options, request);
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::CartOffers> GetAllCartOffersAsync(global::Username request, grpc::CallOptions options)
+    public virtual global::User GetUserByUsername(global::Text request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
-      return CallInvoker.AsyncUnaryCall(__Method_GetAllCartOffers, null, options, request);
+      return GetUserByUsername(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Void DeleteAllCartOffers(global::Username request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::User GetUserByUsername(global::Text request, grpc::CallOptions options)
     {
-      return DeleteAllCartOffers(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      return CallInvoker.BlockingUnaryCall(__Method_GetUserByUsername, null, options, request);
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Void DeleteAllCartOffers(global::Username request, grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::User> GetUserByUsernameAsync(global::Text request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
-      return CallInvoker.BlockingUnaryCall(__Method_DeleteAllCartOffers, null, options, request);
+      return GetUserByUsernameAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Void> DeleteAllCartOffersAsync(global::Username request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::User> GetUserByUsernameAsync(global::Text request, grpc::CallOptions options)
     {
-      return DeleteAllCartOffersAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Void> DeleteAllCartOffersAsync(global::Username request, grpc::CallOptions options)
-    {
-      return CallInvoker.AsyncUnaryCall(__Method_DeleteAllCartOffers, null, options, request);
+      return CallInvoker.AsyncUnaryCall(__Method_GetUserByUsername, null, options, request);
     }
     /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    protected override CartOfferServiceClient NewInstance(ClientBaseConfiguration configuration)
+    protected override UserServiceClient NewInstance(ClientBaseConfiguration configuration)
     {
-      return new CartOfferServiceClient(configuration);
+      return new UserServiceClient(configuration);
     }
   }
 

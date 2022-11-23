@@ -1,2 +1,4 @@
-package mango.sep3.databaseaccess.DAOImplementations;public class OfferDAO {
+package mango.sep3.databaseaccess.DAOImplementations;
+
+public class OfferDAO {
 }

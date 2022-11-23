@@ -7,4 +7,9 @@ public class Address
     public string Street { get; set; }
     
     public string ZIP { get; set; }
+    
+    public override string ToString()
+    {
+        return $"City: {City}, Zip: {ZIP}, Address: {Street} ";
+    }
 }

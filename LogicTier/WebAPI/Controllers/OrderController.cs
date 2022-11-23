@@ -32,7 +32,7 @@ public class OrderController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAsync(string username)
+    public async Task<IActionResult> GetAsync([FromQuery]string username)
     {
         try
         {

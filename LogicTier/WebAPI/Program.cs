@@ -26,6 +26,8 @@ builder.Services.AddScoped<IFarmDao, FarmDaoImpl>();
 builder.Services.AddScoped<IOfferDao, OfferDaoImpl>();
 builder.Services.AddScoped<IFarmLogic, FarmLogic>();
 builder.Services.AddScoped<IOfferLogic,OfferLogic>();
+builder.Services.AddScoped<IOrderLogic, OrderLogic>();
+builder.Services.AddScoped<IOrderDao, OrderDaoImpl>();
 
 
 var app = builder.Build();

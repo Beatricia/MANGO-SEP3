@@ -13,8 +13,9 @@ public class CartLogic : ICartLogic
         this.cartDao = cartDao;
     } 
         
-    public async Task<User> AddToCartAsync(CartOfferDto dto)
+    public async Task AddToCartAsync(CartOfferDto dto)
     {
+        
         if (dto.Quantity <= 0)
         {
             throw new Exception("The quantity should be bigger than 0");
@@ -24,9 +25,10 @@ public class CartLogic : ICartLogic
         {
             throw new Exception("The quantity has to be smaller than 250");
         }
-        
-        return await cartDao.AddToCartAsync(dto);
+
+        await cartDao.AddToCartAsync(dto);
     }
+    
 
     public Task<IEnumerable<CartOffer>> GetAllCartItemsAsync(string username)
     {

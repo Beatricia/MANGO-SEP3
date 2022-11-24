@@ -16,6 +16,12 @@ service UserService{
   rpc GetUserByUsername(Text) returns (User);
 }
 
+service CartOfferService{
+  rpc AddToCart(CartOffer) returns(Void);
+  rpc GetAllCartOffers(Username) returns(CartOffers);
+  rpc DeleteAllCartOffers(Username) returns(Void);
+}
+
 message UserAuth{
   string username = 1;
   string hash = 2;
@@ -77,9 +83,3 @@ message Username{
   string username = 1;
 }
 
-service CartOfferService{
-  //change it so it returns the user (Bety)
-  rpc AddToCart(CartOffer) returns(Void);
-  rpc GetAllCartOffers(Username) returns(CartOffers);
-  rpc DeleteAllCartOffers(Username) returns(Void);
-}

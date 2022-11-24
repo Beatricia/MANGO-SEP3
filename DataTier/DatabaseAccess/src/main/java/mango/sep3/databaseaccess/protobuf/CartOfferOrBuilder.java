@@ -14,19 +14,10 @@ public interface CartOfferOrBuilder extends
   int getId();
 
   /**
-   * <code>.Offer offer = 2;</code>
-   * @return Whether the offer field is set.
+   * <code>int32 offerId = 2;</code>
+   * @return The offerId.
    */
-  boolean hasOffer();
-  /**
-   * <code>.Offer offer = 2;</code>
-   * @return The offer.
-   */
-  mango.sep3.databaseaccess.protobuf.Offer getOffer();
-  /**
-   * <code>.Offer offer = 2;</code>
-   */
-  mango.sep3.databaseaccess.protobuf.OfferOrBuilder getOfferOrBuilder();
+  int getOfferId();
 
   /**
    * <code>int32 quantity = 3;</code>

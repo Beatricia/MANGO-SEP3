@@ -156,9 +156,6 @@ public final class CartOfferServiceGrpc {
   public static abstract class CartOfferServiceImplBase implements io.grpc.BindableService {
 
     /**
-     * <pre>
-     *change it so it returns the user (Bety)
-     * </pre>
      */
     public void addToCart(mango.sep3.databaseaccess.protobuf.CartOffer request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
@@ -221,9 +218,6 @@ public final class CartOfferServiceGrpc {
     }
 
     /**
-     * <pre>
-     *change it so it returns the user (Bety)
-     * </pre>
      */
     public void addToCart(mango.sep3.databaseaccess.protobuf.CartOffer request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
@@ -263,9 +257,6 @@ public final class CartOfferServiceGrpc {
     }
 
     /**
-     * <pre>
-     *change it so it returns the user (Bety)
-     * </pre>
      */
     public mango.sep3.databaseaccess.protobuf.Void addToCart(mango.sep3.databaseaccess.protobuf.CartOffer request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -302,9 +293,6 @@ public final class CartOfferServiceGrpc {
     }
 
     /**
-     * <pre>
-     *change it so it returns the user (Bety)
-     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Void> addToCart(
         mango.sep3.databaseaccess.protobuf.CartOffer request) {

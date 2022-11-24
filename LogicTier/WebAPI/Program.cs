@@ -33,6 +33,10 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(grpcOptions);
 builder.Services.AddScoped<IAuthDao, AuthDaoImpl>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 
+builder.Services.AddGrpcClient<CartOfferService.CartOfferServiceClient>(grpcOptions);
+builder.Services.AddScoped<ICartDao, CartDaoImpl>();
+builder.Services.AddScoped<ICartLogic, CartLogic>();
+
 
 var app = builder.Build();
 

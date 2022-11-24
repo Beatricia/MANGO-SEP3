@@ -87,21 +87,21 @@ public final class Contract {
       "Own\030\010 \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tI" +
       "magePath\030\n \001(\tB\016\n\014_description\"$\n\nOfferI" +
       "tems\022\026\n\006offers\030\001 \003(\0132\006.Offer\"\006\n\004Void\"\024\n\004" +
-      "Text\022\014\n\004text\030\001 \001(\t\"l\n\tCartOffer\022\n\n\002id\030\001 " +
-      "\001(\005\022\025\n\005offer\030\002 \001(\0132\006.Offer\022\020\n\010quantity\030\003" +
-      " \001(\005\022\020\n\010username\030\004 \001(\t\022\030\n\020collectionOpti" +
-      "on\030\005 \001(\t\",\n\nCartOffers\022\036\n\ncartOffers\030\001 \003" +
-      "(\0132\n.CartOffer\"\034\n\010Username\022\020\n\010username\030\001" +
-      " \001(\t2)\n\013FarmService\022\032\n\nCreateFarm\022\005.Farm" +
-      "\032\005.Farm2N\n\014OfferService\022\035\n\013CreateOffer\022\006" +
-      ".Offer\032\006.Offer\022\037\n\tGetOffers\022\005.Void\032\013.Off" +
-      "erItems2R\n\013UserService\022 \n\014RegisterUser\022\t" +
-      ".UserAuth\032\005.User\022!\n\021GetUserByUsername\022\005." +
-      "Text\032\005.User2\207\001\n\020CartOfferService\022\036\n\tAddT" +
-      "oCart\022\n.CartOffer\032\005.Void\022*\n\020GetAllCartOf" +
-      "fers\022\t.Username\032\013.CartOffers\022\'\n\023DeleteAl" +
-      "lCartOffers\022\t.Username\032\005.VoidB&\n\"mango.s" +
-      "ep3.databaseaccess.protobufP\001b\006proto3"
+      "Text\022\014\n\004text\030\001 \001(\t\"f\n\tCartOffer\022\n\n\002id\030\001 " +
+      "\001(\005\022\017\n\007offerId\030\002 \001(\005\022\020\n\010quantity\030\003 \001(\005\022\020" +
+      "\n\010username\030\004 \001(\t\022\030\n\020collectionOption\030\005 \001" +
+      "(\t\",\n\nCartOffers\022\036\n\ncartOffers\030\001 \003(\0132\n.C" +
+      "artOffer\"\034\n\010Username\022\020\n\010username\030\001 \001(\t2)" +
+      "\n\013FarmService\022\032\n\nCreateFarm\022\005.Farm\032\005.Far" +
+      "m2N\n\014OfferService\022\035\n\013CreateOffer\022\006.Offer" +
+      "\032\006.Offer\022\037\n\tGetOffers\022\005.Void\032\013.OfferItem" +
+      "s2R\n\013UserService\022 \n\014RegisterUser\022\t.UserA" +
+      "uth\032\005.User\022!\n\021GetUserByUsername\022\005.Text\032\005" +
+      ".User2\207\001\n\020CartOfferService\022\036\n\tAddToCart\022" +
+      "\n.CartOffer\032\005.Void\022*\n\020GetAllCartOffers\022\t" +
+      ".Username\032\013.CartOffers\022\'\n\023DeleteAllCartO" +
+      "ffers\022\t.Username\032\005.VoidB&\n\"mango.sep3.da" +
+      "tabaseaccess.protobufP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -154,7 +154,7 @@ public final class Contract {
     internal_static_CartOffer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CartOffer_descriptor,
-        new java.lang.String[] { "Id", "Offer", "Quantity", "Username", "CollectionOption", });
+        new java.lang.String[] { "Id", "OfferId", "Quantity", "Username", "CollectionOption", });
     internal_static_CartOffers_descriptor =
       getDescriptor().getMessageTypes().get(8);
     internal_static_CartOffers_fieldAccessorTable = new

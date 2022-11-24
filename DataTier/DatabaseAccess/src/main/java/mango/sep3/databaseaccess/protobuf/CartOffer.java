@@ -55,17 +55,9 @@ private static final long serialVersionUID = 0L;
             id_ = input.readInt32();
             break;
           }
-          case 18: {
-            mango.sep3.databaseaccess.protobuf.Offer.Builder subBuilder = null;
-            if (offer_ != null) {
-              subBuilder = offer_.toBuilder();
-            }
-            offer_ = input.readMessage(mango.sep3.databaseaccess.protobuf.Offer.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(offer_);
-              offer_ = subBuilder.buildPartial();
-            }
+          case 16: {
 
+            offerId_ = input.readInt32();
             break;
           }
           case 24: {
@@ -130,30 +122,15 @@ private static final long serialVersionUID = 0L;
     return id_;
   }
 
-  public static final int OFFER_FIELD_NUMBER = 2;
-  private mango.sep3.databaseaccess.protobuf.Offer offer_;
+  public static final int OFFERID_FIELD_NUMBER = 2;
+  private int offerId_;
   /**
-   * <code>.Offer offer = 2;</code>
-   * @return Whether the offer field is set.
+   * <code>int32 offerId = 2;</code>
+   * @return The offerId.
    */
   @java.lang.Override
-  public boolean hasOffer() {
-    return offer_ != null;
-  }
-  /**
-   * <code>.Offer offer = 2;</code>
-   * @return The offer.
-   */
-  @java.lang.Override
-  public mango.sep3.databaseaccess.protobuf.Offer getOffer() {
-    return offer_ == null ? mango.sep3.databaseaccess.protobuf.Offer.getDefaultInstance() : offer_;
-  }
-  /**
-   * <code>.Offer offer = 2;</code>
-   */
-  @java.lang.Override
-  public mango.sep3.databaseaccess.protobuf.OfferOrBuilder getOfferOrBuilder() {
-    return getOffer();
+  public int getOfferId() {
+    return offerId_;
   }
 
   public static final int QUANTITY_FIELD_NUMBER = 3;
@@ -260,8 +237,8 @@ private static final long serialVersionUID = 0L;
     if (id_ != 0) {
       output.writeInt32(1, id_);
     }
-    if (offer_ != null) {
-      output.writeMessage(2, getOffer());
+    if (offerId_ != 0) {
+      output.writeInt32(2, offerId_);
     }
     if (quantity_ != 0) {
       output.writeInt32(3, quantity_);
@@ -285,9 +262,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, id_);
     }
-    if (offer_ != null) {
+    if (offerId_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getOffer());
+        .computeInt32Size(2, offerId_);
     }
     if (quantity_ != 0) {
       size += com.google.protobuf.CodedOutputStream
@@ -316,11 +293,8 @@ private static final long serialVersionUID = 0L;
 
     if (getId()
         != other.getId()) return false;
-    if (hasOffer() != other.hasOffer()) return false;
-    if (hasOffer()) {
-      if (!getOffer()
-          .equals(other.getOffer())) return false;
-    }
+    if (getOfferId()
+        != other.getOfferId()) return false;
     if (getQuantity()
         != other.getQuantity()) return false;
     if (!getUsername()
@@ -340,10 +314,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ID_FIELD_NUMBER;
     hash = (53 * hash) + getId();
-    if (hasOffer()) {
-      hash = (37 * hash) + OFFER_FIELD_NUMBER;
-      hash = (53 * hash) + getOffer().hashCode();
-    }
+    hash = (37 * hash) + OFFERID_FIELD_NUMBER;
+    hash = (53 * hash) + getOfferId();
     hash = (37 * hash) + QUANTITY_FIELD_NUMBER;
     hash = (53 * hash) + getQuantity();
     hash = (37 * hash) + USERNAME_FIELD_NUMBER;
@@ -485,12 +457,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       id_ = 0;
 
-      if (offerBuilder_ == null) {
-        offer_ = null;
-      } else {
-        offer_ = null;
-        offerBuilder_ = null;
-      }
+      offerId_ = 0;
+
       quantity_ = 0;
 
       username_ = "";
@@ -524,11 +492,7 @@ private static final long serialVersionUID = 0L;
     public mango.sep3.databaseaccess.protobuf.CartOffer buildPartial() {
       mango.sep3.databaseaccess.protobuf.CartOffer result = new mango.sep3.databaseaccess.protobuf.CartOffer(this);
       result.id_ = id_;
-      if (offerBuilder_ == null) {
-        result.offer_ = offer_;
-      } else {
-        result.offer_ = offerBuilder_.build();
-      }
+      result.offerId_ = offerId_;
       result.quantity_ = quantity_;
       result.username_ = username_;
       result.collectionOption_ = collectionOption_;
@@ -583,8 +547,8 @@ private static final long serialVersionUID = 0L;
       if (other.getId() != 0) {
         setId(other.getId());
       }
-      if (other.hasOffer()) {
-        mergeOffer(other.getOffer());
+      if (other.getOfferId() != 0) {
+        setOfferId(other.getOfferId());
       }
       if (other.getQuantity() != 0) {
         setQuantity(other.getQuantity());
@@ -657,123 +621,35 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private mango.sep3.databaseaccess.protobuf.Offer offer_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        mango.sep3.databaseaccess.protobuf.Offer, mango.sep3.databaseaccess.protobuf.Offer.Builder, mango.sep3.databaseaccess.protobuf.OfferOrBuilder> offerBuilder_;
+    private int offerId_ ;
     /**
-     * <code>.Offer offer = 2;</code>
-     * @return Whether the offer field is set.
+     * <code>int32 offerId = 2;</code>
+     * @return The offerId.
      */
-    public boolean hasOffer() {
-      return offerBuilder_ != null || offer_ != null;
+    @java.lang.Override
+    public int getOfferId() {
+      return offerId_;
     }
     /**
-     * <code>.Offer offer = 2;</code>
-     * @return The offer.
+     * <code>int32 offerId = 2;</code>
+     * @param value The offerId to set.
+     * @return This builder for chaining.
      */
-    public mango.sep3.databaseaccess.protobuf.Offer getOffer() {
-      if (offerBuilder_ == null) {
-        return offer_ == null ? mango.sep3.databaseaccess.protobuf.Offer.getDefaultInstance() : offer_;
-      } else {
-        return offerBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.Offer offer = 2;</code>
-     */
-    public Builder setOffer(mango.sep3.databaseaccess.protobuf.Offer value) {
-      if (offerBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        offer_ = value;
-        onChanged();
-      } else {
-        offerBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.Offer offer = 2;</code>
-     */
-    public Builder setOffer(
-        mango.sep3.databaseaccess.protobuf.Offer.Builder builderForValue) {
-      if (offerBuilder_ == null) {
-        offer_ = builderForValue.build();
-        onChanged();
-      } else {
-        offerBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.Offer offer = 2;</code>
-     */
-    public Builder mergeOffer(mango.sep3.databaseaccess.protobuf.Offer value) {
-      if (offerBuilder_ == null) {
-        if (offer_ != null) {
-          offer_ =
-            mango.sep3.databaseaccess.protobuf.Offer.newBuilder(offer_).mergeFrom(value).buildPartial();
-        } else {
-          offer_ = value;
-        }
-        onChanged();
-      } else {
-        offerBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.Offer offer = 2;</code>
-     */
-    public Builder clearOffer() {
-      if (offerBuilder_ == null) {
-        offer_ = null;
-        onChanged();
-      } else {
-        offer_ = null;
-        offerBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.Offer offer = 2;</code>
-     */
-    public mango.sep3.databaseaccess.protobuf.Offer.Builder getOfferBuilder() {
+    public Builder setOfferId(int value) {
       
+      offerId_ = value;
       onChanged();
-      return getOfferFieldBuilder().getBuilder();
+      return this;
     }
     /**
-     * <code>.Offer offer = 2;</code>
+     * <code>int32 offerId = 2;</code>
+     * @return This builder for chaining.
      */
-    public mango.sep3.databaseaccess.protobuf.OfferOrBuilder getOfferOrBuilder() {
-      if (offerBuilder_ != null) {
-        return offerBuilder_.getMessageOrBuilder();
-      } else {
-        return offer_ == null ?
-            mango.sep3.databaseaccess.protobuf.Offer.getDefaultInstance() : offer_;
-      }
-    }
-    /**
-     * <code>.Offer offer = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        mango.sep3.databaseaccess.protobuf.Offer, mango.sep3.databaseaccess.protobuf.Offer.Builder, mango.sep3.databaseaccess.protobuf.OfferOrBuilder> 
-        getOfferFieldBuilder() {
-      if (offerBuilder_ == null) {
-        offerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            mango.sep3.databaseaccess.protobuf.Offer, mango.sep3.databaseaccess.protobuf.Offer.Builder, mango.sep3.databaseaccess.protobuf.OfferOrBuilder>(
-                getOffer(),
-                getParentForChildren(),
-                isClean());
-        offer_ = null;
-      }
-      return offerBuilder_;
+    public Builder clearOfferId() {
+      
+      offerId_ = 0;
+      onChanged();
+      return this;
     }
 
     private int quantity_ ;

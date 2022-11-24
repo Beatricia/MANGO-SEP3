@@ -24,7 +24,10 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public void createOrderOffers(Collection<OrderOffer> orderOffers)
   {
-
+    for (var order : orderOffers)
+    {
+      orderOfferRepository.save(order);
+    }
   }
 
   @Override public Collection<OrderOffer> getOrderOffers(String username)

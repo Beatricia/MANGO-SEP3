@@ -26,7 +26,7 @@ public class OrderHttpClient : IOrderService
 
     public async Task<ICollection<Order>> GetAllOrdersAsync(string username)
     {
-        /*
+        
         HttpResponseMessage response = await client.GetAsync($"/order?username={username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
@@ -37,8 +37,8 @@ public class OrderHttpClient : IOrderService
         ICollection<Order> orders = JsonSerializer.Deserialize<ICollection<Order>>(content, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        })!;*/
-        Offer offer1 = new Offer(1, "tomato", 1, "kg", 20.5, true, true, true, null, "sth");
+        })!;
+        /*Offer offer1 = new Offer(1, "tomato", 1, "kg", 20.5, true, true, true, null, "sth");
         Offer offer2 = new Offer(2, "onion", 1, "kg", 13.5, true, true, true, null, "sth");
         Offer offer3 = new Offer(3, "milk", 1, "kg", 18.75, true, true, true, null, "sth");
         OrderOffer orderItem1 = new OrderOffer
@@ -115,7 +115,7 @@ public class OrderHttpClient : IOrderService
             FarmName = "Happy Farm",
             CollectionOption = "PickUp"
         };
-        Order[] orders = { order1, order2, order3, order4 };
+        Order[] orders = { order1, order2, order3, order4 };*/
         return orders;
     }
 }

@@ -1,8 +1,9 @@
 package mango.sep3.databaseaccess.DAOInterfaces;
 
-import mango.sep3.databaseaccess.protobuf.Farm;
+import mango.sep3.databaseaccess.Shared.Farm;
 
 public interface FarmDaoInterface
 {
-  void CreateFarm(Farm farm);
+  void createFarm(Farm farm);
+  Farm getFarmByName(String farmName);
 }

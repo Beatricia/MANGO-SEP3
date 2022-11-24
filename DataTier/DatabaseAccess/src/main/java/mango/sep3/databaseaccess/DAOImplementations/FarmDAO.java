@@ -3,7 +3,7 @@ package mango.sep3.databaseaccess.DAOImplementations;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
-import mango.sep3.databaseaccess.protobuf.Farm;
+import mango.sep3.databaseaccess.Shared.Farm;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -23,8 +23,6 @@ public class FarmDAO implements FarmDaoInterface
   private FileContext context;
   private FarmRepository farmRepository;
 
-
-  //Since we are not using a DB yet we don't have to use this class yet
   /**
    *
    * @param
@@ -34,12 +32,14 @@ public class FarmDAO implements FarmDaoInterface
   {
     this.farmRepository = farmRepository;
   }
-  @Override public void CreateFarm(Farm farm)
+  @Override public void createFarm(Farm farm)
   {
-    //todo the method should return a Farm object which is NOT a protobuf
-    // and be directly saved in the data base! change it Uafa
-    /*mango.sep3.databaseaccess.Shared.Farm farm2 = new mango.sep3.databaseaccess.Shared.Farm();
+    farmRepository.save(farm);
+  }
 
-    farmRepository.save(farm);*/
+  @Override public Farm getFarmByName(String farmName)
+  {
+    Farm farm = farmRepository.findByName(farmName);
+    return farm;
   }
 }

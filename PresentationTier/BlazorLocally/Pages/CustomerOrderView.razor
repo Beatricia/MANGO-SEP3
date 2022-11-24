@@ -2,6 +2,7 @@
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @inject IOrderService orderService
+@inject IFarmService farmService
 
 <AuthorizeView>
     <div class="title">
@@ -85,11 +86,10 @@
     
     protected override async Task OnInitializedAsync()
     {
-        //var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        //var principal = authstate.User;
-        //username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
+      //  var authstate = await GetAuthenticationState.GetAuthenticationStateAsync();
+       // var principal = authstate.User;
+       // username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
 
-        username = "Agata";
         try
         {
             orders = await orderService.GetAllOrdersAsync(username);
@@ -115,21 +115,7 @@
 
     private Farm GetFarmByName(string farmName)
     {
-        //TODO implement GetFarmByName
-        Address address = new Address
-        {
-            City = "Horsens",
-            Street = "Nygade",
-            ZIP = "8700",
-        };
-        Farm farm = new Farm
-        {
-            Address = address,
-            DeliveryDistance = 15,
-            Name = "HappyFarm",
-            Phone = "+4582785463"
-        };
-
+        Farm farm = farmService.GetFarmByNameAsync(farmName).GetAwaiter().GetResult();
         return farm;
     }
 

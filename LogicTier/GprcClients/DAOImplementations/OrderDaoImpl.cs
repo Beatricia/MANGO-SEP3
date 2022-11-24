@@ -1,33 +1,27 @@
 ﻿using Application.DAOInterfaces;
 using Shared.Models;
-using Offer = Shared.Models.Offer;
 
 namespace GprcClients.DAOImplementations;
 
 public class OrderDaoImpl : IOrderDao
 {
-    private OrderService.OrderServiceClient client;
+    private OfferService.OfferServiceClient offerService;
 
     /// <summary>
     /// Initializes the OrderDaoImpl with the given gRPC client service
     /// </summary>
     /// <param name="offerService"></param>
-    public OrderDaoImpl(OrderService.OrderServiceClient client)
+    public OrderDaoImpl(OfferService.OfferServiceClient offerService)
     {
-        this.client = client;
+        this.offerService = offerService;
     }
-
-    public Task CreateOrderOffersAsync(List<OrderOffer> order)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> order)
     {
         throw new NotImplementedException();
     }
 
-    Task<IEnumerable<Shared.Models.Order>> IOrderDao.GetAllOrdersAsync(string Username)
+    public Task<IEnumerable<Shared.Models.Order>> GetAllOrdersAsync(string Username)
     {
         throw new NotImplementedException();
     }
@@ -37,21 +31,7 @@ public class OrderDaoImpl : IOrderDao
         throw new NotImplementedException();
     }
 
-    Task<IEnumerable<Shared.Models.OrderOffer>> IOrderDao.GetOrdersOffersAsync(string username)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Order>> GetAllOrdersAsync(string Username)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task CreateOrdersAsync(IEnumerable<Order> orders)
-    {
-        throw new NotImplementedException();
-    }
-
+    public Task<IEnumerable<Shared.Models.OrderOffer>> GetOrdersOffersAsync(string username)
     public async Task<IEnumerable<Shared.Models.OrderOffer>> GetOrdersOffersAsync(string username)
     {
         var text = new Text { Text_ = username };

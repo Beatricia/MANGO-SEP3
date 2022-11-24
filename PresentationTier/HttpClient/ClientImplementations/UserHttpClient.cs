@@ -16,7 +16,7 @@ public class UserHttpClient : IUserService
 
     public async Task<Customer> GetCustomer(string username)
     {
-       /* HttpResponseMessage response = await client.GetAsync($"/user/customer?username={username}");
+        HttpResponseMessage response = await client.GetAsync($"/customer/{username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -27,8 +27,8 @@ public class UserHttpClient : IUserService
         {
             PropertyNameCaseInsensitive = true
         })!;
-        return customer;*/
-       Address address = new Address
+        return customer;
+      /* Address address = new Address
        {
            City = "Horsens",
            Street = "Street name 5",
@@ -42,7 +42,6 @@ public class UserHttpClient : IUserService
            LastName = "Rudol",
            Phone = "55215590",
            Username = "Agata"
-       };
-       return customer;
+       };*/
     }
 }

@@ -36,9 +36,10 @@ public class FarmDAO implements FarmDaoInterface
   }
   @Override public void CreateFarm(Farm farm)
   {
-    mango.sep3.databaseaccess.Shared.Farm farm2 =new mango.sep3.databaseaccess.Shared.Farm(farm.getName());
+    //todo the method should return a Farm object which is NOT a protobuf
+    // and be directly saved in the data base! change it Uafa
+    /*mango.sep3.databaseaccess.Shared.Farm farm2 = new mango.sep3.databaseaccess.Shared.Farm();
 
-    farmRepository.save(farm2);
-
+    farmRepository.save(farm);*/
   }
 }

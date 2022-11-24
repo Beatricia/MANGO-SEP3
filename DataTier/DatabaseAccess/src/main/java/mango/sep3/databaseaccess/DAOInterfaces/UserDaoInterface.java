@@ -1,5 +1,6 @@
 package mango.sep3.databaseaccess.DAOInterfaces;
 
+import mango.sep3.databaseaccess.Shared.Customer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.Shared.UserAuth;
 
@@ -20,4 +21,11 @@ public interface UserDaoInterface {
      * @return The user.
      */
     User getUserByUsername(String username);
+
+    /**
+     * Gets a customer by username.
+     * @param username The username of the customer
+     * @return The customer.
+     */
+    Customer getCustomer(String username);
 }

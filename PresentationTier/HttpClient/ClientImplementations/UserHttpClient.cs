@@ -16,7 +16,7 @@ public class UserHttpClient : IUserService
 
     public async Task<Customer> GetCustomer(string username)
     {
-       /* HttpResponseMessage response = await client.GetAsync($"/customer/{username}");
+       /* HttpResponseMessage response = await client.GetAsync($"/user/customer?username={username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {

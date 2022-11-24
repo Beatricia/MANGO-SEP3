@@ -6,7 +6,7 @@ namespace Application.LogicImplementations;
 
 public class UserLogic : IUserLogic
 {
-    private IUserDao userDao;
+    private readonly IUserDao userDao;
 
     public UserLogic(IUserDao userDao)
     {

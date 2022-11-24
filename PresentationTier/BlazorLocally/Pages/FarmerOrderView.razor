@@ -1,10 +1,17 @@
 ﻿@page "/FarmerOrderView"
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
+@using C1.Blazor.Core
+@using C1.Blazor.Grid
+@using C1.Blazor.Input
 @inject IOrderService orderService
+@inject IUserService userService
 <AuthorizeView>
     <div class="title">
         <h1>Orders</h1>
+        <div class="error">
+            @errorMessage
+        </div>
     </div>
     @if (orders == null)
     {
@@ -14,28 +21,33 @@
     {
         @if (deliveryOrders.Any())
         {
-            <div class="orders">
+            /* <div class="orders">
                 <label>Delivery</label>
                 <div class="ordersTable">
                     <table class="mainTable">
                         @foreach (var order in deliveryOrders)
                         {
+                            TempOrder temp = new TempOrder
+                            {
+                                IsOpen = false,
+                                Customer = GetCustomer(order.OrderOffers.First().Username).Result
+                            };
                             <tr class="BigTableRow">
-                                <td class="nameCell">Customer: @GetCustomerUsername(order.OrderOffers.First()).</td>
-                                <td class="phoneCell">@GetFarmByName(order.FarmName).Phone</td>
+                                <td class="nameCell">@(temp.Customer.Username)</td>
+                                <td class="phoneCell">@(temp.Customer.Address.City)</td>
                                 <td class="priceCell">@TotalPrice(order.OrderOffers) dkk</td>
                                 <td class="imgCell">
                                     @if (!displayDetails)
                                     {
-                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => displayDetails = true)">
+                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => temp.IsOpen = true)">
                                     }
                                     else
                                     {
-                                        <img src="Img/upArrow.png" @onclick="@(() => displayDetails = false)">
+                                        <img src="Img/upArrow.png" @onclick="@(() => temp.IsOpen = false)">
                                     }
                                 </td>
                             </tr>
-                            if (displayDetails)
+                            if (temp.IsOpen)
                             {
                                 <Table>
                                     @foreach (var item in order.OrderOffers)
@@ -50,9 +62,26 @@
                         }
                     </table>
                 </div>
-            </div>
-        }
-        @if (pickUpOrders.Any())
+            </div> */
+            <FlexGrid ItemsSource="pickUpOrders" IsReadOnly="true" AutoGenerateColumns="false" HeadersVisibility="GridHeadersVisibility.All" VerticalScrollBarVisibility="ScrollBarVisibility.Visible">
+                    <FlexGridColumns>
+                        <GridColumn Binding="Id"></GridColumn>
+                        <GridColumn Binding="FarmName"></GridColumn>
+                        <GridColumn></GridColumn>
+                    </FlexGridColumns>
+                    <FlexGridBehaviors>
+                        <FlexGridDetailProvider TItem="Order" Height="250" DetailVisibilityMode="@GridDetailVisibilityMode.ExpandMultiple">
+                            @foreach (var item in @context.OrderOffers)
+                            {
+                                <div>
+                                    <div>@item.Offer.Name</div>
+                                    <div>@item.Quantity</div>
+                                </div>
+                            }
+                        </FlexGridDetailProvider>
+                    </FlexGridBehaviors>
+                </FlexGrid>
+            /* @if (pickUpOrders.Any())
         {
             <div class="orders">
                 <label>Pick Up</label>
@@ -60,22 +89,27 @@
                     <table class="mainTable">
                         @foreach (var order in pickUpOrders)
                         {
+                            TempOrder temp = new TempOrder
+                            {
+                                IsOpen = false,
+                                Customer = GetCustomer(order.OrderOffers.First().Username).Result
+                            };
                             <tr class="BigTableRow">
-                                <td class="nameCell">@GetCustomerUsername(order.OrderOffers.First())</td>
+                                <td class="nameCell">@(temp.Customer.Username)</td>
                                 <td class="farmNameCell">@(order.FarmName)</td>
                                 <td class="priceCell">@TotalPrice(order.OrderOffers) dkk</td>
-                                <td class="imgCell">
-                                    @if (!displayDetails)
+                                <td class="imgCell" @onclick="() => temp.IsOpen = !temp.IsOpen">
+                                    @if (!temp.IsOpen)
                                     {
-                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => displayDetails = true)">
+                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => temp.IsOpen = true)">
                                     }
                                     else
                                     {
-                                        <img src="Img/upArrow.png" @onclick="@(() => displayDetails = false)">
+                                        <img src="Img/upArrow.png" @onclick="@(() => temp.IsOpen = false)">
                                     }
                                 </td>
                             </tr>
-                            if (displayDetails)
+                            if (temp.IsOpen)
                             {
                                 <Table>
                                     <tr class="AddressRow">
@@ -93,8 +127,8 @@
                         }
                     </table>
                 </div>
-            </div>
-        }
+            </div>*/
+    }
     }
 </AuthorizeView>
 
@@ -106,7 +140,15 @@
     private string msg = "";
     private string username;
     private bool displayDetails;
+    string errorMessage = "";
 
+
+    /*class TempOrder
+    {
+        public bool IsOpen { get; set; }
+        public Order Order { get; set; }
+        public Customer Customer { get; set; }
+    }*/
 
     protected override async Task OnInitializedAsync()
     {
@@ -142,6 +184,23 @@
     {
         return orderOffer.Username;
     }
+
+    private async Task<Customer> GetCustomer(string customerUsername)
+    {
+        errorMessage = "";
+        try
+        {
+            Customer c = await userService.GetCustomer(customerUsername);
+            return c;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorMessage = e.Message;
+            throw;
+        }
+    }
+
 
     private Farm GetFarmByName(string farmName)
     {

@@ -13,6 +13,7 @@ builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
 builder.Services.AddScoped<IOrderService,OrderHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
+builder.Services.AddScoped<IUserService, UserHttpClient>();
 
 
 await builder.Build().RunAsync();

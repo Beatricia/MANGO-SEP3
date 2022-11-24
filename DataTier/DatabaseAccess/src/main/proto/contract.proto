@@ -57,9 +57,13 @@ message OfferItems{
 }
 
 message Void{}
+
+message Text{
+  string text = 1;
+}
 message CartOffer{
   int32 id = 1;
-  Offer offer = 2;
+  int32 offerId = 2;
   int32 quantity = 3;
   string username = 4;
   string collectionOption = 5;

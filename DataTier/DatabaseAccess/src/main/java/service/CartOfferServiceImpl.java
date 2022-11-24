@@ -1,14 +1,17 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOImplementations.CartOfferDAO;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.protobuf.CartOffer;
 import mango.sep3.databaseaccess.protobuf.CartOfferServiceGrpc;
 import mango.sep3.databaseaccess.protobuf.Farm;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceImplBase
 {
-  private FileContext fileContext;
+  @Autowired
+  private CartOfferDAO fileContext;
 
   public CartOfferServiceImpl(FileContext fileContext){
     this.fileContext = fileContext;

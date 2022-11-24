@@ -29,6 +29,20 @@ public class AuthDaoImpl : IAuthDao
         return ConvertGrpcUserToSharedUser(grpcUser);
     }
 
+    public async Task<Shared.Models.User> LoginAsync(Shared.Models.UserAuth user)
+    {
+        var grpcUserAuth = new UserAuth
+        {
+            Username = user.Username,
+            Hash = user.HashPassword,
+            Salt = user.Salt
+        };
+        
+        User grpcUser = await client.LoginUserAsync(grpcUserAuth);
+        
+        return ConvertGrpcUserToSharedUser(grpcUser);
+    }
+
     public Task<Shared.Models.UserAuth?> GetAuthUserAsync(string username)
     {
         throw new NotImplementedException();

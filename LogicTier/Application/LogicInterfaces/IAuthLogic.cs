@@ -15,4 +15,11 @@ public interface IAuthLogic
     /// <returns></returns>
     Task<User> RegisterAsync(RegisterDto dto);
     
+    /// <summary>
+    /// Login a new user to the system
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    Task<User> LoginAsync(LoginDto dto);
+    
 }

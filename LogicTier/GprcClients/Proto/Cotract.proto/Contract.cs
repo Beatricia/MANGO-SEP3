@@ -37,10 +37,11 @@ public static partial class ContractReflection {
           "MgYuT2ZmZXIiBgoEVm9pZCIUCgRUZXh0EgwKBHRleHQYASABKAkyKQoLRmFy",
           "bVNlcnZpY2USGgoKQ3JlYXRlRmFybRIFLkZhcm0aBS5GYXJtMk4KDE9mZmVy",
           "U2VydmljZRIdCgtDcmVhdGVPZmZlchIGLk9mZmVyGgYuT2ZmZXISHwoJR2V0",
-          "T2ZmZXJzEgUuVm9pZBoLLk9mZmVySXRlbXMyUgoLVXNlclNlcnZpY2USIAoM",
-          "UmVnaXN0ZXJVc2VyEgkuVXNlckF1dGgaBS5Vc2VyEiEKEUdldFVzZXJCeVVz",
-          "ZXJuYW1lEgUuVGV4dBoFLlVzZXJCJgoibWFuZ28uc2VwMy5kYXRhYmFzZWFj",
-          "Y2Vzcy5wcm90b2J1ZlABYgZwcm90bzM="));
+          "T2ZmZXJzEgUuVm9pZBoLLk9mZmVySXRlbXMycQoLVXNlclNlcnZpY2USHQoJ",
+          "TG9naW5Vc2VyEgkuVXNlckF1dGgaBS5Vc2VyEiAKDFJlZ2lzdGVyVXNlchIJ",
+          "LlVzZXJBdXRoGgUuVXNlchIhChFHZXRVc2VyQnlVc2VybmFtZRIFLlRleHQa",
+          "BS5Vc2VyQiYKIm1hbmdvLnNlcDMuZGF0YWJhc2VhY2Nlc3MucHJvdG9idWZQ",
+          "AWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

@@ -30,9 +30,8 @@ public class Address implements Serializable
   private Set<Farm> farms = new HashSet<>();
 
 
-  public Address(Long id, String city, String street, String zip)
+  public Address(String city, String street, String zip)
   {
-    this.id = id;
     this.city = city;
     this.street = street;
     this.zip = zip;

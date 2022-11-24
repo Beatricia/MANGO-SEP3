@@ -35,6 +35,26 @@ public class Farm implements Serializable
     public Farm()
     {}
 
+    public Farm(String name, String phone, String description,
+        int deliveryDistance, Address address)
+    {
+        this.name = name;
+        this.phone = phone;
+        this.description = description;
+        this.deliveryDistance = deliveryDistance;
+        this.address = address;
+    }
+    public Farm(String name, String phone, String description,
+        int deliveryDistance, Address address, Set<Offer> offers)
+    {
+        this.name = name;
+        this.phone = phone;
+        this.description = description;
+        this.deliveryDistance = deliveryDistance;
+        this.address = address;
+        this.offers = offers;
+    }
+
     //TODO add Farmer reference (nut sure if it should be a new Farmer table or just from the User)
 
     //if column in database table is called differently

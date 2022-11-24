@@ -4,7 +4,8 @@ option java_multiple_files = true;
 option java_package = "mango.sep3.databaseaccess.protobuf";
 
 service FarmService{
-  rpc CreateFarm(Farm) returns(Farm);
+  rpc CreateFarm(Farm) returns(Void);
+  rpc GetFarm(Text) returns(Farm);
 }
 
 service OfferService{

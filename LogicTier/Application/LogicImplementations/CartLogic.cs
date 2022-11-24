@@ -7,10 +7,12 @@ namespace Application.LogicImplementations;
 public class CartLogic : ICartLogic
 {
     private ICartDao cartDao;
+    private IAuthDao authDao;
 
-    public CartLogic(ICartDao cartDao)
+    public CartLogic(ICartDao cartDao, IAuthDao authDao)
     {
         this.cartDao = cartDao;
+        this.authDao = authDao;
     } 
         
     public async Task AddToCartAsync(CartOfferDto dto)
@@ -21,17 +23,40 @@ public class CartLogic : ICartLogic
             throw new Exception("The quantity should be bigger than 0");
         }
 
-        if (dto.Quantity >= 250)
+        if (dto.Quantity >= 100)
         {
             throw new Exception("The quantity has to be smaller than 250");
+        }
+
+        if (!dto.CollectOption.ToLower().Equals("Delivery".ToLower()) ||
+            !dto.CollectOption.ToLower().Equals("Pick Up".ToLower()) ||
+            !dto.CollectOption.ToLower().Equals("Pick Your Own".ToLower()))
+        {
+            throw new Exception("Invalid collection option for the cart offer");
         }
 
         await cartDao.AddToCartAsync(dto);
     }
     
 
-    public Task<IEnumerable<CartOffer>> GetAllCartItemsAsync(string username)
+    public async Task<IEnumerable<CartOffer>> GetAllCartItemsAsync(string username)
     {
-        throw new NotImplementedException();
+        if (authDao.GetUserAsync(username).Equals(null))
+        {
+            throw new Exception("Invalid Username. This user does not exist");
+        }
+
+        IEnumerable<CartOffer> cartOffers = await cartDao.GetAllCartItemsAsync(username);
+        return cartOffers;
+    }
+
+    public async Task DeleteAllCartOffersAsync(string username)
+    {
+        if (authDao.GetUserAsync(username).Equals(null))
+        {
+            throw new Exception("Invalid Username. This user does not exist");
+        }
+
+        await cartDao.DeleteAllCartOffersAsync(username);
     }
 }

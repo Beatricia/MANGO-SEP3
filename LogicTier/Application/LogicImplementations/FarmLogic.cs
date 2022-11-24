@@ -44,6 +44,11 @@ public class FarmLogic : IFarmLogic
         return farmToSend;
     }
 
+    public async Task<Farm> GetFarmByNameAsync(string farmName)
+    {
+        return await farmDao.GetFarmByNameAsync(farmName);
+    }
+
     private void ValidateData(FarmCreationDto dto)
     {
         //todo should we check this in here or with the rest of the check from the db fx. city...

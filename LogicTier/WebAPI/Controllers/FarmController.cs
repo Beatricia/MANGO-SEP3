@@ -38,4 +38,19 @@ public class FarmController : ControllerBase
         }
     }
     
+    [HttpGet]
+    public async Task<IActionResult> GetAsync([FromQuery]string farmName)
+    {
+        try
+        {
+            var farm = await farmLogic.GetFarmByNameAsync(farmName);
+            return Created($"/Farms", farm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
 }

@@ -16,22 +16,22 @@ public class OrderDaoImpl : IOrderDao
         this.offerService = offerService;
     }
     
-    public Task CreateOrderOffersAsync(List<OrderOffer> order)
+    public Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> order)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Order>> GetAllOrdersAsync(string Username)
+    public Task<IEnumerable<Shared.Models.Order>> GetAllOrdersAsync(string Username)
     {
         throw new NotImplementedException();
     }
 
-    public Task CreateOrdersAsync(IEnumerable<Order> orders)
+    public Task CreateOrdersAsync(IEnumerable<Shared.Models.Order> orders)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<OrderOffer>> GetOrdersOffersAsync(string username)
+    public Task<IEnumerable<Shared.Models.OrderOffer>> GetOrdersOffersAsync(string username)
     {
         throw new NotImplementedException();
     }

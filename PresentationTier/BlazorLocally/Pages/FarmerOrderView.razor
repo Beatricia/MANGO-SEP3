@@ -1,136 +1,82 @@
 ﻿@page "/FarmerOrderView"
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
-@using C1.Blazor.Core
-@using C1.Blazor.Grid
-@using C1.Blazor.Input
 @inject IOrderService orderService
 @inject IUserService userService
+
 <AuthorizeView>
     <div class="title">
         <h1>Orders</h1>
-        <div class="error">
-            @errorMessage
-        </div>
     </div>
     @if (orders == null)
     {
-        <span>Loading...</span>
+        <span>Loading..</span>
     }
     else if (orders.Any())
     {
         @if (deliveryOrders.Any())
         {
-            /* <div class="orders">
+            <div class="orders">
                 <label>Delivery</label>
                 <div class="ordersTable">
-                    <table class="mainTable">
-                        @foreach (var order in deliveryOrders)
-                        {
-                            TempOrder temp = new TempOrder
+                    @foreach (var order in pickUpOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="customerNameCell">@order.OrderOffers.First().Username</div>
+                            <div class="cityCell">@GetCustomer(order.OrderOffers.First().Username).Address.City</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                            <Table class="detailTable">
+                            <th class="AddressRow">
+                                @GetCustomer(order.OrderOffers.First().Username).Address?.ToString()
+                            </th>
+                            @foreach (var item in order.OrderOffers)
                             {
-                                IsOpen = false,
-                                Customer = GetCustomer(order.OrderOffers.First().Username).Result
-                            };
-                            <tr class="BigTableRow">
-                                <td class="nameCell">@(temp.Customer.Username)</td>
-                                <td class="phoneCell">@(temp.Customer.Address.City)</td>
-                                <td class="priceCell">@TotalPrice(order.OrderOffers) dkk</td>
-                                <td class="imgCell">
-                                    @if (!displayDetails)
-                                    {
-                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => temp.IsOpen = true)">
-                                    }
-                                    else
-                                    {
-                                        <img src="Img/upArrow.png" @onclick="@(() => temp.IsOpen = false)">
-                                    }
-                                </td>
-                            </tr>
-                            if (temp.IsOpen)
-                            {
-                                <Table>
-                                    @foreach (var item in order.OrderOffers)
-                                    {
-                                        <tr>
-                                            <td>@item.Offer.Name</td>
-                                            <td class="quantityCell">@item.Quantity</td>
-                                        </tr>
-                                    }
-                                </Table>
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
                             }
+                        </Table>
                         }
-                    </table>
                 </div>
-            </div> */
-            <FlexGrid ItemsSource="pickUpOrders" IsReadOnly="true" AutoGenerateColumns="false" HeadersVisibility="GridHeadersVisibility.All" VerticalScrollBarVisibility="ScrollBarVisibility.Visible">
-                    <FlexGridColumns>
-                        <GridColumn Binding="Id"></GridColumn>
-                        <GridColumn Binding="FarmName"></GridColumn>
-                        <GridColumn></GridColumn>
-                    </FlexGridColumns>
-                    <FlexGridBehaviors>
-                        <FlexGridDetailProvider TItem="Order" Height="250" DetailVisibilityMode="@GridDetailVisibilityMode.ExpandMultiple">
-                            @foreach (var item in @context.OrderOffers)
-                            {
-                                <div>
-                                    <div>@item.Offer.Name</div>
-                                    <div>@item.Quantity</div>
-                                </div>
-                            }
-                        </FlexGridDetailProvider>
-                    </FlexGridBehaviors>
-                </FlexGrid>
-            /* @if (pickUpOrders.Any())
+            </div>
+        }
+        @if (pickUpOrders.Any())
         {
             <div class="orders">
-                <label>Pick Up</label>
+                <label>Pick up</label>
                 <div class="ordersTable">
-                    <table class="mainTable">
-                        @foreach (var order in pickUpOrders)
-                        {
-                            TempOrder temp = new TempOrder
+                    @foreach (var order in deliveryOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="nameCell">@order.FarmName</div>
+                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                        <Table class="detailTable">
+                            <th></th>
+                            @foreach (var item in order.OrderOffers)
                             {
-                                IsOpen = false,
-                                Customer = GetCustomer(order.OrderOffers.First().Username).Result
-                            };
-                            <tr class="BigTableRow">
-                                <td class="nameCell">@(temp.Customer.Username)</td>
-                                <td class="farmNameCell">@(order.FarmName)</td>
-                                <td class="priceCell">@TotalPrice(order.OrderOffers) dkk</td>
-                                <td class="imgCell" @onclick="() => temp.IsOpen = !temp.IsOpen">
-                                    @if (!temp.IsOpen)
-                                    {
-                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => temp.IsOpen = true)">
-                                    }
-                                    else
-                                    {
-                                        <img src="Img/upArrow.png" @onclick="@(() => temp.IsOpen = false)">
-                                    }
-                                </td>
-                            </tr>
-                            if (temp.IsOpen)
-                            {
-                                <Table>
-                                    <tr class="AddressRow">
-                                        @GetFarmByName(order.FarmName).Address.ToString();
-                                    </tr>
-                                    @foreach (var item in order.OrderOffers)
-                                    {
-                                        <tr>
-                                            <td>@item.Offer.Name</td>
-                                            <td class="QuantityCell">@item.Quantity</td>
-                                        </tr>
-                                    }
-                                </Table>
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
                             }
-                        }
-                    </table>
+                        </Table>
+                    }
                 </div>
-            </div>*/
-    }
+            </div>
+        }
     }
 </AuthorizeView>
+
 
 
 @code {
@@ -139,17 +85,7 @@
     private List<Order> pickUpOrders = new List<Order>();
     private string msg = "";
     private string username;
-    private bool displayDetails;
-    string errorMessage = "";
-
-
-    /*class TempOrder
-    {
-        public bool IsOpen { get; set; }
-        public Order Order { get; set; }
-        public Customer Customer { get; set; }
-    }*/
-
+    
     protected override async Task OnInitializedAsync()
     {
     //var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
@@ -173,35 +109,18 @@
             {
                 deliveryOrders.Add(order);
             }
-            else if (order.CollectionOption.Equals("PickUp"))
+            else if(order.CollectionOption.Equals("PickUp"))
             {
                 pickUpOrders.Add(order);
             }
         }
     }
 
-    private string GetCustomerUsername(OrderOffer orderOffer)
+    private Customer GetCustomer(string username)
     {
-        return orderOffer.Username;
+        return userService.GetCustomer(username).Result;
     }
-
-    private async Task<Customer> GetCustomer(string customerUsername)
-    {
-        errorMessage = "";
-        try
-        {
-            Customer c = await userService.GetCustomer(customerUsername);
-            return c;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            errorMessage = e.Message;
-            throw;
-        }
-    }
-
-
+    
     private Farm GetFarmByName(string farmName)
     {
     //TODO implement GetFarmByName
@@ -232,5 +151,6 @@
 
         return totalPrice;
     }
+
 
 }

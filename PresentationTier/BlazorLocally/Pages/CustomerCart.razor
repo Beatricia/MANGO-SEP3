@@ -1,0 +1,62 @@
+﻿@page "/CustomerCart"
+
+<div class="greeting">
+<h4>SHOPPING CART</h4>
+</div>
+
+
+<button class="removeAllBtn" @onclick="RemoveAll">EMPTY CART</button>
+
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>QTY</th>
+		<th>Item</th>
+		<th>Collect Option</th>
+		<th>Farm</th>
+		<th>Price</th>
+	</tr>
+	</thead>
+	<tbody>
+	<!--@foreach (var item in cartItems)
+	{
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	}-->
+	</tbody>
+</table>
+
+<div class="totalPrice"><strong>Total price: </strong> 
+	<button class="orderBtn" @onclick="Order">ORDER NOW</button></div>
+
+@code {
+    private IEnumerable<String?> cartItems; <!--change string-->
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+           // cartItems = await HttpClient.GetAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+	private async Task RemoveAll()
+	{
+		
+	}
+
+	private async Task Order()
+	{
+		
+	}
+}

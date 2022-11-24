@@ -11,10 +11,15 @@ service OfferService{
   rpc CreateOffer(Offer) returns(Offer);
   rpc GetOffers(Void) returns(OfferItems);
 }
-
 service UserService{
   rpc RegisterUser(UserAuth) returns (User);
   rpc GetUserByUsername(Text) returns (User);
+}
+
+service CartOfferService{
+  rpc AddToCart(CartOffer) returns(Void);
+  rpc GetAllCartOffers(Username) returns(CartOffers);
+  rpc DeleteAllCartOffers(Username) returns(Void);
 }
 
 message UserAuth{
@@ -62,3 +67,19 @@ message Void{}
 message Text{
   string text = 1;
 }
+message CartOffer{
+  int32 id = 1;
+  int32 offerId = 2;
+  int32 quantity = 3;
+  string username = 4;
+  string collectionOption = 5;
+}
+
+message CartOffers{
+  repeated CartOffer cartOffers = 1;
+}
+
+message Username{
+  string username = 1;
+}
+

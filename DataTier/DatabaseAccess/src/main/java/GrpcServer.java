@@ -5,6 +5,7 @@ import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.stereotype.Service;
+import service.CartOfferServiceImpl;
 import service.FarmServiceImpl;
 import service.OfferServiceImpl;
 

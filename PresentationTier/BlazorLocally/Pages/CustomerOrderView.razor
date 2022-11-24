@@ -18,41 +18,29 @@
             <div class="orders">
                 <label>Pick Up</label>
                 <div class="ordersTable">
-                    <table class="mainTable">
-                        @foreach (var order in pickUpOrders)
-                        {
-                            <tr class="BigTableRow">
-                                <td class="nameCell">@order.FarmName</td>
-                                <td class="phoneCell">@GetFarmByName(order.FarmName).Phone</td>
-                                <td class="priceCell">@TotalPrice(order.OrderOffers) dkk</td>
-                                <td class="imgCell">
-                                    @if (!displayDetails)
-                                    {
-                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => displayDetails = true)">
-                                    }
-                                    else
-                                    {
-                                        <img src="Img/upArrow.png" @onclick="@(() => displayDetails = false)">
-                                    }
-                                </td>
-                            </tr>
-                            if (displayDetails)
+                    @foreach (var order in pickUpOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="nameCell">@order.FarmName</div>
+                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                            <Table class="detailTable">
+                            <th class="AddressRow">
+                                @GetFarmByName(order.FarmName).Address.ToString()
+                            </th>
+                            @foreach (var item in order.OrderOffers)
                             {
-                                <Table>
-                                    <tr class="AddressRow">
-                                        @GetFarmByName(order.FarmName).Address.ToString();
-                                    </tr>
-                                    @foreach (var item in order.OrderOffers)
-                                    {
-                                        <tr>
-                                            <td>@item.Offer.Name</td>
-                                            <td class="QuantityCell">@item.Quantity</td>
-                                        </tr>
-                                    }
-                                </Table>
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
                             }
+                        </Table>
                         }
-                    </table>
                 </div>
             </div>
         }
@@ -61,38 +49,27 @@
             <div class="orders">
                 <label>Delivery</label>
                 <div class="ordersTable">
-                    <table class="mainTable">
-                        @foreach (var order in deliveryOrders)
-                        {
-                            <tr class="BigTableRow">
-                                <td class="nameCell">@order.FarmName</td>
-                                <td class="phoneCell">@GetFarmByName(order.FarmName).Phone</td>
-                                <td class="priceCell">@TotalPrice(order.OrderOffers) dkk</td>
-                                <td class="imgCell">
-                                    @if (!displayDetails)
-                                    {
-                                        <img src="Img/upArrow.png" style="transform: rotate(180deg)" @onclick="@(() => displayDetails = true)">
-                                    }
-                                    else
-                                    {
-                                        <img src="Img/upArrow.png" @onclick="@(() => displayDetails = false)">
-                                    }
-                                </td>
-                            </tr>
-                            if (displayDetails)
+                    @foreach (var order in deliveryOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="nameCell">@order.FarmName</div>
+                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                        <Table class="detailTable">
+                            <th></th>
+                            @foreach (var item in order.OrderOffers)
                             {
-                                <Table>
-                                    @foreach (var item in order.OrderOffers)
-                                    {
-                                        <tr>
-                                            <td>@item.Offer.Name</td>
-                                            <td class="quantityCell">@item.Quantity</td>
-                                        </tr>
-                                    }
-                                </Table>
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
                             }
-                        }
-                    </table>
+                        </Table>
+                    }
                 </div>
             </div>
         }
@@ -105,7 +82,6 @@
     private List<Order> pickUpOrders = new List<Order>();
     private string msg = "";
     private string username;
-    private bool displayDetails;
     
     protected override async Task OnInitializedAsync()
     {

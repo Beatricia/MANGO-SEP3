@@ -75,10 +75,11 @@ public final class Contract {
       "Text\022\014\n\004text\030\001 \001(\t2)\n\013FarmService\022\032\n\nCre" +
       "ateFarm\022\005.Farm\032\005.Farm2N\n\014OfferService\022\035\n" +
       "\013CreateOffer\022\006.Offer\032\006.Offer\022\037\n\tGetOffer" +
-      "s\022\005.Void\032\013.OfferItems2R\n\013UserService\022 \n\014" +
-      "RegisterUser\022\t.UserAuth\032\005.User\022!\n\021GetUse" +
-      "rByUsername\022\005.Text\032\005.UserB&\n\"mango.sep3." +
-      "databaseaccess.protobufP\001b\006proto3"
+      "s\022\005.Void\032\013.OfferItems2q\n\013UserService\022\035\n\t" +
+      "LoginUser\022\t.UserAuth\032\005.User\022 \n\014RegisterU" +
+      "ser\022\t.UserAuth\032\005.User\022!\n\021GetUserByUserna" +
+      "me\022\005.Text\032\005.UserB&\n\"mango.sep3.databasea" +
+      "ccess.protobufP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

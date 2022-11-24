@@ -1,4 +1,6 @@
-﻿namespace Application.DAOInterfaces;
+﻿using Shared.Models;
+
+namespace Application.DAOInterfaces;
 
 /// <summary>
 /// Access to the available icons to the farm
@@ -8,12 +10,19 @@ public interface IFarmIconDao
     /// <summary>
     /// Gets all the available icons
     /// </summary>
-    public ICollection<string> AllIcons { get; }
+    public ICollection<FarmIcon> AllIcons { get; }
 
     /// <summary>
     /// Gets the default icon
     /// </summary>
-    public string DefaultIcon { get; }
+    public FarmIcon DefaultIcon { get; }
+
+    /// <summary>
+    /// Creates an icon object from the file name
+    /// </summary>
+    /// <param name="icon"></param>
+    /// <returns></returns>
+    public FarmIcon CreateIcon(string icon);
 
     /// <summary>
     /// Gets if the icon is available or not

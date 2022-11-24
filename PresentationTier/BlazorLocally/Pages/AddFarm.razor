@@ -4,6 +4,7 @@
 @using System.Text.RegularExpressions
 @using BlazorLocally.Utils
 @using global::Shared.DTOs
+@using global::Shared.Models
 @inject IJSRuntime JsRuntime
 @inject IFarmService farmService
 @inject ApiInformation ApiInformation
@@ -46,17 +47,15 @@
             <div>
                 <div class="image-container" title="Upload an image">
                     <label for="image">
-                        <img src="@iconToLoad" width="200" height="200">
+                        <img src="@(selectedIconUrl)" width="200" height="200">
                     </label>
                     @if (icons is not null)
                     {
                         <select @onchange="(eventArgs) => SelectIcon(eventArgs.Value)">
-                            @foreach (var image in icons)
+                            @foreach (var icon in icons)
                             {
-                                var displayValue = image[(image.LastIndexOf("/") + 1)..];
-                                displayValue = displayValue[0..displayValue.IndexOf(".", StringComparison.Ordinal)].Replace('-', ' ');
                                 
-                                <option value="@image">@displayValue</option>
+                                <option value="@icon.FileName">@icon.IconName</option>
                             }
                         </select>
                     }
@@ -81,10 +80,9 @@
     private string zipClasses = string.Empty;
     private string phoneClasses = string.Empty;
 
-    private ICollection<string>? icons;
-    private string selectedIconName = "";
-    private string iconToLoad = "";
-    private string selectedIcon = "";
+    private ICollection<FarmIcon>? icons;
+    private FarmIcon? selectedIcon;
+    private string? selectedIconUrl = "";
 
     private void SelectIcon(object? obj)
     {
@@ -92,9 +90,11 @@
         {
             return;
         }
-
-        iconToLoad = ApiInformation.BaseAddress + icon;
-        selectedIcon = icon;
+        
+        FarmIcon selected = icons.First(i => i.FileName == icon);
+        
+        selectedIcon = selected;
+        selectedIconUrl = selectedIcon.AbsoluteUrl;
     }
 
     protected override async Task OnInitializedAsync()
@@ -102,14 +102,15 @@
         try
         {
             var tempIcons = (await farmService.GetAllIconsAsync()).ToList();
-            var defaultIcon = tempIcons.First(icon => icon.Contains("default.png"));
+            
+            var defaultIcon = tempIcons.First(icon => icon.FileName == "default.png");
 
             tempIcons.Remove(defaultIcon);
             tempIcons.Insert(0, defaultIcon);
 
             icons = tempIcons;
             
-            SelectIcon(defaultIcon);
+            SelectIcon("default.png");
         }
         catch (Exception e)
         {
@@ -137,7 +138,7 @@
             Phone = phone,
             DeliveryDistance = deliveryDistance,
             FarmStatus = status,
-            FarmIcon = selectedIcon
+            FarmIconFileName = selectedIcon.FileName
         };
         
         await farmService.CreateAsync(farmCreationDto);
@@ -175,6 +176,7 @@
             errorMessage = "Invalid phone number. Please use a valid format, for example +45012345678";
         }
         else phoneClasses = "";*/
+        
 
 
         if (errorMessage is not null)

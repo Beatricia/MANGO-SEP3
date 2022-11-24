@@ -28,7 +28,7 @@ public class FarmHttpClient : IFarmService
         }
     }
 
-    public async Task<ICollection<string>> GetAllIconsAsync()
+    public async Task<ICollection<FarmIcon>> GetAllIconsAsync()
     {
         var response = await client.GetAsync("/farm/icons");
         var content = await response.Content.ReadAsStringAsync();
@@ -37,7 +37,12 @@ public class FarmHttpClient : IFarmService
         {
             throw new Exception(content);
         }
+
+        var deserialized = JsonSerializer.Deserialize<ICollection<FarmIcon>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
         
-        return JsonSerializer.Deserialize<ICollection<string>>(content) ?? new List<string>(); 
+        return deserialized ?? new List<FarmIcon>(); 
     }
 }

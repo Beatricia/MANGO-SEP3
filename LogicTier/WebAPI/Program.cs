@@ -32,7 +32,8 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(grpcOptions);
 builder.Services.AddScoped<IAuthDao, AuthDaoImpl>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 
-builder.Services.AddScoped<IFarmIconDao, FarmIconResource>();
+builder.Services.AddTransient<IFarmIconDao, FarmIconResource>();
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();

@@ -15,5 +15,9 @@ public class FarmCreationDto
     public int DeliveryDistance { get; set; }
     
     public string? FarmStatus { get; set; }
-    public string? FarmIcon { get; set; }
+    
+    /// <summary>
+    /// File name of the image (for example: "default.png")
+    /// </summary>
+    public string? FarmIconFileName { get; set; }
 }

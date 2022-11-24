@@ -22,7 +22,7 @@ public class FarmDaoImpl : IFarmDao
             City = farm.Address.City,
             DeliveryDistance = farm.DeliveryDistance,
             FarmStatus = farm.FarmStatus,
-            IconPath = farm.FarmIcon
+            IconPath = farm.FarmIcon.FileName,
         };
 
         _ = await farmServiceClient.CreateFarmAsync(toCreate);

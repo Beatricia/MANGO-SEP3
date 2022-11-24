@@ -27,8 +27,12 @@ public class FarmLogic : IFarmLogic
         ValidateData(dto);
 
         // assign the default icon if the user didn't specify one
-        if (!farmIconDao.isValidIcon(dto.FarmIcon))
-            dto.FarmIcon = farmIconDao.DefaultIcon;
+        FarmIcon icon;
+        if (!farmIconDao.isValidIcon(dto.FarmIconFileName))
+            icon = farmIconDao.DefaultIcon;
+        else
+            icon = farmIconDao.CreateIcon(dto.FarmIconFileName!);
+        
         
         Farm farmToSend = new Farm
         {
@@ -42,7 +46,7 @@ public class FarmLogic : IFarmLogic
                 ZIP = dto.ZIP,
                 Street = dto.Address
             },
-            FarmIcon = dto.FarmIcon
+            FarmIcon = icon
         };
 
         await farmDao.CreateAsync(farmToSend);
@@ -51,7 +55,7 @@ public class FarmLogic : IFarmLogic
     }
 
     /// <inheritdoc/>
-    public ICollection<string> GetAllIcons() => farmIconDao.AllIcons;
+    public ICollection<FarmIcon> GetAllIcons() => farmIconDao.AllIcons;
 
     private void ValidateData(FarmCreationDto dto)
     {

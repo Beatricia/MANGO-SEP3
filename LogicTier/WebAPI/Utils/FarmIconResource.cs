@@ -1,4 +1,5 @@
 ﻿using Application.DAOInterfaces;
+using Shared.Models;
 
 namespace WebAPI.Utils;
 
@@ -15,41 +16,80 @@ public class FarmIconResource : IFarmIconDao
     // this is the route to the icon when you are using the api
     private const string DisplayFolder = "/images/farmicons/";
 
+    // filename.extension, for example ["default.png", "happy-cow.png"]
+    private static ICollection<string>? allIcons;
 
-    private ICollection<string>? icons;
 
+    private readonly HttpRequest request;
+    public FarmIconResource(IHttpContextAccessor context)
+    {
+        request = context.HttpContext.Request; 
+    }
+    
+    
     //   if the 'icons' is not null, returns the 'icons', if it is null, then reads all the icons from the folder,
     //   assigns them to the 'icons' and returns them
     /// <inheritdoc/>
-    public ICollection<string> AllIcons => icons ??= ReadAllIcons();
+    public ICollection<FarmIcon> AllIcons
+    {
+        get
+        {
+            allIcons ??= ReadAllIcons();
+
+            ICollection<FarmIcon> icons = allIcons.Select(CreateIcon).ToList();
+
+            return icons;
+        }
+    }
+
     /// <inheritdoc/>
-    public string DefaultIcon => Path.Combine(DisplayFolder, "default.png");
+    public FarmIcon DefaultIcon => CreateIcon("default.png");//Path.Combine(DisplayFolder, "default.png");
     
     
     /// <inheritdoc/>
-    public bool isValidIcon(string? icon)
+    public bool isValidIcon(string? iconFile)
     {
         // check if icon is null
-        if (icon is null)
+        if (iconFile is null)
             return false;
         
-        // check if icon is in the AllIcons
-        return AllIcons.Contains(icon);
+        return allIcons?.Contains(iconFile) ?? false;
+    }
+    
+    
+    /// <summary>
+    /// Creates a farm icon object from the file name
+    /// </summary>
+    /// <param name="icon"></param>
+    /// <returns></returns>
+    public FarmIcon CreateIcon(string icon)
+    {
+        string iconName = icon[..icon.LastIndexOf(".", StringComparison.Ordinal)].Replace('-', ' ');
+        
+        return new()
+        {
+            IconName = iconName,
+            FileName = icon,
+            AbsoluteUrl = request.Scheme + "://" + request.Host + DisplayFolder + icon
+        };
     }
 
 
-    private ICollection<string> ReadAllIcons()
+    /// <summary>
+    /// Returns all the png file names and extension from the BaseFolder.
+    /// </summary>
+    /// <returns></returns>
+    private static ICollection<string> ReadAllIcons()
     {
         Directory.CreateDirectory(BaseFolder);
         
         // get all farm icons from wwwroot/images/farmicons
-        ICollection<string> icons = Directory.GetFiles(BaseFolder, "*.png", SearchOption.TopDirectoryOnly)
+        ICollection<string> iconsTemp = Directory.GetFiles(BaseFolder, "*.png", SearchOption.TopDirectoryOnly)
             .Select(Path.GetFileName)
             .Where(path => path is not null)
             .Cast<string>()
-            .Select(path => Path.Combine(DisplayFolder, path))
             .ToList();
 
-        return icons;
+        return iconsTemp;
     }
 }

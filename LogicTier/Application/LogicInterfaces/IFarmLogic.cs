@@ -16,5 +16,5 @@ public interface IFarmLogic
     /// Returns all the available icons.
     /// </summary>
     /// <returns></returns>
-    ICollection<string> GetAllIcons();
+    ICollection<FarmIcon> GetAllIcons();
 }

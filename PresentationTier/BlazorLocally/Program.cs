@@ -11,7 +11,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new System.Net.Http.HttpClient { BaseAddress = new Uri("https://localhost:7086") });
 builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
-builder.Services.AddScoped<IAuthService, AuthHttpClient>();
+builder.Services.AddScoped<IOrderService,OrderHttpClient>();
 
 
 await builder.Build().RunAsync();

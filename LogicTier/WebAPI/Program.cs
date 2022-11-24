@@ -26,6 +26,8 @@ builder.Services.AddScoped<IFarmLogic, FarmLogic>();
 builder.Services.AddGrpcClient<OfferService.OfferServiceClient>(grpcOptions);
 builder.Services.AddScoped<IOfferDao, OfferDaoImpl>();
 builder.Services.AddScoped<IOfferLogic,OfferLogic>();
+builder.Services.AddScoped<IOrderLogic, OrderLogic>();
+builder.Services.AddScoped<IOrderDao, OrderDaoImpl>();
 
 builder.Services.AddGrpcClient<UserService.UserServiceClient>(grpcOptions);
 builder.Services.AddScoped<IAuthDao, AuthDaoImpl>();

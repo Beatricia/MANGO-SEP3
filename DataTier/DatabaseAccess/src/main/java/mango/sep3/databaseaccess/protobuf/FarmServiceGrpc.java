@@ -15,34 +15,65 @@ public final class FarmServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Farm,
-      mango.sep3.databaseaccess.protobuf.Farm> getCreateFarmMethod;
+      mango.sep3.databaseaccess.protobuf.Void> getCreateFarmMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateFarm",
       requestType = mango.sep3.databaseaccess.protobuf.Farm.class,
-      responseType = mango.sep3.databaseaccess.protobuf.Farm.class,
+      responseType = mango.sep3.databaseaccess.protobuf.Void.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Farm,
-      mango.sep3.databaseaccess.protobuf.Farm> getCreateFarmMethod() {
-    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Farm, mango.sep3.databaseaccess.protobuf.Farm> getCreateFarmMethod;
+      mango.sep3.databaseaccess.protobuf.Void> getCreateFarmMethod() {
+    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Farm, mango.sep3.databaseaccess.protobuf.Void> getCreateFarmMethod;
     if ((getCreateFarmMethod = FarmServiceGrpc.getCreateFarmMethod) == null) {
       synchronized (FarmServiceGrpc.class) {
         if ((getCreateFarmMethod = FarmServiceGrpc.getCreateFarmMethod) == null) {
           FarmServiceGrpc.getCreateFarmMethod = getCreateFarmMethod =
-              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.Farm, mango.sep3.databaseaccess.protobuf.Farm>newBuilder()
+              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.Farm, mango.sep3.databaseaccess.protobuf.Void>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateFarm"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   mango.sep3.databaseaccess.protobuf.Farm.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  mango.sep3.databaseaccess.protobuf.Farm.getDefaultInstance()))
+                  mango.sep3.databaseaccess.protobuf.Void.getDefaultInstance()))
               .setSchemaDescriptor(new FarmServiceMethodDescriptorSupplier("CreateFarm"))
               .build();
         }
       }
     }
     return getCreateFarmMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Text,
+      mango.sep3.databaseaccess.protobuf.Farm> getGetFarmMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetFarm",
+      requestType = mango.sep3.databaseaccess.protobuf.Text.class,
+      responseType = mango.sep3.databaseaccess.protobuf.Farm.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Text,
+      mango.sep3.databaseaccess.protobuf.Farm> getGetFarmMethod() {
+    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Text, mango.sep3.databaseaccess.protobuf.Farm> getGetFarmMethod;
+    if ((getGetFarmMethod = FarmServiceGrpc.getGetFarmMethod) == null) {
+      synchronized (FarmServiceGrpc.class) {
+        if ((getGetFarmMethod = FarmServiceGrpc.getGetFarmMethod) == null) {
+          FarmServiceGrpc.getGetFarmMethod = getGetFarmMethod =
+              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.Text, mango.sep3.databaseaccess.protobuf.Farm>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetFarm"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  mango.sep3.databaseaccess.protobuf.Text.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  mango.sep3.databaseaccess.protobuf.Farm.getDefaultInstance()))
+              .setSchemaDescriptor(new FarmServiceMethodDescriptorSupplier("GetFarm"))
+              .build();
+        }
+      }
+    }
+    return getGetFarmMethod;
   }
 
   /**
@@ -96,8 +127,15 @@ public final class FarmServiceGrpc {
     /**
      */
     public void createFarm(mango.sep3.databaseaccess.protobuf.Farm request,
-        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farm> responseObserver) {
+        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateFarmMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void getFarm(mango.sep3.databaseaccess.protobuf.Text request,
+        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farm> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetFarmMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -107,8 +145,15 @@ public final class FarmServiceGrpc {
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
                 mango.sep3.databaseaccess.protobuf.Farm,
-                mango.sep3.databaseaccess.protobuf.Farm>(
+                mango.sep3.databaseaccess.protobuf.Void>(
                   this, METHODID_CREATE_FARM)))
+          .addMethod(
+            getGetFarmMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                mango.sep3.databaseaccess.protobuf.Text,
+                mango.sep3.databaseaccess.protobuf.Farm>(
+                  this, METHODID_GET_FARM)))
           .build();
     }
   }
@@ -130,9 +175,17 @@ public final class FarmServiceGrpc {
     /**
      */
     public void createFarm(mango.sep3.databaseaccess.protobuf.Farm request,
-        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farm> responseObserver) {
+        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCreateFarmMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getFarm(mango.sep3.databaseaccess.protobuf.Text request,
+        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farm> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetFarmMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -152,9 +205,16 @@ public final class FarmServiceGrpc {
 
     /**
      */
-    public mango.sep3.databaseaccess.protobuf.Farm createFarm(mango.sep3.databaseaccess.protobuf.Farm request) {
+    public mango.sep3.databaseaccess.protobuf.Void createFarm(mango.sep3.databaseaccess.protobuf.Farm request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateFarmMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public mango.sep3.databaseaccess.protobuf.Farm getFarm(mango.sep3.databaseaccess.protobuf.Text request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetFarmMethod(), getCallOptions(), request);
     }
   }
 
@@ -174,14 +234,23 @@ public final class FarmServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Farm> createFarm(
+    public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Void> createFarm(
         mango.sep3.databaseaccess.protobuf.Farm request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateFarmMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Farm> getFarm(
+        mango.sep3.databaseaccess.protobuf.Text request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetFarmMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_FARM = 0;
+  private static final int METHODID_GET_FARM = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -202,6 +271,10 @@ public final class FarmServiceGrpc {
       switch (methodId) {
         case METHODID_CREATE_FARM:
           serviceImpl.createFarm((mango.sep3.databaseaccess.protobuf.Farm) request,
+              (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void>) responseObserver);
+          break;
+        case METHODID_GET_FARM:
+          serviceImpl.getFarm((mango.sep3.databaseaccess.protobuf.Text) request,
               (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farm>) responseObserver);
           break;
         default:
@@ -266,6 +339,7 @@ public final class FarmServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new FarmServiceFileDescriptorSupplier())
               .addMethod(getCreateFarmMethod())
+              .addMethod(getGetFarmMethod())
               .build();
         }
       }

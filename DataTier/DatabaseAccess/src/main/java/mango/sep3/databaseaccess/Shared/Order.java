@@ -12,18 +12,16 @@ public class Order
   @Column(name = "orderId")
   private int id;
 
-  @ManyToMany
-  @JoinTable(
-      name = "orderOffers",
-      joinColumns = @JoinColumn(name = "orderId"),
-      inverseJoinColumns = @JoinColumn(name = "offerId")
-  )
+  @OneToMany(mappedBy = "order")
   private Set<OrderOffer> orderOffers;
 
+  @Column
   private boolean isDone;
 
+  @Column
   private String farmName;
 
+  @Column
   private String collectionOption;
 
   public int getId()

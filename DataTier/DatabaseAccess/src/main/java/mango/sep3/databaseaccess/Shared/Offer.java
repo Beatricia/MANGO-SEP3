@@ -47,9 +47,6 @@ public class Offer implements Serializable
     @JoinColumn(name = "farmId", nullable = false)
     private Farm farm;
 
-    @ManyToMany(mappedBy = "orderOffers")
-    private Set<Order> orders;
-
     @OneToMany(mappedBy="offer")
     private Set<OrderOffer> orderOffers;
 
@@ -175,13 +172,4 @@ public class Offer implements Serializable
         this.price = price;
     }
 
-    public Set<Order> getOrders()
-    {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders)
-    {
-        this.orders = orders;
-    }
 }

@@ -11,15 +11,13 @@ import java.util.Set;
   private int id;
 
   @ManyToOne
-  @JoinColumn(name="offerId", nullable=false)
+  @JoinColumn(name="offerId")
   private Offer offer;
 
-  @ManyToMany
-  @JoinTable(
-      name = "order",
-      joinColumns = @JoinColumn(name = "offerId"),
-      inverseJoinColumns = @JoinColumn(name = "orderId"))
-  private Set<Order> orders;
+  @ManyToOne
+  @JoinColumn(name="orderId")
+  private Order order;
+
 
   @Column(name = "quantity")
   private int quantity;
@@ -80,13 +78,13 @@ import java.util.Set;
     this.collectionOption = collectionOption;
   }
 
-  public Set<Order> getOrders()
+  public Order getOrder()
   {
-    return orders;
+    return order;
   }
 
-  public void setOrders(Set<Order> orders)
+  public void setOrder(Order order)
   {
-    this.orders = orders;
+    this.order = order;
   }
 }

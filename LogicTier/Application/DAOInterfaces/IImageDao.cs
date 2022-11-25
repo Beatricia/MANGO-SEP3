@@ -1,4 +1,6 @@
-﻿namespace Application.DAOInterfaces;
+﻿using Shared.Models;
+
+namespace Application.DAOInterfaces;
 
 public interface IImageDao
 {
@@ -16,5 +18,5 @@ public interface IImageDao
     /// </summary>
     /// <param name="offerId"></param>
     /// <returns></returns>
-    public string CreateRelativePathOffer(int offerId);
+    public Image CreateRelativePathOffer(int offerId);
 }

@@ -4,6 +4,9 @@
 @inject IOfferService httpClient
 @using System.Reflection.Metadata
 @using HttpClient.ClientInterfaces
+@using Microsoft.Extensions.Options
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
 
 
 <h3>CreateOffer</h3>
@@ -16,18 +19,18 @@
     <!--image-->
     <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0"> 
         <div class=" d-flex flex-column">
-            <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img col-3 me-4"/>
-            <input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>
-            <InputFile OnChange="args => file = args.File"></InputFile>
+            <img id="image" src="Img/sample-offer.png" alt="default" width="200px" height="auto" class="img col-3 me-4"/>
+            @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
+            <InputFile OnChange="GetImage"></InputFile>
         </div>
-</div>
+    </div>
     
     <div class="col-6" >
-            <label>Quantity <span class="required">*</span></label>
+        <label>Quantity <span class="required">*</span></label>
             
-            <div class="col-9 d-flex flex-nowrap">
+        <div class="col-9 d-flex flex-nowrap">
             <input type="text" @bind="quantity" required="required" />
-             <!--dropdown menu-->
+            <!--dropdown menu-->
             <div class="dropdown col-2 ms-1">
                 <button onclick="@(() => DropDownVisible())" class="dropbtn">@unit</button>
                 <div id="myDropdown" class="dropdown-content" style="display: @displayDropdown">
@@ -35,8 +38,8 @@
                     <span onclick="@(() => SetUnit("l"))">l</span>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
         
        
     
@@ -88,6 +91,17 @@
     private string displayDropdown = "none";
 
     private IBrowserFile? file;
+    private string? blobUri;
+    private Lazy<IJSObjectReference> ExampleModule = new();
+
+
+    private async Task GetImage(InputFileChangeEventArgs args)
+    {
+        file = args.File;
+
+        var dotnetImageStream = new DotNetStreamReference(file.OpenReadStream(15_000_000L));
+        await JSRuntime.InvokeVoidAsync("setImage", "image", dotnetImageStream);
+    }
 
 
     ///summary///
@@ -99,7 +113,6 @@
         {
             if (file is null)
             {
-                
                 return;
             }
             
@@ -116,6 +129,8 @@
             var offer = await httpClient.CreateAsync(dto);
             if(offer is not null)
                 await httpClient.UploadImageAsync(file, offer.Id);
+            
+            
         }
         catch (Exception e)
         {
@@ -176,6 +191,19 @@
     private void ValidateData()
     {
         //check if required fields are empty nothing too bad
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if(ExampleModule.IsValueCreated)
+        {
+            await ExampleModule.Value.DisposeAsync();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        ExampleModule = new(await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/CreateOffer.razor.js"));
     }
 
 }

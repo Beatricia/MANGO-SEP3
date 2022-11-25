@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorLocally;
 using HttpClient.ClientImplementations;
 using HttpClient.ClientInterfaces;
+using SoloX.BlazorJsBlob;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -13,6 +14,9 @@ builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
 
+// https://github.com/xaviersolau/BlazorJsBlob
+// we use this for images
+builder.Services.AddJsBlob();
 
 await builder.Build().RunAsync();
 

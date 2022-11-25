@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
+using Shared.Models;
 using WebAPI.Utils;
 
 namespace WebAPI.Controllers;
@@ -44,30 +45,30 @@ public class OfferController : ControllerBase
     [HttpPost("{id:int}/image")]
     public async Task<IActionResult> UploadImage([FromRoute] int id)
     {
-        if(!Request.HasFormContentType)
+        if (!Request.HasFormContentType)
             return BadRequest("Not a form content type");
-        
-        if(Request.Form.Files.Count == 0)
+
+        if (Request.Form.Files.Count == 0)
             return BadRequest("No files in form");
 
         // TODO: check if the current user owns this offer
-        
-        
+
+
         string folder = "wwwroot/images/offers";
         Directory.CreateDirectory(folder);
-        
+
         var file = Request.Form.Files[0];
-        string fileName = imageResource.CreateRelativePathOffer(id);
+        Image image = imageResource.CreateRelativePathOffer(id);
 
-        await imageResource.SaveImageAsync(imageResource.OfferImages, fileName, file);
+        await imageResource.SaveImageAsync(imageResource.OfferImages, image.RelativeUrl, file);
 
-        
+
         // check if the file is an image
-        await imageResource.CheckImageAsync(imageResource.OfferImages, fileName);
+        await imageResource.CheckImageAsync(imageResource.OfferImages, image.RelativeUrl);
 
         return Ok();
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAsync()
     {

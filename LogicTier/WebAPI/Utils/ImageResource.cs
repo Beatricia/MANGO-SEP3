@@ -24,8 +24,13 @@ public class ImageResource : IImageDao
     /// <param name="image"></param>
     public async Task SaveImageAsync(string folder, string filename, IFormFile image)
     {
+        string path = Path.Join(BaseFolder, folder, filename);
+        
+        
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        
         // saves an image as a png
-        await using var fs = new FileStream(Path.Combine(BaseFolder, folder, filename), FileMode.Create);
+        await using var fs = new FileStream(path, FileMode.Create);
         using Image bitmap = Bitmap.FromStream(image.OpenReadStream()); // please use windows, thanks
         await Task.Run(() => bitmap.Save(fs, ImageFormat.Png));// if you made it to this line, please use windows again, thanks
     }
@@ -38,7 +43,7 @@ public class ImageResource : IImageDao
     /// <exception cref="Exception"></exception>
     public async Task CheckImageAsync(string folder, string filename)
     {
-        string path = Path.Join(folder, filename);
+        string path = Path.Join(BaseFolder, folder, filename);
         
         await using var checkFs = new FileStream(path, FileMode.Open);
         
@@ -73,8 +78,15 @@ public class ImageResource : IImageDao
         return $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/{path}";
     }
 
-    public string CreateRelativePathOffer(int offerId)
+    public Shared.Models.Image CreateRelativePathOffer(int offerId)
     {
-        return Path.Join(OfferImages, $"{offerId}.png");
+        string relativePath = Path.Join(OfferImages, $"{offerId}.png");
+        var image = new Shared.Models.Image
+        {
+            RelativeUrl = relativePath,
+            AbsoluteUrl = GetAbsoluteUrl(relativePath)
+        };
+        
+        return image;
     }
 }

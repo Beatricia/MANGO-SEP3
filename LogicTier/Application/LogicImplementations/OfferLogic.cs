@@ -32,13 +32,9 @@ public class OfferLogic : IOfferLogic
     public async Task<Offer> CreateAsync(OfferCreationDto dto)
     {
         ValidateData(dto);
-        var id = 1;
-
-        //TODO make correct id 
 
         Offer offerToSend = new Offer
         {
-            Id = id,
             Name = dto.Name,
             Quantity = dto.Quantity,
             Unit = dto.Unit,
@@ -49,7 +45,7 @@ public class OfferLogic : IOfferLogic
             Description = dto.Description,
             Image = new Image()
             {
-                RelativeUrl = imageDao.CreateRelativePathOffer(id),
+                RelativeUrl = ""
             }
         };
 
@@ -100,6 +96,5 @@ public class OfferLogic : IOfferLogic
         {
             throw new Exception("Price must be bigger than 0!");
         }
-
     }
 }

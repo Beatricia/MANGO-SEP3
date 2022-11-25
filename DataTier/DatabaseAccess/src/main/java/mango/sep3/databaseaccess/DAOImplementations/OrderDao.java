@@ -5,10 +5,11 @@ import mango.sep3.databaseaccess.Repositories.OrderOfferRepository;
 import mango.sep3.databaseaccess.Repositories.OrderRepository;
 import mango.sep3.databaseaccess.Shared.Order;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class OrderDao implements OrderDaoInterface
 {
@@ -39,7 +40,14 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public Collection<Order> getAllOrders(String username)
   {
+    Collection<OrderOffer> orderOffers = orderOfferRepository.findAllByUsername(username);
 
-    return null;
+    List<Integer> order_ids = new ArrayList<>();
+
+    for (var orderOffer: orderOffers)
+    {
+      order_ids.add(orderOffer.getOrder().getId());
+    }
+    return orderRepository.findAllById(order_ids);
   }
 }

@@ -32,6 +32,10 @@ public class Farm implements Serializable
     @OneToMany(mappedBy = "farm")
     private Set<Offer> offers;
 
+    @ManyToOne
+    @JoinColumn(name="farmer", nullable=false)
+    private Farmer farmer;
+
     public Farm()
     {}
 

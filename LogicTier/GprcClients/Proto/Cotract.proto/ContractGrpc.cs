@@ -48,12 +48,12 @@ public static partial class FarmService
   static readonly grpc::Marshaller<global::Farm> __Marshaller_Farm = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Farm.Parser));
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Method<global::Farm, global::Farm> __Method_CreateFarm = new grpc::Method<global::Farm, global::Farm>(
+  static readonly grpc::Method<global::Farm, global::Void> __Method_CreateFarm = new grpc::Method<global::Farm, global::Void>(
       grpc::MethodType.Unary,
       __ServiceName,
       "CreateFarm",
       __Marshaller_Farm,
-      __Marshaller_Farm);
+      __Marshaller_Void);
 
   /// <summary>Service descriptor</summary>
   public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -89,22 +89,22 @@ public static partial class FarmService
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Farm CreateFarm(global::Farm request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::Void CreateFarm(global::Farm request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return CreateFarm(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Farm CreateFarm(global::Farm request, grpc::CallOptions options)
+    public virtual global::Void CreateFarm(global::Farm request, grpc::CallOptions options)
     {
       return CallInvoker.BlockingUnaryCall(__Method_CreateFarm, null, options, request);
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Farm> CreateFarmAsync(global::Farm request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::Void> CreateFarmAsync(global::Farm request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return CreateFarmAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Farm> CreateFarmAsync(global::Farm request, grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::Void> CreateFarmAsync(global::Farm request, grpc::CallOptions options)
     {
       return CallInvoker.AsyncUnaryCall(__Method_CreateFarm, null, options, request);
     }
@@ -300,6 +300,8 @@ public static partial class UserService
   static readonly grpc::Marshaller<global::UserAuth> __Marshaller_UserAuth = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::UserAuth.Parser));
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
   static readonly grpc::Marshaller<global::User> __Marshaller_User = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.Parser));
+  [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+  static readonly grpc::Marshaller<global::Void> __Marshaller_Void = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Void.Parser));
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
   static readonly grpc::Marshaller<global::Text> __Marshaller_Text = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Text.Parser));
 

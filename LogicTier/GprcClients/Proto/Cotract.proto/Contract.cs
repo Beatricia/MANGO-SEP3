@@ -47,7 +47,7 @@ public static partial class ContractReflection {
           "IAEoCRIRCglmaXJzdG5hbWUYAiABKAkSEAoIbGFzdG5hbWUYAyABKAkiNAoH",
           "QWRkcmVzcxIMCgRjaXR5GAEgASgJEg4KBnN0cmVldBgCIAEoCRILCgN6aXAY",
           "AyABKAkiBgoEVm9pZCIUCgRUZXh0EgwKBHRleHQYASABKAkyQgoLRmFybVNl",
-          "cnZpY2USGgoKQ3JlYXRlRmFybRIFLkZhcm0aBS5GYXJtEhcKB0dldEZhcm0S",
+          "cnZpY2USGgoKQ3JlYXRlRmFybRIFLkZhcm0aBS5Wb2lkEhcKB0dldEZhcm0S",
           "BS5UZXh0GgUuRmFybTJOCgxPZmZlclNlcnZpY2USHQoLQ3JlYXRlT2ZmZXIS",
           "Bi5PZmZlchoGLk9mZmVyEh8KCUdldE9mZmVycxIFLlZvaWQaCy5PZmZlckl0",
           "ZW1zMnMKC1VzZXJTZXJ2aWNlEiAKDFJlZ2lzdGVyVXNlchIJLlVzZXJBdXRo",
@@ -2170,10 +2170,8 @@ public sealed partial class Order : pb::IMessage<Order>
   private readonly pbc::RepeatedField<global::OrderOffer> orderOffers_ = new pbc::RepeatedField<global::OrderOffer>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::RepeatedField<global::OrderOffer> OrderOffers
-  {
+  public pbc::RepeatedField<global::OrderOffer> OrderOffers {
     get { return orderOffers_; }
-    set => throw new NotImplementedException();
   }
 
   /// <summary>Field number for the "isDone" field.</summary>

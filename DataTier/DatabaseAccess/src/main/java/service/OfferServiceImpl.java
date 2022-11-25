@@ -1,24 +1,31 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
+import mango.sep3.databaseaccess.Repositories.OfferRepository;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A class responsable for taking the data from the database (currently from
  * a textFile) and sending it to the Logic Tier
  */
+@GRpcService
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
-  private FileContext context;
+  @Autowired
+  private OfferDaoInterface offerDaoInterface;
 
-  public OfferServiceImpl(FileContext context)
+  public OfferServiceImpl()
   {
-    this.context = context;
   }
 
   /**
@@ -31,24 +38,43 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
    */
   @Override public void createOffer(Offer request, StreamObserver<Offer> responseObserver)
   {
-    Offer offer = Offer.newBuilder()
-        .setId(request.getId())
-        .setName(request.getName())
-        .setQuantity(request.getQuantity())
-        .setUnit(request.getUnit())
-        .setPrice(request.getPrice())
-        .setDelivery(request.getDelivery())
-        .setPickUp(request.getPickUp())
-        .setPickYourOwn(request.getPickYourOwn())
-        .setDescription(request.getDescription())
-        .setImagePath(request.getImagePath())
+    mango.sep3.databaseaccess.Shared.Offer offer = convertToShared(request);
+
+    var savedOffer = offerDaoInterface.CreateOffer(offer);
+
+    responseObserver.onNext(convertToGrpc(savedOffer));
+    responseObserver.onCompleted();
+  }
+
+  private mango.sep3.databaseaccess.Shared.Offer convertToShared(Offer request) {
+    mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
+    offer.setName(request.getName());
+    offer.setDescription(request.getDescription());
+    offer.setImage(request.getImagePath());
+    offer.setDelivery(request.getDelivery());
+    offer.setPickUp(request.getPickUp());
+    offer.setPickYourOwn(request.getPickYourOwn());
+    offer.setPrice(request.getPrice());
+    offer.setUnit(request.getUnit());
+
+    return offer;
+  }
+
+  // convert from shared to grpc offer
+  private Offer convertToGrpc(mango.sep3.databaseaccess.Shared.Offer offer) {
+    Offer offerResponse = Offer.newBuilder()
+        .setId(offer.getId())
+        .setName(offer.getName())
+        .setDescription(offer.getDescription())
+        .setImagePath(offer.getImage())
+        .setDelivery(offer.isDelivery())
+        .setPickUp(offer.isPickUp())
+        .setPickYourOwn(offer.isPickYourOwn())
+        .setPrice(offer.getPrice())
+        .setUnit(offer.getUnit())
         .build();
 
-    context.Offers().add(offer);
-    context.SaveChanges();
-
-    responseObserver.onNext(offer);
-    responseObserver.onCompleted();
+    return offerResponse;
   }
 
   /**
@@ -62,27 +88,17 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     //Creating the proto OfferItems
     OfferItems.Builder response = OfferItems.newBuilder();
     //Creating the Offers from the model
-    ArrayList<Offer> offers = (ArrayList<Offer>) context.Offers();
+    Collection<mango.sep3.databaseaccess.Shared.Offer> offers =  offerDaoInterface.GetOffer();
 
     Collection<Offer> offersList = new ArrayList<>();
 
-    for (int i = 0; i < offers.size(); i++)
-    {
-      Offer off = Offer.newBuilder()
-          .setId(offers.get(i).getId())
-          .setName(offers.get(i).getName())
-          .setQuantity(offers.get(i).getQuantity())
-          .setUnit(offers.get(i).getUnit())
-          .setPrice(offers.get(i).getPrice())
-          .setDelivery(offers.get(i).getDelivery())
-          .setPickUp(offers.get(i).getPickUp())
-          .setPickYourOwn(offers.get(i).getPickYourOwn())
-          .setDescription(offers.get(i).getDescription())
-          .setImagePath(offers.get(i).getImagePath())
-          .build();
 
-      offersList.add(off);
+    for (mango.sep3.databaseaccess.Shared.Offer offer : offers)
+    {
+      var protoOffer = convertToGrpc(offer);
+      response.addOffers(protoOffer);
     }
+
 
     response.addAllOffers(offersList);
     //sending back data to the client

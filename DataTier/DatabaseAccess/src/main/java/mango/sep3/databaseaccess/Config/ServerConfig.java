@@ -5,6 +5,7 @@ import mango.sep3.databaseaccess.FileData.FileContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import service.FarmServiceImpl;
+import service.OfferServiceImpl;
 import service.UserServiceImpl;
 
 @Configuration
@@ -20,4 +21,6 @@ public class ServerConfig {
     @Bean public UserServiceImpl getUserServiceImpl(){
         return new UserServiceImpl();
     }
+
+    @Bean public OfferServiceImpl getOfferService(){ return new OfferServiceImpl(); }
 }

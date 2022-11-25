@@ -1,4 +1,5 @@
 ﻿using Application.DAOInterfaces;
+using Shared.Models;
 
 namespace GprcClients.DAOImplementations;
 
@@ -19,23 +20,13 @@ public class OfferDaoImpl : IOfferDao
     }
     
     
-    public async Task CreateAsync(Shared.Models.Offer offer)
+    public async Task<Shared.Models.Offer> CreateAsync(Shared.Models.Offer offer)
     {
-        var offerToCreate = new Offer
-        {
-            Id = offer.Id,
-            Name = offer.Name,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            Description = offer.Description,
-            ImagePath = offer.ImagePath
-        };
+        var offerToCreate = ConvertOfferToGrpc(offer);
         
-        _ = await offerService.CreateOfferAsync(offerToCreate);
+        var returnedOffer = await offerService.CreateOfferAsync(offerToCreate);
+
+        return ConvertOfferToShared(returnedOffer);
     }
 
     /// <summary>
@@ -55,24 +46,52 @@ public class OfferDaoImpl : IOfferDao
             if (created is null)
                 continue;
             // Creating a new instance of Model offer
-            Shared.Models.Offer offerToPresentationTier = new Shared.Models.Offer
-            {
-                Id = created.Id,
-                Name = created.Name,
-                Quantity = created.Quantity,
-                Unit = created.Unit,
-                Price = created.Price,
-                Delivery = created.Delivery,
-                PickUp = created.PickUp,
-                PickYourOwn = created.PickYourOwn,
-                Description = created.Description,
-                ImagePath = created.ImagePath
-            };
+            Shared.Models.Offer offerToPresentationTier = ConvertOfferToShared(created);
             // Adding the new created offer to the list
             list.Add(offerToPresentationTier);
         }
 
         // Returning the list with all the offers
         return list;
+    }
+    
+    
+    // convert from grpc object to shared offer
+    private Shared.Models.Offer ConvertOfferToShared(Offer offer)
+    {
+        return new Shared.Models.Offer
+        {
+            Id = offer.Id,
+            Name = offer.Name,
+            Quantity = offer.Quantity,
+            Unit = offer.Unit,
+            Price = offer.Price,
+            Delivery = offer.Delivery,
+            PickUp = offer.PickUp,
+            PickYourOwn = offer.PickYourOwn,
+            Description = offer.Description,
+            Image = new Image()
+            {
+                RelativeUrl = offer.ImagePath
+            }
+        };
+    }
+    
+    // convert from shared offer to grpc object
+    private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
+    {
+        return new Offer
+        {
+            Id = offer.Id,
+            Name = offer.Name,
+            Quantity = offer.Quantity,
+            Unit = offer.Unit,
+            Price = offer.Price,
+            Delivery = offer.Delivery,
+            PickUp = offer.PickUp,
+            PickYourOwn = offer.PickYourOwn,
+            Description = offer.Description,
+            ImagePath = offer.Image.RelativeUrl
+        };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
+using WebAPI.Utils;
 
 namespace WebAPI.Controllers;
 
@@ -10,10 +11,12 @@ namespace WebAPI.Controllers;
 public class OfferController : ControllerBase
 {
     private readonly IOfferLogic offerLogic;
+    private ImageResource imageResource;
 
-    public OfferController(IOfferLogic offerLogic)
+    public OfferController(IOfferLogic offerLogic, ImageResource resource)
     {
         this.offerLogic = offerLogic;
+        imageResource = resource;
     }
     
     /// <summary>
@@ -37,13 +40,39 @@ public class OfferController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpPost("{id:int}/image")]
+    public async Task<IActionResult> UploadImage([FromRoute] int id)
+    {
+        if(!Request.HasFormContentType)
+            return BadRequest("Not a form content type");
+        
+        if(Request.Form.Files.Count == 0)
+            return BadRequest("No files in form");
+
+        // TODO: check if the current user owns this offer
+        
+        
+        string folder = "wwwroot/images/offers";
+        Directory.CreateDirectory(folder);
+        
+        var file = Request.Form.Files[0];
+        string fileName = imageResource.CreateRelativePathOffer(id);
+
+        await imageResource.SaveImageAsync(imageResource.OfferImages, fileName, file);
+
+        
+        // check if the file is an image
+        await imageResource.CheckImageAsync(imageResource.OfferImages, fileName);
+
+        return Ok();
+    }
     
     [HttpGet]
     public async Task<IActionResult> GetAsync()
     {
         try
         {
-            Console.WriteLine("REQUEST RECEIVED");
             var created = await offerLogic.GetAsync();
             return Created($"/offers", created);
         }

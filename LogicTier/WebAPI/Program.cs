@@ -3,6 +3,7 @@ using Application.LogicImplementations;
 using Application.LogicInterfaces;
 using GprcClients.DAOImplementations;
 using Grpc.Net.ClientFactory;
+using WebAPI.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,10 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(grpcOptions);
 builder.Services.AddScoped<IAuthDao, AuthDaoImpl>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 
+builder.Services.AddTransient<IImageDao, ImageResource>();
+builder.Services.AddTransient<ImageResource>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

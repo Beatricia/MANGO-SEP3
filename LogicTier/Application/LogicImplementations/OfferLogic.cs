@@ -1,6 +1,7 @@
 ﻿using Application.DAOInterfaces;
 using Application.LogicInterfaces;
 using Shared.DTOs;
+using Shared.Models;
 using Offer = Shared.Models.Offer;
 
 namespace Application.LogicImplementations;
@@ -11,14 +12,16 @@ namespace Application.LogicImplementations;
 public class OfferLogic : IOfferLogic
 {
     private IOfferDao offerDao;
+    private IImageDao imageDao;
 
     /// <summary>
     /// Initializing the OfferLogic with the given IOfferDao
     /// </summary>
     /// <param name="offerDao"></param>
-    public OfferLogic(IOfferDao offerDao)
+    public OfferLogic(IOfferDao offerDao, IImageDao imageDao)
     {
         this.offerDao = offerDao;
+        this.imageDao = imageDao;
     }
     
     /// <summary>
@@ -44,12 +47,18 @@ public class OfferLogic : IOfferLogic
             PickUp = dto.PickUp,
             PickYourOwn = dto.PickYourOwn,
             Description = dto.Description,
-            ImagePath = dto.ImagePath
+            Image = new Image()
+            {
+                RelativeUrl = imageDao.CreateRelativePathOffer(id),
+            }
         };
 
-        await offerDao.CreateAsync(offerToSend);
+        var created = await offerDao.CreateAsync(offerToSend);
+
+        // set the absolute url for an image
+        created.Image.AbsoluteUrl = imageDao.GetAbsoluteUrl(offerToSend.Image.RelativeUrl);
         
-        return offerToSend;
+        return created;
     }
 
     /// <summary>
@@ -58,7 +67,14 @@ public class OfferLogic : IOfferLogic
     /// <returns>A Collection of Offers</returns>
     public async Task<IEnumerable<Offer>> GetAsync()
     {
-        return await offerDao.GetAsync();
+        var results = await offerDao.GetAsync();
+
+        foreach (Offer offer in results)
+        {
+            offer.Image.AbsoluteUrl = imageDao.GetAbsoluteUrl(offer.Image.RelativeUrl);
+        }
+
+        return results;
     }
 
 

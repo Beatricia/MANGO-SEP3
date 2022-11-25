@@ -15,6 +15,13 @@ public interface IAuthDao
     Task<User> RegisterAsync(UserAuth user);
     
     /// <summary>
+    /// Login a user into the system
+    /// </summary>
+    /// <param name="user">user to login</param>
+    /// <returns></returns>
+    Task<User> LoginAsync(UserAuth user);
+    
+    /// <summary>
     /// Get an authenticated user if exists, else null
     /// </summary>
     /// <param name="username">username of the user to get</param>

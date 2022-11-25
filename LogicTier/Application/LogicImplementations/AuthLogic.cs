@@ -48,6 +48,37 @@ public class AuthLogic : IAuthLogic
     }
 
     /// <summary>
+    /// Check if user exists, checks if password is correct -> logs user in
+    /// </summary>
+    /// <returns></returns>
+    public async Task<User> LoginAsync(LoginDto dto)
+    {
+        string username = dto.Username;
+        string passwordPlain = dto.Password;
+        
+        var authUser = await authDao.GetAuthUserAsync(username);
+        User? user = await authDao.GetUserAsync(username);
+        
+        // check if user exists
+        if (authUser == null)
+            throw new Exception("User does not exist");
+
+        // check if password length at least 8 character
+        if (passwordPlain.Length < 8)
+            throw new Exception("Password must be at least 8 characters");
+
+        string saltString = authUser.Salt;
+        string hashPassToCheck = HashPassword(passwordPlain, saltString);
+
+        if (!hashPassToCheck.Equals(authUser.HashPassword))
+        {
+            throw new Exception("Password does not match");
+        }
+
+        return await authDao.LoginAsync(authUser);
+    }
+
+    /// <summary>
     /// Create salt for password
     /// </summary>
     /// <returns></returns>

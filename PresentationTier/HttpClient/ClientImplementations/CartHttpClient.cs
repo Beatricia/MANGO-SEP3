@@ -5,11 +5,11 @@ using Shared.Models;
 
 namespace HttpClient.ClientImplementations;
 
-public class CartHttpClients : ICartService
+public class CartHttpClient : ICartService
 {
     private readonly System.Net.Http.HttpClient client;
 
-    public CartHttpClients(System.Net.Http.HttpClient client)
+    public CartHttpClient(System.Net.Http.HttpClient client)
     {
         this.client = client;
     }

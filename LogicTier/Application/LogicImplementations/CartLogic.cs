@@ -28,12 +28,13 @@ public class CartLogic : ICartLogic
             throw new Exception("The quantity has to be smaller than 250");
         }
 
-        if (!dto.CollectOption.ToLower().Equals("Delivery".ToLower()) ||
+      /*  if (!dto.CollectOption.ToLower().Equals("Delivery".ToLower()) ||
             !dto.CollectOption.ToLower().Equals("Pick Up".ToLower()) ||
             !dto.CollectOption.ToLower().Equals("Pick Your Own".ToLower()))
         {
             throw new Exception("Invalid collection option for the cart offer");
         }
+        */
 
         await cartDao.AddToCartAsync(dto);
     }

@@ -34,13 +34,13 @@ public class Offer implements Serializable
     @Column
     private int quantity;
 
-    @Column
+    @Column(nullable = true)
     private boolean pickUp;
 
-    @Column
+    @Column(nullable = true)
     private boolean delivery;
 
-    @Column
+    @Column(nullable = true)
     private boolean pickyourOwn;
 
     @ManyToOne

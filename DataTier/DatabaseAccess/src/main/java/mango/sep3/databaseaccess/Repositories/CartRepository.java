@@ -12,6 +12,6 @@ import java.util.Collection;
 @Repository 
 public interface CartRepository extends JpaRepository<CartItem,Integer>
 {
-  Collection<CartOffer> findAllByUsername(User username);
+  Collection<CartItem> findAllByUsername(User username);
   void deleteAllByUsername(User username);
 }

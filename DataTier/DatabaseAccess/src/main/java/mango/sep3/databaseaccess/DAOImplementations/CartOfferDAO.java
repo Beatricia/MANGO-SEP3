@@ -6,6 +6,7 @@ import mango.sep3.databaseaccess.Repositories.CartRepository;
 import mango.sep3.databaseaccess.Shared.CartItem;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.protobuf.CartOffer;
+import mango.sep3.databaseaccess.protobuf.Username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,6 @@ import java.util.Collection;
 @Repository
 public class CartOfferDAO implements CartOfferInterface
 {
-  private FileContext context;
   private CartRepository cartRepository;
 
   @Autowired
@@ -23,11 +23,10 @@ public class CartOfferDAO implements CartOfferInterface
   }
 
   @Override public void createCartOffer(CartItem cartItem){
-    cartRepository.save(cartItem);
+    cartRepository.saveAndFlush(cartItem);
   }
 
-
-  @Override public Collection<CartOffer> getAllCartOffers(User username){
+  @Override public Collection<CartItem> getAllCartOffers(User username){
     return cartRepository.findAllByUsername(username);
   }
 

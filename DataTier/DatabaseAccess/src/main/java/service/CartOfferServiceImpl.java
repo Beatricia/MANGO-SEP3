@@ -2,17 +2,29 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOImplementations.CartOfferDAO;
+import mango.sep3.databaseaccess.DAOInterfaces.CartOfferInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.CartItem;
+import mango.sep3.databaseaccess.Shared.Offer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
+
 @GRpcService
 public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceImplBase
 {
-  @Autowired private CartOfferDAO cartOfferDAO;
+  @Autowired private CartOfferInterface cartOfferDAO;
+  @Autowired private OfferDaoInterface offerDaoInterface;
+  @Autowired private UserDaoInterface userDaoInterface;
+
+
 
   public CartOfferServiceImpl()
   {
@@ -23,13 +35,16 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
   {
     CartItem cartItem = new CartItem();
     cartItem.setCartItemId(request.getId());
-    //int offerId = request.getOfferId();
-    //Offer off = new Offer();
-    //off.
-    //cartItem.setOfferId((Offer) request.getOfferId());
+
+    int offerId = request.getOfferId();
+    Offer off = offerDaoInterface.getOfferById(offerId);
+
+    cartItem.setOfferId(off);
     cartItem.setQuantity(request.getQuantity());
+
     String userName = request.getUsername();
-    User user = new User();
+    User user = userDaoInterface.getUserByUsername(userName);
+
     user.setUsername(userName);
     cartItem.setUsername(user);
     cartItem.setCollectionOption(request.getCollectionOption());
@@ -44,19 +59,38 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
   //not working
   @Override public void getAllCartOffers(Username request,
       StreamObserver<CartOffers> responseObserver) {
-    User user = new User();
-    user.setUsername(request.getUsername());
-    Iterable<? extends CartOffer> cartOffersModel = cartOfferDAO.getAllCartOffers(user);
+    User usr = new User();
+    usr.setUsername(request.getUsername());
 
-    CartOffers cartOffers = CartOffers.newBuilder()
-        .addAllCartOffers(cartOffersModel)
-        .build();
+    Collection<CartItem >cartItems =  cartOfferDAO.getAllCartOffers(usr);
+    Collection<CartOffer> cartOffersBuf = new ArrayList<>();
 
-    responseObserver.onNext(cartOffers);
+    //proto
+    CartOffers.Builder response = CartOffers.newBuilder();
+
+    if(cartItems == null){
+      responseObserver.onError(new Exception("No Order Offers found"));
+      return;
+    }
+
+    for (CartItem item : cartItems)
+    {
+      CartOffer co = CartOffer.newBuilder()
+          .setId(item.getCartItemId())
+          .setOfferId(item.getOfferId().getId())
+          .setQuantity(item.getQuantity())
+          .setCollectionOption(item.getCollectionOption())
+          .setUsername(item.getUsername().getUsername())
+          .build();
+      cartOffersBuf.add(co);
+    }
+    response.addAllCartOffers(cartOffersBuf);
+
+    responseObserver.onNext(response.build());
     responseObserver.onCompleted();
   }
 
-  //not working
+  @Transactional
   @Override public void deleteAllCartOffers(Username request,
       StreamObserver<Void> responseObserver) {
     User user = new User();

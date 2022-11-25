@@ -14,6 +14,7 @@ builder.Services.AddScoped<IFarmService, FarmHttpClient>();
 builder.Services.AddScoped<IOrderService,OrderHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
+builder.Services.AddScoped<ICartService, CartHttpClient>();
 
 
 await builder.Build().RunAsync();

@@ -9,6 +9,6 @@ import java.util.Collection;
 public interface CartOfferInterface
 {
   void createCartOffer(CartItem cartItem);
-  Collection<CartOffer> getAllCartOffers(User username);
+  Collection<CartItem> getAllCartOffers(User username);
   void deleteAllCartOffers(User username);
 }

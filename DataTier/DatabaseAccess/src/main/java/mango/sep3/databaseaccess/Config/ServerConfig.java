@@ -26,4 +26,8 @@ public class ServerConfig {
    /* @Bean public OrderServiceImpl getOrderServiceImpl(){
         return new OrderServiceImpl();
     }*/
+
+    @Bean public CartOfferServiceImpl getCartOfferServiceImpl(){
+        return new CartOfferServiceImpl();
+    }
 }

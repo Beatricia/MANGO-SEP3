@@ -1,5 +1,7 @@
 package mango.sep3.databaseaccess.Shared;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,18 +15,18 @@ public class CartItem implements Serializable
   private int cartItemId;
 
 
-  @OneToOne(targetEntity = Offer.class)
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "offerId")
   private Offer offerId;
 
   @Column(name = "quantity")
   private int quantity;
 
-  @OneToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "userName")
   private User username;
 
-  @Column(name  = "collectionOption")
+  @Column(name  = "collectionOption", nullable = true)
   private String collectionOption;
 
   public CartItem(){

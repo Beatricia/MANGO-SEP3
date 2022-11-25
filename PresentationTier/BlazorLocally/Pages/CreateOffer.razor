@@ -18,6 +18,7 @@
         <div class=" d-flex flex-column">
             <img src="Img/default-placeholder.png" alt="default" width="30%" height="30%" class="img col-3 me-4"/>
             <input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>
+            <InputFile OnChange="args => file = args.File"></InputFile>
         </div>
 </div>
     
@@ -84,8 +85,9 @@
     private bool pickUp;
     private bool pickYO;
     private string? description;
-    private string imgPath = "Img/default-placeholder.png";
     private string displayDropdown = "none";
+
+    private IBrowserFile? file;
 
 
     ///summary///
@@ -95,6 +97,12 @@
     {
         try
         {
+            if (file is null)
+            {
+                
+                return;
+            }
+            
             OfferCreationDto dto = new();
             dto.Name = productName;
             dto.Quantity = quantity;
@@ -104,9 +112,10 @@
             dto.PickUp = pickUp;
             dto.PickYourOwn = pickYO;
             dto.Description = description;
-            dto.ImagePath = imgPath;
             
-            await httpClient.CreateAsync(dto);
+            var offer = await httpClient.CreateAsync(dto);
+            if(offer is not null)
+                await httpClient.UploadImageAsync(file, offer.Id);
         }
         catch (Exception e)
         {

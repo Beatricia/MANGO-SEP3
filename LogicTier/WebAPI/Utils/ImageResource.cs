@@ -1,4 +1,6 @@
-﻿using Application.DAOInterfaces;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using Application.DAOInterfaces;
 
 namespace WebAPI.Utils;
 
@@ -22,9 +24,10 @@ public class ImageResource : IImageDao
     /// <param name="image"></param>
     public async Task SaveImageAsync(string folder, string filename, IFormFile image)
     {
-        var fs = new FileStream(Path.Combine(BaseFolder, folder, filename), FileMode.Create);
-        await image.CopyToAsync(fs);
-        fs.Close();
+        // saves an image as a png
+        await using var fs = new FileStream(Path.Combine(BaseFolder, folder, filename), FileMode.Create);
+        using Image bitmap = Bitmap.FromStream(image.OpenReadStream()); // please use windows, thanks
+        await Task.Run(() => bitmap.Save(fs, ImageFormat.Png));// if you made it to this line, please use windows again, thanks
     }
     
     /// <summary>

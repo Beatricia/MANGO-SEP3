@@ -28,5 +28,7 @@ public interface UserDaoInterface {
      */
     User getUserByUsername(String username);
 
+    UserAuth getUserAuthByUsername(String username);
+
 
 }

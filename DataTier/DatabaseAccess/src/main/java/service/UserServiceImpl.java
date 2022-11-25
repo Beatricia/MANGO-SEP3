@@ -36,6 +36,21 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     }
 
     @Override
+    public void getUserAuthByUsername(Text request, StreamObserver<UserAuth> responseObserver) {
+        mango.sep3.databaseaccess.Shared.UserAuth userAuth = userDao.getUserAuthByUsername(request.getText());
+
+        if(userAuth == null){
+            responseObserver.onError(new Exception("User not found"));
+            return;
+        }
+
+        UserAuth userResponse = convertUserAuthToGrpc(userAuth);
+
+        responseObserver.onNext(userResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void registerUser(UserAuth request, StreamObserver<User> responseObserver) {
 
         mango.sep3.databaseaccess.Shared.UserAuth userAuth = new mango.sep3.databaseaccess.Shared.UserAuth();
@@ -76,6 +91,14 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                 .setUsername(user.getUsername())
                 .setFirstname(user.getFirstName())
                 .setLastname(user.getLastName())
+                .build();
+    }
+
+    private UserAuth convertUserAuthToGrpc(mango.sep3.databaseaccess.Shared.UserAuth user) {
+        return UserAuth.newBuilder()
+                .setUsername(user.getUsername())
+                .setSalt(user.getSalt())
+                .setHash(user.getHash())
                 .build();
     }
 }

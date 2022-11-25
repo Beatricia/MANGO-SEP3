@@ -44,6 +44,8 @@ public class AuthLogic : IAuthLogic
             Salt = saltString
         };
 
+        Console.WriteLine($"Register info: {authUser.HashPassword} {authUser.Salt}");
+
         return await authDao.RegisterAsync(authUser);
     }
 
@@ -56,21 +58,21 @@ public class AuthLogic : IAuthLogic
         string username = dto.Username;
         string passwordPlain = dto.Password;
         
+        //get logged user
         var authUser = await authDao.GetAuthUserAsync(username);
-        User? user = await authDao.GetUserAsync(username);
-        
+
         // check if user exists
         if (authUser == null)
             throw new Exception("User does not exist");
 
-        // check if password length at least 8 character
-        if (passwordPlain.Length < 8)
-            throw new Exception("Password must be at least 8 characters");
-
+        Console.WriteLine($"Login info: {authUser.HashPassword} {authUser.Salt}");
+        
         string saltString = authUser.Salt;
         string hashPassToCheck = HashPassword(passwordPlain, saltString);
 
-        if (!hashPassToCheck.Equals(authUser.HashPassword))
+        Console.WriteLine("Check hash: " + hashPassToCheck);
+        
+        if (hashPassToCheck != authUser.HashPassword)
         {
             throw new Exception("Password does not match");
         }

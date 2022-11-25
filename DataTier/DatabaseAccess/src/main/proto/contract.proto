@@ -4,7 +4,8 @@ option java_multiple_files = true;
 option java_package = "mango.sep3.databaseaccess.protobuf";
 
 service FarmService{
-  rpc CreateFarm(Farm) returns(Farm);
+  rpc CreateFarm(Farm) returns(Void);
+  rpc GetFarm(Text) returns(Farm);
 }
 
 service OfferService{
@@ -14,6 +15,14 @@ service OfferService{
 service UserService{
   rpc RegisterUser(UserAuth) returns (User);
   rpc GetUserByUsername(Text) returns (User);
+  rpc GetCustomer(Text) returns(Customer);
+}
+
+service OrderService{
+  rpc CreateOrderOffers(OrderOffers) returns(Void);
+  rpc CreateOrders(Orders) returns(Void);
+  rpc GetAllOrders(Text) returns(Orders);
+  rpc GetOrderOffers(Text) returns(OrderOffers);
 }
 
 service CartOfferService{
@@ -44,7 +53,6 @@ message Farm{
   optional int32 deliveryDistance = 7;
 }
 
-
 message Offer{
   int32 id = 1;
   string name = 2;
@@ -58,8 +66,51 @@ message Offer{
   string ImagePath = 10;
 }
 
+message OrderOffer{
+  int32 id = 1;
+  Offer offer = 2;
+  int32 quantity = 3;
+  string username = 4;
+  string collectionOption = 5;
+}
+
+message OrderOffers{
+  repeated OrderOffer orderOffers = 1;
+}
+
+message Order{
+  int32 id = 1;
+  repeated OrderOffer orderOffers = 2;
+  bool isDone = 3;
+  string farmName = 4;
+  string collectionOption = 5;
+}
+message Orders{
+  repeated Order orders = 1;
+}
+
 message OfferItems{
   repeated Offer offers = 1;
+}
+
+message Customer{
+  string username = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string phone = 4;
+  Address address = 5;
+}
+
+message Farmer{
+  string username = 1;
+  string firstname = 2;
+  string lastname = 3;
+}
+
+message Address{
+  string city = 1;
+  string street = 2;
+  string zip = 3;
 }
 
 message Void{}

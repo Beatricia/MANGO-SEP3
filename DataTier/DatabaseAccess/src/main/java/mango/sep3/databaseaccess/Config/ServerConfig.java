@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import service.CartOfferServiceImpl;
 import service.FarmServiceImpl;
+import service.OrderServiceImpl;
 import service.UserServiceImpl;
 
 @Configuration
@@ -22,7 +23,7 @@ public class ServerConfig {
         return new UserServiceImpl();
     }
 
-    @Bean public CartOfferServiceImpl getCartOfferServiceImpl(){
-        return new CartOfferServiceImpl();
-    }
+   /* @Bean public OrderServiceImpl getOrderServiceImpl(){
+        return new OrderServiceImpl();
+    }*/
 }

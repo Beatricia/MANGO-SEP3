@@ -15,9 +15,18 @@ public interface UserDaoInterface {
     User registerUser(UserAuth userAuth);
 
     /**
+     * Checks for user in the database. If Exists -> Logs the user in
+     * @param userAuth The user to login.
+     * @return The logged-in user.
+     */
+    User loginUser(UserAuth userAuth);
+
+    /**
      * Gets a user by username.
      * @param username The username of the user.
      * @return The user.
      */
     User getUserByUsername(String username);
+
+
 }

@@ -38,7 +38,19 @@ public class UserDao implements UserDaoInterface {
     }
 
     @Override
+    public User loginUser(UserAuth userAuth) {
+        UserAuth userToCheck = userAuthRepository.getReferenceById(userAuth.getUsername());
+
+        if (userToCheck.equals(userAuth))
+            return userRepository.getReferenceById(userAuth.getUsername());
+
+        return null;
+    }
+
+    @Override
     public User getUserByUsername(String username) {
         return userRepository.findById(username).orElse(null);
     }
+
+
 }

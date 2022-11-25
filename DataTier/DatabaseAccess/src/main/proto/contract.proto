@@ -13,6 +13,7 @@ service OfferService{
 }
 
 service UserService{
+  rpc LoginUser(UserAuth) returns (User);
   rpc RegisterUser(UserAuth) returns (User);
   rpc GetUserByUsername(Text) returns (User);
 }

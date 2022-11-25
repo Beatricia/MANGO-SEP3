@@ -6,127 +6,127 @@ package mango.sep3.databaseaccess.protobuf;
 public final class Contract {
   private Contract() {}
   public static void registerAllExtensions(
-          com.google.protobuf.ExtensionRegistryLite registry) {
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
   public static void registerAllExtensions(
-          com.google.protobuf.ExtensionRegistry registry) {
+      com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions(
-            (com.google.protobuf.ExtensionRegistryLite) registry);
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_UserAuth_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_UserAuth_fieldAccessorTable;
+    internal_static_UserAuth_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_UserAuth_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_User_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_User_fieldAccessorTable;
+    internal_static_User_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_User_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_Farm_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_Farm_fieldAccessorTable;
+    internal_static_Farm_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Farm_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_Offer_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_Offer_fieldAccessorTable;
+    internal_static_Offer_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Offer_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_OfferItems_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_OfferItems_fieldAccessorTable;
+    internal_static_OfferItems_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_OfferItems_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_Void_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_Void_fieldAccessorTable;
+    internal_static_Void_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Void_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_Text_descriptor;
-  static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_Text_fieldAccessorTable;
+    internal_static_Text_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Text_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-  getDescriptor() {
+      getDescriptor() {
     return descriptor;
   }
   private static  com.google.protobuf.Descriptors.FileDescriptor
-          descriptor;
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\016contract.proto\"8\n\010UserAuth\022\020\n\010username" +
-                    "\030\001 \001(\t\022\014\n\004hash\030\002 \001(\t\022\014\n\004salt\030\003 \001(\t\"=\n\004Us" +
-                    "er\022\020\n\010username\030\001 \001(\t\022\021\n\tfirstname\030\002 \001(\t\022" +
-                    "\020\n\010lastname\030\003 \001(\t\"\253\001\n\004Farm\022\014\n\004name\030\001 \001(\t" +
-                    "\022\r\n\005phone\030\002 \001(\t\022\013\n\003zip\030\003 \001(\t\022\017\n\007address\030" +
-                    "\004 \001(\t\022\014\n\004city\030\005 \001(\t\022\027\n\nfarmStatus\030\006 \001(\tH" +
-                    "\000\210\001\001\022\035\n\020deliveryDistance\030\007 \001(\005H\001\210\001\001B\r\n\013_" +
-                    "farmStatusB\023\n\021_deliveryDistance\"\304\001\n\005Offe" +
-                    "r\022\n\n\002id\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\020\n\010quantity\030" +
-                    "\003 \001(\005\022\014\n\004unit\030\004 \001(\t\022\r\n\005price\030\005 \001(\001\022\020\n\010de" +
-                    "livery\030\006 \001(\010\022\016\n\006pickUp\030\007 \001(\010\022\023\n\013pickYour" +
-                    "Own\030\010 \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tI" +
-                    "magePath\030\n \001(\tB\016\n\014_description\"$\n\nOfferI" +
-                    "tems\022\026\n\006offers\030\001 \003(\0132\006.Offer\"\006\n\004Void\"\024\n\004" +
-                    "Text\022\014\n\004text\030\001 \001(\t2)\n\013FarmService\022\032\n\nCre" +
-                    "ateFarm\022\005.Farm\032\005.Farm2N\n\014OfferService\022\035\n" +
-                    "\013CreateOffer\022\006.Offer\032\006.Offer\022\037\n\tGetOffer" +
-                    "s\022\005.Void\032\013.OfferItems2q\n\013UserService\022\035\n\t" +
-                    "LoginUser\022\t.UserAuth\032\005.User\022 \n\014RegisterU" +
-                    "ser\022\t.UserAuth\032\005.User\022!\n\021GetUserByUserna" +
-                    "me\022\005.Text\032\005.UserB&\n\"mango.sep3.databasea" +
-                    "ccess.protobufP\001b\006proto3"
+      "\n\016contract.proto\"8\n\010UserAuth\022\020\n\010username" +
+      "\030\001 \001(\t\022\014\n\004hash\030\002 \001(\t\022\014\n\004salt\030\003 \001(\t\"=\n\004Us" +
+      "er\022\020\n\010username\030\001 \001(\t\022\021\n\tfirstname\030\002 \001(\t\022" +
+      "\020\n\010lastname\030\003 \001(\t\"\253\001\n\004Farm\022\014\n\004name\030\001 \001(\t" +
+      "\022\r\n\005phone\030\002 \001(\t\022\013\n\003zip\030\003 \001(\t\022\017\n\007address\030" +
+      "\004 \001(\t\022\014\n\004city\030\005 \001(\t\022\027\n\nfarmStatus\030\006 \001(\tH" +
+      "\000\210\001\001\022\035\n\020deliveryDistance\030\007 \001(\005H\001\210\001\001B\r\n\013_" +
+      "farmStatusB\023\n\021_deliveryDistance\"\304\001\n\005Offe" +
+      "r\022\n\n\002id\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\020\n\010quantity\030" +
+      "\003 \001(\005\022\014\n\004unit\030\004 \001(\t\022\r\n\005price\030\005 \001(\001\022\020\n\010de" +
+      "livery\030\006 \001(\010\022\016\n\006pickUp\030\007 \001(\010\022\023\n\013pickYour" +
+      "Own\030\010 \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tI" +
+      "magePath\030\n \001(\tB\016\n\014_description\"$\n\nOfferI" +
+      "tems\022\026\n\006offers\030\001 \003(\0132\006.Offer\"\006\n\004Void\"\024\n\004" +
+      "Text\022\014\n\004text\030\001 \001(\t2)\n\013FarmService\022\032\n\nCre" +
+      "ateFarm\022\005.Farm\032\005.Farm2N\n\014OfferService\022\035\n" +
+      "\013CreateOffer\022\006.Offer\032\006.Offer\022\037\n\tGetOffer" +
+      "s\022\005.Void\032\013.OfferItems2q\n\013UserService\022\035\n\t" +
+      "LoginUser\022\t.UserAuth\032\005.User\022 \n\014RegisterU" +
+      "ser\022\t.UserAuth\032\005.User\022!\n\021GetUserByUserna" +
+      "me\022\005.Text\032\005.UserB&\n\"mango.sep3.databasea" +
+      "ccess.protobufP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-            .internalBuildGeneratedFileFrom(descriptorData,
-                    new com.google.protobuf.Descriptors.FileDescriptor[] {
-                    });
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        });
     internal_static_UserAuth_descriptor =
-            getDescriptor().getMessageTypes().get(0);
+      getDescriptor().getMessageTypes().get(0);
     internal_static_UserAuth_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_UserAuth_descriptor,
-            new java.lang.String[] { "Username", "Hash", "Salt", });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_UserAuth_descriptor,
+        new java.lang.String[] { "Username", "Hash", "Salt", });
     internal_static_User_descriptor =
-            getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(1);
     internal_static_User_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_User_descriptor,
-            new java.lang.String[] { "Username", "Firstname", "Lastname", });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_User_descriptor,
+        new java.lang.String[] { "Username", "Firstname", "Lastname", });
     internal_static_Farm_descriptor =
-            getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_Farm_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_Farm_descriptor,
-            new java.lang.String[] { "Name", "Phone", "Zip", "Address", "City", "FarmStatus", "DeliveryDistance", "FarmStatus", "DeliveryDistance", });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Farm_descriptor,
+        new java.lang.String[] { "Name", "Phone", "Zip", "Address", "City", "FarmStatus", "DeliveryDistance", "FarmStatus", "DeliveryDistance", });
     internal_static_Offer_descriptor =
-            getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_Offer_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_Offer_descriptor,
-            new java.lang.String[] { "Id", "Name", "Quantity", "Unit", "Price", "Delivery", "PickUp", "PickYourOwn", "Description", "ImagePath", "Description", });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Offer_descriptor,
+        new java.lang.String[] { "Id", "Name", "Quantity", "Unit", "Price", "Delivery", "PickUp", "PickYourOwn", "Description", "ImagePath", "Description", });
     internal_static_OfferItems_descriptor =
-            getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_OfferItems_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_OfferItems_descriptor,
-            new java.lang.String[] { "Offers", });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_OfferItems_descriptor,
+        new java.lang.String[] { "Offers", });
     internal_static_Void_descriptor =
-            getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_Void_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_Void_descriptor,
-            new java.lang.String[] { });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Void_descriptor,
+        new java.lang.String[] { });
     internal_static_Text_descriptor =
-            getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_Text_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_Text_descriptor,
-            new java.lang.String[] { "Text", });
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Text_descriptor,
+        new java.lang.String[] { "Text", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

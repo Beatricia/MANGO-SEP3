@@ -53,6 +53,24 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void loginUser(UserAuth request, StreamObserver<User> responseObserver) {
+
+        mango.sep3.databaseaccess.Shared.UserAuth userAuth = new mango.sep3.databaseaccess.Shared.UserAuth();
+        userAuth.setUsername(request.getUsername());
+        userAuth.setHash(request.getHash());
+        userAuth.setSalt(request.getSalt());
+
+
+        mango.sep3.databaseaccess.Shared.User user = userDao.loginUser(userAuth);
+
+        // create gRPC user
+        User userResponse = convertToGrpc(user);
+
+        responseObserver.onNext(userResponse);
+        responseObserver.onCompleted();
+    }
+
     private User convertToGrpc(mango.sep3.databaseaccess.Shared.User user) {
         return User.newBuilder()
                 .setUsername(user.getUsername())

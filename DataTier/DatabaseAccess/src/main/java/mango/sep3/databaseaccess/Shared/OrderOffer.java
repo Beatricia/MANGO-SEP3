@@ -1,6 +1,7 @@
 package mango.sep3.databaseaccess.Shared;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity @Table(name = "OrderOffers", schema = "locally") public class OrderOffer
 {
@@ -12,6 +13,13 @@ import javax.persistence.*;
   @ManyToOne
   @JoinColumn(name="offerId", nullable=false)
   private Offer offer;
+
+  @ManyToMany
+  @JoinTable(
+      name = "order",
+      joinColumns = @JoinColumn(name = "offerId"),
+      inverseJoinColumns = @JoinColumn(name = "orderId"))
+  private Set<Order> orders;
 
   @Column(name = "quantity")
   private int quantity;
@@ -70,5 +78,15 @@ import javax.persistence.*;
   public void setCollectionOption(String collectionOption)
   {
     this.collectionOption = collectionOption;
+  }
+
+  public Set<Order> getOrders()
+  {
+    return orders;
+  }
+
+  public void setOrders(Set<Order> orders)
+  {
+    this.orders = orders;
   }
 }

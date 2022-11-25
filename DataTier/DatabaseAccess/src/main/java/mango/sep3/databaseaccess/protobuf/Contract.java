@@ -120,19 +120,19 @@ public final class Contract {
       "ddress\"?\n\006Farmer\022\020\n\010username\030\001 \001(\t\022\021\n\tfi" +
       "rstname\030\002 \001(\t\022\020\n\010lastname\030\003 \001(\t\"4\n\007Addre" +
       "ss\022\014\n\004city\030\001 \001(\t\022\016\n\006street\030\002 \001(\t\022\013\n\003zip\030" +
-      "\003 \001(\t\"\006\n\004Void\"\024\n\004Text\022\014\n\004text\030\001 \001(\t2)\n\013F" +
-      "armService\022\032\n\nCreateFarm\022\005.Farm\032\005.Farm2N" +
-      "\n\014OfferService\022\035\n\013CreateOffer\022\006.Offer\032\006." +
-      "Offer\022\037\n\tGetOffers\022\005.Void\032\013.OfferItems2s" +
-      "\n\013UserService\022 \n\014RegisterUser\022\t.UserAuth" +
-      "\032\005.User\022!\n\021GetUserByUsername\022\005.Text\032\005.Us" +
-      "er\022\037\n\013GetCustomer\022\005.Text\032\t.Customer2\237\001\n\014" +
-      "OrderService\022(\n\021CreateOrderOffers\022\014.Orde" +
-      "rOffers\032\005.Void\022\036\n\014CreateOrders\022\007.Orders\032" +
-      "\005.Void\022\036\n\014GetAllOrders\022\005.Text\032\007.Orders\022%" +
-      "\n\016GetOrderOffers\022\005.Text\032\014.OrderOffersB&\n" +
-      "\"mango.sep3.databaseaccess.protobufP\001b\006p" +
-      "roto3"
+      "\003 \001(\t\"\006\n\004Void\"\024\n\004Text\022\014\n\004text\030\001 \001(\t2B\n\013F" +
+      "armService\022\032\n\nCreateFarm\022\005.Farm\032\005.Void\022\027" +
+      "\n\007GetFarm\022\005.Text\032\005.Farm2N\n\014OfferService\022" +
+      "\035\n\013CreateOffer\022\006.Offer\032\006.Offer\022\037\n\tGetOff" +
+      "ers\022\005.Void\032\013.OfferItems2s\n\013UserService\022 " +
+      "\n\014RegisterUser\022\t.UserAuth\032\005.User\022!\n\021GetU" +
+      "serByUsername\022\005.Text\032\005.User\022\037\n\013GetCustom" +
+      "er\022\005.Text\032\t.Customer2\237\001\n\014OrderService\022(\n" +
+      "\021CreateOrderOffers\022\014.OrderOffers\032\005.Void\022" +
+      "\036\n\014CreateOrders\022\007.Orders\032\005.Void\022\036\n\014GetAl" +
+      "lOrders\022\005.Text\032\007.Orders\022%\n\016GetOrderOffer" +
+      "s\022\005.Text\032\014.OrderOffersB&\n\"mango.sep3.dat" +
+      "abaseaccess.protobufP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

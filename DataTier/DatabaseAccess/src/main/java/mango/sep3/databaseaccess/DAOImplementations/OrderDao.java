@@ -24,10 +24,7 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public void createOrderOffers(Collection<OrderOffer> orderOffers)
   {
-    for (var order : orderOffers)
-    {
-      orderOfferRepository.save(order);
-    }
+    orderOfferRepository.saveAll(orderOffers);
   }
 
   @Override public Collection<OrderOffer> getOrderOffers(String username)
@@ -37,11 +34,12 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public void createOrders(Collection<Order> orders)
   {
-
+    orderRepository.saveAll(orders);
   }
 
   @Override public Collection<Order> getAllOrders(String username)
   {
+
     return null;
   }
 }

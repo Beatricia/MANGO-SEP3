@@ -46,17 +46,18 @@ public static partial class ContractReflection {
           "ZHJlc3MYBSABKAsyCC5BZGRyZXNzIj8KBkZhcm1lchIQCgh1c2VybmFtZRgB",
           "IAEoCRIRCglmaXJzdG5hbWUYAiABKAkSEAoIbGFzdG5hbWUYAyABKAkiNAoH",
           "QWRkcmVzcxIMCgRjaXR5GAEgASgJEg4KBnN0cmVldBgCIAEoCRILCgN6aXAY",
-          "AyABKAkiBgoEVm9pZCIUCgRUZXh0EgwKBHRleHQYASABKAkyKQoLRmFybVNl",
-          "cnZpY2USGgoKQ3JlYXRlRmFybRIFLkZhcm0aBS5GYXJtMk4KDE9mZmVyU2Vy",
-          "dmljZRIdCgtDcmVhdGVPZmZlchIGLk9mZmVyGgYuT2ZmZXISHwoJR2V0T2Zm",
-          "ZXJzEgUuVm9pZBoLLk9mZmVySXRlbXMycwoLVXNlclNlcnZpY2USIAoMUmVn",
-          "aXN0ZXJVc2VyEgkuVXNlckF1dGgaBS5Vc2VyEiEKEUdldFVzZXJCeVVzZXJu",
-          "YW1lEgUuVGV4dBoFLlVzZXISHwoLR2V0Q3VzdG9tZXISBS5UZXh0GgkuQ3Vz",
-          "dG9tZXIynwEKDE9yZGVyU2VydmljZRIoChFDcmVhdGVPcmRlck9mZmVycxIM",
-          "Lk9yZGVyT2ZmZXJzGgUuVm9pZBIeCgxDcmVhdGVPcmRlcnMSBy5PcmRlcnMa",
-          "BS5Wb2lkEh4KDEdldEFsbE9yZGVycxIFLlRleHQaBy5PcmRlcnMSJQoOR2V0",
-          "T3JkZXJPZmZlcnMSBS5UZXh0GgwuT3JkZXJPZmZlcnNCJgoibWFuZ28uc2Vw",
-          "My5kYXRhYmFzZWFjY2Vzcy5wcm90b2J1ZlABYgZwcm90bzM="));
+          "AyABKAkiBgoEVm9pZCIUCgRUZXh0EgwKBHRleHQYASABKAkyQgoLRmFybVNl",
+          "cnZpY2USGgoKQ3JlYXRlRmFybRIFLkZhcm0aBS5GYXJtEhcKB0dldEZhcm0S",
+          "BS5UZXh0GgUuRmFybTJOCgxPZmZlclNlcnZpY2USHQoLQ3JlYXRlT2ZmZXIS",
+          "Bi5PZmZlchoGLk9mZmVyEh8KCUdldE9mZmVycxIFLlZvaWQaCy5PZmZlckl0",
+          "ZW1zMnMKC1VzZXJTZXJ2aWNlEiAKDFJlZ2lzdGVyVXNlchIJLlVzZXJBdXRo",
+          "GgUuVXNlchIhChFHZXRVc2VyQnlVc2VybmFtZRIFLlRleHQaBS5Vc2VyEh8K",
+          "C0dldEN1c3RvbWVyEgUuVGV4dBoJLkN1c3RvbWVyMp8BCgxPcmRlclNlcnZp",
+          "Y2USKAoRQ3JlYXRlT3JkZXJPZmZlcnMSDC5PcmRlck9mZmVycxoFLlZvaWQS",
+          "HgoMQ3JlYXRlT3JkZXJzEgcuT3JkZXJzGgUuVm9pZBIeCgxHZXRBbGxPcmRl",
+          "cnMSBS5UZXh0GgcuT3JkZXJzEiUKDkdldE9yZGVyT2ZmZXJzEgUuVGV4dBoM",
+          "Lk9yZGVyT2ZmZXJzQiYKIm1hbmdvLnNlcDMuZGF0YWJhc2VhY2Nlc3MucHJv",
+          "dG9idWZQAWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -2169,8 +2170,10 @@ public sealed partial class Order : pb::IMessage<Order>
   private readonly pbc::RepeatedField<global::OrderOffer> orderOffers_ = new pbc::RepeatedField<global::OrderOffer>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::RepeatedField<global::OrderOffer> OrderOffers {
+  public pbc::RepeatedField<global::OrderOffer> OrderOffers
+  {
     get { return orderOffers_; }
+    set => throw new NotImplementedException();
   }
 
   /// <summary>Field number for the "isDone" field.</summary>

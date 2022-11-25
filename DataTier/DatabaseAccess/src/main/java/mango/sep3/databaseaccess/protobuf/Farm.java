@@ -21,6 +21,7 @@ private static final long serialVersionUID = 0L;
     zip_ = "";
     address_ = "";
     city_ = "";
+    iconPath_ = "";
     farmStatus_ = "";
   }
 
@@ -87,11 +88,17 @@ private static final long serialVersionUID = 0L;
           }
           case 50: {
             java.lang.String s = input.readStringRequireUtf8();
+
+            iconPath_ = s;
+            break;
+          }
+          case 58: {
+            java.lang.String s = input.readStringRequireUtf8();
             bitField0_ |= 0x00000001;
             farmStatus_ = s;
             break;
           }
-          case 56: {
+          case 64: {
             bitField0_ |= 0x00000002;
             deliveryDistance_ = input.readInt32();
             break;
@@ -321,10 +328,48 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int FARMSTATUS_FIELD_NUMBER = 6;
+  public static final int ICONPATH_FIELD_NUMBER = 6;
+  private volatile java.lang.Object iconPath_;
+  /**
+   * <code>string iconPath = 6;</code>
+   * @return The iconPath.
+   */
+  @java.lang.Override
+  public java.lang.String getIconPath() {
+    java.lang.Object ref = iconPath_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      iconPath_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string iconPath = 6;</code>
+   * @return The bytes for iconPath.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getIconPathBytes() {
+    java.lang.Object ref = iconPath_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      iconPath_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int FARMSTATUS_FIELD_NUMBER = 7;
   private volatile java.lang.Object farmStatus_;
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 7;</code>
    * @return Whether the farmStatus field is set.
    */
   @java.lang.Override
@@ -332,7 +377,7 @@ private static final long serialVersionUID = 0L;
     return ((bitField0_ & 0x00000001) != 0);
   }
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 7;</code>
    * @return The farmStatus.
    */
   @java.lang.Override
@@ -349,7 +394,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 7;</code>
    * @return The bytes for farmStatus.
    */
   @java.lang.Override
@@ -367,10 +412,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int DELIVERYDISTANCE_FIELD_NUMBER = 7;
+  public static final int DELIVERYDISTANCE_FIELD_NUMBER = 8;
   private int deliveryDistance_;
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 8;</code>
    * @return Whether the deliveryDistance field is set.
    */
   @java.lang.Override
@@ -378,7 +423,7 @@ private static final long serialVersionUID = 0L;
     return ((bitField0_ & 0x00000002) != 0);
   }
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 8;</code>
    * @return The deliveryDistance.
    */
   @java.lang.Override
@@ -415,11 +460,14 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(city_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, city_);
     }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(iconPath_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, iconPath_);
+    }
     if (((bitField0_ & 0x00000001) != 0)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, farmStatus_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, farmStatus_);
     }
     if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeInt32(7, deliveryDistance_);
+      output.writeInt32(8, deliveryDistance_);
     }
     unknownFields.writeTo(output);
   }
@@ -445,12 +493,15 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(city_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, city_);
     }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(iconPath_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, iconPath_);
+    }
     if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, farmStatus_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, farmStatus_);
     }
     if (((bitField0_ & 0x00000002) != 0)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(7, deliveryDistance_);
+        .computeInt32Size(8, deliveryDistance_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -477,6 +528,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getAddress())) return false;
     if (!getCity()
         .equals(other.getCity())) return false;
+    if (!getIconPath()
+        .equals(other.getIconPath())) return false;
     if (hasFarmStatus() != other.hasFarmStatus()) return false;
     if (hasFarmStatus()) {
       if (!getFarmStatus()
@@ -508,6 +561,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getAddress().hashCode();
     hash = (37 * hash) + CITY_FIELD_NUMBER;
     hash = (53 * hash) + getCity().hashCode();
+    hash = (37 * hash) + ICONPATH_FIELD_NUMBER;
+    hash = (53 * hash) + getIconPath().hashCode();
     if (hasFarmStatus()) {
       hash = (37 * hash) + FARMSTATUS_FIELD_NUMBER;
       hash = (53 * hash) + getFarmStatus().hashCode();
@@ -659,6 +714,8 @@ private static final long serialVersionUID = 0L;
 
       city_ = "";
 
+      iconPath_ = "";
+
       farmStatus_ = "";
       bitField0_ = (bitField0_ & ~0x00000001);
       deliveryDistance_ = 0;
@@ -696,6 +753,7 @@ private static final long serialVersionUID = 0L;
       result.zip_ = zip_;
       result.address_ = address_;
       result.city_ = city_;
+      result.iconPath_ = iconPath_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         to_bitField0_ |= 0x00000001;
       }
@@ -771,6 +829,10 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getCity().isEmpty()) {
         city_ = other.city_;
+        onChanged();
+      }
+      if (!other.getIconPath().isEmpty()) {
+        iconPath_ = other.iconPath_;
         onChanged();
       }
       if (other.hasFarmStatus()) {
@@ -1191,16 +1253,92 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object iconPath_ = "";
+    /**
+     * <code>string iconPath = 6;</code>
+     * @return The iconPath.
+     */
+    public java.lang.String getIconPath() {
+      java.lang.Object ref = iconPath_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        iconPath_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string iconPath = 6;</code>
+     * @return The bytes for iconPath.
+     */
+    public com.google.protobuf.ByteString
+        getIconPathBytes() {
+      java.lang.Object ref = iconPath_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        iconPath_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string iconPath = 6;</code>
+     * @param value The iconPath to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIconPath(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      iconPath_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string iconPath = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearIconPath() {
+      
+      iconPath_ = getDefaultInstance().getIconPath();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string iconPath = 6;</code>
+     * @param value The bytes for iconPath to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIconPathBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      iconPath_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object farmStatus_ = "";
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 7;</code>
      * @return Whether the farmStatus field is set.
      */
     public boolean hasFarmStatus() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 7;</code>
      * @return The farmStatus.
      */
     public java.lang.String getFarmStatus() {
@@ -1216,7 +1354,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 7;</code>
      * @return The bytes for farmStatus.
      */
     public com.google.protobuf.ByteString
@@ -1233,7 +1371,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 7;</code>
      * @param value The farmStatus to set.
      * @return This builder for chaining.
      */
@@ -1248,7 +1386,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearFarmStatus() {
@@ -1258,7 +1396,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 7;</code>
      * @param value The bytes for farmStatus to set.
      * @return This builder for chaining.
      */
@@ -1276,7 +1414,7 @@ private static final long serialVersionUID = 0L;
 
     private int deliveryDistance_ ;
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 8;</code>
      * @return Whether the deliveryDistance field is set.
      */
     @java.lang.Override
@@ -1284,7 +1422,7 @@ private static final long serialVersionUID = 0L;
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 8;</code>
      * @return The deliveryDistance.
      */
     @java.lang.Override
@@ -1292,7 +1430,7 @@ private static final long serialVersionUID = 0L;
       return deliveryDistance_;
     }
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 8;</code>
      * @param value The deliveryDistance to set.
      * @return This builder for chaining.
      */
@@ -1303,7 +1441,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearDeliveryDistance() {

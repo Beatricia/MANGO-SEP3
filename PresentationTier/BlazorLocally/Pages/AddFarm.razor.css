@@ -184,6 +184,10 @@ input:not(.distance-slider):not(input[type='button']):focus, textarea:focus, .up
 
 }
 
+.right select{
+    font-size: 16px;
+}
+
 @media screen and (max-width: 1150px) {
     .form{
         display: flex;

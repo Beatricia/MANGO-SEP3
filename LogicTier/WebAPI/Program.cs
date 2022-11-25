@@ -2,6 +2,7 @@ using Application.DAOInterfaces;
 using Application.LogicImplementations;
 using Application.LogicInterfaces;
 using GprcClients.DAOImplementations;
+using WebAPI.Utils;
 using Grpc.Net.ClientFactory;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,9 @@ builder.Services.AddGrpcClient<UserService.UserServiceClient>(grpcOptions);
 builder.Services.AddScoped<IAuthDao, AuthDaoImpl>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 
+builder.Services.AddTransient<IFarmIconDao, FarmIconResource>();
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
@@ -42,6 +46,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

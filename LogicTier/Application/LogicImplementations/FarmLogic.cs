@@ -7,10 +7,12 @@ using Farm = Shared.Models.Farm;
 namespace Application.LogicImplementations;
 public class FarmLogic : IFarmLogic
 {
+    private IFarmIconDao farmIconDao;
     private IFarmDao farmDao;
 
-    public FarmLogic(IFarmDao farmDao)
+    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao)
     {
+        this.farmIconDao = farmIconDao;
         this.farmDao = farmDao;
     }
     
@@ -23,8 +25,15 @@ public class FarmLogic : IFarmLogic
     public async Task<Farm> CreateAsync(FarmCreationDto dto)
     {
         ValidateData(dto);
-        
 
+        // assign the default icon if the user didn't specify one
+        FarmIcon icon;
+        if (!farmIconDao.isValidIcon(dto.FarmIconFileName))
+            icon = farmIconDao.DefaultIcon;
+        else
+            icon = farmIconDao.CreateIcon(dto.FarmIconFileName!);
+        
+        
         Farm farmToSend = new Farm
         {
             Name = dto.Name,
@@ -37,12 +46,16 @@ public class FarmLogic : IFarmLogic
                 ZIP = dto.ZIP,
                 Street = dto.Address
             },
+            FarmIcon = icon
         };
 
         await farmDao.CreateAsync(farmToSend);
         
         return farmToSend;
     }
+
+    /// <inheritdoc/>
+    public ICollection<FarmIcon> GetAllIcons() => farmIconDao.AllIcons;
 
     private void ValidateData(FarmCreationDto dto)
     {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Models;
+using WebAPI.Utils;
 
 namespace WebAPI.Controllers;
 
@@ -36,6 +37,17 @@ public class FarmController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
+    }
+
+
+    /// <summary>
+    /// Gets all the available farm icons
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("icons")]
+    public IActionResult GetAllIcons()
+    {
+        return Ok(farmLogic.GetAllIcons());
     }
     
 }

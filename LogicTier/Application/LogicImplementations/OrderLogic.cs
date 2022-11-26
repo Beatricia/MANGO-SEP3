@@ -6,21 +6,49 @@ namespace Application.LogicImplementations;
 
 public class OrderLogic : IOrderLogic
 {
-    private readonly IOrderDao dao;
-    // we need ICartDao!!!
+    private readonly IOrderDao orderDao;
+    private readonly ICartDao cartDao;
+    private readonly IOfferDao OfferDao;
 
-    public OrderLogic(IOrderDao dao)
+    public OrderLogic(IOrderDao orderDao,ICartDao cartDao,IOfferDao offerDao)
     {
-        this.dao = dao;
+        this.orderDao = orderDao;
+        this.cartDao = cartDao;
+        this.OfferDao = offerDao;
     }
 
-    public Task CreateOrderAsync(string Username)
+    public async Task CreateOrderAsync(string username)
     {
-        throw new NotImplementedException();
+        ICollection<CartOffer> cartOffers =  cartDao.GetAllCartItemsAsync(username).GetAwaiter().GetResult();
+        List<OrderOffer> orderOffers = new List<OrderOffer>();
+        
+        //converting cartItems into OrderItems
+        foreach (var cartOffer in cartOffers)
+        {
+            Offer offer = await OfferDao.GetOfferByIdAsync(cartOffer.Id);
+            OrderOffer orderOffer = new OrderOffer
+            {
+                Id = cartOffer.Id,
+                Offer = offer,
+                Quantity = cartOffer.Quantity,
+                Username = cartOffer.UserName,
+                CollectionOption = cartOffer.CollectionOption,
+            };
+            orderOffers.Add(orderOffer);
+        }
+
+        //adding OrderItems to database
+        await orderDao.CreateOrderOffersAsync(orderOffers);
+        
+        //sorting OrderItems into Order
+        
+        
+        
+        
     }
 
-    public Task<IEnumerable<Order>> GetAllOrders(string Username)
+    public Task<IEnumerable<Order>> GetAllOrders(string username)
     {
-        throw new NotImplementedException();
+        return orderDao.GetAllOrdersAsync(username);
     }
 }

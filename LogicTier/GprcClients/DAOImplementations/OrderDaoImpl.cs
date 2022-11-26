@@ -22,7 +22,6 @@ public class OrderDaoImpl : IOrderDao
         this.offerService = offerService;
         this.orderService = orderService;
     }
-
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
         OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);

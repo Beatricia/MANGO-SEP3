@@ -1,4 +1,5 @@
 ﻿using Application.DAOInterfaces;
+using Offer = Shared.Models.Offer;
 
 namespace GprcClients.DAOImplementations;
 
@@ -21,9 +22,8 @@ public class OfferDaoImpl : IOfferDao
     
     public async Task CreateAsync(Shared.Models.Offer offer)
     {
-        var offerToCreate = new Offer
+        var offerToCreate = new global::OfferCreation()
         {
-            Id = offer.Id,
             Name = offer.Name,
             Quantity = offer.Quantity,
             Unit = offer.Unit,
@@ -35,7 +35,7 @@ public class OfferDaoImpl : IOfferDao
             ImagePath = offer.ImagePath
         };
         
-        _ = await offerService.CreateOfferAsync(offerToCreate);
+         await offerService.CreateOfferAsync(offerToCreate);
     }
 
     /// <summary>
@@ -74,5 +74,30 @@ public class OfferDaoImpl : IOfferDao
 
         // Returning the list with all the offers
         return list;
+    }
+
+    public async Task<Shared.Models.Offer> GetOfferByIdAsync(int id)
+    {
+        Id offerId = new Id
+        {
+            Id_ = id
+        };
+
+        global::Offer offer = await offerService.GetOfferByIdAsync(offerId);
+
+        Shared.Models.Offer offerToSend = new Shared.Models.Offer
+        {
+            Id = offer.Id,
+            Name = offer.Name,
+            Quantity = offer.Quantity,
+            Unit = offer.Unit,
+            Price = offer.Price,
+            Delivery = offer.Delivery,
+            PickUp = offer.PickUp,
+            PickYourOwn = offer.PickYourOwn,
+            Description = offer.Description,
+            ImagePath = offer.ImagePath,
+        };
+        return offerToSend;
     }
 }

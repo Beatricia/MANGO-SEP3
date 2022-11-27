@@ -28,14 +28,9 @@ public class OfferLogic : IOfferLogic
     /// <returns>The created Offer object</returns>
     public async Task<Offer> CreateAsync(OfferCreationDto dto)
     {
-        ValidateData(dto);
-        var id = 1;
-
-        //TODO make correct id 
 
         Offer offerToSend = new Offer
         {
-            Id = id,
             Name = dto.Name,
             Quantity = dto.Quantity,
             Unit = dto.Unit,
@@ -61,29 +56,5 @@ public class OfferLogic : IOfferLogic
         return await offerDao.GetAsync();
     }
 
-
-    /// <summary>
-    /// Validating the data when creating an offer
-    /// </summary>
-    /// <param name="dto">The offer to be created</param>
-    /// <exception cref="Exception"></exception>
-    private void ValidateData(OfferCreationDto dto)
-    {
-        
-        if (dto.Name.Length > 100)
-        {
-            throw new Exception("Offer name is too long!");
-        }
-
-        if (dto.Quantity <= 0)
-        {
-            throw new Exception("Quantity must be bigger than 0!");
-        }
-
-        if (dto.Price <= 0)
-        {
-            throw new Exception("Price must be bigger than 0!");
-        }
-
-    }
+    
 }

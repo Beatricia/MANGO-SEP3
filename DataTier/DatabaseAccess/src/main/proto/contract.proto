@@ -9,8 +9,9 @@ service FarmService{
 }
 
 service OfferService{
-  rpc CreateOffer(Offer) returns(Offer);
+  rpc CreateOffer(OfferCreation) returns(Offer);
   rpc GetOffers(Void) returns(OfferItems);
+  rpc GetOfferById(Id) returns(Offer);
 }
 service UserService{
   rpc RegisterUser(UserAuth) returns (User);
@@ -55,6 +56,18 @@ message Farm{
 
 message Offer{
   int32 id = 1;
+  string name = 2;
+  int32 quantity = 3;
+  string unit = 4;
+  double price = 5;
+  bool delivery = 6;
+  bool pickUp = 7;
+  bool pickYourOwn = 8;
+  optional string description = 9;
+  string ImagePath = 10;
+}
+
+message OfferCreation{
   string name = 2;
   int32 quantity = 3;
   string unit = 4;
@@ -132,5 +145,9 @@ message CartOffers{
 
 message Username{
   string username = 1;
+}
+
+message Id{
+  int32 id =1;
 }
 

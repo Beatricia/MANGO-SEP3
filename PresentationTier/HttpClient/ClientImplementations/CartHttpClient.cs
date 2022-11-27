@@ -16,7 +16,7 @@ public class CartHttpClient : ICartService
     
     public async Task<User> AddToCartAsync(CartOfferDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/cart", dto);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/cartItem", dto);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -32,10 +32,11 @@ public class CartHttpClient : ICartService
         return user;
     }
 
-    public async Task<ICollection<CartOffer>> GetAllCartItemsAsync()
+    public async Task<ICollection<CartOffer>> GetAllCartItemsAsync(string username)
     {
-        HttpResponseMessage response = await client.GetAsync("/cart");
+        HttpResponseMessage response = await client.GetAsync($"/Cart?username={username}");
         string content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -52,6 +53,12 @@ public class CartHttpClient : ICartService
 
     public async Task DeleteAllCartOffersAsync(string username)
     {
-        HttpResponseMessage response = await client.DeleteAsync("/cart");
+        HttpResponseMessage response = await client.DeleteAsync($"/Cart?username={username}");
+        string content = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
     }
 }

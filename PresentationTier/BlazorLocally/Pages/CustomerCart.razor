@@ -1,47 +1,69 @@
 ﻿@page "/CustomerCart"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@inject ICartService cartService;
+@inject IOrderService orderService;
 
 <div class="greeting">
-<h4>SHOPPING CART</h4>
+    <h4>SHOPPING CART</h4>
 </div>
 
-
+@if (cartOffers == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
 <button class="removeAllBtn" @onclick="RemoveAll">EMPTY CART</button>
+@if (cartOffers != null)
+{
+	
+    <table class="table">
+        <thead>
+        <tr>
+            <th>QTY</th>
+            <th>Item</th>
+            <th>Collect Option</th>
+            <th>Farm</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var cartOff in cartOffers)
+        {
+            <td>@cartOff.Quantity</td>
+            <td>@cartOff.Offer.Name</td>
+            <td>@cartOff.CollectionOption</td>
+            <td>Farm</td>
+            <td>@cartOff.Offer.Price</td>
+        }
+        </tbody>
+    </table>
+	
 
 
-<table class="table">
-	<thead>
-	<tr>
-		<th>QTY</th>
-		<th>Item</th>
-		<th>Collect Option</th>
-		<th>Farm</th>
-		<th>Price</th>
-	</tr>
-	</thead>
-	<tbody>
-	<!--@foreach (var item in cartItems)
-	{
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	}-->
-	</tbody>
-</table>
-
-<div class="totalPrice"><strong>Total price: </strong> 
-	<button class="orderBtn" @onclick="Order">ORDER NOW</button></div>
+    <div class="totalPrice"><strong>Total price: </strong> 
+        <button class="orderBtn" @onclick="Order">ORDER NOW</button></div>
+}
 
 @code {
-    private IEnumerable<String?> cartItems; <!--change string-->
+    private IEnumerable<CartOffer>? cartOffers;
+    private IEnumerable<Offer> offers;
     private string msg = "";
 
+    private string? username;
+	
     protected override async Task OnInitializedAsync()
     {
         try
         {
-           // cartItems = await HttpClient.GetAsync();
+            cartOffers = await cartService.GetAllCartItemsAsync("Bety");
+            Console.WriteLine("The cart offers received: " +  cartOffers);
+
+            foreach (var VARIABLE in cartOffers)
+            {
+                Console.WriteLine("salut"+ cartOffers.GetEnumerator());
+            }
         }
         catch (Exception e)
         {
@@ -50,13 +72,14 @@
         }
     }
 
-	private async Task RemoveAll()
-	{
-		
-	}
+    private async Task RemoveAll()
+    {
+        await cartService.DeleteAllCartOffersAsync("Bety");
+        cartOffers = null;
+    }
 
-	private async Task Order()
-	{
-		
-	}
+    private async Task Order()
+    {
+        await orderService.CreateOrderAsync("Cristi");
+    }
 }

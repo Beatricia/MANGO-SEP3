@@ -1,9 +1,12 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,13 +15,16 @@ import java.util.Collection;
  * A class responsable for taking the data from the database (currently from
  * a textFile) and sending it to the Logic Tier
  */
+
+@GRpcService
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
   private FileContext context;
+  @Autowired private OfferDaoInterface offerDaoInterface;
 
-  public OfferServiceImpl(FileContext context)
+  public OfferServiceImpl()
   {
-    this.context = context;
+
   }
 
   /**
@@ -44,12 +50,24 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
         .setImagePath(request.getImagePath())
         .build();
 
-    context.Offers().add(offer);
-    context.SaveChanges();
+    mango.sep3.databaseaccess.Shared.Offer offerShared = new mango.sep3.databaseaccess.Shared.Offer();
+    offerShared.setId(request.getId());
+    offerShared.setName(request.getName());
+    offerShared.setQuantity(request.getQuantity());
+    offerShared.setUnit(request.getUnit());
+    offerShared.setPrice(request.getPrice());
+    offerShared.setDelivery(request.getDelivery());
+    offerShared.setPickUp(request.getPickUp());
+    offerShared.setPickyourOwn(request.getPickYourOwn());
+    offerShared.setDescription(request.getDescription());
+    offerShared.setImgPath(request.getImagePath());
+
+    offerDaoInterface.CreateOffer(offerShared);
 
     responseObserver.onNext(offer);
     responseObserver.onCompleted();
   }
+
 
   /**
    * Getting the offers from the database(currently from the file context)
@@ -62,7 +80,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     //Creating the proto OfferItems
     OfferItems.Builder response = OfferItems.newBuilder();
     //Creating the Offers from the model
-    ArrayList<Offer> offers = (ArrayList<Offer>) context.Offers();
+    ArrayList<mango.sep3.databaseaccess.Shared.Offer> offers = (ArrayList<mango.sep3.databaseaccess.Shared.Offer>) offerDaoInterface.GetOffers();
 
     Collection<Offer> offersList = new ArrayList<>();
 
@@ -78,7 +96,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
           .setPickUp(offers.get(i).getPickUp())
           .setPickYourOwn(offers.get(i).getPickYourOwn())
           .setDescription(offers.get(i).getDescription())
-          .setImagePath(offers.get(i).getImagePath())
+          .setImagePath(offers.get(i).getImgPath())
           .build();
 
       offersList.add(off);

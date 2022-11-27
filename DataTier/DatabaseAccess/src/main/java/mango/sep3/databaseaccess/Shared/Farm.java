@@ -121,4 +121,23 @@ public class Farm implements Serializable
     {
         this.address = address;
     }
+    public Set<Offer> getOffers()
+    {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers)
+    {
+        this.offers = offers;
+    }
+
+    public Farmer getFarmer()
+    {
+        return farmer;
+    }
+
+    public void setFarmer(Farmer farmer)
+    {
+        this.farmer = farmer;
+    }
 }

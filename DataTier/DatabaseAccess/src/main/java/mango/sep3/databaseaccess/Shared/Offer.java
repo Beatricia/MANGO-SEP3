@@ -172,4 +172,18 @@ public class Offer implements Serializable
         this.price = price;
     }
 
+    public boolean getDelivery()
+    {
+        return delivery;
+    }
+
+    public boolean getPickUp()
+    {
+        return pickUp;
+    }
+
+    public boolean getPickYourOwn()
+    {
+        return pickyourOwn;
+    }
 }

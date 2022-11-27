@@ -68,29 +68,41 @@ public interface FarmOrBuilder extends
       getCityBytes();
 
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>string iconPath = 6;</code>
+   * @return The iconPath.
+   */
+  java.lang.String getIconPath();
+  /**
+   * <code>string iconPath = 6;</code>
+   * @return The bytes for iconPath.
+   */
+  com.google.protobuf.ByteString
+      getIconPathBytes();
+
+  /**
+   * <code>optional string farmStatus = 7;</code>
    * @return Whether the farmStatus field is set.
    */
   boolean hasFarmStatus();
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 7;</code>
    * @return The farmStatus.
    */
   java.lang.String getFarmStatus();
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 7;</code>
    * @return The bytes for farmStatus.
    */
   com.google.protobuf.ByteString
       getFarmStatusBytes();
 
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 8;</code>
    * @return Whether the deliveryDistance field is set.
    */
   boolean hasDeliveryDistance();
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 8;</code>
    * @return The deliveryDistance.
    */
   int getDeliveryDistance();

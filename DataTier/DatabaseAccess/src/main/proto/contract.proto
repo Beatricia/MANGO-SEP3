@@ -17,6 +17,7 @@ service UserService{
   rpc LoginUser(UserAuth) returns (User);
   rpc RegisterUser(UserAuth) returns (User);
   rpc GetUserByUsername(Text) returns (User);
+  rpc GetUserAuthByUsername(Text) returns (UserAuth);
 }
 
 message UserAuth{
@@ -37,8 +38,9 @@ message Farm{
   string zip = 3;
   string address = 4;
   string city = 5;
-  optional string farmStatus = 6;
-  optional int32 deliveryDistance = 7;
+  string iconPath = 6;
+  optional string farmStatus = 7;
+  optional int32 deliveryDistance = 8;
 }
 
 

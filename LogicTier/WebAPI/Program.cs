@@ -3,6 +3,7 @@ using Application.DAOInterfaces;
 using Application.LogicImplementations;
 using Application.LogicInterfaces;
 using GprcClients.DAOImplementations;
+using WebAPI.Utils;
 using Grpc.Net.ClientFactory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +51,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 AuthorizationPolicies.AddPolicies(builder.Services);
+builder.Services.AddTransient<IFarmIconDao, FarmIconResource>();
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
@@ -61,6 +65,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 

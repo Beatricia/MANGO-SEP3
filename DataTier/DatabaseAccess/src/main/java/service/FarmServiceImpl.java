@@ -44,6 +44,7 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
         .setZip(request.getZip())
         .setFarmStatus(request.getFarmStatus())
         .setDeliveryDistance(request.getDeliveryDistance())
+         .setIconPath(request.getIconPath())
         .build();
 
         farmDAO.CreateFarm(farm);

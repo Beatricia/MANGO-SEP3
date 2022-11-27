@@ -1,10 +1,13 @@
-﻿@page "/farms/add"
+﻿@page "/AddFarm"
 
 @using HttpClient.ClientInterfaces
 @using System.Text.RegularExpressions
+@using BlazorLocally.Utils
 @using global::Shared.DTOs
+@using global::Shared.Models
 @inject IJSRuntime JsRuntime
 @inject IFarmService farmService
+@inject ApiInformation ApiInformation
 
 
 <div class="center add-farm-root">
@@ -44,10 +47,18 @@
             <div>
                 <div class="image-container" title="Upload an image">
                     <label for="image">
-                        <img src="https://img.freepik.com/free-vector/farm-scene-nature-with-barn_1308-32159.jpg" width="200" height="200">
-                        <div class="upload-button">Upload</div>
+                        <img src="@(selectedIconUrl)" width="200" height="200">
                     </label>
-                    <input id="image" type="file" alt="Submit">
+                    @if (icons is not null)
+                    {
+                        <select @onchange="(eventArgs) => SelectIcon(eventArgs.Value)">
+                            @foreach (var icon in icons)
+                            {
+                                
+                                <option value="@icon.FileName">@icon.IconName</option>
+                            }
+                        </select>
+                    }
                 </div>
                 <div class="submit-container">
                     <input type="button" class="submit-button" value="Submit" @onclick="CreateFarm">
@@ -69,6 +80,44 @@
     private string zipClasses = string.Empty;
     private string phoneClasses = string.Empty;
 
+    private ICollection<FarmIcon>? icons;
+    private FarmIcon? selectedIcon;
+    private string? selectedIconUrl = "";
+
+    private void SelectIcon(object? obj)
+    {
+        if (obj is not string icon)
+        {
+            return;
+        }
+        
+        FarmIcon selected = icons.First(i => i.FileName == icon);
+        
+        selectedIcon = selected;
+        selectedIconUrl = selectedIcon.AbsoluteUrl;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var tempIcons = (await farmService.GetAllIconsAsync()).ToList();
+            
+            var defaultIcon = tempIcons.First(icon => icon.FileName == "default.png");
+
+            tempIcons.Remove(defaultIcon);
+            tempIcons.Insert(0, defaultIcon);
+
+            icons = tempIcons;
+            
+            SelectIcon("default.png");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
     private async Task CreateFarm()
     {
         try
@@ -89,6 +138,7 @@
             Phone = phone,
             DeliveryDistance = deliveryDistance,
             FarmStatus = status,
+            FarmIconFileName = selectedIcon.FileName
         };
         
         await farmService.CreateAsync(farmCreationDto);
@@ -126,6 +176,7 @@
             errorMessage = "Invalid phone number. Please use a valid format, for example +45012345678";
         }
         else phoneClasses = "";*/
+        
 
 
         if (errorMessage is not null)

@@ -1,9 +1,10 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
-import mango.sep3.databaseaccess.FileData.FileContext;
+import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,42 +15,49 @@ import java.util.Collection;
  */
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
-  private FileContext context;
+  @Autowired
+  private OfferDaoInterface offerDao;
 
-  public OfferServiceImpl(FileContext context)
+  public OfferServiceImpl()
   {
-    this.context = context;
   }
 
   /**
    * The method creates a grpc Offer object using the parameters send in the
    * request. Then directly calls the FileContext instance to write the object to
    * the file and save the changes (this will be changed when the DB is implemented).
-   * Finally returns the created object.
+   * Finally, returns the created object.
    * @param request  the Offer object send from the Logic Tier
    * @param responseObserver the object returned to the Logic Tier
    */
-  @Override public void createOffer(Offer request, StreamObserver<Offer> responseObserver)
+  @Override public void createOffer(OfferCreation request,
+      StreamObserver<Offer> responseObserver)
   {
-    Offer offer = Offer.newBuilder()
-        .setId(request.getId())
-        .setName(request.getName())
-        .setQuantity(request.getQuantity())
-        .setUnit(request.getUnit())
-        .setPrice(request.getPrice())
-        .setDelivery(request.getDelivery())
-        .setPickUp(request.getPickUp())
-        .setPickYourOwn(request.getPickYourOwn())
-        .setDescription(request.getDescription())
-        .setImagePath(request.getImagePath())
-        .build();
 
-    context.Offers().add(offer);
-    context.SaveChanges();
+    mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
 
-    responseObserver.onNext(offer);
+      offer.setName(request.getName());
+      offer.setQuantity(request.getQuantity());
+      offer.setUnit(request.getUnit());
+      offer.setPrice(request.getPrice());
+      offer.setDelivery(request.getDelivery());
+      offer.setPickUp(request.getPickUp());
+      offer.setPickyourOwn(request.getPickYourOwn());
+      offer.setDescription(request.getDescription());
+      offer.setImgPath(request.getImagePath());
+
+
+    offerDao.CreateOffer(offer);
+
+    Offer response = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(
+            offer.getQuantity()).setUnit(offer.getUnit())
+        .setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
+        .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+
+    responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
+
 
   /**
    * Getting the offers from the database(currently from the file context)
@@ -59,34 +67,35 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   @Override public void getOffers(Void request,
       StreamObserver<OfferItems> responseObserver)
   {
-    //Creating the proto OfferItems
-    OfferItems.Builder response = OfferItems.newBuilder();
-    //Creating the Offers from the model
-    ArrayList<Offer> offers = (ArrayList<Offer>) context.Offers();
+    Collection<mango.sep3.databaseaccess.Shared.Offer> offers = offerDao.GetOffer();
 
     Collection<Offer> offersList = new ArrayList<>();
 
-    for (int i = 0; i < offers.size(); i++)
+    for (var offer: offers)
     {
-      Offer off = Offer.newBuilder()
-          .setId(offers.get(i).getId())
-          .setName(offers.get(i).getName())
-          .setQuantity(offers.get(i).getQuantity())
-          .setUnit(offers.get(i).getUnit())
-          .setPrice(offers.get(i).getPrice())
-          .setDelivery(offers.get(i).getDelivery())
-          .setPickUp(offers.get(i).getPickUp())
-          .setPickYourOwn(offers.get(i).getPickYourOwn())
-          .setDescription(offers.get(i).getDescription())
-          .setImagePath(offers.get(i).getImagePath())
-          .build();
-
-      offersList.add(off);
+      Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
+          .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
+          .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+      offersList.add(offerToSend);
     }
 
-    response.addAllOffers(offersList);
+    OfferItems response = OfferItems.newBuilder().addAllOffers(offersList).build();
     //sending back data to the client
-    responseObserver.onNext(response.build());
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
+
+  @Override public void getOfferById(Id request,
+      StreamObserver<Offer> responseObserver)
+  {
+    mango.sep3.databaseaccess.Shared.Offer offer = offerDao.getOfferById(request.getId());
+
+    Offer response = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(
+            offer.getQuantity()).setUnit(offer.getUnit())
+        .setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
+        .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+
+    responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
 }

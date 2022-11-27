@@ -2,6 +2,7 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOImplementations.FarmDAO;
+import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.Shared.Address;
@@ -21,7 +22,7 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
   @Autowired
   private FileContext fileContext;
   @Autowired
-  private FarmDAO farmDAO;
+  private FarmDaoInterface farmDAO;
 
   private FarmRepository farmRepository;
 

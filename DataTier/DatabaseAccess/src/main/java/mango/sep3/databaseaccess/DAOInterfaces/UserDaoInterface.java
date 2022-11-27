@@ -28,6 +28,11 @@ public interface UserDaoInterface {
      */
     User getUserByUsername(String username);
 
+    /**
+     * Gets authorized user by username.
+     * @param username The username of the authorized user.
+     * @return The authorized user.
+     */
     UserAuth getUserAuthByUsername(String username);
 
 

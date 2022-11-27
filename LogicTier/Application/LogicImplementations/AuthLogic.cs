@@ -43,9 +43,7 @@ public class AuthLogic : IAuthLogic
             HashPassword = hashPass,
             Salt = saltString
         };
-
-        Console.WriteLine($"Register info: {authUser.HashPassword} {authUser.Salt}");
-
+        
         return await authDao.RegisterAsync(authUser);
     }
 
@@ -65,12 +63,10 @@ public class AuthLogic : IAuthLogic
         if (authUser == null)
             throw new Exception("User does not exist");
 
-        Console.WriteLine($"Login info: {authUser.HashPassword} {authUser.Salt}");
         
         string saltString = authUser.Salt;
         string hashPassToCheck = HashPassword(passwordPlain, saltString);
 
-        Console.WriteLine("Check hash: " + hashPassToCheck);
         
         if (hashPassToCheck != authUser.HashPassword)
         {

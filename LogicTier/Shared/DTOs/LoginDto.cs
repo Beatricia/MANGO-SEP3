@@ -1,4 +1,4 @@
-﻿namespace Shared.DTOs;
+namespace Shared.DTOs;
 
 /// <summary>
 /// Holds information required to log in
@@ -8,9 +8,9 @@ public class LoginDto
     /// <summary>
     /// Username of the person who wants to log in
     /// </summary>
-    public string Username { get; set; }
+    public string Username { get; set; } = string.Empty;
     /// <summary>
     /// Password of the person who wants to log in
     /// </summary>
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 }

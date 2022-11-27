@@ -35,6 +35,11 @@ public final class Contract {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Offer_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_OfferCreation_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_OfferCreation_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_OrderOffer_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -99,6 +104,11 @@ public final class Contract {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Username_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Id_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Id_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -120,42 +130,48 @@ public final class Contract {
       "\003 \001(\005\022\014\n\004unit\030\004 \001(\t\022\r\n\005price\030\005 \001(\001\022\020\n\010de" +
       "livery\030\006 \001(\010\022\016\n\006pickUp\030\007 \001(\010\022\023\n\013pickYour" +
       "Own\030\010 \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tI" +
-      "magePath\030\n \001(\tB\016\n\014_description\"m\n\nOrderO" +
-      "ffer\022\n\n\002id\030\001 \001(\005\022\025\n\005offer\030\002 \001(\0132\006.Offer\022" +
-      "\020\n\010quantity\030\003 \001(\005\022\020\n\010username\030\004 \001(\t\022\030\n\020c" +
-      "ollectionOption\030\005 \001(\t\"/\n\013OrderOffers\022 \n\013" +
-      "orderOffers\030\001 \003(\0132\013.OrderOffer\"q\n\005Order\022" +
-      "\n\n\002id\030\001 \001(\005\022 \n\013orderOffers\030\002 \003(\0132\013.Order" +
-      "Offer\022\016\n\006isDone\030\003 \001(\010\022\020\n\010farmName\030\004 \001(\t\022" +
-      "\030\n\020collectionOption\030\005 \001(\t\" \n\006Orders\022\026\n\006o" +
-      "rders\030\001 \003(\0132\006.Order\"$\n\nOfferItems\022\026\n\006off" +
-      "ers\030\001 \003(\0132\006.Offer\"k\n\010Customer\022\020\n\010usernam" +
-      "e\030\001 \001(\t\022\021\n\tfirstname\030\002 \001(\t\022\020\n\010lastname\030\003" +
-      " \001(\t\022\r\n\005phone\030\004 \001(\t\022\031\n\007address\030\005 \001(\0132\010.A" +
-      "ddress\"?\n\006Farmer\022\020\n\010username\030\001 \001(\t\022\021\n\tfi" +
-      "rstname\030\002 \001(\t\022\020\n\010lastname\030\003 \001(\t\"4\n\007Addre" +
-      "ss\022\014\n\004city\030\001 \001(\t\022\016\n\006street\030\002 \001(\t\022\013\n\003zip\030" +
-      "\003 \001(\t\"\006\n\004Void\"\024\n\004Text\022\014\n\004text\030\001 \001(\t\"f\n\tC" +
-      "artOffer\022\n\n\002id\030\001 \001(\005\022\017\n\007offerId\030\002 \001(\005\022\020\n" +
-      "\010quantity\030\003 \001(\005\022\020\n\010username\030\004 \001(\t\022\030\n\020col" +
-      "lectionOption\030\005 \001(\t\",\n\nCartOffers\022\036\n\ncar" +
-      "tOffers\030\001 \003(\0132\n.CartOffer\"\034\n\010Username\022\020\n" +
-      "\010username\030\001 \001(\t2B\n\013FarmService\022\032\n\nCreate" +
-      "Farm\022\005.Farm\032\005.Void\022\027\n\007GetFarm\022\005.Text\032\005.F" +
-      "arm2N\n\014OfferService\022\035\n\013CreateOffer\022\006.Off" +
-      "er\032\006.Offer\022\037\n\tGetOffers\022\005.Void\032\013.OfferIt" +
-      "ems2s\n\013UserService\022 \n\014RegisterUser\022\t.Use" +
-      "rAuth\032\005.User\022!\n\021GetUserByUsername\022\005.Text" +
-      "\032\005.User\022\037\n\013GetCustomer\022\005.Text\032\t.Customer" +
-      "2\237\001\n\014OrderService\022(\n\021CreateOrderOffers\022\014" +
-      ".OrderOffers\032\005.Void\022\036\n\014CreateOrders\022\007.Or" +
-      "ders\032\005.Void\022\036\n\014GetAllOrders\022\005.Text\032\007.Ord" +
-      "ers\022%\n\016GetOrderOffers\022\005.Text\032\014.OrderOffe" +
-      "rs2\207\001\n\020CartOfferService\022\036\n\tAddToCart\022\n.C" +
-      "artOffer\032\005.Void\022*\n\020GetAllCartOffers\022\t.Us" +
-      "ername\032\013.CartOffers\022\'\n\023DeleteAllCartOffe" +
-      "rs\022\t.Username\032\005.VoidB&\n\"mango.sep3.datab" +
-      "aseaccess.protobufP\001b\006proto3"
+      "magePath\030\n \001(\tB\016\n\014_description\"\300\001\n\rOffer" +
+      "Creation\022\014\n\004name\030\002 \001(\t\022\020\n\010quantity\030\003 \001(\005" +
+      "\022\014\n\004unit\030\004 \001(\t\022\r\n\005price\030\005 \001(\001\022\020\n\010deliver" +
+      "y\030\006 \001(\010\022\016\n\006pickUp\030\007 \001(\010\022\023\n\013pickYourOwn\030\010" +
+      " \001(\010\022\030\n\013description\030\t \001(\tH\000\210\001\001\022\021\n\tImageP" +
+      "ath\030\n \001(\tB\016\n\014_description\"m\n\nOrderOffer\022" +
+      "\n\n\002id\030\001 \001(\005\022\025\n\005offer\030\002 \001(\0132\006.Offer\022\020\n\010qu" +
+      "antity\030\003 \001(\005\022\020\n\010username\030\004 \001(\t\022\030\n\020collec" +
+      "tionOption\030\005 \001(\t\"/\n\013OrderOffers\022 \n\013order" +
+      "Offers\030\001 \003(\0132\013.OrderOffer\"q\n\005Order\022\n\n\002id" +
+      "\030\001 \001(\005\022 \n\013orderOffers\030\002 \003(\0132\013.OrderOffer" +
+      "\022\016\n\006isDone\030\003 \001(\010\022\020\n\010farmName\030\004 \001(\t\022\030\n\020co" +
+      "llectionOption\030\005 \001(\t\" \n\006Orders\022\026\n\006orders" +
+      "\030\001 \003(\0132\006.Order\"$\n\nOfferItems\022\026\n\006offers\030\001" +
+      " \003(\0132\006.Offer\"k\n\010Customer\022\020\n\010username\030\001 \001" +
+      "(\t\022\021\n\tfirstname\030\002 \001(\t\022\020\n\010lastname\030\003 \001(\t\022" +
+      "\r\n\005phone\030\004 \001(\t\022\031\n\007address\030\005 \001(\0132\010.Addres" +
+      "s\"?\n\006Farmer\022\020\n\010username\030\001 \001(\t\022\021\n\tfirstna" +
+      "me\030\002 \001(\t\022\020\n\010lastname\030\003 \001(\t\"4\n\007Address\022\014\n" +
+      "\004city\030\001 \001(\t\022\016\n\006street\030\002 \001(\t\022\013\n\003zip\030\003 \001(\t" +
+      "\"\006\n\004Void\"\024\n\004Text\022\014\n\004text\030\001 \001(\t\"f\n\tCartOf" +
+      "fer\022\n\n\002id\030\001 \001(\005\022\017\n\007offerId\030\002 \001(\005\022\020\n\010quan" +
+      "tity\030\003 \001(\005\022\020\n\010username\030\004 \001(\t\022\030\n\020collecti" +
+      "onOption\030\005 \001(\t\",\n\nCartOffers\022\036\n\ncartOffe" +
+      "rs\030\001 \003(\0132\n.CartOffer\"\034\n\010Username\022\020\n\010user" +
+      "name\030\001 \001(\t\"\020\n\002Id\022\n\n\002id\030\001 \001(\0052B\n\013FarmServ" +
+      "ice\022\032\n\nCreateFarm\022\005.Farm\032\005.Void\022\027\n\007GetFa" +
+      "rm\022\005.Text\032\005.Farm2s\n\014OfferService\022%\n\013Crea" +
+      "teOffer\022\016.OfferCreation\032\006.Offer\022\037\n\tGetOf" +
+      "fers\022\005.Void\032\013.OfferItems\022\033\n\014GetOfferById" +
+      "\022\003.Id\032\006.Offer2s\n\013UserService\022 \n\014Register" +
+      "User\022\t.UserAuth\032\005.User\022!\n\021GetUserByUsern" +
+      "ame\022\005.Text\032\005.User\022\037\n\013GetCustomer\022\005.Text\032" +
+      "\t.Customer2\237\001\n\014OrderService\022(\n\021CreateOrd" +
+      "erOffers\022\014.OrderOffers\032\005.Void\022\036\n\014CreateO" +
+      "rders\022\007.Orders\032\005.Void\022\036\n\014GetAllOrders\022\005." +
+      "Text\032\007.Orders\022%\n\016GetOrderOffers\022\005.Text\032\014" +
+      ".OrderOffers2\207\001\n\020CartOfferService\022\036\n\tAdd" +
+      "ToCart\022\n.CartOffer\032\005.Void\022*\n\020GetAllCartO" +
+      "ffers\022\t.Username\032\013.CartOffers\022\'\n\023DeleteA" +
+      "llCartOffers\022\t.Username\032\005.VoidB&\n\"mango." +
+      "sep3.databaseaccess.protobufP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -185,84 +201,96 @@ public final class Contract {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Offer_descriptor,
         new java.lang.String[] { "Id", "Name", "Quantity", "Unit", "Price", "Delivery", "PickUp", "PickYourOwn", "Description", "ImagePath", "Description", });
-    internal_static_OrderOffer_descriptor =
+    internal_static_OfferCreation_descriptor =
       getDescriptor().getMessageTypes().get(4);
+    internal_static_OfferCreation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_OfferCreation_descriptor,
+        new java.lang.String[] { "Name", "Quantity", "Unit", "Price", "Delivery", "PickUp", "PickYourOwn", "Description", "ImagePath", "Description", });
+    internal_static_OrderOffer_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_OrderOffer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_OrderOffer_descriptor,
         new java.lang.String[] { "Id", "Offer", "Quantity", "Username", "CollectionOption", });
     internal_static_OrderOffers_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_OrderOffers_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_OrderOffers_descriptor,
         new java.lang.String[] { "OrderOffers", });
     internal_static_Order_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_Order_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Order_descriptor,
         new java.lang.String[] { "Id", "OrderOffers", "IsDone", "FarmName", "CollectionOption", });
     internal_static_Orders_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_Orders_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Orders_descriptor,
         new java.lang.String[] { "Orders", });
     internal_static_OfferItems_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_OfferItems_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_OfferItems_descriptor,
         new java.lang.String[] { "Offers", });
     internal_static_Customer_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_Customer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Customer_descriptor,
         new java.lang.String[] { "Username", "Firstname", "Lastname", "Phone", "Address", });
     internal_static_Farmer_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_Farmer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Farmer_descriptor,
         new java.lang.String[] { "Username", "Firstname", "Lastname", });
     internal_static_Address_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_Address_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Address_descriptor,
         new java.lang.String[] { "City", "Street", "Zip", });
     internal_static_Void_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_Void_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Void_descriptor,
         new java.lang.String[] { });
     internal_static_Text_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_Text_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Text_descriptor,
         new java.lang.String[] { "Text", });
     internal_static_CartOffer_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_CartOffer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CartOffer_descriptor,
         new java.lang.String[] { "Id", "OfferId", "Quantity", "Username", "CollectionOption", });
     internal_static_CartOffers_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_CartOffers_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CartOffers_descriptor,
         new java.lang.String[] { "CartOffers", });
     internal_static_Username_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_Username_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Username_descriptor,
         new java.lang.String[] { "Username", });
+    internal_static_Id_descriptor =
+      getDescriptor().getMessageTypes().get(18);
+    internal_static_Id_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Id_descriptor,
+        new java.lang.String[] { "Id", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

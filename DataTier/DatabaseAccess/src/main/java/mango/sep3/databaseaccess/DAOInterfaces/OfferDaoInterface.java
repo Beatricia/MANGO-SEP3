@@ -8,6 +8,6 @@ import java.util.Collection;
 public interface OfferDaoInterface
 {
   Offer CreateOffer(Offer offer);
-  Collection<Offer> GetOffers();
+  Collection<Offer> GetOffer();
   Offer getOfferById(int id);
 }

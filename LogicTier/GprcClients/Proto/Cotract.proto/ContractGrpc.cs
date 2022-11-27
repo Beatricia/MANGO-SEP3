@@ -187,18 +187,22 @@ public static partial class OfferService
   }
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+  static readonly grpc::Marshaller<global::OfferCreation> __Marshaller_OfferCreation = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::OfferCreation.Parser));
+  [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
   static readonly grpc::Marshaller<global::Offer> __Marshaller_Offer = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Offer.Parser));
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
   static readonly grpc::Marshaller<global::Void> __Marshaller_Void = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Void.Parser));
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
   static readonly grpc::Marshaller<global::OfferItems> __Marshaller_OfferItems = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::OfferItems.Parser));
+  [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+  static readonly grpc::Marshaller<global::Id> __Marshaller_Id = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Id.Parser));
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-  static readonly grpc::Method<global::Offer, global::Offer> __Method_CreateOffer = new grpc::Method<global::Offer, global::Offer>(
+  static readonly grpc::Method<global::OfferCreation, global::Offer> __Method_CreateOffer = new grpc::Method<global::OfferCreation, global::Offer>(
       grpc::MethodType.Unary,
       __ServiceName,
       "CreateOffer",
-      __Marshaller_Offer,
+      __Marshaller_OfferCreation,
       __Marshaller_Offer);
 
   [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -208,6 +212,14 @@ public static partial class OfferService
       "GetOffers",
       __Marshaller_Void,
       __Marshaller_OfferItems);
+
+  [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+  static readonly grpc::Method<global::Id, global::Offer> __Method_GetOfferById = new grpc::Method<global::Id, global::Offer>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "GetOfferById",
+      __Marshaller_Id,
+      __Marshaller_Offer);
 
   /// <summary>Service descriptor</summary>
   public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -243,22 +255,22 @@ public static partial class OfferService
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Offer CreateOffer(global::Offer request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::Offer CreateOffer(global::OfferCreation request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return CreateOffer(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual global::Offer CreateOffer(global::Offer request, grpc::CallOptions options)
+    public virtual global::Offer CreateOffer(global::OfferCreation request, grpc::CallOptions options)
     {
       return CallInvoker.BlockingUnaryCall(__Method_CreateOffer, null, options, request);
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Offer> CreateOfferAsync(global::Offer request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::Offer> CreateOfferAsync(global::OfferCreation request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return CreateOfferAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    public virtual grpc::AsyncUnaryCall<global::Offer> CreateOfferAsync(global::Offer request, grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::Offer> CreateOfferAsync(global::OfferCreation request, grpc::CallOptions options)
     {
       return CallInvoker.AsyncUnaryCall(__Method_CreateOffer, null, options, request);
     }
@@ -281,6 +293,26 @@ public static partial class OfferService
     public virtual grpc::AsyncUnaryCall<global::OfferItems> GetOffersAsync(global::Void request, grpc::CallOptions options)
     {
       return CallInvoker.AsyncUnaryCall(__Method_GetOffers, null, options, request);
+    }
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    public virtual global::Offer GetOfferById(global::Id request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return GetOfferById(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    public virtual global::Offer GetOfferById(global::Id request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_GetOfferById, null, options, request);
+    }
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    public virtual grpc::AsyncUnaryCall<global::Offer> GetOfferByIdAsync(global::Id request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return GetOfferByIdAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    public virtual grpc::AsyncUnaryCall<global::Offer> GetOfferByIdAsync(global::Id request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_GetOfferById, null, options, request);
     }
     /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]

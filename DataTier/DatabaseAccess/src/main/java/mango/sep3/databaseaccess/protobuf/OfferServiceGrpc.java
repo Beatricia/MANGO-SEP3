@@ -14,27 +14,27 @@ public final class OfferServiceGrpc {
   public static final String SERVICE_NAME = "OfferService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Offer,
+  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OfferCreation,
       mango.sep3.databaseaccess.protobuf.Offer> getCreateOfferMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateOffer",
-      requestType = mango.sep3.databaseaccess.protobuf.Offer.class,
+      requestType = mango.sep3.databaseaccess.protobuf.OfferCreation.class,
       responseType = mango.sep3.databaseaccess.protobuf.Offer.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Offer,
+  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OfferCreation,
       mango.sep3.databaseaccess.protobuf.Offer> getCreateOfferMethod() {
-    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Offer, mango.sep3.databaseaccess.protobuf.Offer> getCreateOfferMethod;
+    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OfferCreation, mango.sep3.databaseaccess.protobuf.Offer> getCreateOfferMethod;
     if ((getCreateOfferMethod = OfferServiceGrpc.getCreateOfferMethod) == null) {
       synchronized (OfferServiceGrpc.class) {
         if ((getCreateOfferMethod = OfferServiceGrpc.getCreateOfferMethod) == null) {
           OfferServiceGrpc.getCreateOfferMethod = getCreateOfferMethod =
-              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.Offer, mango.sep3.databaseaccess.protobuf.Offer>newBuilder()
+              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.OfferCreation, mango.sep3.databaseaccess.protobuf.Offer>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateOffer"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  mango.sep3.databaseaccess.protobuf.Offer.getDefaultInstance()))
+                  mango.sep3.databaseaccess.protobuf.OfferCreation.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   mango.sep3.databaseaccess.protobuf.Offer.getDefaultInstance()))
               .setSchemaDescriptor(new OfferServiceMethodDescriptorSupplier("CreateOffer"))
@@ -74,6 +74,37 @@ public final class OfferServiceGrpc {
       }
     }
     return getGetOffersMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Id,
+      mango.sep3.databaseaccess.protobuf.Offer> getGetOfferByIdMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetOfferById",
+      requestType = mango.sep3.databaseaccess.protobuf.Id.class,
+      responseType = mango.sep3.databaseaccess.protobuf.Offer.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Id,
+      mango.sep3.databaseaccess.protobuf.Offer> getGetOfferByIdMethod() {
+    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Id, mango.sep3.databaseaccess.protobuf.Offer> getGetOfferByIdMethod;
+    if ((getGetOfferByIdMethod = OfferServiceGrpc.getGetOfferByIdMethod) == null) {
+      synchronized (OfferServiceGrpc.class) {
+        if ((getGetOfferByIdMethod = OfferServiceGrpc.getGetOfferByIdMethod) == null) {
+          OfferServiceGrpc.getGetOfferByIdMethod = getGetOfferByIdMethod =
+              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.Id, mango.sep3.databaseaccess.protobuf.Offer>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetOfferById"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  mango.sep3.databaseaccess.protobuf.Id.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  mango.sep3.databaseaccess.protobuf.Offer.getDefaultInstance()))
+              .setSchemaDescriptor(new OfferServiceMethodDescriptorSupplier("GetOfferById"))
+              .build();
+        }
+      }
+    }
+    return getGetOfferByIdMethod;
   }
 
   /**
@@ -126,7 +157,7 @@ public final class OfferServiceGrpc {
 
     /**
      */
-    public void createOffer(mango.sep3.databaseaccess.protobuf.Offer request,
+    public void createOffer(mango.sep3.databaseaccess.protobuf.OfferCreation request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Offer> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateOfferMethod(), responseObserver);
     }
@@ -138,13 +169,20 @@ public final class OfferServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetOffersMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void getOfferById(mango.sep3.databaseaccess.protobuf.Id request,
+        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Offer> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetOfferByIdMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getCreateOfferMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                mango.sep3.databaseaccess.protobuf.Offer,
+                mango.sep3.databaseaccess.protobuf.OfferCreation,
                 mango.sep3.databaseaccess.protobuf.Offer>(
                   this, METHODID_CREATE_OFFER)))
           .addMethod(
@@ -154,6 +192,13 @@ public final class OfferServiceGrpc {
                 mango.sep3.databaseaccess.protobuf.Void,
                 mango.sep3.databaseaccess.protobuf.OfferItems>(
                   this, METHODID_GET_OFFERS)))
+          .addMethod(
+            getGetOfferByIdMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                mango.sep3.databaseaccess.protobuf.Id,
+                mango.sep3.databaseaccess.protobuf.Offer>(
+                  this, METHODID_GET_OFFER_BY_ID)))
           .build();
     }
   }
@@ -174,7 +219,7 @@ public final class OfferServiceGrpc {
 
     /**
      */
-    public void createOffer(mango.sep3.databaseaccess.protobuf.Offer request,
+    public void createOffer(mango.sep3.databaseaccess.protobuf.OfferCreation request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Offer> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCreateOfferMethod(), getCallOptions()), request, responseObserver);
@@ -186,6 +231,14 @@ public final class OfferServiceGrpc {
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.OfferItems> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetOffersMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getOfferById(mango.sep3.databaseaccess.protobuf.Id request,
+        io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Offer> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetOfferByIdMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -205,7 +258,7 @@ public final class OfferServiceGrpc {
 
     /**
      */
-    public mango.sep3.databaseaccess.protobuf.Offer createOffer(mango.sep3.databaseaccess.protobuf.Offer request) {
+    public mango.sep3.databaseaccess.protobuf.Offer createOffer(mango.sep3.databaseaccess.protobuf.OfferCreation request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateOfferMethod(), getCallOptions(), request);
     }
@@ -215,6 +268,13 @@ public final class OfferServiceGrpc {
     public mango.sep3.databaseaccess.protobuf.OfferItems getOffers(mango.sep3.databaseaccess.protobuf.Void request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetOffersMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public mango.sep3.databaseaccess.protobuf.Offer getOfferById(mango.sep3.databaseaccess.protobuf.Id request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetOfferByIdMethod(), getCallOptions(), request);
     }
   }
 
@@ -235,7 +295,7 @@ public final class OfferServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Offer> createOffer(
-        mango.sep3.databaseaccess.protobuf.Offer request) {
+        mango.sep3.databaseaccess.protobuf.OfferCreation request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateOfferMethod(), getCallOptions()), request);
     }
@@ -247,10 +307,19 @@ public final class OfferServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetOffersMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Offer> getOfferById(
+        mango.sep3.databaseaccess.protobuf.Id request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetOfferByIdMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_OFFER = 0;
   private static final int METHODID_GET_OFFERS = 1;
+  private static final int METHODID_GET_OFFER_BY_ID = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -270,12 +339,16 @@ public final class OfferServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_CREATE_OFFER:
-          serviceImpl.createOffer((mango.sep3.databaseaccess.protobuf.Offer) request,
+          serviceImpl.createOffer((mango.sep3.databaseaccess.protobuf.OfferCreation) request,
               (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Offer>) responseObserver);
           break;
         case METHODID_GET_OFFERS:
           serviceImpl.getOffers((mango.sep3.databaseaccess.protobuf.Void) request,
               (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.OfferItems>) responseObserver);
+          break;
+        case METHODID_GET_OFFER_BY_ID:
+          serviceImpl.getOfferById((mango.sep3.databaseaccess.protobuf.Id) request,
+              (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Offer>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -340,6 +413,7 @@ public final class OfferServiceGrpc {
               .setSchemaDescriptor(new OfferServiceFileDescriptorSupplier())
               .addMethod(getCreateOfferMethod())
               .addMethod(getGetOffersMethod())
+              .addMethod(getGetOfferByIdMethod())
               .build();
         }
       }

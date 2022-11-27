@@ -28,7 +28,7 @@ public class OfferDAO implements OfferDaoInterface {
   }
 
   @Override
-  public Collection<Offer> GetOffers() {
+  public Collection<Offer> GetOffer() {
     return offerRepository.findAll();
   }
 

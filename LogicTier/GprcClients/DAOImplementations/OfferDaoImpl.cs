@@ -81,9 +81,22 @@ public class OfferDaoImpl : IOfferDao
     // convert from shared offer to grpc object
     private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
     {
+        // print out each property of the offer
+        Console.WriteLine(offer.Id);
+        Console.WriteLine(offer.Name);
+        Console.WriteLine(offer.Quantity);
+        Console.WriteLine(offer.Unit);
+        Console.WriteLine(offer.Price);
+        Console.WriteLine(offer.Delivery);
+        Console.WriteLine(offer.PickUp);
+        Console.WriteLine(offer.PickYourOwn);
+        Console.WriteLine(offer.Description);
+        Console.WriteLine(offer.Image.RelativeUrl);
+        Console.WriteLine(offer.FarmName);
+        
+        
         return new Offer
         {
-            Id = offer.Id,
             Name = offer.Name,
             Quantity = offer.Quantity,
             Unit = offer.Unit,

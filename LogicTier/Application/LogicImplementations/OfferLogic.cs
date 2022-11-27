@@ -48,7 +48,8 @@ public class OfferLogic : IOfferLogic
             Image = new Image()
             {
                 RelativeUrl = ""
-            }
+            },
+            FarmName = dto.FarmName
         };
 
         var created = await offerDao.CreateAsync(offerToSend);

@@ -5,7 +5,7 @@ option java_package = "mango.sep3.databaseaccess.protobuf";
 
 service FarmService{
   rpc CreateFarm(Farm) returns(Farm);
-  rpc  GetFarmByName(Text) returns(Farm);
+  rpc GetFarmByName(Text) returns(Farm);
 }
 
 service OfferService{

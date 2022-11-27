@@ -11,25 +11,26 @@
 
 <h3>CreateOffer</h3>
 <div class="form d-flex flex-wrap flex-column">
+    <div style="color: red">@errorMessage</div>
     <div class="col-6">
         <label>Product Name <span class="required">*</span></label>
         <input type="text" @bind="productName" required="required"/>
     </div>
-    
+
     <!--image-->
-    <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0"> 
+    <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0">
         <div class=" d-flex flex-column">
             <img id="image" src="Img/sample-offer.png" alt="default" width="200px" height="auto" class="img col-3 me-4"/>
             @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
             <InputFile OnChange="GetImage"></InputFile>
         </div>
     </div>
-    
-    <div class="col-6" >
+
+    <div class="col-6">
         <label>Quantity <span class="required">*</span></label>
-            
+
         <div class="col-9 d-flex flex-nowrap">
-            <input type="text" @bind="quantity" required="required" />
+            <input type="text" @bind="quantity" required="required"/>
             <!--dropdown menu-->
             <div class="dropdown col-2 ms-1">
                 <button onclick="@(() => DropDownVisible())" class="dropbtn">@unit</button>
@@ -40,15 +41,15 @@
             </div>
         </div>
     </div>
-        
-       
-    
+
+
+
 
     <div class="col-6">
         <label>Price <span class="required">*</span></label>
         <input type="text" @bind="price" required="required"/>
     </div>
-    
+
     <!--radio buttons for delivery option-->
     <label class="col-6" for="radioGroup">Delivery Option:</label>
     <div id="radioGroup" class="d-flex flex-column">
@@ -68,27 +69,28 @@
                    onchange="@(() => PickYO())"/>
             <label for="pickYO"> Pick Your Own</label>
         </div>
-        
+
     </div>
     <!--textarea for description-->
     <label for="textarea">Description:</label>
     <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
-    
+
     <!--submit button-->
     <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
-    
+
 </div>
 
 @code {
-    private string productName;
+    private string productName = "";
     private int quantity;
     private string unit = "kg";
     private int price;
     private bool delivery = true;
     private bool pickUp;
     private bool pickYO;
-    private string? description;
+    private string description = "";
     private string displayDropdown = "none";
+    private string errorMessage = "";
 
     private IBrowserFile? file;
     private string? blobUri;
@@ -111,25 +113,37 @@
     {
         try
         {
+            errorMessage = "";
+            
             if (file is null)
             {
+                errorMessage = "No image selected;";
                 return;
             }
             
-            OfferCreationDto dto = new();
-            dto.Name = productName;
-            dto.Quantity = quantity;
-            dto.Unit = unit;
-            dto.Price = price;
-            dto.Delivery = delivery;
-            dto.PickUp = pickUp;
-            dto.PickYourOwn = pickYO;
-            dto.Description = description;
-            
-            var offer = await httpClient.CreateAsync(dto);
-            if(offer is not null)
-                await httpClient.UploadImageAsync(file, offer.Id);
-            
+            OfferCreationDto dto = new()
+            {
+                Name = productName,
+                Quantity = quantity,
+                Unit = unit,
+                Price = price,
+                Delivery = delivery,
+                PickUp = pickUp,
+                PickYourOwn = pickYO,
+                Description = description,
+                FarmName = "Jakobs farm"
+            };
+
+            try
+            {
+                var offer = await httpClient.CreateAsync(dto);
+                if (offer is not null)
+                    await httpClient.UploadImageAsync(file, offer.Id);
+            }
+            catch (Exception e)
+            {
+                errorMessage = e.Message;
+            }
             
         }
         catch (Exception e)

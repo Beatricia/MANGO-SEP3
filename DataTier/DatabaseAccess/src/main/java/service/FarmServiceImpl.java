@@ -6,6 +6,7 @@ import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;
+import mango.sep3.databaseaccess.protobuf.Text;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,14 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
     responseObserver.onCompleted();
   }
 
+  @Override
+  public void getFarmByName(Text request, StreamObserver<Farm> responseObserver) {
+    var farm = farmDAO.getFarmByName(request.getText());
+    var grpcFarm = convertToGrpc(farm);
+
+    responseObserver.onNext(grpcFarm);
+    responseObserver.onCompleted();
+  }
 
   // convert grpc farm to shared in a method
   private mango.sep3.databaseaccess.Shared.Farm convertToShared(Farm request) {

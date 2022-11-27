@@ -38,6 +38,10 @@ public class Offer implements Serializable
     @Column
     private String image;
 
+    @ManyToOne(targetEntity = Farm.class)
+    @JoinColumn(name = "farm_id")
+    private Farm farm;
+
 
     public Offer(){}
 
@@ -107,5 +111,13 @@ public class Offer implements Serializable
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Farm getFarm() {
+        return farm;
+    }
+
+    public void setFarm(Farm farm) {
+        this.farm = farm;
     }
 }

@@ -38,6 +38,7 @@ public class OfferHttpClient : IOfferService
     }
     
     
+    
 
     ///summary///
     /// Sends GET request to a WebAPI server

@@ -28,4 +28,31 @@ public class FarmDaoImpl : IFarmDao
         
         return farm;
     }
+
+    public async Task<Shared.Models.Farm?> GetByName(string name)
+    {
+        var text = new Text{Text_= name};
+        var grpcFarm = await farmServiceClient.GetFarmByNameAsync(text);
+
+        return ConvertToSharedFarm(grpcFarm);
+    }
+    
+    
+    // convert grpc farm to shared farm
+    private Shared.Models.Farm ConvertToSharedFarm(Farm grpcFarm)
+    {
+        return new Shared.Models.Farm
+        {
+            Name = grpcFarm.Name,
+            Phone = grpcFarm.Phone,
+            Address = new Shared.Models.Address
+            {
+                ZIP = grpcFarm.Zip,
+                Street = grpcFarm.Address,
+                City = grpcFarm.City
+            },
+            DeliveryDistance = grpcFarm.DeliveryDistance,
+            FarmStatus = grpcFarm.FarmStatus
+        };
+    }
 }

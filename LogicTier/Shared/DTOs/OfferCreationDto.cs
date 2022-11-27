@@ -3,6 +3,8 @@
 public class OfferCreationDto
 {
     public OfferCreationDto(){}
+    
+    public string FarmName { get; set; }
 
     public string Name { get; set; }
 

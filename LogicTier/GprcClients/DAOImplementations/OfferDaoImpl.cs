@@ -56,7 +56,7 @@ public class OfferDaoImpl : IOfferDao
     }
     
     
-    // convert from grpc object to shared offer
+    // convert from grpc object to shared offe
     private Shared.Models.Offer ConvertOfferToShared(Offer offer)
     {
         return new Shared.Models.Offer
@@ -73,7 +73,8 @@ public class OfferDaoImpl : IOfferDao
             Image = new Image()
             {
                 RelativeUrl = offer.ImagePath
-            }
+            },
+            FarmName = offer.FarmName,
         };
     }
     
@@ -91,7 +92,8 @@ public class OfferDaoImpl : IOfferDao
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
-            ImagePath = offer.Image.RelativeUrl
+            ImagePath = offer.Image.RelativeUrl,
+            FarmName = offer.FarmName,
         };
     }
 }

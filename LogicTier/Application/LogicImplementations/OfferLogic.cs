@@ -13,15 +13,17 @@ public class OfferLogic : IOfferLogic
 {
     private IOfferDao offerDao;
     private IImageDao imageDao;
+    private IFarmDao farmDao;
 
     /// <summary>
     /// Initializing the OfferLogic with the given IOfferDao
     /// </summary>
     /// <param name="offerDao"></param>
-    public OfferLogic(IOfferDao offerDao, IImageDao imageDao)
+    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao)
     {
         this.offerDao = offerDao;
         this.imageDao = imageDao;
+        this.farmDao = farmDao;
     }
     
     /// <summary>
@@ -31,7 +33,7 @@ public class OfferLogic : IOfferLogic
     /// <returns>The created Offer object</returns>
     public async Task<Offer> CreateAsync(OfferCreationDto dto)
     {
-        ValidateData(dto);
+        await ValidateData(dto);
 
         Offer offerToSend = new Offer
         {
@@ -79,7 +81,7 @@ public class OfferLogic : IOfferLogic
     /// </summary>
     /// <param name="dto">The offer to be created</param>
     /// <exception cref="Exception"></exception>
-    private void ValidateData(OfferCreationDto dto)
+    private async Task ValidateData(OfferCreationDto dto)
     {
         
         if (dto.Name.Length > 100)
@@ -96,5 +98,14 @@ public class OfferLogic : IOfferLogic
         {
             throw new Exception("Price must be bigger than 0!");
         }
+        
+        // get farm by name from dao and check if it exists
+        var farm = await farmDao.GetByName(dto.FarmName);
+        
+        if (farm == null)
+        {
+            throw new Exception($"Farm {dto.FarmName} does not exist!");
+        }
+        
     }
 }

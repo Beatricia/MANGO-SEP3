@@ -14,9 +14,6 @@ builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
 
-// https://github.com/xaviersolau/BlazorJsBlob
-// we use this for images
-builder.Services.AddJsBlob();
 
 await builder.Build().RunAsync();
 

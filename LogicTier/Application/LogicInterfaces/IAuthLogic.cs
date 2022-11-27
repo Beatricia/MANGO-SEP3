@@ -9,7 +9,7 @@ namespace Application.LogicInterfaces;
 public interface IAuthLogic
 {
     /// <summary>
-    /// Register a new user to the system
+    /// Register a new user to the system 
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>

@@ -1,6 +1,7 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
@@ -23,6 +24,9 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
   @Autowired
   private OfferDaoInterface offerDaoInterface;
+
+  @Autowired
+  private FarmDaoInterface farmDaoInterface;
 
   public OfferServiceImpl()
   {
@@ -57,6 +61,9 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     offer.setPrice(request.getPrice());
     offer.setUnit(request.getUnit());
 
+    var farm = farmDaoInterface.getFarmByName(request.getFarmName());
+    offer.setFarm(farm);
+
     return offer;
   }
 
@@ -72,6 +79,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
         .setPickYourOwn(offer.isPickYourOwn())
         .setPrice(offer.getPrice())
         .setUnit(offer.getUnit())
+        .setFarmName(offer.getFarm().getName())
         .build();
 
     return offerResponse;

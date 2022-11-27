@@ -14,7 +14,7 @@ public interface IAuthService
     /// <param name="username"></param>
     /// <param name="password"></param>
     /// <returns>LoginResponse containing the logged in user and the token</returns>
-    Task<LoginResponse> LoginAsync(string username, string password);
+    Task<User> LoginAsync(string username, string password);
     
     /// <summary>
     /// Register a user

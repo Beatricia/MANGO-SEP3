@@ -1,0 +1,75 @@
+@page "/LogIn"
+@using HttpClient.ClientInterfaces
+@inject IAuthService AuthService
+@inject NavigationManager NavManager
+
+<div class="register-wrapper">
+    <div class="register-text">
+        Login
+    </div>
+    <div class="register-body">
+        <div class="row">
+            <div class="error">
+                @errorMessage
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-text">Username</div>
+            <div class="row-input">
+                <input type="text" @bind="username">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-text">Password</div>
+            <div class="row-input">
+                <input type="password" @bind="password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-input register-button">
+                <button @onclick="LoginUser">Login</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-login-link" >
+                <a href="/Register" >Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    string username = "";
+    string password = "";
+    string errorMessage = "";
+
+    
+    private void TrimUsername()
+    {
+        username = username.Trim();
+    }
+    
+    private async Task LoginUser()
+    {
+        errorMessage = "";
+
+        TrimUsername();
+        
+        if (username == "" || password == "")
+        {
+            errorMessage = "All fields are required";
+            return;
+        }
+
+        try
+        {
+            await AuthService.LoginAsync(username, password);
+            NavManager.NavigateTo("/DisplayOffers");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorMessage = e.Message;
+        }
+    }
+}

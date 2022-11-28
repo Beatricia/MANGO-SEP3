@@ -4,6 +4,7 @@ using BlazorLocally;
 using BlazorLocally.Utils;
 using HttpClient.ClientImplementations;
 using HttpClient.ClientInterfaces;
+using SoloX.BlazorJsBlob;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

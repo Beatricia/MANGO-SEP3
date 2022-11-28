@@ -4,6 +4,7 @@ public class Offer
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public string FarmName { get; set; }
 
     public int Quantity { get; set; }
 
@@ -17,23 +18,9 @@ public class Offer
     public bool PickYourOwn { get; set; }
     public string? Description { get; set; }
 
-    public string ImagePath { get; set; }
+    public Image Image { get; set; }
 
     public Offer()
     {
     }
-
-    public Offer(int id,string name, int quantity, string unit,double price, bool delivery, bool pickUp, bool pickYourOwn, string? description, string imagePath)
-    {
-        Id = id;
-        Name = name;
-        Quantity = quantity;
-        Unit = unit;
-        Price = price;
-        Delivery = delivery;
-        PickUp = pickUp;
-        PickYourOwn = pickYourOwn;
-        Description = description;
-        ImagePath = imagePath;
-    }   
 }

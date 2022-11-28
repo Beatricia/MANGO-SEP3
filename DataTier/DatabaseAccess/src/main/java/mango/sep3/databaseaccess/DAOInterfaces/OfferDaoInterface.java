@@ -1,11 +1,12 @@
 package mango.sep3.databaseaccess.DAOInterfaces;
 
-import mango.sep3.databaseaccess.protobuf.Offer;
+
+import mango.sep3.databaseaccess.Shared.Offer;
 
 import java.util.Collection;
 
 public interface OfferDaoInterface
 {
-  void CreateOffer(Offer offer);
+  Offer CreateOffer(Offer offer);
   Collection<Offer> GetOffer();
 }

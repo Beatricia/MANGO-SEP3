@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorLocally;
 using BlazorLocally.Utils;
+using BlazorWasm.Auth;
 using HttpClient.ClientImplementations;
 using HttpClient.ClientInterfaces;
-using SoloX.BlazorJsBlob;
+using Microsoft.AspNetCore.Components.Authorization;
+using Shared.Auth;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,6 +17,10 @@ builder.Services.AddScoped(sp => new System.Net.Http.HttpClient { BaseAddress = 
 builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
+
+AuthorizationPolicies.AddPolicies(builder.Services); //idk if this should be here
+
 
 var app = builder.Build();
 

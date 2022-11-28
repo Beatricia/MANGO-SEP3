@@ -44,5 +44,6 @@ public class FarmDAO implements FarmDaoInterface
   {
     Farm farm = farmRepository.findByName(farmName);
     return farm;
+    farmRepository.save(farm);
   }
 }

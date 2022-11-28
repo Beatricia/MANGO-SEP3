@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorLocally;
 using BlazorLocally.Utils;
+using BlazorWasm.Auth;
 using HttpClient.ClientImplementations;
 using HttpClient.ClientInterfaces;
+using Microsoft.AspNetCore.Components.Authorization;
+using Shared.Auth;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +20,9 @@ builder.Services.AddScoped<IOrderService,OrderHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<ICartService, CartHttpClient>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
+
+AuthorizationPolicies.AddPolicies(builder.Services); //idk if this should be here
 
 var app = builder.Build();
 

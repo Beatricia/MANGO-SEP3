@@ -6,6 +6,7 @@ option java_package = "mango.sep3.databaseaccess.protobuf";
 service FarmService{
   rpc CreateFarm(Farm) returns(Farm);
   rpc GetFarm(Text) returns(Farm);
+  rpc GetFarmByName(Text) returns(Farm);
 }
 
 service OfferService{
@@ -67,6 +68,7 @@ message Offer{
   bool pickYourOwn = 8;
   optional string description = 9;
   string ImagePath = 10;
+  string farmName = 11;
 }
 
 message OfferCreation{

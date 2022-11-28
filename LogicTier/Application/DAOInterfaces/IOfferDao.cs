@@ -7,7 +7,7 @@ namespace Application.DAOInterfaces;
 /// </summary>
 public interface IOfferDao
 {
-    Task CreateAsync(Offer offer); 
+    Task<Offer> CreateAsync(Offer offer); 
     
     /// <summary>
     /// Getting the Offers from the database

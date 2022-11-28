@@ -20,9 +20,9 @@ public class ServerConfig {
         return new UserServiceImpl();
     }
 
-   /* @Bean public OrderServiceImpl getOrderServiceImpl(){
+    @Bean public OrderServiceImpl getOrderServiceImpl(){
         return new OrderServiceImpl();
-    }*/
+    }
 
     @Bean public CartOfferServiceImpl getCartOfferServiceImpl(){
         return new CartOfferServiceImpl();
@@ -31,5 +31,4 @@ public class ServerConfig {
     @Bean public OfferServiceImpl getOfferServiceImpl(){
         return new OfferServiceImpl();
     }
-
 }

@@ -10,6 +10,9 @@ import mango.sep3.databaseaccess.Shared.Address;
 import mango.sep3.databaseaccess.Shared.Offer;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import mango.sep3.databaseaccess.protobuf.Farm;
+import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;
+import mango.sep3.databaseaccess.protobuf.Text;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,4 +128,25 @@ import java.util.Set;
   }
 
 
+
+  @Override
+  public void getFarmByName(Text request, StreamObserver<Farm> responseObserver) {
+    var farm = farmDAO.getFarmByName(request.getText());
+    var grpcFarm = convertToGrpc(farm);
+
+    responseObserver.onNext(grpcFarm);
+    responseObserver.onCompleted();
+  }
+
+  // convert grpc farm to shared in a method
+  private mango.sep3.databaseaccess.Shared.Farm convertToShared(Farm request) {
+    mango.sep3.databaseaccess.Shared.Farm farm = new mango.sep3.databaseaccess.Shared.Farm();
+    farm.setName(request.getName());
+    return farm;
+  }
+
+  // convert shared farm to grpc in a method
+    private Farm convertToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
+      return Farm.newBuilder().setName(farm.getName()).build();
+    }
 }

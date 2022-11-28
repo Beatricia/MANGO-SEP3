@@ -7,4 +7,5 @@ public interface IFarmDao
 {
     Task<Farm> CreateAsync(Farm farm);
     Task<Farm> GetFarmByNameAsync(string farmName);
+    Task<Farm?> GetByName(string name);
 }

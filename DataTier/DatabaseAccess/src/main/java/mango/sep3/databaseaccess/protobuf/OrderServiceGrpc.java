@@ -14,27 +14,27 @@ public final class OrderServiceGrpc {
   public static final String SERVICE_NAME = "OrderService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrderOffers,
+  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrderOffersToCreate,
       mango.sep3.databaseaccess.protobuf.Void> getCreateOrderOffersMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateOrderOffers",
-      requestType = mango.sep3.databaseaccess.protobuf.OrderOffers.class,
+      requestType = mango.sep3.databaseaccess.protobuf.OrderOffersToCreate.class,
       responseType = mango.sep3.databaseaccess.protobuf.Void.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrderOffers,
+  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrderOffersToCreate,
       mango.sep3.databaseaccess.protobuf.Void> getCreateOrderOffersMethod() {
-    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrderOffers, mango.sep3.databaseaccess.protobuf.Void> getCreateOrderOffersMethod;
+    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrderOffersToCreate, mango.sep3.databaseaccess.protobuf.Void> getCreateOrderOffersMethod;
     if ((getCreateOrderOffersMethod = OrderServiceGrpc.getCreateOrderOffersMethod) == null) {
       synchronized (OrderServiceGrpc.class) {
         if ((getCreateOrderOffersMethod = OrderServiceGrpc.getCreateOrderOffersMethod) == null) {
           OrderServiceGrpc.getCreateOrderOffersMethod = getCreateOrderOffersMethod =
-              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.OrderOffers, mango.sep3.databaseaccess.protobuf.Void>newBuilder()
+              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.OrderOffersToCreate, mango.sep3.databaseaccess.protobuf.Void>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateOrderOffers"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  mango.sep3.databaseaccess.protobuf.OrderOffers.getDefaultInstance()))
+                  mango.sep3.databaseaccess.protobuf.OrderOffersToCreate.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   mango.sep3.databaseaccess.protobuf.Void.getDefaultInstance()))
               .setSchemaDescriptor(new OrderServiceMethodDescriptorSupplier("CreateOrderOffers"))
@@ -45,27 +45,27 @@ public final class OrderServiceGrpc {
     return getCreateOrderOffersMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Orders,
+  private static volatile io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrdersToCreate,
       mango.sep3.databaseaccess.protobuf.Void> getCreateOrdersMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateOrders",
-      requestType = mango.sep3.databaseaccess.protobuf.Orders.class,
+      requestType = mango.sep3.databaseaccess.protobuf.OrdersToCreate.class,
       responseType = mango.sep3.databaseaccess.protobuf.Void.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Orders,
+  public static io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrdersToCreate,
       mango.sep3.databaseaccess.protobuf.Void> getCreateOrdersMethod() {
-    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.Orders, mango.sep3.databaseaccess.protobuf.Void> getCreateOrdersMethod;
+    io.grpc.MethodDescriptor<mango.sep3.databaseaccess.protobuf.OrdersToCreate, mango.sep3.databaseaccess.protobuf.Void> getCreateOrdersMethod;
     if ((getCreateOrdersMethod = OrderServiceGrpc.getCreateOrdersMethod) == null) {
       synchronized (OrderServiceGrpc.class) {
         if ((getCreateOrdersMethod = OrderServiceGrpc.getCreateOrdersMethod) == null) {
           OrderServiceGrpc.getCreateOrdersMethod = getCreateOrdersMethod =
-              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.Orders, mango.sep3.databaseaccess.protobuf.Void>newBuilder()
+              io.grpc.MethodDescriptor.<mango.sep3.databaseaccess.protobuf.OrdersToCreate, mango.sep3.databaseaccess.protobuf.Void>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateOrders"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  mango.sep3.databaseaccess.protobuf.Orders.getDefaultInstance()))
+                  mango.sep3.databaseaccess.protobuf.OrdersToCreate.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   mango.sep3.databaseaccess.protobuf.Void.getDefaultInstance()))
               .setSchemaDescriptor(new OrderServiceMethodDescriptorSupplier("CreateOrders"))
@@ -188,14 +188,14 @@ public final class OrderServiceGrpc {
 
     /**
      */
-    public void createOrderOffers(mango.sep3.databaseaccess.protobuf.OrderOffers request,
+    public void createOrderOffers(mango.sep3.databaseaccess.protobuf.OrderOffersToCreate request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateOrderOffersMethod(), responseObserver);
     }
 
     /**
      */
-    public void createOrders(mango.sep3.databaseaccess.protobuf.Orders request,
+    public void createOrders(mango.sep3.databaseaccess.protobuf.OrdersToCreate request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateOrdersMethod(), responseObserver);
     }
@@ -220,14 +220,14 @@ public final class OrderServiceGrpc {
             getCreateOrderOffersMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                mango.sep3.databaseaccess.protobuf.OrderOffers,
+                mango.sep3.databaseaccess.protobuf.OrderOffersToCreate,
                 mango.sep3.databaseaccess.protobuf.Void>(
                   this, METHODID_CREATE_ORDER_OFFERS)))
           .addMethod(
             getCreateOrdersMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                mango.sep3.databaseaccess.protobuf.Orders,
+                mango.sep3.databaseaccess.protobuf.OrdersToCreate,
                 mango.sep3.databaseaccess.protobuf.Void>(
                   this, METHODID_CREATE_ORDERS)))
           .addMethod(
@@ -264,7 +264,7 @@ public final class OrderServiceGrpc {
 
     /**
      */
-    public void createOrderOffers(mango.sep3.databaseaccess.protobuf.OrderOffers request,
+    public void createOrderOffers(mango.sep3.databaseaccess.protobuf.OrderOffersToCreate request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCreateOrderOffersMethod(), getCallOptions()), request, responseObserver);
@@ -272,7 +272,7 @@ public final class OrderServiceGrpc {
 
     /**
      */
-    public void createOrders(mango.sep3.databaseaccess.protobuf.Orders request,
+    public void createOrders(mango.sep3.databaseaccess.protobuf.OrdersToCreate request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCreateOrdersMethod(), getCallOptions()), request, responseObserver);
@@ -311,14 +311,14 @@ public final class OrderServiceGrpc {
 
     /**
      */
-    public mango.sep3.databaseaccess.protobuf.Void createOrderOffers(mango.sep3.databaseaccess.protobuf.OrderOffers request) {
+    public mango.sep3.databaseaccess.protobuf.Void createOrderOffers(mango.sep3.databaseaccess.protobuf.OrderOffersToCreate request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateOrderOffersMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public mango.sep3.databaseaccess.protobuf.Void createOrders(mango.sep3.databaseaccess.protobuf.Orders request) {
+    public mango.sep3.databaseaccess.protobuf.Void createOrders(mango.sep3.databaseaccess.protobuf.OrdersToCreate request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateOrdersMethod(), getCallOptions(), request);
     }
@@ -355,7 +355,7 @@ public final class OrderServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Void> createOrderOffers(
-        mango.sep3.databaseaccess.protobuf.OrderOffers request) {
+        mango.sep3.databaseaccess.protobuf.OrderOffersToCreate request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateOrderOffersMethod(), getCallOptions()), request);
     }
@@ -363,7 +363,7 @@ public final class OrderServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<mango.sep3.databaseaccess.protobuf.Void> createOrders(
-        mango.sep3.databaseaccess.protobuf.Orders request) {
+        mango.sep3.databaseaccess.protobuf.OrdersToCreate request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateOrdersMethod(), getCallOptions()), request);
     }
@@ -408,11 +408,11 @@ public final class OrderServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_CREATE_ORDER_OFFERS:
-          serviceImpl.createOrderOffers((mango.sep3.databaseaccess.protobuf.OrderOffers) request,
+          serviceImpl.createOrderOffers((mango.sep3.databaseaccess.protobuf.OrderOffersToCreate) request,
               (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void>) responseObserver);
           break;
         case METHODID_CREATE_ORDERS:
-          serviceImpl.createOrders((mango.sep3.databaseaccess.protobuf.Orders) request,
+          serviceImpl.createOrders((mango.sep3.databaseaccess.protobuf.OrdersToCreate) request,
               (io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Void>) responseObserver);
           break;
         case METHODID_GET_ALL_ORDERS:

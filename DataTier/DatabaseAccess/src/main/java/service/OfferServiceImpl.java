@@ -49,7 +49,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
       offer.setImgPath(request.getImagePath());
 
 
-    offerDao.CreateOffer(offer);
+    mango.sep3.databaseaccess.Shared.Offer offerFromDatabase =  offerDao.CreateOffer(offer);
 
     Offer response =  convertOfferToGrpc(offer);
 
@@ -89,19 +89,10 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   {
     mango.sep3.databaseaccess.Shared.Offer offer = offerDao.getOfferById(request.getId());
 
-    Offer response = convertOfferToGrpc(offer);
-
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
-  }
-
-  private Offer convertOfferToGrpc(
-      mango.sep3.databaseaccess.Shared.Offer offer)
-  {
-    Offer response = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(
-            offer.getQuantity()).setUnit(offer.getUnit())
-        .setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-        .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+    Offer response = Offer.newBuilder().setId(offerFromDatabase.getId()).setName(offerFromDatabase.getName()).setQuantity(
+            offerFromDatabase.getQuantity()).setUnit(offerFromDatabase.getUnit())
+        .setPrice(offerFromDatabase.getPrice()).setDelivery(offerFromDatabase.isDelivery()).setPickUp(offerFromDatabase.isPickUp())
+        .setPickYourOwn(offerFromDatabase.isPickyourOwn()).setDescription(offerFromDatabase.getDescription()).setImagePath(offerFromDatabase.getImgPath()).build();
 
 
     return response;

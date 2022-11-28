@@ -20,11 +20,8 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
 {
 
   @Autowired
-  private FileContext fileContext;
-  @Autowired
   private FarmDaoInterface farmDAO;
 
-  private FarmRepository farmRepository;
 
   public FarmServiceImpl()
   {

@@ -24,7 +24,7 @@ public class OrderDaoImpl : IOrderDao
     }
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
-       OrderOffersToCreate orderOffersGrpc = ConvertOrderOffersToCreateToGrpc(orderOffers);
+        OrderOffersToCreate orderOffersGrpc = ConvertOrderOffersToCreateToGrpc(orderOffers);
 
         try
         {
@@ -216,6 +216,7 @@ public class OrderDaoImpl : IOrderDao
         };
         return offerToReturn;
     }
+    
     
     private OrdersToCreate ConvertOrdersToCreateToGrpc(IEnumerable<Shared.Models.Order> orders)
     {

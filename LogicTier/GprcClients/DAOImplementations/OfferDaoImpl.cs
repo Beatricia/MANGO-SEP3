@@ -22,7 +22,7 @@ public class OfferDaoImpl : IOfferDao
     
     public async Task CreateAsync(Shared.Models.Offer offer)
     {
-        var offerToCreate = new global::OfferCreation()
+        var offerToCreate = new OfferCreation
         {
             Name = offer.Name,
             Quantity = offer.Quantity,
@@ -35,7 +35,8 @@ public class OfferDaoImpl : IOfferDao
             ImagePath = offer.ImagePath
         };
         
-         await offerService.CreateOfferAsync(offerToCreate);
+         global::Offer response = await offerService.CreateOfferAsync(offerToCreate);
+         
     }
 
     /// <summary>
@@ -100,5 +101,6 @@ public class OfferDaoImpl : IOfferDao
             ImagePath = offer.ImagePath,
         };
         return offerToSend;
+    
     }
 }

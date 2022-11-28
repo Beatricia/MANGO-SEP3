@@ -5,13 +5,16 @@
 @inject IOrderService orderService;
 
 <div class="greeting">
-    <h4>SHOPPING CART</h4>
+    <h4>YOUR SHOPPING CART</h4>
 </div>
 
 @if (cartOffers == null)
 {
     <p>
-        <em>Loading...</em>
+        <em>Currently you have no cart items. For discovering for offers please go to 
+             <NavLink class="nav-link" href="DisplayOffers">
+                                    <span class="oi oi-list-rich" aria-hidden="true"></span> Our Offers
+                                </NavLink></em>
     </p>
 }
 <button class="removeAllBtn" @onclick="RemoveAll">EMPTY CART</button>
@@ -40,9 +43,7 @@
         </tbody>
     </table>
 	
-
-
-    <div class="totalPrice"><strong>Total price: </strong> 
+    <div class="totalPrice"><strong>Total price: @totalPrice DKK </strong> 
         <button class="orderBtn" @onclick="Order">ORDER NOW</button></div>
 }
 
@@ -50,19 +51,20 @@
     private IEnumerable<CartOffer>? cartOffers;
     private IEnumerable<Offer> offers;
     private string msg = "";
+    private double totalPrice;
 
     private string? username;
-	
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            cartOffers = await cartService.GetAllCartItemsAsync("Bety");
-            Console.WriteLine("The cart offers received: " +  cartOffers);
+            cartOffers = await cartService.GetAllCartItemsAsync("Cristi");
+            Console.WriteLine("The cart offers received: " + cartOffers);
 
-            foreach (var VARIABLE in cartOffers)
+            foreach (var cartOffer in cartOffers)
             {
-                Console.WriteLine("salut"+ cartOffers.GetEnumerator());
+                totalPrice += cartOffer.Offer.Price;
             }
         }
         catch (Exception e)
@@ -74,7 +76,7 @@
 
     private async Task RemoveAll()
     {
-        await cartService.DeleteAllCartOffersAsync("Bety");
+        await cartService.DeleteAllCartOffersAsync("Cristi");
         cartOffers = null;
     }
 
@@ -82,4 +84,6 @@
     {
         await orderService.CreateOrderAsync("Cristi");
     }
+
+
 }

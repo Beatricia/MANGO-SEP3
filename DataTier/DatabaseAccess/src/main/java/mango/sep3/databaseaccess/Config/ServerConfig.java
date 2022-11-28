@@ -4,10 +4,7 @@ import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import service.CartOfferServiceImpl;
-import service.FarmServiceImpl;
-import service.OrderServiceImpl;
-import service.UserServiceImpl;
+import service.*;
 
 @Configuration
 public class ServerConfig {
@@ -29,5 +26,9 @@ public class ServerConfig {
 
     @Bean public CartOfferServiceImpl getCartOfferServiceImpl(){
         return new CartOfferServiceImpl();
+    }
+
+    @Bean public OfferServiceImpl getOfferServiceImpl(){
+        return new OfferServiceImpl();
     }
 }

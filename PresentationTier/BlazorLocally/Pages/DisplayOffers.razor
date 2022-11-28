@@ -3,8 +3,6 @@
 @using HttpClient.ClientInterfaces
 @inject IOfferService httpOfferClient
 @inject ICartService HttpCartClient
-@using Components
-@using System.Diagnostics.CodeAnalysis
 
 <h3>DisplayOffers</h3>
 @if (offers == null)
@@ -31,9 +29,9 @@
                 </button>
             </div>
         }
-    </div>
+    </div>}
 
-}
+
 @if (!string.IsNullOrEmpty(msg))
 {
     <div class="errorMsg">
@@ -41,56 +39,78 @@
     </div>
 }
 
-<button type="button" @onclick="OpenPopUpAddToCart"> Add to cart
-</button>
 @if (showAddToCartComponent)
 {
-    <div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Order info</h4>
-        </div>
+     <div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h4 class="modal-title">Order info</h4>
+                 </div>
             
-        <div class="quantity">
-            <div class="col-6" >
-                <label>Quantity:<span class="required">*</span></label>
-                <div class="col-9 d-flex flex-nowrap">
-                    <input type="text" @bind="quantity" required="required" />
-                </div>
-            </div>
-        </div>
-        <div class="delivery">
-            <!--radio buttons for delivery option-->
-            <label class="col-6" for="radioGroup">Delivery Option:<span class="required">*</span></label>
-            <div id="radioGroup" class="d-flex flex-column">
-                <div class="col-4 d-flex flex-nowrap">
-                    <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
-                           onchange="@(() => Delivery())"
-                           checked="@delivery"/>
-                    <label for="delivery"> Delivery</label>
-                </div>
-                <div class="col-4 d-flex flex-nowrap">
-                    <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
-                           onchange="@(() => PickUp())"/>
-                    <label for="pickUp"> Pick Up</label>
-                </div>
-                <div class="col-4 d-flex flex-nowrap">
-                    <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
-                           onchange="@(() => PickYO())"/>
-                    <label for="pickYO"> Pick Your Own</label>
-                </div>
-            </div>
-        </div>
-        
-        <div class="buttons">
-            <div class="col-4"><button class="addToCartBtn" @onclick= "AddToCart">ADD TO CART</button> </div>
-            <div class="col-4"><button class="cancel" @onclick="Cancel">CANCEL</button></div>
-            </div>
-    </div>
-</div>
-</div>
-}
+                 <div class="container">
+                     <div class="row">
+                         <div class="col-6">
+                             <div class="quantity">
+                                 <div class="col-6">
+                                     <label>Quantity:<span class="required">*</span></label>
+                                     <div class="col-6 d-flex flex-nowrap">
+                                         <input type="text" @bind="quantity" required="required"/>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-6">
+                             <div class="delivery">
+                                 <!--radio buttons for delivery option-->
+                                 <label class="col-8" for="radioGroup">Delivery Option:<span class="required">*</span></label>
+                                 <div id="radioGroup" class="d-flex flex-column">
+                                     <div class="col-8 d-flex flex-nowrap">
+                                         <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
+                                                onchange="@(() => Delivery())"
+                                                checked="@delivery"/>
+                                         <label for="delivery"> Delivery</label>
+                                     </div>
+                                     <div class="col-8 d-flex flex-nowrap">
+                                         <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
+                                                onchange="@(() => PickUp())"/>
+                                         <label for="pickUp"> Pick Up</label>
+                                     </div>
+                                     <div class="col-8 d-flex flex-nowrap">
+                                         <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
+                                                onchange="@(() => PickYO())"/>
+                                         <label for="pickYO"> Pick Your Own</label>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                         @if (!string.IsNullOrEmpty(msg))
+                         {
+                             <div class="errorMsg">
+                                 <span>@msg</span>
+                             </div>
+                         }
+
+
+                         <div class="row">
+                             <div class="col-6">
+                                 <div class="buttons">
+                                      <div class="col-4"><button class="cancel" @onclick="Cancel">CANCEL</button></div>
+                                 </div>
+                             </div>
+                             <div class="col-6">
+                                 <div class="buttons">
+                                     <div class="col-"><button class="addToCartBtn" @onclick="AddToCart">ADD TO CART</button> </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         </div>
+    
 }
 
 @code {
@@ -123,46 +143,12 @@
         }
     }
     
-    private async Task CreateCartOffer(CartOfferDto dto)
-    {
-        try
-        {
-            await ValidateData();
-        }
-        catch
-        {
-            return;
-        }
-
-        var cartOfferDto = new CartOfferDto()
-        {
-
-        };
-    }
-    
     private void OpenPopUpAddToCart(int offerId)
     {
         this.offerId = offerId;
         showAddToCartComponent = true;
     }
-    
-    private void OpenPopUpAddToCart()
-    {
-        showAddToCartComponent = true;
-    }
 
-    public async void OnAddToCartButton(bool accepted, CartOfferDto dto)
-    {
-        await CreateCartOffer(dto);
-        showAddToCartComponent = false;
-        StateHasChanged();
-    }
-
-    public void OnCancelDialog(bool accepted)
-    {
-        showAddToCartComponent = false;
-        StateHasChanged();
-    }
     private async Task AddToCart()
     {
         try
@@ -181,6 +167,11 @@
             {dto.CollectOption = "delivery";
             }
             dto.OfferId = offerId;
+
+            if (quantity < 0)
+            {
+                msg = "Quantity should be bigger than 0.";
+            }
             
             await HttpCartClient.AddToCartAsync(dto);
 
@@ -191,12 +182,14 @@
             throw;
         }
         showAddToCartComponent = false;
+        StateHasChanged();
     }
 
     private Task Cancel()
     {
         showAddToCartComponent = false;
-        return null;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
     
     

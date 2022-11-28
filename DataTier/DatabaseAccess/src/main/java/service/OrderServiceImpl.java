@@ -6,6 +6,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@GRpcService
 public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 {
   @Autowired private OrderDaoInterface orderDao;

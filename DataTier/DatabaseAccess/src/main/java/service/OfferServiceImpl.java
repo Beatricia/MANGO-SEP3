@@ -4,6 +4,7 @@ import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Collection;
  * A class responsable for taking the data from the database (currently from
  * a textFile) and sending it to the Logic Tier
  */
+@GRpcService
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
   @Autowired

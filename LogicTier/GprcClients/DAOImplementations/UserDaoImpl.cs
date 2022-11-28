@@ -26,12 +26,28 @@ public class UserDaoImpl : IUserDao
             return null;
         }
     }
-    
+
+    public async Task<Shared.Models.Farmer> GetFarmer(string username)
+    {
+        var text = new Text
+            { Text_ = username };
+
+        try
+        {
+            global::Farmer customer = await client.GetFarmerAsync(text);
+            return ConvertFromGrpc(customer);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public async Task<Shared.Models.Customer> RegisterCustomer(Shared.Models.Customer customer)
     {
         try
         {
-            global::Customer grpcCustomer = ConvertToGrpc(customer);
+            Customer grpcCustomer = ConvertToGrpc(customer);
             grpcCustomer = await client.RegisterCustomerAsync(grpcCustomer);
             return ConvertFromGrpc(grpcCustomer);
         }
@@ -46,7 +62,7 @@ public class UserDaoImpl : IUserDao
     {
         try
         {
-            global::Farmer grpcFarmer = ConvertToGrpc(farmer);
+            Farmer grpcFarmer = ConvertToGrpc(farmer);
             grpcFarmer = await client.RegisterFarmerAsync(grpcFarmer);
             return ConvertFromGrpc(grpcFarmer);
         }
@@ -75,7 +91,7 @@ public class UserDaoImpl : IUserDao
 
     private Shared.Models.Customer ConvertFromGrpc(global::Customer customer)
     {
-        Shared.Models.Address address = convertFromGrpc(customer.Address);
+        Shared.Models.Address address = ConvertFromGrpc(customer.Address);
         var customerToReturn = new Shared.Models.Customer
         {
             Username = customer.Username,
@@ -87,7 +103,7 @@ public class UserDaoImpl : IUserDao
         return customerToReturn;
     }
 
-    private Shared.Models.Address convertFromGrpc(global::Address customerAddress)
+    private Shared.Models.Address ConvertFromGrpc(global::Address customerAddress)
     {
         var address = new Shared.Models.Address
         {
@@ -99,9 +115,9 @@ public class UserDaoImpl : IUserDao
     }
     
     
-    private global::Farmer ConvertToGrpc(Shared.Models.Farmer farmer)
+    private Farmer ConvertToGrpc(Shared.Models.Farmer farmer)
     {
-        return new global::Farmer
+        return new Farmer
         {
             Username = farmer.Username,
             Firstname = farmer.FirstName,
@@ -109,7 +125,7 @@ public class UserDaoImpl : IUserDao
         };
     }
     
-    private Shared.Models.Farmer ConvertFromGrpc(global::Farmer farmer)
+    private Shared.Models.Farmer ConvertFromGrpc(Farmer farmer)
     {
         var farmerToReturn = new Shared.Models.Farmer
         {

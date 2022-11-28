@@ -1,6 +1,4 @@
 using Application.DAOInterfaces;
-using Address = Shared.Models.Address;
-using Farmer = Shared.Models.Farmer;
 
 namespace GprcClients.DAOImplementations;
 
@@ -21,15 +19,18 @@ public class FarmDaoImpl : IFarmDao
             Phone = farm.Phone,
             DeliveryDistance = farm.DeliveryDistance,
             FarmStatus = farm.FarmStatus,
-            Farmer = ConvertFarmerToGrpc(farm.Farmer)
-            IconPath = farm.FarmIcon.FileName,
+            Farmer = ConvertFarmerToGrpc(farm.Farmer),
+            Address = ConvertSharedToGrpc(farm.Address),
+            
         };
 
         await farmServiceClient.CreateFarmAsync(toCreate);
         
         return farm;
     }
+
     
+
     public async Task<Shared.Models.Farm> GetFarmByNameAsync(string farmName)
     {
         var name = new Text
@@ -71,16 +72,7 @@ public class FarmDaoImpl : IFarmDao
         };
         return farmer;
     }
-    private global::Farmer ConvertFarmerToGrpc(Shared.Models.Farmer farmFarmer)
-    {
-        var farmer = new global::Farmer
-        {
-            Firstname = farmFarmer.FirstName,
-            Lastname = farmFarmer.LastName,
-            Username = farmFarmer.Username
-        };
-        return farmer;
-     }
+    
 
     public async Task<Shared.Models.Farm?> GetByName(string name)
     {
@@ -100,12 +92,33 @@ public class FarmDaoImpl : IFarmDao
             Phone = grpcFarm.Phone,
             Address = new Shared.Models.Address
             {
-                ZIP = grpcFarm.Zip,
-                Street = grpcFarm.Address,
-                City = grpcFarm.City
+                ZIP = grpcFarm.Address.Zip,
+                Street = grpcFarm.Address.Street,
+                City = grpcFarm.Address.City
             },
             DeliveryDistance = grpcFarm.DeliveryDistance,
             FarmStatus = grpcFarm.FarmStatus
+        };
+    }
+    
+    private Farmer ConvertFarmerToGrpc(Shared.Models.Farmer farmFarmer)
+    {
+        var farmer = new global::Farmer
+        {
+            Firstname = farmFarmer.FirstName,
+            Lastname = farmFarmer.LastName,
+            Username = farmFarmer.Username
+        };
+        return farmer;
+    }
+    
+    private Address ConvertSharedToGrpc(Shared.Models.Address farmAddress)
+    {
+        return new Address
+        {
+            City = farmAddress.City,
+            Street = farmAddress.Street,
+            Zip = farmAddress.ZIP
         };
     }
 }

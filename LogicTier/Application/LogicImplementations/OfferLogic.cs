@@ -53,9 +53,6 @@ public class OfferLogic : IOfferLogic
         };
 
         var created = await offerDao.CreateAsync(offerToSend);
-
-        // set the absolute url for an image
-        created.Image.AbsoluteUrl = imageDao.GetAbsoluteUrl(offerToSend.Image.RelativeUrl);
         
         return created;
     }
@@ -67,11 +64,6 @@ public class OfferLogic : IOfferLogic
     public async Task<IEnumerable<Offer>> GetAsync()
     {
         var results = await offerDao.GetAsync();
-
-        foreach (Offer offer in results)
-        {
-            offer.Image.AbsoluteUrl = imageDao.GetAbsoluteUrl(offer.Image.RelativeUrl);
-        }
 
         return results;
     }

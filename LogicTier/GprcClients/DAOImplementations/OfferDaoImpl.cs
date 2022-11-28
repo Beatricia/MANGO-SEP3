@@ -1,6 +1,4 @@
 using Application.DAOInterfaces;
-using Offer = Shared.Models.Offer;
-using Shared.Models;
 
 namespace GprcClients.DAOImplementations;
 
@@ -10,21 +8,36 @@ namespace GprcClients.DAOImplementations;
 public class OfferDaoImpl : IOfferDao 
 {
     private OfferService.OfferServiceClient offerService;
+    private IImageDao _imageDao;
 
     /// <summary>
     /// Initializes the OfferDaoImpl with the given gRPC client service
     /// </summary>
     /// <param name="offerService"></param>
-    public OfferDaoImpl(OfferService.OfferServiceClient offerService)
+    public OfferDaoImpl(OfferService.OfferServiceClient offerService, IImageDao imageDao)
     {
         this.offerService = offerService;
+        _imageDao = imageDao;
     }
     
     
     public async Task<Shared.Models.Offer> CreateAsync(Shared.Models.Offer offer)
     {
-        var offerToCreate = new OfferCreation
+        Offer response = ConvertOfferToGrpc(offer);//;await offerService.CreateOfferAsync(offerToCreate);
+         
+        var offerToCreate = ConvertOfferToGrpc(offer);
+        
+        var returnedOffer = await offerService.CreateOfferAsync(offerToCreate);
+
+        return ConvertOfferToShared(returnedOffer);
+    }
+
+    private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
+    {
+        // Convert shared offer to grpc
+        var offerToCreate = new Offer
         {
+            Id = offer.Id,
             Name = offer.Name,
             Quantity = offer.Quantity,
             Unit = offer.Unit,
@@ -33,16 +46,10 @@ public class OfferDaoImpl : IOfferDao
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
-            ImagePath = offer.ImagePath
+            FarmName = offer.FarmName,
         };
-        
-         global::Offer response = await offerService.CreateOfferAsync(offerToCreate);
-         
-        var offerToCreate = ConvertOfferToGrpc(offer);
-        
-        var returnedOffer = await offerService.CreateOfferAsync(offerToCreate);
 
-        return ConvertOfferToShared(returnedOffer);
+        return offerToCreate;
     }
 
     /// <summary>
@@ -79,7 +86,7 @@ public class OfferDaoImpl : IOfferDao
             Id_ = id
         };
 
-        global::Offer offer = await offerService.GetOfferByIdAsync(offerId);
+        Offer offer = await offerService.GetOfferByIdAsync(offerId);
 
         Shared.Models.Offer offerToSend = new Shared.Models.Offer
         {
@@ -92,14 +99,12 @@ public class OfferDaoImpl : IOfferDao
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
-            ImagePath = offer.ImagePath,
         };
         return offerToSend;
-    
     }
     
     
-    // convert from grpc object to shared offe
+    // convert from grpc object to shared offer
     private Shared.Models.Offer ConvertOfferToShared(Offer offer)
     {
         return new Shared.Models.Offer
@@ -113,15 +118,7 @@ public class OfferDaoImpl : IOfferDao
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
-            ImagePath = offer.ImagePath,
-        };
-        return offerToSend;
-    
-            Image = new Image()
-            {
-                RelativeUrl = offer.ImagePath
-            },
-            FarmName = offer.FarmName,
+            Image = _imageDao.GetImageForOffer(offer.Id),
         };
     }
 }

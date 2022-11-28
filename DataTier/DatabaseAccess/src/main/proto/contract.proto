@@ -16,9 +16,15 @@ service OfferService{
 }
 
 service UserService{
-  rpc RegisterUser(UserAuth) returns (User);
+  rpc RegisterUser(UserAuth) returns (UserAuth);
+  rpc RegisterFarmer(Farmer) returns (Farmer);
+  rpc RegisterCustomer(Customer) returns (Customer);
+  rpc GetUserAuthByUsername(Text) returns(UserAuth);
+
   rpc GetUserByUsername(Text) returns (User);
   rpc GetCustomer(Text) returns(Customer);
+  rpc GetFarmer(Text) returns(Farmer);
+
 }
 
 service OrderService{
@@ -67,7 +73,6 @@ message Offer{
   bool pickUp = 7;
   bool pickYourOwn = 8;
   optional string description = 9;
-  string ImagePath = 10;
   string farmName = 11;
 }
 

@@ -1,5 +1,4 @@
 ﻿using Application.DAOInterfaces;
-using UserAuth = Shared.Models.UserAuth;
 
 namespace GprcClients.DAOImplementations;
 
@@ -15,38 +14,24 @@ public class AuthDaoImpl : IAuthDao
         this.client = client;
     }
     
-    public async Task<Shared.Models.User> RegisterAsync(Shared.Models.UserAuth user)
+    public async Task<Shared.Models.UserAuth> RegisterAsync(Shared.Models.UserAuth user)
     {
         // create grpc UserAuth with username hash and salt
-        var grpcUserAuth = new global::UserAuth
+        var grpcUserAuth = new UserAuth
         {
             Username = user.Username,
             Hash = user.HashPassword,
             Salt = user.Salt
         };
         
-        User grpcUser = await client.RegisterUserAsync(grpcUserAuth);
+        UserAuth grpcUser = await client.RegisterUserAsync(grpcUserAuth);
         
-        return ConvertGrpcUserToSharedUser(grpcUser);
+        return ConvertGrpcUserAuthToSharedUserAuth(grpcUser);
     }
 
-    public async Task<Shared.Models.User> LoginAsync(Shared.Models.UserAuth user)
-    {
-        var grpcUserAuth = new global::UserAuth
-        {
-            Username = user.Username,
-            Hash = user.HashPassword,
-            Salt = user.Salt
-        };
-        
-        User grpcUser = await client.LoginUserAsync(grpcUserAuth);
-        
-        return ConvertGrpcUserToSharedUser(grpcUser);
-    }
 
     public async Task<Shared.Models.UserAuth?> GetAuthUserAsync(string username)
     {
-        // create text object
         var text = new Text { Text_ = username };
         
         try
@@ -105,4 +90,80 @@ public class AuthDaoImpl : IAuthDao
         return sharedUserAuth;
     }
     
+    
+    // convert shared farmer to grpc farmer
+    private Farmer ConvertSharedToGrpc(Shared.Models.Farmer farmer)
+    {
+        var grpcFarmer = new Farmer
+        {
+            Username = farmer.Username,
+            Firstname = farmer.FirstName,
+            Lastname = farmer.LastName,
+        };
+        
+        return grpcFarmer;
+    }
+    
+    // convert grpc farmer to shared farmer
+    private Shared.Models.Farmer ConvertGrpcToShared(Farmer farmer)
+    {
+        var sharedFarmer = new Shared.Models.Farmer
+        {
+            Username = farmer.Username,
+            FirstName = farmer.Firstname,
+            LastName = farmer.Lastname,
+        };
+        
+        return sharedFarmer;
+    }
+    
+    // convert shared customer to grpc customer
+    private Customer ConvertSharedToGrpc(Shared.Models.Customer customer)
+    {
+        var grpcCustomer = new Customer
+        {
+            Username = customer.Username,
+            Firstname = customer.FirstName,
+            Lastname = customer.LastName,
+            Address = ConvertSharedToGrpc(customer.Address),
+            Phone = customer.Phone,
+        };
+        
+        return grpcCustomer;
+    }
+    
+    // convert grpc customer to shared customer
+    private Shared.Models.Customer ConvertGrpcToShared(Customer customer)
+    {
+        var sharedCustomer = new Shared.Models.Customer
+        {
+            Username = customer.Username,
+            FirstName = customer.Firstname,
+            LastName = customer.Lastname,
+            Phone = customer.Phone,
+            Address = ConvertGrpcToShared(customer.Address)
+        };
+        
+        return sharedCustomer;
+    }
+    
+    private Address ConvertSharedToGrpc(Shared.Models.Address farmAddress)
+    {
+        return new Address
+        {
+            City = farmAddress.City,
+            Street = farmAddress.Street,
+            Zip = farmAddress.ZIP
+        };
+    }
+    
+    private Shared.Models.Address ConvertGrpcToShared(Address address)
+    {
+        return new Shared.Models.Address
+        {
+            City = address.City,
+            Street = address.Street,
+            ZIP = address.Zip
+        };
+    }
 }

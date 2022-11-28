@@ -58,7 +58,7 @@ public class OfferController : ControllerBase
         Directory.CreateDirectory(folder);
 
         var file = Request.Form.Files[0];
-        Image image = imageResource.CreateRelativePathOffer(id);
+        Image image = imageResource.GetImageForOffer(id);
 
         await imageResource.SaveImageAsync(imageResource.OfferImages, image.RelativeUrl, file);
 

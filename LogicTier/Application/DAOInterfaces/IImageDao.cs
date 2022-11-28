@@ -18,5 +18,5 @@ public interface IImageDao
     /// </summary>
     /// <param name="offerId"></param>
     /// <returns></returns>
-    public Image CreateRelativePathOffer(int offerId);
+    public Image GetImageForOffer(int offerId);
 }

@@ -1,4 +1,6 @@
-﻿namespace Shared.DTOs;
+﻿using Shared.Models;
+
+namespace Shared.DTOs;
 
 public class FarmCreationDto
 {

@@ -22,7 +22,7 @@ public class OrderDaoImpl : IOrderDao
     }
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
-        OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
+        /*OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
 
         try
         {
@@ -32,7 +32,7 @@ public class OrderDaoImpl : IOrderDao
         {
             Console.WriteLine(e);
             throw;
-        }
+        }*/
     }
     
 
@@ -115,7 +115,6 @@ public class OrderDaoImpl : IOrderDao
             Price = offer.Price,
             Quantity = offer.Quantity,
             Unit = offer.Unit,
-            ImagePath = offer.ImagePath,
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn
         };
@@ -186,7 +185,6 @@ public class OrderDaoImpl : IOrderDao
             Price = offer.Price,
             Quantity = offer.Quantity,
             Unit = offer.Unit,
-            ImagePath = offer.ImagePath,
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn
         };

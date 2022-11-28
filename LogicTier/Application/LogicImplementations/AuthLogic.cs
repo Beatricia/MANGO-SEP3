@@ -95,7 +95,10 @@ public class AuthLogic : IAuthLogic
             throw new Exception("Password does not match");
         }
 
-        return await authDao.LoginAsync(authUser);
+        User? user = await userDao.GetCustomer(username);
+        user ??= await userDao.GetFarmer(username);
+
+        return user;
     }
 
     /// <summary>

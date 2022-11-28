@@ -78,7 +78,7 @@ public class ImageResource : IImageDao
         return $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/{path}";
     }
 
-    public Shared.Models.Image CreateRelativePathOffer(int offerId)
+    public Shared.Models.Image GetImageForOffer(int offerId)
     {
         string relativePath = Path.Join(OfferImages, $"{offerId}.png");
         var image = new Shared.Models.Image

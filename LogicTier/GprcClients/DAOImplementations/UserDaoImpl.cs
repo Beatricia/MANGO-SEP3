@@ -11,7 +11,7 @@ public class UserDaoImpl : IUserDao
         this.client = client;
     }
 
-    public async Task<Shared.Models.Customer> GetCustomer(string username)
+    public async Task<Shared.Models.Customer?> GetCustomer(string username)
     {
         var text = new Text
             { Text_ = username };
@@ -27,7 +27,7 @@ public class UserDaoImpl : IUserDao
         }
     }
 
-    public async Task<Shared.Models.Farmer> GetFarmer(string username)
+    public async Task<Shared.Models.Farmer?> GetFarmer(string username)
     {
         var text = new Text
             { Text_ = username };

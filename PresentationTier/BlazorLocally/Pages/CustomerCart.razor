@@ -34,11 +34,13 @@
         <tbody>
         @foreach (var cartOff in cartOffers)
         {
+            <tr>
             <td>@cartOff.Quantity</td>
             <td>@cartOff.Offer.Name</td>
             <td>@cartOff.CollectionOption</td>
             <td>Farm</td>
             <td>@cartOff.Offer.Price</td>
+        </tr>
         }
         </tbody>
     </table>
@@ -59,7 +61,7 @@
     {
         try
         {
-            cartOffers = await cartService.GetAllCartItemsAsync("Cristi");
+            cartOffers = await cartService.GetAllCartItemsAsync("Uafa");
             Console.WriteLine("The cart offers received: " + cartOffers);
 
             foreach (var cartOffer in cartOffers)
@@ -76,14 +78,13 @@
 
     private async Task RemoveAll()
     {
-        await cartService.DeleteAllCartOffersAsync("Cristi");
+        await cartService.DeleteAllCartOffersAsync("Agata");
         cartOffers = null;
     }
 
     private async Task Order()
     {
-        await orderService.CreateOrderAsync("Cristi");
+        await orderService.CreateOrderAsync("Uafa");
     }
-
 
 }

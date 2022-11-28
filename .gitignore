@@ -2,6 +2,7 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 LogicTier/GprcClients/Proto/*/*
+DataTier/DatabaseAccess/src/main/java/mango/sep3/databaseaccess/protobuf/*
 
 application.properties
 

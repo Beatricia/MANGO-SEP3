@@ -22,7 +22,7 @@ public class OrderDaoImpl : IOrderDao
     }
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
-        /*OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
+        OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
 
         try
         {
@@ -32,7 +32,7 @@ public class OrderDaoImpl : IOrderDao
         {
             Console.WriteLine(e);
             throw;
-        }*/
+        }
     }
     
 
@@ -96,7 +96,8 @@ public class OrderDaoImpl : IOrderDao
                 CollectionOption = orderOffer.CollectionOption,
                 Offer = ConvertOfferFromGrpc(orderOffer.Offer),
                 Quantity = orderOffer.Quantity,
-                Username = orderOffer.Username
+                Username = orderOffer.Username,
+                FarmName = orderOffer.Offer.FarmName
             };
             listToReturn.Add(item);
         }
@@ -116,7 +117,8 @@ public class OrderDaoImpl : IOrderDao
             Quantity = offer.Quantity,
             Unit = offer.Unit,
             PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn
+            PickYourOwn = offer.PickYourOwn,
+            FarmName = offer.FarmName
         };
         return offerToReturn;
     }
@@ -200,15 +202,19 @@ public class OrderDaoImpl : IOrderDao
         {
            
             OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
-            RepeatedField<OrderOffer> orderOffersList = orderOffersGrpc.OrderOffers_;
 
+            Console.WriteLine("Order");
+            Console.WriteLine("Farm name: " + order.FarmName);
+            
+            
             var orderGrpc = new global::Order()
             {
                 CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
-                OrderOffers = { orderOffersList }
+                
             };
+            orderGrpc.OrderOffers.AddRange(orderOffersGrpc.OrderOffers_);
             ordersListGrpc.Add(orderGrpc);
         }
 

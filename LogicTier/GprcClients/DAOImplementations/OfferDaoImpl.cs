@@ -119,6 +119,7 @@ public class OfferDaoImpl : IOfferDao
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
             Image = _imageDao.GetImageForOffer(offer.Id),
+            FarmName = offer.FarmName
         };
     }
 }

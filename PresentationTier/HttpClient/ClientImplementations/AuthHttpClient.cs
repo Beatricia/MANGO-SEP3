@@ -13,12 +13,13 @@ namespace HttpClient.ClientImplementations;
 public class AuthHttpClient : IAuthService
 {
     // accept httpclient from constructor to field
-    private readonly System.Net.Http.HttpClient client;
+    private System.Net.Http.HttpClient Client => _access.HttpClient;
     public static string? Jwt { get; private set; } = "";
-    
-    public AuthHttpClient(System.Net.Http.HttpClient httpClient)
+
+    private readonly ApiAccess _access;
+    public AuthHttpClient(ApiAccess apiAccess)
     {
-        client = httpClient;
+        _access = apiAccess;
     }
     
     /// <inheritdoc/>
@@ -31,19 +32,21 @@ public class AuthHttpClient : IAuthService
         };
         
         
-        HttpResponseMessage response = await client.PostAsJsonAsync("/auth/login", dto);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/auth/login", dto);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
             throw new Exception(content);
         }
         
-        var user = await response.Content.ReadFromJsonAsync<User>();
-        if(user == null)
+        var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
+        if(loginResponse == null)
             throw new Exception("Cannot read user from response");
-        
+
+
+        _access.JWT = loginResponse.Token;
         //was returning Login response but isnt User better?
-        return user;
+        return loginResponse.User;
     }
 
     /// <inheritdoc/>
@@ -57,7 +60,7 @@ public class AuthHttpClient : IAuthService
         };
         
         
-        HttpResponseMessage response = await client.PostAsJsonAsync("/auth/register", dto);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/auth/register", dto);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

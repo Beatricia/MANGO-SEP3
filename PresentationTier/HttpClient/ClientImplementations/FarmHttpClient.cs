@@ -8,11 +8,12 @@ namespace HttpClient.ClientImplementations;
 
 public class FarmHttpClient : IFarmService
 {
-    private readonly System.Net.Http.HttpClient client;
+    private System.Net.Http.HttpClient client => apiAccess.HttpClient;
 
-    public FarmHttpClient(System.Net.Http.HttpClient client)
+    private readonly ApiAccess apiAccess;
+    public FarmHttpClient(ApiAccess apiAccess)
     {
-        this.client = client;
+        this.apiAccess = apiAccess;
     } 
     
     

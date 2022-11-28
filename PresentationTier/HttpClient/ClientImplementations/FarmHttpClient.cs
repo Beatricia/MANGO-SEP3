@@ -8,8 +8,7 @@ namespace HttpClient.ClientImplementations;
 
 public class FarmHttpClient : IFarmService
 {
-    private System.Net.Http.HttpClient client => apiAccess.HttpClient;
-
+    private System.Net.Http.HttpClient Client => apiAccess.HttpClient;
     private readonly ApiAccess apiAccess;
     public FarmHttpClient(ApiAccess apiAccess)
     {
@@ -20,7 +19,7 @@ public class FarmHttpClient : IFarmService
     
     public async Task CreateAsync(FarmCreationDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/farm", dto);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/farm", dto);
         string content = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
@@ -31,7 +30,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<Farm> GetFarmByNameAsync(string farmName)
     {
-        HttpResponseMessage response = await client.GetAsync($"/farm?farmName={farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"/farm?farmName={farmName}");
         string content = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
@@ -49,7 +48,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<FarmIcon>> GetAllIconsAsync()
     {
-        var response = await client.GetAsync("/farm/icons");
+        var response = await Client.GetAsync("/farm/icons");
         var content = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

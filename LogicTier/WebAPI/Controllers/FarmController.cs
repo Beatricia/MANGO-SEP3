@@ -28,8 +28,6 @@ public class FarmController : LocallyController
     [HttpPost]
     public async Task<IActionResult> CreateAsync(FarmCreationDto dto)
     {
-        Console.WriteLine("Logged in user: " + LoggedInUsername);
-        
         try
         {
             Shared.Models.Farm created = await farmLogic.CreateAsync(dto);

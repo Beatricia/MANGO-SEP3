@@ -44,7 +44,8 @@ public class AuthHttpClient : IAuthService
             throw new Exception("Cannot read user from response");
 
 
-        _access.JWT = loginResponse.Token;
+        await _access.LoginAsync(loginResponse.Token);
+        
         //was returning Login response but isnt User better?
         return loginResponse.User;
     }

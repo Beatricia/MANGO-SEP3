@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text.Json;
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
 using Shared.Models;
@@ -9,27 +10,26 @@ public class OrderLogic : IOrderLogic
 {
     private readonly IOrderDao orderDao;
     private readonly ICartDao cartDao;
-    private readonly IOfferDao OfferDao;
+    private readonly IOfferDao offerDao;
 
     public OrderLogic(IOrderDao orderDao,ICartDao cartDao,IOfferDao offerDao)
     {
         this.orderDao = orderDao;
         this.cartDao = cartDao;
-        this.OfferDao = offerDao;
+        this.offerDao = offerDao;
     }
 
     public async Task CreateOrderAsync(string username)
     {
-        ICollection<CartOffer> cartOffers =  cartDao.GetAllCartItemsAsync(username).GetAwaiter().GetResult();
+        ICollection<CartOffer> cartOffers = await cartDao.GetAllCartItemsAsync(username);
         List<OrderOffer> orderOffers = new List<OrderOffer>();
         
         //converting cartItems into OrderItems
         foreach (var cartOffer in cartOffers)
         {
-            Offer offer = await OfferDao.GetOfferByIdAsync(cartOffer.Id);
+            Offer offer = await offerDao.GetOfferByIdAsync(cartOffer.Id);
             OrderOffer orderOffer = new OrderOffer
             {
-                Id = cartOffer.Id,
                 Offer = offer,
                 Quantity = cartOffer.Quantity,
                 Username = cartOffer.UserName,
@@ -42,30 +42,23 @@ public class OrderLogic : IOrderLogic
         await orderDao.CreateOrderOffersAsync(orderOffers);
         IEnumerable<OrderOffer> orderOffersList = await orderDao.GetOrdersOffersAsync(username);
 
-        //TODO change to farmName
+        Console.WriteLine(JsonSerializer.Serialize(orderOffersList));
+
         //sorting OrderItems into Order
         var orders = from orderOffer in orderOffersList
-            group orderOffer by orderOffer.Offer.Name
+            group orderOffer by orderOffer.Offer.FarmName
             into order
             select new { FarmName = order.Key, OrderOffer = order.ToList() };
 
         List<Order> ordersToSend = new List<Order>();
         foreach (var order in orders)
         {
-            List<OrderOffer> deliveryOffers = new List<OrderOffer>();
-            List<OrderOffer> pickUpOffers = new List<OrderOffer>();
-            foreach (var orderOffer in order.OrderOffer)
-            {
-                if (orderOffer.CollectionOption.Equals("delivery"))
-                {
-                    deliveryOffers.Add(orderOffer);
-                }
-                else if (orderOffer.CollectionOption.Equals("pickUp"))
-                {
-                    pickUpOffers.Add(orderOffer);
-                }
-            }
-
+            List<OrderOffer> deliveryOffers =
+                order.OrderOffer.Where(offer => offer.CollectionOption == "delivery").ToList();
+            List<OrderOffer> pickUpOffers = 
+                order.OrderOffer.Where(offer => offer.CollectionOption == "pickUp").ToList();
+            
+            
             if (deliveryOffers.Any())
             {
                 Order orderToSend = new Order
@@ -82,7 +75,7 @@ public class OrderLogic : IOrderLogic
             {
                 Order orderToSend = new Order
                 {
-                    OrderOffers = deliveryOffers,
+                    OrderOffers = pickUpOffers,
                     IsDone = false,
                     FarmName = order.FarmName,
                     CollectionOption = "pickUp"
@@ -91,7 +84,7 @@ public class OrderLogic : IOrderLogic
             }
         }
 
-        await orderDao.CreateOrdersAsync(ordersToSend);
+        await orderDao.CreateOrdersAsync(ordersToSend); 
     }
 
     public Task<IEnumerable<Order>> GetAllOrders(string username)

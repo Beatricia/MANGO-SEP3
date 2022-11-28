@@ -7,5 +7,6 @@ public class OrderOffer
     public int Quantity { get; set; }
     public string Username { get; set; }
     public string CollectionOption { get; set; }
+    public string FarmName { get; set; }
     
 }

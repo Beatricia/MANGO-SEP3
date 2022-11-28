@@ -5,9 +5,7 @@ import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.stereotype.Service;
-import service.CartOfferServiceImpl;
-import service.FarmServiceImpl;
-import service.OfferServiceImpl;
+import service.*;
 
 import java.io.IOException;
 
@@ -21,6 +19,10 @@ public class GrpcServer
     Server server = ServerBuilder
         .forPort(8084)
         .addService(new FarmServiceImpl())
+        .addService(new OfferServiceImpl())
+        .addService(new OrderServiceImpl())
+        .addService(new UserServiceImpl())
+        .addService(new CartOfferServiceImpl())
         .build();
 
    server.start();

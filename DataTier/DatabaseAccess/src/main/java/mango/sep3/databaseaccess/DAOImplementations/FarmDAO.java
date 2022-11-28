@@ -20,7 +20,6 @@ import org.springframework.stereotype.Repository;
 public class FarmDAO implements FarmDaoInterface
 {
 
-  private FileContext context;
   private FarmRepository farmRepository;
 
   /**

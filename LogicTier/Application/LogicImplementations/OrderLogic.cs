@@ -1,3 +1,4 @@
+using System.Collections;
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
 using Shared.Models;
@@ -39,12 +40,58 @@ public class OrderLogic : IOrderLogic
 
         //adding OrderItems to database
         await orderDao.CreateOrderOffersAsync(orderOffers);
-        
+        IEnumerable<OrderOffer> orderOffersList = await orderDao.GetOrdersOffersAsync(username);
+
+        //TODO change to farmName
         //sorting OrderItems into Order
-        
-        
-        
-        
+        var orders = from orderOffer in orderOffersList
+            group orderOffer by orderOffer.Offer.Name
+            into order
+            select new { FarmName = order.Key, OrderOffer = order.ToList() };
+
+        List<Order> ordersToSend = new List<Order>();
+        foreach (var order in orders)
+        {
+            List<OrderOffer> deliveryOffers = new List<OrderOffer>();
+            List<OrderOffer> pickUpOffers = new List<OrderOffer>();
+            foreach (var orderOffer in order.OrderOffer)
+            {
+                if (orderOffer.CollectionOption.Equals("delivery"))
+                {
+                    deliveryOffers.Add(orderOffer);
+                }
+                else if (orderOffer.CollectionOption.Equals("pickUp"))
+                {
+                    pickUpOffers.Add(orderOffer);
+                }
+            }
+
+            if (deliveryOffers.Any())
+            {
+                Order orderToSend = new Order
+                {
+                    OrderOffers = deliveryOffers,
+                    IsDone = false,
+                    FarmName = order.FarmName,
+                    CollectionOption = "delivery"
+                };
+                ordersToSend.Add(orderToSend);
+            }
+
+            if (pickUpOffers.Any())
+            {
+                Order orderToSend = new Order
+                {
+                    OrderOffers = deliveryOffers,
+                    IsDone = false,
+                    FarmName = order.FarmName,
+                    CollectionOption = "pickUp"
+                };
+                ordersToSend.Add(orderToSend);
+            }
+        }
+
+        await orderDao.CreateOrdersAsync(ordersToSend);
     }
 
     public Task<IEnumerable<Order>> GetAllOrders(string username)

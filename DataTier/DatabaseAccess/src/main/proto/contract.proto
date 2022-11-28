@@ -20,8 +20,8 @@ service UserService{
 }
 
 service OrderService{
-  rpc CreateOrderOffers(OrderOffers) returns(Void);
-  rpc CreateOrders(Orders) returns(Void);
+  rpc CreateOrderOffers(OrderOffersToCreate) returns(Void);
+  rpc CreateOrders(OrdersToCreate) returns(Void);
   rpc GetAllOrders(Text) returns(Orders);
   rpc GetOrderOffers(Text) returns(OrderOffers);
 }
@@ -68,15 +68,15 @@ message Offer{
 }
 
 message OfferCreation{
-  string name = 2;
-  int32 quantity = 3;
-  string unit = 4;
-  double price = 5;
-  bool delivery = 6;
-  bool pickUp = 7;
-  bool pickYourOwn = 8;
-  optional string description = 9;
-  string ImagePath = 10;
+  string name = 1;
+  int32 quantity = 2;
+  string unit = 3;
+  double price = 4;
+  bool delivery = 5;
+  bool pickUp = 6;
+  bool pickYourOwn = 7;
+  optional string description = 8;
+  string ImagePath = 9;
 }
 
 message OrderOffer{
@@ -91,6 +91,17 @@ message OrderOffers{
   repeated OrderOffer orderOffers = 1;
 }
 
+message OrderOfferToCreate{
+  Offer offer = 1;
+  int32 quantity = 2;
+  string username = 3;
+  string collectionOption = 4;
+}
+
+message OrderOffersToCreate{
+  repeated OrderOfferToCreate orderOffers = 1;
+}
+
 message Order{
   int32 id = 1;
   repeated OrderOffer orderOffers = 2;
@@ -100,6 +111,16 @@ message Order{
 }
 message Orders{
   repeated Order orders = 1;
+}
+
+message OrderToCreate{
+  repeated OrderOffer orderOffers = 1;
+  bool isDone = 2;
+  string farmName = 3;
+  string collectionOption = 4;
+}
+message OrdersToCreate{
+  repeated OrderToCreate orders = 1;
 }
 
 message OfferItems{

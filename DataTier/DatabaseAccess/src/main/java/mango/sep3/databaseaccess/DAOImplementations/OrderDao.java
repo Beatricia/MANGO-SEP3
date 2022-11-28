@@ -40,6 +40,7 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public Collection<Order> getAllOrders(String username)
   {
+
     Collection<OrderOffer> orderOffers = orderOfferRepository.findAllByUsername(username);
 
     List<Integer> order_ids = new ArrayList<>();

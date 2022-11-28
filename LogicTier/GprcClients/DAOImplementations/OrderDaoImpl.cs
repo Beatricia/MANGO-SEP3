@@ -24,7 +24,7 @@ public class OrderDaoImpl : IOrderDao
     }
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
-        OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
+       OrderOffersToCreate orderOffersGrpc = ConvertOrderOffersToCreateToGrpc(orderOffers);
 
         try
         {
@@ -57,7 +57,7 @@ public class OrderDaoImpl : IOrderDao
 
     public async Task CreateOrdersAsync(IEnumerable<Shared.Models.Order> orders)
     {
-        Orders ordersGrpc = ConvertOrdersToGrpc(orders);
+        OrdersToCreate ordersGrpc = ConvertOrdersToCreateToGrpc(orders);
         try
         {
             await orderService.CreateOrdersAsync(ordersGrpc);
@@ -175,6 +175,29 @@ public class OrderDaoImpl : IOrderDao
         };
         return orderOffersGprc;
     }
+    
+    private OrderOffersToCreate ConvertOrderOffersToCreateToGrpc(List<Shared.Models.OrderOffer> orderOffers)
+    {
+        List<OrderOfferToCreate> orderOffersGrpcList = new List<OrderOfferToCreate>();
+
+        foreach (var orderOffer in orderOffers)
+        {
+            var item = new OrderOfferToCreate()
+            {
+                Quantity = orderOffer.Quantity,
+                Username = orderOffer.Username,
+                CollectionOption = orderOffer.CollectionOption,
+                Offer = ConvertOfferToGrpc(orderOffer.Offer)
+            };
+            orderOffersGrpcList.Add(item);
+        }
+
+        OrderOffersToCreate orderOffersGprc = new OrderOffersToCreate()
+        {
+            OrderOffers = { orderOffersGrpcList }
+        };
+        return orderOffersGprc;
+    }
 
     private global::Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
     {
@@ -194,9 +217,9 @@ public class OrderDaoImpl : IOrderDao
         return offerToReturn;
     }
     
-    private Orders ConvertOrdersToGrpc(IEnumerable<Shared.Models.Order> orders)
+    private OrdersToCreate ConvertOrdersToCreateToGrpc(IEnumerable<Shared.Models.Order> orders)
     {
-        List<global::Order> ordersListGrpc = new List<global::Order>();
+        List<global::OrderToCreate> ordersListGrpc = new List<global::OrderToCreate>();
 
         foreach (var order in orders)
         {
@@ -204,9 +227,8 @@ public class OrderDaoImpl : IOrderDao
             OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
             RepeatedField<OrderOffer> orderOffersList = orderOffersGrpc.OrderOffers_;
 
-            var orderGrpc = new global::Order
+            var orderGrpc = new global::OrderToCreate()
             {
-                Id = order.Id,
                 CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
@@ -215,9 +237,9 @@ public class OrderDaoImpl : IOrderDao
             ordersListGrpc.Add(orderGrpc);
         }
 
-        Orders ordersToReturn = new Orders
+        OrdersToCreate ordersToReturn = new OrdersToCreate()
         {
-            Orders_ = { ordersListGrpc }
+            Orders = { ordersListGrpc }
         };
         return ordersToReturn;
     }

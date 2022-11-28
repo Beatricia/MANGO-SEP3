@@ -25,7 +25,7 @@ public class Offer implements Serializable
     @Column
     private String unit;
 
-    @Column
+    @Column(nullable = true)
     private String description;
 
     @Column

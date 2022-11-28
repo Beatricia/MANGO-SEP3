@@ -4,6 +4,7 @@ import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Collection;
  * A class responsable for taking the data from the database (currently from
  * a textFile) and sending it to the Logic Tier
  */
+@GRpcService
 public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 {
   @Autowired
@@ -49,10 +51,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 
     offerDao.CreateOffer(offer);
 
-    Offer response = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(
-            offer.getQuantity()).setUnit(offer.getUnit())
-        .setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-        .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+    Offer response =  convertOfferToGrpc(offer);
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
@@ -90,12 +89,21 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   {
     mango.sep3.databaseaccess.Shared.Offer offer = offerDao.getOfferById(request.getId());
 
+    Offer response = convertOfferToGrpc(offer);
+
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
+
+  private Offer convertOfferToGrpc(
+      mango.sep3.databaseaccess.Shared.Offer offer)
+  {
     Offer response = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(
             offer.getQuantity()).setUnit(offer.getUnit())
         .setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
         .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
 
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
+
+    return response;
   }
 }

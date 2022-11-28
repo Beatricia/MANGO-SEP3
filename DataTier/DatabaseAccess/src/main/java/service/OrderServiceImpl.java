@@ -6,6 +6,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@GRpcService
 public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 {
   @Autowired private OrderDaoInterface orderDao;
@@ -21,17 +23,29 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
   {
   }
 
-  @Override public void createOrderOffers(OrderOffers request,
+  @Override public void createOrderOffers(OrderOffersToCreate request,
       StreamObserver<Void> responseObserver)
   {
-    //convert the grpc OrderOffers into normal Collection<OrderOffers>
-    Collection<OrderOffer> orderOffers = ConvertOrderOffersFromGrpc(request);
+    //convert the grpc OrderOffersToCreate into normal Collection<OrderOffers>
+    Collection<OrderOffer> orderOffers = ConvertOrderOffersToCreateFromGrpc(request);
 
     orderDao.createOrderOffers(orderOffers);
 
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
 
+  }
+
+  @Override public void createOrders(OrdersToCreate request,
+      StreamObserver<Void> responseObserver)
+  {
+    List<mango.sep3.databaseaccess.Shared.Order> orders = ConvertOrdersToCreateFromGrpc(
+        request.getOrdersList());
+
+    orderDao.createOrders(orders);
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
   }
 
   @Override public void getOrderOffers(Text request,
@@ -53,7 +67,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onCompleted();
   }
 
-  @Override public void createOrders(Orders request,
+
+ /* @Override public void createOrders(Orders request,
       StreamObserver<Void> responseObserver)
   {
     List<mango.sep3.databaseaccess.Shared.Order> orders = ConvertOrdersFromGrpc(
@@ -63,7 +78,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
-  }
+  }*/
 
   @Override public void getAllOrders(Text request,
       StreamObserver<Orders> responseObserver)
@@ -107,8 +122,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     return ordersToReturn;
   }
 
-  private List<mango.sep3.databaseaccess.Shared.Order> ConvertOrdersFromGrpc(
-      List<Order> ordersList)
+  private List<mango.sep3.databaseaccess.Shared.Order> ConvertOrdersToCreateFromGrpc(
+      List<OrderToCreate> ordersList)
   {
     List<mango.sep3.databaseaccess.Shared.Order> listToReturn = new ArrayList<>();
 
@@ -119,7 +134,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
       Set<OrderOffer> orderOffersSet = Sets.newHashSet(orderOffers);
 
       var item = new mango.sep3.databaseaccess.Shared.Order();
-      item.setId(order.getId());
       item.setCollectionOption(order.getCollectionOption());
       item.setDone(order.getIsDone());
       item.setFarmName(order.getFarmName());
@@ -178,9 +192,9 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     return OrderOffers.newBuilder().addAllOrderOffers(orderOfferList).build();
   }
 
-  private Collection<OrderOffer> ConvertOrderOffersFromGrpc(OrderOffers request)
+  private Collection<OrderOffer> ConvertOrderOffersToCreateFromGrpc(OrderOffersToCreate request)
   {
-    List<mango.sep3.databaseaccess.protobuf.OrderOffer> orderOffersList = request.getOrderOffersList();
+    List<mango.sep3.databaseaccess.protobuf.OrderOfferToCreate> orderOffersList = request.getOrderOffersList();
 
     List<OrderOffer> listToReturn = new ArrayList<>();
     for (var orderOffer : orderOffersList)
@@ -188,7 +202,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
       var item = new OrderOffer();
       item.setOffer(convertOfferFromGrpc(orderOffer.getOffer()));
       item.setQuantity(orderOffer.getQuantity());
-      item.setId(orderOffer.getId());
       item.setUsername(orderOffer.getUsername());
       item.setCollectionOption(orderOffer.getCollectionOption());
       listToReturn.add(item);

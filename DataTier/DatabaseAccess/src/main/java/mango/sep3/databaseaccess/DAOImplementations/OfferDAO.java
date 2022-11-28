@@ -1,6 +1,7 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -14,10 +15,10 @@ import java.util.Collection;
 
 @Repository
 public class OfferDAO implements OfferDaoInterface {
+  @Autowired
   private OfferRepository offerRepository;
 
-  public OfferDAO(OfferRepository offerRepository) {
-    this.offerRepository = offerRepository;
+  public OfferDAO() {
   }
 
 

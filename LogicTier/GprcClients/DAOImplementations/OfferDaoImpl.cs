@@ -75,7 +75,8 @@ public class OfferDaoImpl : IOfferDao
         // Returning the list with all the offers
         return list;
     }
-
+    
+    
     public async Task<Shared.Models.Offer> GetOfferByIdAsync(int id)
     {
         Id offerId = new Id

@@ -6,6 +6,7 @@ import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.protobuf.Farm;
 import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;
+import mango.sep3.databaseaccess.protobuf.Text;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,24 +37,32 @@ public class FarmServiceImpl extends FarmServiceGrpc.FarmServiceImplBase
   @Override public void createFarm(Farm request,
       StreamObserver<Farm> responseObserver)
   {
-    Farm farm = Farm.newBuilder()
-        .setName(request.getName())
-        .setPhone(request.getPhone())
-        .setAddress(request.getAddress())
-        .setCity(request.getCity())
-        .setZip(request.getZip())
-        .setFarmStatus(request.getFarmStatus())
-        .setDeliveryDistance(request.getDeliveryDistance())
-         .setIconPath(request.getIconPath())
-        .build();
+    var farm = convertToShared(request);
 
-        farmDAO.CreateFarm(farm);
+    farmDAO.CreateFarm(farm);
 
-        fileContext.Farms().add(farm);
-        fileContext.SaveChanges();
-
-    responseObserver.onNext(farm);
+    responseObserver.onNext(request);
     responseObserver.onCompleted();
   }
 
+  @Override
+  public void getFarmByName(Text request, StreamObserver<Farm> responseObserver) {
+    var farm = farmDAO.getFarmByName(request.getText());
+    var grpcFarm = convertToGrpc(farm);
+
+    responseObserver.onNext(grpcFarm);
+    responseObserver.onCompleted();
+  }
+
+  // convert grpc farm to shared in a method
+  private mango.sep3.databaseaccess.Shared.Farm convertToShared(Farm request) {
+    mango.sep3.databaseaccess.Shared.Farm farm = new mango.sep3.databaseaccess.Shared.Farm();
+    farm.setName(request.getName());
+    return farm;
+  }
+
+  // convert shared farm to grpc in a method
+    private Farm convertToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
+      return Farm.newBuilder().setName(farm.getName()).build();
+    }
 }

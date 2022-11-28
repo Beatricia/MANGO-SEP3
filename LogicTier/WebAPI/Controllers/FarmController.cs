@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Models;
+using WebAPI.Controllers.Base;
 using WebAPI.Utils;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class FarmController : ControllerBase
+public class FarmController : LocallyController
 {
     private readonly IFarmLogic farmLogic;
 

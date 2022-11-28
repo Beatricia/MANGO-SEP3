@@ -24,6 +24,7 @@ public class AuthController : ControllerBase
         this.authLogic = authLogic;
     }
     
+    
     /// <summary>
     /// Logs user to the system
     /// </summary>

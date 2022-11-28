@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
@@ -46,7 +45,7 @@ public class AuthLogic : IAuthLogic
             HashPassword = hashPass,
             Salt = saltString
         };
-
+        
         _ = await authDao.RegisterAsync(authUser);
 
 
@@ -68,6 +67,35 @@ public class AuthLogic : IAuthLogic
             };
             return await userDao.RegisterCustomer(customer);
         }
+    }
+
+    /// <summary>
+    /// Check if user exists, checks if password is correct -> logs user in
+    /// </summary>
+    /// <returns></returns>
+    public async Task<User> LoginAsync(LoginDto dto)
+    {
+        string username = dto.Username;
+        string passwordPlain = dto.Password;
+        
+        //get logged user
+        var authUser = await authDao.GetAuthUserAsync(username);
+
+        // check if user exists
+        if (authUser == null)
+            throw new Exception("User does not exist");
+
+        
+        string saltString = authUser.Salt;
+        string hashPassToCheck = HashPassword(passwordPlain, saltString);
+
+        
+        if (hashPassToCheck != authUser.HashPassword)
+        {
+            throw new Exception("Password does not match");
+        }
+
+        return await authDao.LoginAsync(authUser);
     }
 
     /// <summary>

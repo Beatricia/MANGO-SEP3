@@ -13,4 +13,10 @@ public interface IFarmLogic
     Task<Farm> CreateAsync(FarmCreationDto dto);
 
     Task<Farm> GetFarmByNameAsync(string farmName);
+
+    /// <summary>
+    /// Returns all the available icons.
+    /// </summary>
+    /// <returns></returns>
+    ICollection<FarmIcon> GetAllIcons();
 }

@@ -1,7 +1,5 @@
 package mango.sep3.databaseaccess.DAOInterfaces;
 
-import mango.sep3.databaseaccess.Shared.Customer;
-import mango.sep3.databaseaccess.Shared.Farmer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.Shared.UserAuth;
 
@@ -31,11 +29,27 @@ public interface UserDaoInterface {
     Customer registerCustomer(Customer customer);
 
     /**
+     * Checks for user in the database. If Exists -> Logs the user in
+     * @param userAuth The user to login.
+     * @return The logged-in user.
+     */
+    User loginUser(UserAuth userAuth);
+
+    /**
      * Gets a user by username.
      * @param username The username of the user.
      * @return The user.
      */
     User getUserByUsername(String username);
+
+    /**
+     * Gets authorized user by username.
+     * @param username The username of the authorized user.
+     * @return The authorized user.
+     */
+    UserAuth getUserAuthByUsername(String username);
+
+
 
     /**
      * Gets a customer by username.

@@ -15,13 +15,14 @@ public class FarmDaoImpl : IFarmDao
 
     public async Task<Shared.Models.Farm> CreateAsync(Shared.Models.Farm farm)
     {
-        var toCreate = new Farm()
+        var toCreate = new Farm
         {
             Name = farm.Name,
             Phone = farm.Phone,
             DeliveryDistance = farm.DeliveryDistance,
             FarmStatus = farm.FarmStatus,
             Farmer = ConvertFarmerToGrpc(farm.Farmer)
+            IconPath = farm.FarmIcon.FileName,
         };
 
         await farmServiceClient.CreateFarmAsync(toCreate);

@@ -45,4 +45,22 @@ public class FarmHttpClient : IFarmService
 
         return farm;
     }
+
+    public async Task<ICollection<FarmIcon>> GetAllIconsAsync()
+    {
+        var response = await client.GetAsync("/farm/icons");
+        var content = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        var deserialized = JsonSerializer.Deserialize<ICollection<FarmIcon>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+        
+        return deserialized ?? new List<FarmIcon>(); 
+    }
 }

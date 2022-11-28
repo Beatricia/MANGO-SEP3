@@ -19,9 +19,28 @@ public class AuthHttpClient : IAuthService
     }
     
     /// <inheritdoc/>
-    public Task<LoginResponse> LoginAsync(string username, string password)
+    public async Task<User> LoginAsync(string username, string password)
     {
-        throw new NotImplementedException();
+        LoginDto dto = new LoginDto()
+        {
+            Username = username,
+            Password = password
+        };
+        
+        
+        HttpResponseMessage response = await client.PostAsJsonAsync("/auth/login", dto);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+        
+        var user = await response.Content.ReadFromJsonAsync<User>();
+        if(user == null)
+            throw new Exception("Cannot read user from response");
+        
+        //was returning Login response but isnt User better?
+        return user;
     }
 
     /// <inheritdoc/>

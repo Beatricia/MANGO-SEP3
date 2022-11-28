@@ -3,8 +3,7 @@ package mango.sep3.databaseaccess.DAOImplementations;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
-import mango.sep3.databaseaccess.Repositories.FarmerRepository;
-import mango.sep3.databaseaccess.Shared.Farm;
+import mango.sep3.databaseaccess.protobuf.Farm;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -32,13 +31,12 @@ public class FarmDAO implements FarmDaoInterface
   @Autowired
   public FarmDAO()
   {
+    this.farmRepository = farmRepository;
   }
   @Override public Farm createFarm(Farm farm)
   {
-    System.out.println("Username: " + farm.getFarmer().getUsername());
     var farmer = farmerRepository.findById(farm.getFarmer().getUsername());
     farm.setFarmer(farmer.get());
-    System.out.println("Farmer: " + farmer);
     return farmRepository.saveAndFlush(farm);
   }
 

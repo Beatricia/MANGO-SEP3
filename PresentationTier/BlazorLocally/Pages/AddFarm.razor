@@ -1,11 +1,13 @@
-﻿@page "/farms/add"
+﻿@page "/AddFarm"
 
 @using HttpClient.ClientInterfaces
 @using System.Text.RegularExpressions
+@using BlazorLocally.Utils
 @using global::Shared.DTOs
 @using global::Shared.Models
 @inject IJSRuntime JsRuntime
 @inject IFarmService farmService
+@inject ApiInformation ApiInformation
 
 
 <div class="center add-farm-root">
@@ -24,7 +26,7 @@
             </div>
             <div>
                 <label for="address" class="required">Address</label>
-                <input @bind="street" type="text" name="address" id="address" style="--width-ratio: 1;" required placeholder="Farm street 1">
+                <input @bind="address" type="text" name="address" id="address" style="--width-ratio: 1;" required placeholder="Farm street 1">
             </div>
             <div>
                 <label for="phone" class="required">Phone</label>
@@ -45,10 +47,18 @@
             <div>
                 <div class="image-container" title="Upload an image">
                     <label for="image">
-                        <img src="https://img.freepik.com/free-vector/farm-scene-nature-with-barn_1308-32159.jpg" width="200" height="200">
-                        <div class="upload-button">Upload</div>
+                        <img src="@(selectedIconUrl)" width="200" height="200">
                     </label>
-                    <input id="image" type="file" alt="Submit">
+                    @if (icons is not null)
+                    {
+                        <select @onchange="(eventArgs) => SelectIcon(eventArgs.Value)">
+                            @foreach (var icon in icons)
+                            {
+                                
+                                <option value="@icon.FileName">@icon.IconName</option>
+                            }
+                        </select>
+                    }
                 </div>
                 <div class="submit-container">
                     <input type="button" class="submit-button" value="Submit" @onclick="CreateFarm">
@@ -62,13 +72,51 @@
     private string farmName = string.Empty;
     private string city = string.Empty;
     private string zip = string.Empty;
-    private string street = string.Empty;
+    private string address = string.Empty;
     private string phone = string.Empty;
     private int deliveryDistance = 0;
     private string status = string.Empty;
 
     private string zipClasses = string.Empty;
     private string phoneClasses = string.Empty;
+
+    private ICollection<FarmIcon>? icons;
+    private FarmIcon? selectedIcon;
+    private string? selectedIconUrl = "";
+
+    private void SelectIcon(object? obj)
+    {
+        if (obj is not string icon)
+        {
+            return;
+        }
+        
+        FarmIcon selected = icons.First(i => i.FileName == icon);
+        
+        selectedIcon = selected;
+        selectedIconUrl = selectedIcon.AbsoluteUrl;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var tempIcons = (await farmService.GetAllIconsAsync()).ToList();
+            
+            var defaultIcon = tempIcons.First(icon => icon.FileName == "default.png");
+
+            tempIcons.Remove(defaultIcon);
+            tempIcons.Insert(0, defaultIcon);
+
+            icons = tempIcons;
+            
+            SelectIcon("default.png");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
 
     private async Task CreateFarm()
     {
@@ -97,6 +145,7 @@
             Address = address,
             //TODO get the farmer from the login stuff
             //Farmer = new Farmer()
+            FarmIconFileName = selectedIcon.FileName
         };
         
         await farmService.CreateAsync(farmCreationDto);
@@ -108,7 +157,7 @@
         farmName = farmName.Trim();
         city = city.Trim();
         zip = zip.Trim();
-        street = street.Trim();
+        address = address.Trim();
         phone = phone.Trim();
         status = status.Trim();
 

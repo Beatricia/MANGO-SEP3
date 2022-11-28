@@ -1,4 +1,5 @@
 ﻿using Application.DAOInterfaces;
+using UserAuth = Shared.Models.UserAuth;
 
 namespace GprcClients.DAOImplementations;
 
@@ -17,7 +18,7 @@ public class AuthDaoImpl : IAuthDao
     public async Task<Shared.Models.User> RegisterAsync(Shared.Models.UserAuth user)
     {
         // create grpc UserAuth with username hash and salt
-        var grpcUserAuth = new UserAuth
+        var grpcUserAuth = new global::UserAuth
         {
             Username = user.Username,
             Hash = user.HashPassword,
@@ -29,10 +30,33 @@ public class AuthDaoImpl : IAuthDao
         return ConvertGrpcUserToSharedUser(grpcUser);
     }
 
-    public Task<Shared.Models.UserAuth?> GetAuthUserAsync(string username)
+    public async Task<Shared.Models.User> LoginAsync(Shared.Models.UserAuth user)
     {
-        throw new NotImplementedException();
+        var grpcUserAuth = new global::UserAuth
+        {
+            Username = user.Username,
+            Hash = user.HashPassword,
+            Salt = user.Salt
+        };
+        
+        User grpcUser = await client.LoginUserAsync(grpcUserAuth);
+        
+        return ConvertGrpcUserToSharedUser(grpcUser);
     }
+
+    public async Task<Shared.Models.UserAuth?> GetAuthUserAsync(string username)
+    {
+        // create text object
+        var text = new Text { Text_ = username };
+        
+        try
+        {
+            var userAuth = await client.GetUserAuthByUsernameAsync(text);
+            return ConvertGrpcUserAuthToSharedUserAuth(userAuth);
+        }
+        catch { return null; }
+    }
+    
 
     public async Task<Shared.Models.User?> GetUserAsync(string username)
     {
@@ -62,6 +86,23 @@ public class AuthDaoImpl : IAuthDao
         };
         
         return sharedUser;
+    }
+    
+    /// <summary>
+    /// Converts a grpc User to a shared User
+    /// </summary>
+    /// <param name="grpcUser">the grpc user to convert</param>
+    /// <returns></returns>
+    private Shared.Models.UserAuth ConvertGrpcUserAuthToSharedUserAuth(global::UserAuth grpcUser)
+    {
+        var sharedUserAuth = new Shared.Models.UserAuth()
+        {
+            Username = grpcUser.Username,
+            Salt = grpcUser.Salt,
+            HashPassword = grpcUser.Hash
+        };
+        
+        return sharedUserAuth;
     }
     
 }

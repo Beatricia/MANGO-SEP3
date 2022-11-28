@@ -62,10 +62,18 @@ public class Farm implements Serializable
 
     //TODO add Farmer reference (nut sure if it should be a new Farmer table or just from the User)
 
+
+    @Column(name = "iconpath")
+    private String iconPath;
     //if column in database table is called differently
     // just add @Column('attribute' = "'nameOfTheColumn'")
 
     //at least one empty constructor
+    public Farm(){}
+
+    public Farm(String name){
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -142,4 +150,12 @@ public class Farm implements Serializable
         this.farmer = farmer;
     }
 
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
 }

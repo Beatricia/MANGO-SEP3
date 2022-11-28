@@ -6,11 +6,11 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CartItemController : ControllerBase
+public class CartController : ControllerBase
 {
     private readonly ICartLogic cartLogic;
 
-    public CartItemController(ICartLogic cartLogic)
+    public CartController(ICartLogic cartLogic)
     {
         this.cartLogic = cartLogic;
     }

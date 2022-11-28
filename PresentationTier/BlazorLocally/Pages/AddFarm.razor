@@ -3,6 +3,7 @@
 @using HttpClient.ClientInterfaces
 @using System.Text.RegularExpressions
 @using global::Shared.DTOs
+@using global::Shared.Models
 @inject IJSRuntime JsRuntime
 @inject IFarmService farmService
 
@@ -23,7 +24,7 @@
             </div>
             <div>
                 <label for="address" class="required">Address</label>
-                <input @bind="address" type="text" name="address" id="address" style="--width-ratio: 1;" required placeholder="Farm street 1">
+                <input @bind="street" type="text" name="address" id="address" style="--width-ratio: 1;" required placeholder="Farm street 1">
             </div>
             <div>
                 <label for="phone" class="required">Phone</label>
@@ -61,7 +62,7 @@
     private string farmName = string.Empty;
     private string city = string.Empty;
     private string zip = string.Empty;
-    private string address = string.Empty;
+    private string street = string.Empty;
     private string phone = string.Empty;
     private int deliveryDistance = 0;
     private string status = string.Empty;
@@ -80,15 +81,22 @@
             return;
         }
 
+        var address = new Address
+        {
+            City = city,
+            Street = street,
+            ZIP = zip
+        };
+        
         var farmCreationDto = new FarmCreationDto
         {
             Name = farmName,
-            City = city,
-            ZIP = zip,
-            Address = address,
             Phone = phone,
             DeliveryDistance = deliveryDistance,
             FarmStatus = status,
+            Address = address,
+            //TODO get the farmer from the login stuff
+            //Farmer = new Farmer()
         };
         
         await farmService.CreateAsync(farmCreationDto);
@@ -100,7 +108,7 @@
         farmName = farmName.Trim();
         city = city.Trim();
         zip = zip.Trim();
-        address = address.Trim();
+        street = street.Trim();
         phone = phone.Trim();
         status = status.Trim();
 

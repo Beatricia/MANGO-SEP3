@@ -20,7 +20,7 @@ public class ServerConfig {
         return new UserServiceImpl();
     }
 
-    /*@Bean public OrderServiceImpl getOrderServiceImpl(){
+   /* @Bean public OrderServiceImpl getOrderServiceImpl(){
         return new OrderServiceImpl();
     }*/
 

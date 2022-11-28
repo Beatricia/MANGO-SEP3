@@ -17,11 +17,9 @@ private static final long serialVersionUID = 0L;
   }
   private Farm() {
     name_ = "";
-    phone_ = "";
-    zip_ = "";
-    address_ = "";
     city_ = "";
     farmStatus_ = "";
+    phone_ = "";
   }
 
   @java.lang.Override
@@ -62,38 +60,52 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            mango.sep3.databaseaccess.protobuf.Address.Builder subBuilder = null;
+            if (address_ != null) {
+              subBuilder = address_.toBuilder();
+            }
+            address_ = input.readMessage(mango.sep3.databaseaccess.protobuf.Address.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(address_);
+              address_ = subBuilder.buildPartial();
+            }
 
-            phone_ = s;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            mango.sep3.databaseaccess.protobuf.Farmer.Builder subBuilder = null;
+            if (farmer_ != null) {
+              subBuilder = farmer_.toBuilder();
+            }
+            farmer_ = input.readMessage(mango.sep3.databaseaccess.protobuf.Farmer.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(farmer_);
+              farmer_ = subBuilder.buildPartial();
+            }
 
-            zip_ = s;
             break;
           }
           case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            address_ = s;
-            break;
-          }
-          case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
-
             city_ = s;
             break;
           }
-          case 50: {
+          case 42: {
             java.lang.String s = input.readStringRequireUtf8();
             bitField0_ |= 0x00000001;
             farmStatus_ = s;
             break;
           }
-          case 56: {
+          case 48: {
             bitField0_ |= 0x00000002;
             deliveryDistance_ = input.readInt32();
+            break;
+          }
+          case 58: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            phone_ = s;
             break;
           }
           default: {
@@ -169,124 +181,62 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int PHONE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object phone_;
+  public static final int ADDRESS_FIELD_NUMBER = 2;
+  private mango.sep3.databaseaccess.protobuf.Address address_;
   /**
-   * <code>string phone = 2;</code>
-   * @return The phone.
+   * <code>.Address address = 2;</code>
+   * @return Whether the address field is set.
    */
   @java.lang.Override
-  public java.lang.String getPhone() {
-    java.lang.Object ref = phone_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      phone_ = s;
-      return s;
-    }
+  public boolean hasAddress() {
+    return address_ != null;
   }
   /**
-   * <code>string phone = 2;</code>
-   * @return The bytes for phone.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getPhoneBytes() {
-    java.lang.Object ref = phone_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      phone_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int ZIP_FIELD_NUMBER = 3;
-  private volatile java.lang.Object zip_;
-  /**
-   * <code>string zip = 3;</code>
-   * @return The zip.
-   */
-  @java.lang.Override
-  public java.lang.String getZip() {
-    java.lang.Object ref = zip_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      zip_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string zip = 3;</code>
-   * @return The bytes for zip.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getZipBytes() {
-    java.lang.Object ref = zip_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      zip_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int ADDRESS_FIELD_NUMBER = 4;
-  private volatile java.lang.Object address_;
-  /**
-   * <code>string address = 4;</code>
+   * <code>.Address address = 2;</code>
    * @return The address.
    */
   @java.lang.Override
-  public java.lang.String getAddress() {
-    java.lang.Object ref = address_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      address_ = s;
-      return s;
-    }
+  public mango.sep3.databaseaccess.protobuf.Address getAddress() {
+    return address_ == null ? mango.sep3.databaseaccess.protobuf.Address.getDefaultInstance() : address_;
   }
   /**
-   * <code>string address = 4;</code>
-   * @return The bytes for address.
+   * <code>.Address address = 2;</code>
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getAddressBytes() {
-    java.lang.Object ref = address_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      address_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public mango.sep3.databaseaccess.protobuf.AddressOrBuilder getAddressOrBuilder() {
+    return getAddress();
   }
 
-  public static final int CITY_FIELD_NUMBER = 5;
+  public static final int FARMER_FIELD_NUMBER = 3;
+  private mango.sep3.databaseaccess.protobuf.Farmer farmer_;
+  /**
+   * <code>.Farmer farmer = 3;</code>
+   * @return Whether the farmer field is set.
+   */
+  @java.lang.Override
+  public boolean hasFarmer() {
+    return farmer_ != null;
+  }
+  /**
+   * <code>.Farmer farmer = 3;</code>
+   * @return The farmer.
+   */
+  @java.lang.Override
+  public mango.sep3.databaseaccess.protobuf.Farmer getFarmer() {
+    return farmer_ == null ? mango.sep3.databaseaccess.protobuf.Farmer.getDefaultInstance() : farmer_;
+  }
+  /**
+   * <code>.Farmer farmer = 3;</code>
+   */
+  @java.lang.Override
+  public mango.sep3.databaseaccess.protobuf.FarmerOrBuilder getFarmerOrBuilder() {
+    return getFarmer();
+  }
+
+  public static final int CITY_FIELD_NUMBER = 4;
   private volatile java.lang.Object city_;
   /**
-   * <code>string city = 5;</code>
+   * <code>string city = 4;</code>
    * @return The city.
    */
   @java.lang.Override
@@ -303,7 +253,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string city = 5;</code>
+   * <code>string city = 4;</code>
    * @return The bytes for city.
    */
   @java.lang.Override
@@ -321,10 +271,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int FARMSTATUS_FIELD_NUMBER = 6;
+  public static final int FARMSTATUS_FIELD_NUMBER = 5;
   private volatile java.lang.Object farmStatus_;
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 5;</code>
    * @return Whether the farmStatus field is set.
    */
   @java.lang.Override
@@ -332,7 +282,7 @@ private static final long serialVersionUID = 0L;
     return ((bitField0_ & 0x00000001) != 0);
   }
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 5;</code>
    * @return The farmStatus.
    */
   @java.lang.Override
@@ -349,7 +299,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 5;</code>
    * @return The bytes for farmStatus.
    */
   @java.lang.Override
@@ -367,10 +317,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int DELIVERYDISTANCE_FIELD_NUMBER = 7;
+  public static final int DELIVERYDISTANCE_FIELD_NUMBER = 6;
   private int deliveryDistance_;
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 6;</code>
    * @return Whether the deliveryDistance field is set.
    */
   @java.lang.Override
@@ -378,12 +328,50 @@ private static final long serialVersionUID = 0L;
     return ((bitField0_ & 0x00000002) != 0);
   }
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 6;</code>
    * @return The deliveryDistance.
    */
   @java.lang.Override
   public int getDeliveryDistance() {
     return deliveryDistance_;
+  }
+
+  public static final int PHONE_FIELD_NUMBER = 7;
+  private volatile java.lang.Object phone_;
+  /**
+   * <code>string phone = 7;</code>
+   * @return The phone.
+   */
+  @java.lang.Override
+  public java.lang.String getPhone() {
+    java.lang.Object ref = phone_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      phone_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string phone = 7;</code>
+   * @return The bytes for phone.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getPhoneBytes() {
+    java.lang.Object ref = phone_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      phone_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -403,23 +391,23 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(phone_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, phone_);
+    if (address_ != null) {
+      output.writeMessage(2, getAddress());
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(zip_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, zip_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, address_);
+    if (farmer_ != null) {
+      output.writeMessage(3, getFarmer());
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(city_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, city_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, city_);
     }
     if (((bitField0_ & 0x00000001) != 0)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, farmStatus_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, farmStatus_);
     }
     if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeInt32(7, deliveryDistance_);
+      output.writeInt32(6, deliveryDistance_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(phone_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, phone_);
     }
     unknownFields.writeTo(output);
   }
@@ -433,24 +421,26 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(phone_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, phone_);
+    if (address_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(2, getAddress());
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(zip_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, zip_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, address_);
+    if (farmer_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(3, getFarmer());
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(city_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, city_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, city_);
     }
     if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, farmStatus_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, farmStatus_);
     }
     if (((bitField0_ & 0x00000002) != 0)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(7, deliveryDistance_);
+        .computeInt32Size(6, deliveryDistance_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(phone_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, phone_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -469,12 +459,16 @@ private static final long serialVersionUID = 0L;
 
     if (!getName()
         .equals(other.getName())) return false;
-    if (!getPhone()
-        .equals(other.getPhone())) return false;
-    if (!getZip()
-        .equals(other.getZip())) return false;
-    if (!getAddress()
-        .equals(other.getAddress())) return false;
+    if (hasAddress() != other.hasAddress()) return false;
+    if (hasAddress()) {
+      if (!getAddress()
+          .equals(other.getAddress())) return false;
+    }
+    if (hasFarmer() != other.hasFarmer()) return false;
+    if (hasFarmer()) {
+      if (!getFarmer()
+          .equals(other.getFarmer())) return false;
+    }
     if (!getCity()
         .equals(other.getCity())) return false;
     if (hasFarmStatus() != other.hasFarmStatus()) return false;
@@ -487,6 +481,8 @@ private static final long serialVersionUID = 0L;
       if (getDeliveryDistance()
           != other.getDeliveryDistance()) return false;
     }
+    if (!getPhone()
+        .equals(other.getPhone())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -500,12 +496,14 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + PHONE_FIELD_NUMBER;
-    hash = (53 * hash) + getPhone().hashCode();
-    hash = (37 * hash) + ZIP_FIELD_NUMBER;
-    hash = (53 * hash) + getZip().hashCode();
-    hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
-    hash = (53 * hash) + getAddress().hashCode();
+    if (hasAddress()) {
+      hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+      hash = (53 * hash) + getAddress().hashCode();
+    }
+    if (hasFarmer()) {
+      hash = (37 * hash) + FARMER_FIELD_NUMBER;
+      hash = (53 * hash) + getFarmer().hashCode();
+    }
     hash = (37 * hash) + CITY_FIELD_NUMBER;
     hash = (53 * hash) + getCity().hashCode();
     if (hasFarmStatus()) {
@@ -516,6 +514,8 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + DELIVERYDISTANCE_FIELD_NUMBER;
       hash = (53 * hash) + getDeliveryDistance();
     }
+    hash = (37 * hash) + PHONE_FIELD_NUMBER;
+    hash = (53 * hash) + getPhone().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -651,18 +651,26 @@ private static final long serialVersionUID = 0L;
       super.clear();
       name_ = "";
 
-      phone_ = "";
-
-      zip_ = "";
-
-      address_ = "";
-
+      if (addressBuilder_ == null) {
+        address_ = null;
+      } else {
+        address_ = null;
+        addressBuilder_ = null;
+      }
+      if (farmerBuilder_ == null) {
+        farmer_ = null;
+      } else {
+        farmer_ = null;
+        farmerBuilder_ = null;
+      }
       city_ = "";
 
       farmStatus_ = "";
       bitField0_ = (bitField0_ & ~0x00000001);
       deliveryDistance_ = 0;
       bitField0_ = (bitField0_ & ~0x00000002);
+      phone_ = "";
+
       return this;
     }
 
@@ -692,9 +700,16 @@ private static final long serialVersionUID = 0L;
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.name_ = name_;
-      result.phone_ = phone_;
-      result.zip_ = zip_;
-      result.address_ = address_;
+      if (addressBuilder_ == null) {
+        result.address_ = address_;
+      } else {
+        result.address_ = addressBuilder_.build();
+      }
+      if (farmerBuilder_ == null) {
+        result.farmer_ = farmer_;
+      } else {
+        result.farmer_ = farmerBuilder_.build();
+      }
       result.city_ = city_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         to_bitField0_ |= 0x00000001;
@@ -704,6 +719,7 @@ private static final long serialVersionUID = 0L;
         result.deliveryDistance_ = deliveryDistance_;
         to_bitField0_ |= 0x00000002;
       }
+      result.phone_ = phone_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -757,17 +773,11 @@ private static final long serialVersionUID = 0L;
         name_ = other.name_;
         onChanged();
       }
-      if (!other.getPhone().isEmpty()) {
-        phone_ = other.phone_;
-        onChanged();
+      if (other.hasAddress()) {
+        mergeAddress(other.getAddress());
       }
-      if (!other.getZip().isEmpty()) {
-        zip_ = other.zip_;
-        onChanged();
-      }
-      if (!other.getAddress().isEmpty()) {
-        address_ = other.address_;
-        onChanged();
+      if (other.hasFarmer()) {
+        mergeFarmer(other.getFarmer());
       }
       if (!other.getCity().isEmpty()) {
         city_ = other.city_;
@@ -780,6 +790,10 @@ private static final long serialVersionUID = 0L;
       }
       if (other.hasDeliveryDistance()) {
         setDeliveryDistance(other.getDeliveryDistance());
+      }
+      if (!other.getPhone().isEmpty()) {
+        phone_ = other.phone_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -887,237 +901,247 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object phone_ = "";
+    private mango.sep3.databaseaccess.protobuf.Address address_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        mango.sep3.databaseaccess.protobuf.Address, mango.sep3.databaseaccess.protobuf.Address.Builder, mango.sep3.databaseaccess.protobuf.AddressOrBuilder> addressBuilder_;
     /**
-     * <code>string phone = 2;</code>
-     * @return The phone.
+     * <code>.Address address = 2;</code>
+     * @return Whether the address field is set.
      */
-    public java.lang.String getPhone() {
-      java.lang.Object ref = phone_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        phone_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public boolean hasAddress() {
+      return addressBuilder_ != null || address_ != null;
     }
     /**
-     * <code>string phone = 2;</code>
-     * @return The bytes for phone.
-     */
-    public com.google.protobuf.ByteString
-        getPhoneBytes() {
-      java.lang.Object ref = phone_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        phone_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string phone = 2;</code>
-     * @param value The phone to set.
-     * @return This builder for chaining.
-     */
-    public Builder setPhone(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      phone_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string phone = 2;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearPhone() {
-      
-      phone_ = getDefaultInstance().getPhone();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string phone = 2;</code>
-     * @param value The bytes for phone to set.
-     * @return This builder for chaining.
-     */
-    public Builder setPhoneBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      phone_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object zip_ = "";
-    /**
-     * <code>string zip = 3;</code>
-     * @return The zip.
-     */
-    public java.lang.String getZip() {
-      java.lang.Object ref = zip_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        zip_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string zip = 3;</code>
-     * @return The bytes for zip.
-     */
-    public com.google.protobuf.ByteString
-        getZipBytes() {
-      java.lang.Object ref = zip_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        zip_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string zip = 3;</code>
-     * @param value The zip to set.
-     * @return This builder for chaining.
-     */
-    public Builder setZip(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      zip_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string zip = 3;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearZip() {
-      
-      zip_ = getDefaultInstance().getZip();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string zip = 3;</code>
-     * @param value The bytes for zip to set.
-     * @return This builder for chaining.
-     */
-    public Builder setZipBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      zip_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object address_ = "";
-    /**
-     * <code>string address = 4;</code>
+     * <code>.Address address = 2;</code>
      * @return The address.
      */
-    public java.lang.String getAddress() {
-      java.lang.Object ref = address_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        address_ = s;
-        return s;
+    public mango.sep3.databaseaccess.protobuf.Address getAddress() {
+      if (addressBuilder_ == null) {
+        return address_ == null ? mango.sep3.databaseaccess.protobuf.Address.getDefaultInstance() : address_;
       } else {
-        return (java.lang.String) ref;
+        return addressBuilder_.getMessage();
       }
     }
     /**
-     * <code>string address = 4;</code>
-     * @return The bytes for address.
+     * <code>.Address address = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getAddressBytes() {
-      java.lang.Object ref = address_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        address_ = b;
-        return b;
+    public Builder setAddress(mango.sep3.databaseaccess.protobuf.Address value) {
+      if (addressBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        address_ = value;
+        onChanged();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        addressBuilder_.setMessage(value);
       }
+
+      return this;
     }
     /**
-     * <code>string address = 4;</code>
-     * @param value The address to set.
-     * @return This builder for chaining.
+     * <code>.Address address = 2;</code>
      */
     public Builder setAddress(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      address_ = value;
-      onChanged();
+        mango.sep3.databaseaccess.protobuf.Address.Builder builderForValue) {
+      if (addressBuilder_ == null) {
+        address_ = builderForValue.build();
+        onChanged();
+      } else {
+        addressBuilder_.setMessage(builderForValue.build());
+      }
+
       return this;
     }
     /**
-     * <code>string address = 4;</code>
-     * @return This builder for chaining.
+     * <code>.Address address = 2;</code>
+     */
+    public Builder mergeAddress(mango.sep3.databaseaccess.protobuf.Address value) {
+      if (addressBuilder_ == null) {
+        if (address_ != null) {
+          address_ =
+            mango.sep3.databaseaccess.protobuf.Address.newBuilder(address_).mergeFrom(value).buildPartial();
+        } else {
+          address_ = value;
+        }
+        onChanged();
+      } else {
+        addressBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.Address address = 2;</code>
      */
     public Builder clearAddress() {
-      
-      address_ = getDefaultInstance().getAddress();
-      onChanged();
+      if (addressBuilder_ == null) {
+        address_ = null;
+        onChanged();
+      } else {
+        address_ = null;
+        addressBuilder_ = null;
+      }
+
       return this;
     }
     /**
-     * <code>string address = 4;</code>
-     * @param value The bytes for address to set.
-     * @return This builder for chaining.
+     * <code>.Address address = 2;</code>
      */
-    public Builder setAddressBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+    public mango.sep3.databaseaccess.protobuf.Address.Builder getAddressBuilder() {
       
-      address_ = value;
       onChanged();
+      return getAddressFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.Address address = 2;</code>
+     */
+    public mango.sep3.databaseaccess.protobuf.AddressOrBuilder getAddressOrBuilder() {
+      if (addressBuilder_ != null) {
+        return addressBuilder_.getMessageOrBuilder();
+      } else {
+        return address_ == null ?
+            mango.sep3.databaseaccess.protobuf.Address.getDefaultInstance() : address_;
+      }
+    }
+    /**
+     * <code>.Address address = 2;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        mango.sep3.databaseaccess.protobuf.Address, mango.sep3.databaseaccess.protobuf.Address.Builder, mango.sep3.databaseaccess.protobuf.AddressOrBuilder> 
+        getAddressFieldBuilder() {
+      if (addressBuilder_ == null) {
+        addressBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            mango.sep3.databaseaccess.protobuf.Address, mango.sep3.databaseaccess.protobuf.Address.Builder, mango.sep3.databaseaccess.protobuf.AddressOrBuilder>(
+                getAddress(),
+                getParentForChildren(),
+                isClean());
+        address_ = null;
+      }
+      return addressBuilder_;
+    }
+
+    private mango.sep3.databaseaccess.protobuf.Farmer farmer_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        mango.sep3.databaseaccess.protobuf.Farmer, mango.sep3.databaseaccess.protobuf.Farmer.Builder, mango.sep3.databaseaccess.protobuf.FarmerOrBuilder> farmerBuilder_;
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     * @return Whether the farmer field is set.
+     */
+    public boolean hasFarmer() {
+      return farmerBuilder_ != null || farmer_ != null;
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     * @return The farmer.
+     */
+    public mango.sep3.databaseaccess.protobuf.Farmer getFarmer() {
+      if (farmerBuilder_ == null) {
+        return farmer_ == null ? mango.sep3.databaseaccess.protobuf.Farmer.getDefaultInstance() : farmer_;
+      } else {
+        return farmerBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    public Builder setFarmer(mango.sep3.databaseaccess.protobuf.Farmer value) {
+      if (farmerBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        farmer_ = value;
+        onChanged();
+      } else {
+        farmerBuilder_.setMessage(value);
+      }
+
       return this;
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    public Builder setFarmer(
+        mango.sep3.databaseaccess.protobuf.Farmer.Builder builderForValue) {
+      if (farmerBuilder_ == null) {
+        farmer_ = builderForValue.build();
+        onChanged();
+      } else {
+        farmerBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    public Builder mergeFarmer(mango.sep3.databaseaccess.protobuf.Farmer value) {
+      if (farmerBuilder_ == null) {
+        if (farmer_ != null) {
+          farmer_ =
+            mango.sep3.databaseaccess.protobuf.Farmer.newBuilder(farmer_).mergeFrom(value).buildPartial();
+        } else {
+          farmer_ = value;
+        }
+        onChanged();
+      } else {
+        farmerBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    public Builder clearFarmer() {
+      if (farmerBuilder_ == null) {
+        farmer_ = null;
+        onChanged();
+      } else {
+        farmer_ = null;
+        farmerBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    public mango.sep3.databaseaccess.protobuf.Farmer.Builder getFarmerBuilder() {
+      
+      onChanged();
+      return getFarmerFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    public mango.sep3.databaseaccess.protobuf.FarmerOrBuilder getFarmerOrBuilder() {
+      if (farmerBuilder_ != null) {
+        return farmerBuilder_.getMessageOrBuilder();
+      } else {
+        return farmer_ == null ?
+            mango.sep3.databaseaccess.protobuf.Farmer.getDefaultInstance() : farmer_;
+      }
+    }
+    /**
+     * <code>.Farmer farmer = 3;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        mango.sep3.databaseaccess.protobuf.Farmer, mango.sep3.databaseaccess.protobuf.Farmer.Builder, mango.sep3.databaseaccess.protobuf.FarmerOrBuilder> 
+        getFarmerFieldBuilder() {
+      if (farmerBuilder_ == null) {
+        farmerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            mango.sep3.databaseaccess.protobuf.Farmer, mango.sep3.databaseaccess.protobuf.Farmer.Builder, mango.sep3.databaseaccess.protobuf.FarmerOrBuilder>(
+                getFarmer(),
+                getParentForChildren(),
+                isClean());
+        farmer_ = null;
+      }
+      return farmerBuilder_;
     }
 
     private java.lang.Object city_ = "";
     /**
-     * <code>string city = 5;</code>
+     * <code>string city = 4;</code>
      * @return The city.
      */
     public java.lang.String getCity() {
@@ -1133,7 +1157,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string city = 5;</code>
+     * <code>string city = 4;</code>
      * @return The bytes for city.
      */
     public com.google.protobuf.ByteString
@@ -1150,7 +1174,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string city = 5;</code>
+     * <code>string city = 4;</code>
      * @param value The city to set.
      * @return This builder for chaining.
      */
@@ -1165,7 +1189,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string city = 5;</code>
+     * <code>string city = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearCity() {
@@ -1175,7 +1199,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string city = 5;</code>
+     * <code>string city = 4;</code>
      * @param value The bytes for city to set.
      * @return This builder for chaining.
      */
@@ -1193,14 +1217,14 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object farmStatus_ = "";
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 5;</code>
      * @return Whether the farmStatus field is set.
      */
     public boolean hasFarmStatus() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 5;</code>
      * @return The farmStatus.
      */
     public java.lang.String getFarmStatus() {
@@ -1216,7 +1240,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 5;</code>
      * @return The bytes for farmStatus.
      */
     public com.google.protobuf.ByteString
@@ -1233,7 +1257,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 5;</code>
      * @param value The farmStatus to set.
      * @return This builder for chaining.
      */
@@ -1248,7 +1272,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearFarmStatus() {
@@ -1258,7 +1282,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>optional string farmStatus = 6;</code>
+     * <code>optional string farmStatus = 5;</code>
      * @param value The bytes for farmStatus to set.
      * @return This builder for chaining.
      */
@@ -1276,7 +1300,7 @@ private static final long serialVersionUID = 0L;
 
     private int deliveryDistance_ ;
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 6;</code>
      * @return Whether the deliveryDistance field is set.
      */
     @java.lang.Override
@@ -1284,7 +1308,7 @@ private static final long serialVersionUID = 0L;
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 6;</code>
      * @return The deliveryDistance.
      */
     @java.lang.Override
@@ -1292,7 +1316,7 @@ private static final long serialVersionUID = 0L;
       return deliveryDistance_;
     }
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 6;</code>
      * @param value The deliveryDistance to set.
      * @return This builder for chaining.
      */
@@ -1303,12 +1327,88 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>optional int32 deliveryDistance = 7;</code>
+     * <code>optional int32 deliveryDistance = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearDeliveryDistance() {
       bitField0_ = (bitField0_ & ~0x00000002);
       deliveryDistance_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object phone_ = "";
+    /**
+     * <code>string phone = 7;</code>
+     * @return The phone.
+     */
+    public java.lang.String getPhone() {
+      java.lang.Object ref = phone_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        phone_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string phone = 7;</code>
+     * @return The bytes for phone.
+     */
+    public com.google.protobuf.ByteString
+        getPhoneBytes() {
+      java.lang.Object ref = phone_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        phone_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string phone = 7;</code>
+     * @param value The phone to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPhone(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      phone_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string phone = 7;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPhone() {
+      
+      phone_ = getDefaultInstance().getPhone();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string phone = 7;</code>
+     * @param value The bytes for phone to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPhoneBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      phone_ = value;
       onChanged();
       return this;
     }

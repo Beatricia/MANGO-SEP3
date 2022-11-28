@@ -8,11 +8,13 @@ public class CartLogic : ICartLogic
 {
     private ICartDao cartDao;
     private IAuthDao authDao;
+    private IOfferDao offerDao;
 
-    public CartLogic(ICartDao cartDao, IAuthDao authDao)
+    public CartLogic(ICartDao cartDao, IAuthDao authDao, IOfferDao offerDao)
     {
         this.cartDao = cartDao;
         this.authDao = authDao;
+        this.offerDao = offerDao;
     } 
         
     public async Task AddToCartAsync(CartOfferDto dto)
@@ -28,13 +30,13 @@ public class CartLogic : ICartLogic
             throw new Exception("The quantity has to be smaller than 250");
         }
 
-      /*  if (!dto.CollectOption.ToLower().Equals("Delivery".ToLower()) ||
-            !dto.CollectOption.ToLower().Equals("Pick Up".ToLower()) ||
-            !dto.CollectOption.ToLower().Equals("Pick Your Own".ToLower()))
-        {
-            throw new Exception("Invalid collection option for the cart offer");
-        }
-        */
+        /*  if (!dto.CollectOption.ToLower().Equals("Delivery".ToLower()) ||
+              !dto.CollectOption.ToLower().Equals("Pick Up".ToLower()) ||
+              !dto.CollectOption.ToLower().Equals("Pick Your Own".ToLower()))
+          {
+              throw new Exception("Invalid collection option for the cart offer");
+          }
+          */
 
         await cartDao.AddToCartAsync(dto);
     }

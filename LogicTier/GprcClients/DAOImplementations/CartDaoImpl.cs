@@ -1,15 +1,18 @@
 ﻿using Application.DAOInterfaces;
 using Shared.Models;
+using Offer = Shared.Models.Offer;
 
 namespace GprcClients.DAOImplementations;
 
 public class CartDaoImpl : ICartDao
 {
     private CartOfferService.CartOfferServiceClient cartOfferServiceClient;
+    private OfferService.OfferServiceClient offerServiceClient;
 
-    public CartDaoImpl(CartOfferService.CartOfferServiceClient cartOfferServiceClient )
+    public CartDaoImpl(CartOfferService.CartOfferServiceClient cartOfferServiceClient, OfferService.OfferServiceClient offerServiceClient )
     {
         this.cartOfferServiceClient = cartOfferServiceClient;
+        this.offerServiceClient = offerServiceClient;
     }
     
     public async Task AddToCartAsync(CartOfferDto dto)
@@ -38,6 +41,8 @@ public class CartDaoImpl : ICartDao
         // Getting the cartOffers from the database as CartOffers class from the buffer
         // the param from the GetAll ... is a proto 
         CartOffers cartOffers = await cartOfferServiceClient.GetAllCartOffersAsync(user);
+        // Getting the offers from the database as an OfferItem class from the buffer
+        OfferItems offersBuff = await offerServiceClient.GetOffersAsync(new Void());
 
         ICollection<Shared.Models.CartOffer> list = new List<Shared.Models.CartOffer>();
 
@@ -45,11 +50,24 @@ public class CartDaoImpl : ICartDao
         {
             if (cartOffer is null)
                 continue;
+            
+            Shared.Models.Offer off = new Shared.Models.Offer();
+            foreach (var offer in offersBuff.Offers)
+            {
+                if (offer.Id == cartOffer.OfferId)
+                {
+                    off.Id = offer.Id;
+                    off.Delivery = offer.Delivery;
+                    off.Name = offer.Name;
+                    off.Price = offer.Price;
+                }
+            }
+            
             //Creating a new instance of CartOffer from the Model
-            Shared.Models.CartOffer cartOfferToSend = new Shared.Models.CartOffer
+            Shared.Models.CartOffer cartOfferToSend = new Shared.Models.CartOffer()
             {
                 Id = cartOffer.Id,
-                OfferId = cartOffer.OfferId,
+                Offer = off,
                 Quantity = cartOffer.Quantity,
                 UserName = cartOffer.Username,
                 CollectionOption = cartOffer.CollectionOption

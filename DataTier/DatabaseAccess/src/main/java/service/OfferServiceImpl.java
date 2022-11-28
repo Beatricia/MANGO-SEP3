@@ -32,6 +32,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
    * @param request  the Offer object send from the Logic Tier
    * @param responseObserver the object returned to the Logic Tier
    */
+
   @Override public void createOffer(OfferCreation request,
       StreamObserver<Offer> responseObserver)
   {
@@ -56,6 +57,8 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
+
+
 
 
   /**

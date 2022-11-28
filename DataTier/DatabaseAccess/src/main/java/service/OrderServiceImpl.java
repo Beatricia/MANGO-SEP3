@@ -6,7 +6,9 @@ import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +24,11 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
   {
   }
 
+  /**
+   * Creates an order in the database
+   * @param request
+   * @param responseObserver
+   */
   @Override public void createOrderOffers(OrderOffers request,
       StreamObserver<Void> responseObserver)
   {
@@ -34,7 +41,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onCompleted();
 
   }
-
   @Override public void getOrderOffers(Text request,
       StreamObserver<OrderOffers> responseObserver)
   {

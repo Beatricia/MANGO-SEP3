@@ -52,7 +52,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase =  offerDao.CreateOffer(offer);
 
-    Offer response =  convertOfferToGrpc(offer);
+    Offer response =  convertOfferToGrpc(offerFromDatabase);
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
@@ -90,7 +90,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   @Override public void getOfferById(Id request,
       StreamObserver<Offer> responseObserver)
   {
-    mango.sep3.databaseaccess.Shared.Offer offer = offerDao.getOfferById(request.getId());
+    mango.sep3.databaseaccess.Shared.Offer offerFromDatabase = offerDao.getOfferById(request.getId());
 
     Offer response = Offer.newBuilder().setId(offerFromDatabase.getId()).setName(offerFromDatabase.getName()).setQuantity(
             offerFromDatabase.getQuantity()).setUnit(offerFromDatabase.getUnit())
@@ -98,6 +98,17 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
         .setPickYourOwn(offerFromDatabase.isPickyourOwn()).setDescription(offerFromDatabase.getDescription()).setImagePath(offerFromDatabase.getImgPath()).build();
 
 
-    return response;
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
   }
+
+
+  // create method to convert offer to grpc
+    private Offer convertOfferToGrpc(mango.sep3.databaseaccess.Shared.Offer offer)
+    {
+        Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
+            .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
+            .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+        return offerToSend;
+    }
 }

@@ -43,11 +43,11 @@ public class Offer implements Serializable
     @Column(nullable = true)
     private boolean pickyourOwn;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "farmId", nullable = false)
     private Farm farm;
 
-    @OneToMany(mappedBy="offer")
+    @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<OrderOffer> orderOffers;
 
     public String getUnit()

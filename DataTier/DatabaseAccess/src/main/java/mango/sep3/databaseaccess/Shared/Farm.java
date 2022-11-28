@@ -25,15 +25,15 @@ public class Farm implements Serializable
     @Column(name = "deliveryDistance")
     private int deliveryDistance;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "farm")
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Offer> offers;
 
-    @ManyToOne
-    @JoinColumn(name="farmer", nullable=true)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="farmer", nullable=true, referencedColumnName = "username")
     private Farmer farmer;
 
     public Farm()
@@ -47,7 +47,7 @@ public class Farm implements Serializable
         this.description = description;
         this.deliveryDistance = deliveryDistance;
         this.address = address;
-        this.farmer = farmer;
+        //this.farmer = farmer;
     }
     public Farm(String name, String phone, String description,
         int deliveryDistance, Address address, Set<Offer> offers)

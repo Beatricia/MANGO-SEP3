@@ -10,5 +10,5 @@ public class FarmCreationDto
     public int DeliveryDistance { get; set; }
     public string? FarmStatus { get; set; }
 
-    public Farmer Farmer { get; set; }
+    public string FarmerUsername { get; set; }
 }

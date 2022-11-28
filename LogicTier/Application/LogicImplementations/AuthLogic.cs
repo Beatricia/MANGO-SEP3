@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography;
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
@@ -11,10 +12,12 @@ public class AuthLogic : IAuthLogic
 {
     
     private readonly IAuthDao authDao;
+    private readonly IUserDao userDao;
     
-    public AuthLogic(IAuthDao dao)
+    public AuthLogic(IAuthDao dao, IUserDao userDao)
     {
         authDao = dao;
+        this.userDao = userDao;
     }
     
     
@@ -44,7 +47,27 @@ public class AuthLogic : IAuthLogic
             Salt = saltString
         };
 
-        return await authDao.RegisterAsync(authUser);
+        _ = await authDao.RegisterAsync(authUser);
+
+
+        if (dto.IsFarmer)
+        {
+            Farmer farmer = new Farmer
+            {
+                Username = dto.Username,
+                LastName = "",
+                FirstName = "",
+            };
+            return await userDao.RegisterFarmer(farmer);
+        }
+        else
+        {
+            Customer customer = new Customer()
+            {
+                Username = dto.Username,
+            };
+            return await userDao.RegisterCustomer(customer);
+        }
     }
 
     /// <summary>

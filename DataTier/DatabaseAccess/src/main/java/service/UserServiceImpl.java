@@ -49,8 +49,26 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void registerCustomer(Customer request, StreamObserver<Customer> responseObserver) {
+        var customer = convertToShared(request);
+        customer = userDao.registerCustomer(customer);
+
+        responseObserver.onNext(convertToGrpc(customer));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void registerFarmer(Farmer request, StreamObserver<Farmer> responseObserver) {
+        var farmer = convertToShared(request);
+        farmer = userDao.registerFarmer(farmer);
+
+        responseObserver.onNext(convertToGrpc(farmer));
+        responseObserver.onCompleted();
+    }
+
     @Override public void getCustomer(Text request,
-        StreamObserver<Customer> responseObserver)
+                                      StreamObserver<Customer> responseObserver)
     {
         mango.sep3.databaseaccess.Shared.Customer customer = userDao.getCustomer(request.getText());
 
@@ -88,5 +106,44 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
             .setLastname(customer.getLastName())
             .setAddress(address)
             .build();
+    }
+
+    // convert from shared to grpc farmer
+    private Farmer convertToGrpc(mango.sep3.databaseaccess.Shared.Farmer farmer)
+    {
+        return Farmer.newBuilder()
+            .setUsername(farmer.getUsername())
+            .setFirstname(farmer.getFirstName())
+            .setLastname(farmer.getLastName())
+            .build();
+    }
+
+
+    private mango.sep3.databaseaccess.Shared.Farmer convertToShared(Farmer farmer)
+    {
+        mango.sep3.databaseaccess.Shared.Farmer sharedFarmer = new mango.sep3.databaseaccess.Shared.Farmer();
+        sharedFarmer.setUsername(farmer.getUsername());
+        sharedFarmer.setFirstName(farmer.getFirstname());
+        sharedFarmer.setLastName(farmer.getLastname());
+
+        return sharedFarmer;
+    }
+
+    // convert from grpc to shared customer
+    private mango.sep3.databaseaccess.Shared.Customer convertToShared(Customer customer)
+    {
+        mango.sep3.databaseaccess.Shared.Customer sharedCustomer = new mango.sep3.databaseaccess.Shared.Customer();
+        sharedCustomer.setUsername(customer.getUsername());
+        sharedCustomer.setFirstName(customer.getFirstname());
+        sharedCustomer.setLastName(customer.getLastname());
+
+        mango.sep3.databaseaccess.Shared.Address address = new mango.sep3.databaseaccess.Shared.Address();
+        address.setCity(customer.getAddress().getCity());
+        address.setStreet(customer.getAddress().getStreet());
+        address.setZip(customer.getAddress().getZip());
+
+        sharedCustomer.setAddress(address);
+
+        return sharedCustomer;
     }
 }

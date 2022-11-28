@@ -3,6 +3,7 @@ package service;
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOImplementations.FarmDAO;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.Shared.Address;
@@ -19,6 +20,7 @@ import java.util.Set;
     extends FarmServiceGrpc.FarmServiceImplBase
 {
   @Autowired private FarmDaoInterface farmDAO;
+  @Autowired private UserDaoInterface userDao;
 
   public FarmServiceImpl()
   {
@@ -43,6 +45,11 @@ import java.util.Set;
         request.getDeliveryDistance(),
         convertAddressFromGrpc(request.getAddress()),
         convertFarmerFromGrpc(request.getFarmer()));
+
+    // get the farmer from the database by username
+    mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getFarmer().getUsername());
+    farm.setFarmer(farmer);
+
 
     farmDAO.createFarm(farm);
     Void response = Void.newBuilder().build();
@@ -77,7 +84,7 @@ import java.util.Set;
         .setPhone(farm.getPhone()).setFarmStatus(farm.getDescription())
         .setDeliveryDistance(farm.getDeliveryDistance())
         .setAddress(convertAddressToGrpc(farm.getAddress()))
-        //.setFarmer(convertFarmerToGrpc(farm.getFarmer())))
+        .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
         .build();
 
     responseObserver.onNext(farmToSend);

@@ -32,7 +32,12 @@ public class FarmLogic : IFarmLogic
             DeliveryDistance = dto.DeliveryDistance,
             FarmStatus = dto.FarmStatus,
             Address = dto.Address,
-            Farmer = dto.Farmer
+            Farmer = new Farmer()
+            {
+                Username = dto.FarmerUsername,
+                FirstName = "",
+                LastName = "",
+            }
         };
 
         await farmDao.CreateAsync(farmToSend);

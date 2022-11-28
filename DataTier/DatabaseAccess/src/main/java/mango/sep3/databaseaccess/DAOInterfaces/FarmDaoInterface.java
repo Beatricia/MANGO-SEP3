@@ -4,6 +4,6 @@ import mango.sep3.databaseaccess.Shared.Farm;
 
 public interface FarmDaoInterface
 {
-  void createFarm(Farm farm);
+  Farm createFarm(Farm farm);
   Farm getFarmByName(String farmName);
 }

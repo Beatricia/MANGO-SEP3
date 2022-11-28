@@ -17,9 +17,8 @@ public class Farmer
   @Column(name = "lastname")
   private String lastName;
 
-  @OneToMany(mappedBy="farmer")
+  @OneToMany(mappedBy = "farmer")
   private Set<Farm> farms;
-
 
   public Farmer(){}
 

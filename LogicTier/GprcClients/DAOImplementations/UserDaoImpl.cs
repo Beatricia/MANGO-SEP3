@@ -1,7 +1,4 @@
 using Application.DAOInterfaces;
-using Shared.Models;
-using Address = Shared.Models.Address;
-using Customer = Shared.Models.Customer;
 
 namespace GprcClients.DAOImplementations;
 
@@ -29,10 +26,56 @@ public class UserDaoImpl : IUserDao
             return null;
         }
     }
+    
+    public async Task<Shared.Models.Customer> RegisterCustomer(Shared.Models.Customer customer)
+    {
+        try
+        {
+            global::Customer grpcCustomer = ConvertToGrpc(customer);
+            grpcCustomer = await client.RegisterCustomerAsync(grpcCustomer);
+            return ConvertFromGrpc(grpcCustomer);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    
+    // register farmer
+    public async Task<Shared.Models.Farmer> RegisterFarmer(Shared.Models.Farmer farmer)
+    {
+        try
+        {
+            global::Farmer grpcFarmer = ConvertToGrpc(farmer);
+            grpcFarmer = await client.RegisterFarmerAsync(grpcFarmer);
+            return ConvertFromGrpc(grpcFarmer);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private global::Customer ConvertToGrpc(Shared.Models.Customer customer)
+    {
+        return new global::Customer
+        {
+            Username = customer.Username,
+            Firstname = customer.FirstName,
+            Lastname = customer.LastName,
+            Phone = customer.Phone,
+            Address = new global::Address
+            {
+                Street = customer.Address.Street,
+                City = customer.Address.City,
+                Zip = customer.Address.ZIP
+            }
+        };
+    }
 
     private Shared.Models.Customer ConvertFromGrpc(global::Customer customer)
     {
-        Shared.Models.Address address = convertAddressFromGrpc(customer.Address);
+        Shared.Models.Address address = convertFromGrpc(customer.Address);
         var customerToReturn = new Shared.Models.Customer
         {
             Username = customer.Username,
@@ -44,7 +87,7 @@ public class UserDaoImpl : IUserDao
         return customerToReturn;
     }
 
-    private Shared.Models.Address convertAddressFromGrpc(global::Address customerAddress)
+    private Shared.Models.Address convertFromGrpc(global::Address customerAddress)
     {
         var address = new Shared.Models.Address
         {
@@ -53,5 +96,27 @@ public class UserDaoImpl : IUserDao
             ZIP = customerAddress.Zip
         };
         return address;
+    }
+    
+    
+    private global::Farmer ConvertToGrpc(Shared.Models.Farmer farmer)
+    {
+        return new global::Farmer
+        {
+            Username = farmer.Username,
+            Firstname = farmer.FirstName,
+            Lastname = farmer.LastName,
+        };
+    }
+    
+    private Shared.Models.Farmer ConvertFromGrpc(global::Farmer farmer)
+    {
+        var farmerToReturn = new Shared.Models.Farmer
+        {
+            Username = farmer.Username,
+            FirstName = farmer.Firstname,
+            LastName = farmer.Lastname,
+        };
+        return farmerToReturn;
     }
 }

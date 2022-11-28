@@ -19,28 +19,31 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FarmDAO implements FarmDaoInterface
 {
-
-  private FileContext context;
+  @Autowired
   private FarmRepository farmRepository;
+  @Autowired
+  private FarmerRepository farmerRepository;
 
-
-  //Since we are not using a DB yet we don't have to use this class yet
   /**
    *
    * @param
    */
   @Autowired
-  public FarmDAO(FarmRepository farmRepository)
+  public FarmDAO()
   {
     this.farmRepository = farmRepository;
   }
-  @Override public void CreateFarm(Farm farm)
+  @Override public Farm createFarm(Farm farm)
   {
-    farmRepository.save(farm);
+    var farmer = farmerRepository.findById(farm.getFarmer().getUsername());
+    farm.setFarmer(farmer.get());
+    return farmRepository.saveAndFlush(farm);
   }
 
-  @Override
-  public Farm getFarmByName(String name) {
-    return farmRepository.getFarmByName(name);
+  @Override public Farm getFarmByName(String farmName)
+  {
+    Farm farm = farmRepository.findByName(farmName);
+    return farm;
+    farmRepository.save(farm);
   }
 }

@@ -9,4 +9,5 @@ public interface OfferDaoInterface
 {
   Offer CreateOffer(Offer offer);
   Collection<Offer> GetOffer();
+  Offer getOfferById(int id);
 }

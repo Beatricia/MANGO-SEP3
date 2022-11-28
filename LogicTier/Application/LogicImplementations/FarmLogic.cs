@@ -40,11 +40,12 @@ public class FarmLogic : IFarmLogic
             Phone = dto.Phone,
             DeliveryDistance = dto.DeliveryDistance,
             FarmStatus = dto.FarmStatus,
-            Address = new Address
+            Address = dto.Address,
+            Farmer = new Farmer()
             {
-                City = dto.City,
-                ZIP = dto.ZIP,
-                Street = dto.Address
+                Username = dto.FarmerUsername,
+                FirstName = "",
+                LastName = "",
             },
             FarmIcon = icon
         };
@@ -52,6 +53,11 @@ public class FarmLogic : IFarmLogic
         await farmDao.CreateAsync(farmToSend);
         
         return farmToSend;
+    }
+
+    public async Task<Farm> GetFarmByNameAsync(string farmName)
+    {
+        return await farmDao.GetFarmByNameAsync(farmName);
     }
 
     /// <inheritdoc/>

@@ -28,6 +28,24 @@ public class FarmHttpClient : IFarmService
         }
     }
 
+    public async Task<Farm> GetFarmByNameAsync(string farmName)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/farm?farmName={farmName}");
+        string content = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+        
+        Farm farm = JsonSerializer.Deserialize<Farm>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+
+        return farm;
+    }
+
     public async Task<ICollection<FarmIcon>> GetAllIconsAsync()
     {
         var response = await client.GetAsync("/farm/icons");

@@ -1,0 +1,156 @@
+﻿@page "/FarmerOrderView"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@inject IOrderService orderService
+@inject IUserService userService
+
+<AuthorizeView>
+    <div class="title">
+        <h1>Orders</h1>
+    </div>
+    @if (orders == null)
+    {
+        <span>Loading..</span>
+    }
+    else if (orders.Any())
+    {
+        @if (deliveryOrders.Any())
+        {
+            <div class="orders">
+                <label>Delivery</label>
+                <div class="ordersTable">
+                    @foreach (var order in pickUpOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="customerNameCell">@order.OrderOffers.First().Username</div>
+                            <div class="cityCell">@GetCustomer(order.OrderOffers.First().Username).Address?.City</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                            <Table class="detailTable">
+                            <th class="AddressRow">
+                                @GetCustomer(order.OrderOffers.First().Username).Address?.ToString()
+                            </th>
+                            @foreach (var item in order.OrderOffers)
+                            {
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
+                            }
+                        </Table>
+                        }
+                </div>
+            </div>
+        }
+        @if (pickUpOrders.Any())
+        {
+            <div class="orders">
+                <label>Pick up</label>
+                <div class="ordersTable">
+                    @foreach (var order in deliveryOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="nameCell">@GetCustomer(order.OrderOffers.First().Username)</div>
+                            <div class="phoneCell">@order.FarmName</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                        <Table class="detailTable">
+                            <th></th>
+                            @foreach (var item in order.OrderOffers)
+                            {
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
+                            }
+                        </Table>
+                    }
+                </div>
+            </div>
+        }
+    }
+</AuthorizeView>
+
+
+
+@code {
+    private IEnumerable<Order>? orders;
+    private List<Order> deliveryOrders = new List<Order>();
+    private List<Order> pickUpOrders = new List<Order>();
+    private string msg = "";
+    private string username;
+    
+    protected override async Task OnInitializedAsync()
+    {
+    //var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+    //var principal = authstate.User;
+    //username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
+
+        username = "Agata";
+        try
+        {
+            orders = await orderService.GetAllOrdersAsync(username);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+
+        foreach (var order in orders)
+        {
+            if (order.CollectionOption.Equals("Delivery"))
+            {
+                deliveryOrders.Add(order);
+            }
+            else if(order.CollectionOption.Equals("PickUp"))
+            {
+                pickUpOrders.Add(order);
+            }
+        }
+    }
+
+    private Customer GetCustomer(string username)
+    {
+        return userService.GetCustomer(username).Result;
+    }
+    
+    private Farm GetFarmByName(string farmName)
+    {
+    //TODO implement GetFarmByName
+        Address address = new Address
+        {
+            City = "Horsens",
+            Street = "Nygade",
+            ZIP = "8700",
+        };
+        Farm farm = new Farm
+        {
+            Address = address,
+            DeliveryDistance = 15,
+            Name = "HappyFarm",
+            Phone = "+4582785463"
+        };
+
+        return farm;
+    }
+
+    private double TotalPrice(List<OrderOffer> items)
+    {
+        double totalPrice = 0;
+        for (int i = 0; i < items.Count; i++)
+        {
+            totalPrice += items[i].Quantity * items[i].Offer.Price;
+        }
+
+        return totalPrice;
+    }
+
+
+}

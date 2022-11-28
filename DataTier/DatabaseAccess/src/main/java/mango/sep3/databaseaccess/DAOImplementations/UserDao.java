@@ -1,8 +1,12 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
+import mango.sep3.databaseaccess.Repositories.CustomerRepository;
+import mango.sep3.databaseaccess.Repositories.FarmerRepository;
 import mango.sep3.databaseaccess.Repositories.UserAuthRepository;
 import mango.sep3.databaseaccess.Repositories.UserRepository;
+import mango.sep3.databaseaccess.Shared.Customer;
+import mango.sep3.databaseaccess.Shared.Farmer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.Shared.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,12 @@ public class UserDao implements UserDaoInterface {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private FarmerRepository farmerRepository;
 
     public UserDao()
     { }
@@ -38,6 +48,16 @@ public class UserDao implements UserDaoInterface {
     }
 
     @Override
+    public Farmer registerFarmer(Farmer farmer) {
+        return farmerRepository.saveAndFlush(farmer);
+    }
+
+    @Override
+    public Customer registerCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
+    @Override
     public User loginUser(UserAuth userAuth) {
         return userRepository.findById(userAuth.getUsername()).orElse(null);
     }
@@ -53,4 +73,14 @@ public class UserDao implements UserDaoInterface {
     }
 
 
+
+    @Override public Customer getCustomer(String username)
+    {
+        return customerRepository.findById(username).orElse(null);
+    }
+
+    @Override
+    public Farmer getFarmer(String username) {
+        return farmerRepository.getReferenceById(username);
+    }
 }

@@ -1,4 +1,6 @@
-﻿using Application.DAOInterfaces;
+using Application.DAOInterfaces;
+using Address = Shared.Models.Address;
+using Farmer = Shared.Models.Farmer;
 
 namespace GprcClients.DAOImplementations;
 
@@ -17,18 +19,68 @@ public class FarmDaoImpl : IFarmDao
         {
             Name = farm.Name,
             Phone = farm.Phone,
-            Zip = farm.Address.ZIP,
-            Address = farm.Address.Street,
-            City = farm.Address.City,
             DeliveryDistance = farm.DeliveryDistance,
             FarmStatus = farm.FarmStatus,
+            Farmer = ConvertFarmerToGrpc(farm.Farmer)
             IconPath = farm.FarmIcon.FileName,
         };
 
-        _ = await farmServiceClient.CreateFarmAsync(toCreate);
+        await farmServiceClient.CreateFarmAsync(toCreate);
         
         return farm;
     }
+    
+    public async Task<Shared.Models.Farm> GetFarmByNameAsync(string farmName)
+    {
+        var name = new Text
+        {
+            Text_ = farmName
+        };
+
+        Farm farmGrpc = await farmServiceClient.GetFarmAsync(name);
+        global::Address addressGrpc = farmGrpc.Address;
+        
+        
+        Shared.Models.Address address = new Shared.Models.Address
+        {
+            City = addressGrpc.City,
+            Street = addressGrpc.Street,
+            ZIP = addressGrpc.Zip
+        };
+
+        Shared.Models.Farm farm = new Shared.Models.Farm
+        {
+            Address = address,
+            DeliveryDistance = farmGrpc.DeliveryDistance,
+            FarmStatus = farmGrpc.FarmStatus,
+            Name = farmGrpc.Name,
+            Phone = farmGrpc.Phone,
+            Farmer = ConvertFarmerFromGrpc(farmGrpc.Farmer)
+        };
+
+        return farm;
+    }
+
+    private Shared.Models.Farmer ConvertFarmerFromGrpc(global::Farmer farmGrpcFarmer)
+    {
+        var farmer = new Shared.Models.Farmer
+        {
+            FirstName = farmGrpcFarmer.Firstname,
+            LastName = farmGrpcFarmer.Lastname,
+            Username = farmGrpcFarmer.Username
+        };
+        return farmer;
+    }
+    private global::Farmer ConvertFarmerToGrpc(Shared.Models.Farmer farmFarmer)
+    {
+        var farmer = new global::Farmer
+        {
+            Firstname = farmFarmer.FirstName,
+            Lastname = farmFarmer.LastName,
+            Username = farmFarmer.Username
+        };
+        return farmer;
+     }
 
     public async Task<Shared.Models.Farm?> GetByName(string name)
     {

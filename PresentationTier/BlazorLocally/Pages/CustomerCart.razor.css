@@ -1,0 +1,28 @@
+﻿.removeAllBtn{
+    /*border-radius: 20px;*/
+    float: right;
+    font-size: 12px;
+    background-color: white;
+    border-style: solid;
+    color: #202020;
+    cursor: pointer;
+}
+
+.greeting{
+    font-size: 20px;
+    text-align: center;
+}
+tr{
+    color: darkgray;
+}
+.totalPrice{
+    text-decoration: solid;
+}
+.orderBtn{
+    float:right;
+    font-size: 16px;
+    background-color: black;
+    color:white;
+    cursor:pointer;
+    border-style: solid;
+}

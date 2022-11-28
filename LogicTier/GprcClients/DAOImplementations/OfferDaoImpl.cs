@@ -1,4 +1,5 @@
-﻿using Application.DAOInterfaces;
+using Application.DAOInterfaces;
+using Offer = Shared.Models.Offer;
 using Shared.Models;
 
 namespace GprcClients.DAOImplementations;
@@ -22,6 +23,21 @@ public class OfferDaoImpl : IOfferDao
     
     public async Task<Shared.Models.Offer> CreateAsync(Shared.Models.Offer offer)
     {
+        var offerToCreate = new OfferCreation
+        {
+            Name = offer.Name,
+            Quantity = offer.Quantity,
+            Unit = offer.Unit,
+            Price = offer.Price,
+            Delivery = offer.Delivery,
+            PickUp = offer.PickUp,
+            PickYourOwn = offer.PickYourOwn,
+            Description = offer.Description,
+            ImagePath = offer.ImagePath
+        };
+        
+         global::Offer response = await offerService.CreateOfferAsync(offerToCreate);
+         
         var offerToCreate = ConvertOfferToGrpc(offer);
         
         var returnedOffer = await offerService.CreateOfferAsync(offerToCreate);
@@ -56,6 +72,33 @@ public class OfferDaoImpl : IOfferDao
     }
     
     
+    public async Task<Shared.Models.Offer> GetOfferByIdAsync(int id)
+    {
+        Id offerId = new Id
+        {
+            Id_ = id
+        };
+
+        global::Offer offer = await offerService.GetOfferByIdAsync(offerId);
+
+        Shared.Models.Offer offerToSend = new Shared.Models.Offer
+        {
+            Id = offer.Id,
+            Name = offer.Name,
+            Quantity = offer.Quantity,
+            Unit = offer.Unit,
+            Price = offer.Price,
+            Delivery = offer.Delivery,
+            PickUp = offer.PickUp,
+            PickYourOwn = offer.PickYourOwn,
+            Description = offer.Description,
+            ImagePath = offer.ImagePath,
+        };
+        return offerToSend;
+    
+    }
+    
+    
     // convert from grpc object to shared offe
     private Shared.Models.Offer ConvertOfferToShared(Offer offer)
     {
@@ -70,42 +113,14 @@ public class OfferDaoImpl : IOfferDao
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
+            ImagePath = offer.ImagePath,
+        };
+        return offerToSend;
+    
             Image = new Image()
             {
                 RelativeUrl = offer.ImagePath
             },
-            FarmName = offer.FarmName,
-        };
-    }
-    
-    // convert from shared offer to grpc object
-    private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
-    {
-        // print out each property of the offer
-        Console.WriteLine(offer.Id);
-        Console.WriteLine(offer.Name);
-        Console.WriteLine(offer.Quantity);
-        Console.WriteLine(offer.Unit);
-        Console.WriteLine(offer.Price);
-        Console.WriteLine(offer.Delivery);
-        Console.WriteLine(offer.PickUp);
-        Console.WriteLine(offer.PickYourOwn);
-        Console.WriteLine(offer.Description);
-        Console.WriteLine(offer.Image.RelativeUrl);
-        Console.WriteLine(offer.FarmName);
-        
-        
-        return new Offer
-        {
-            Name = offer.Name,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            Description = offer.Description,
-            ImagePath = offer.Image.RelativeUrl,
             FarmName = offer.FarmName,
         };
     }

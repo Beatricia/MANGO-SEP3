@@ -1,0 +1,10 @@
+/*.button, .buttons{
+    font-size: 12px;
+    background-color: white;
+    border-style: solid;
+    color: #202020;
+    cursor: pointer;
+}
+.addToCartBtn{
+    float: right;
+}

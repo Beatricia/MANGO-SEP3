@@ -16,11 +16,13 @@ builder.Services.AddSingleton(new ApiInformation{ BaseAddress = "https://localho
 builder.Services.AddScoped(sp => new System.Net.Http.HttpClient { BaseAddress = new Uri(sp.GetRequiredService<ApiInformation>().BaseAddress) });
 builder.Services.AddScoped<IOfferService, OfferHttpClient>();
 builder.Services.AddScoped<IFarmService, FarmHttpClient>();
+builder.Services.AddScoped<IOrderService,OrderHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
+builder.Services.AddScoped<IUserService, UserHttpClient>();
+builder.Services.AddScoped<ICartService, CartHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 
 AuthorizationPolicies.AddPolicies(builder.Services); //idk if this should be here
-
 
 var app = builder.Build();
 

@@ -129,15 +129,22 @@
             return;
         }
 
+        var address = new Address
+        {
+            City = city,
+            Street = street,
+            ZIP = zip
+        };
+        
         var farmCreationDto = new FarmCreationDto
         {
             Name = farmName,
-            City = city,
-            ZIP = zip,
-            Address = address,
             Phone = phone,
             DeliveryDistance = deliveryDistance,
             FarmStatus = status,
+            Address = address,
+            //TODO get the farmer from the login stuff
+            //Farmer = new Farmer()
             FarmIconFileName = selectedIcon.FileName
         };
         
@@ -176,7 +183,6 @@
             errorMessage = "Invalid phone number. Please use a valid format, for example +45012345678";
         }
         else phoneClasses = "";*/
-        
 
 
         if (errorMessage is not null)

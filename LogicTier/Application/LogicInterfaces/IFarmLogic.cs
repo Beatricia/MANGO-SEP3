@@ -10,7 +10,9 @@ public interface IFarmLogic
     /// </summary>
     /// <param name="dto">The object holding all the farm information</param>
     /// <returns>The created Farm object</returns>
-    Task<Shared.Models.Farm> CreateAsync(FarmCreationDto dto);
+    Task<Farm> CreateAsync(FarmCreationDto dto);
+
+    Task<Farm> GetFarmByNameAsync(string farmName);
 
     /// <summary>
     /// Returns all the available icons.

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FarmRepository extends JpaRepository<Farm,Long> {
-    Farm getFarmByName(String name);
+  Farm findByName(String name);
 }

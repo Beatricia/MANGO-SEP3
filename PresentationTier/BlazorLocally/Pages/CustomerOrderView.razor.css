@@ -1,0 +1,92 @@
+.title{
+    text-align: center;
+    margin-bottom: 7%;
+    margin-top: 15px;
+}
+
+ label{
+     background-color: #B7BF96;
+     font-size: 22px;
+     font-weight: bold;
+     padding: 5px;
+     border-radius: 3px ;
+     border: 1px solid #6a7246;
+ }
+ 
+ .orders{
+     margin-bottom: 7%;
+     padding-right: 10%;
+     padding-left: 10%;
+     width: 100%;
+ }
+ 
+ img{
+     width: 45px;
+     height: 30px;
+     padding: 5px;
+ }
+ .nameCell{
+     width: 40%;
+     font-size: 20px;
+     padding: 5px;
+ }
+ .phoneCell{
+     width: 25%;
+     font-size: 20px;
+     padding: 5px;
+ }
+ .priceCell{
+     width:15% ;
+     font-size: 20px;
+     padding: 5px;
+ }
+ .imgCell{
+     text-align: right;
+     padding: 5px;
+     width: 20%;
+ }
+ 
+ .AddressRow{
+     border-bottom: 1px solid #6a7246;
+     font-weight: bold;
+     width: 100%;
+ }
+ 
+ .QuantityCell{
+     text-align: right;
+     padding-right: 10px;
+ }
+ 
+ tr{
+     border-bottom: 1px solid #6a7246;
+     width: 100%;
+ }
+ 
+ th{
+     width: 100%;
+ }
+
+.detailTable{
+    display: none;
+    width: 100%;
+    border: 1px solid #6a7246;
+}
+
+.rowDiv.details .imgCell img{
+    transform: rotate(180deg);
+}
+
+.details + .detailTable{
+    display: block;
+}
+.ordersTable{
+    width: 100%;
+    background-image: linear-gradient(#B7BF96,#fafaf7);
+    
+}
+.rowDiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border: 1px solid #6a7246;
+}

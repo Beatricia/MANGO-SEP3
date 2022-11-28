@@ -1,7 +1,10 @@
 package mango.sep3.databaseaccess.Shared;
 
+import mango.sep3.databaseaccess.protobuf.OfferItems;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name="OFFERS", schema = "locally")
@@ -9,7 +12,7 @@ public class Offer implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "offerId")
     private int id;
 
     @Column(nullable = false, length = 100)
@@ -21,103 +24,30 @@ public class Offer implements Serializable
     @Column (nullable = false, length = 20)
     private String unit;
 
-    // add column annotation to fields
-
-    @Column
-    private boolean delivery;
-
-    @Column
-    private boolean pickUp;
-
-    @Column
-    private boolean pickYourOwn;
-
-    @Column
+    @Column(nullable = true)
     private String description;
 
     @Column
-    private String image;
+    private String imgPath;
 
-    @ManyToOne(targetEntity = Farm.class)
-    @JoinColumn(name = "farm_id")
+    @Column
+    private int quantity;
+
+    @Column(nullable = true)
+    private boolean pickUp;
+
+    @Column(nullable = true)
+    private boolean delivery;
+
+    @Column(nullable = true)
+    private boolean pickyourOwn;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "farmId", nullable = false)
     private Farm farm;
 
+    @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
+    private Set<OrderOffer> orderOffers;
 
-    public Offer(){}
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public boolean isDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(boolean delivery) {
-        this.delivery = delivery;
-    }
-
-    public boolean isPickUp() {
-        return pickUp;
-    }
-
-    public void setPickUp(boolean pickUp) {
-        this.pickUp = pickUp;
-    }
-
-    public boolean isPickYourOwn() {
-        return pickYourOwn;
-    }
-
-    public void setPickYourOwn(boolean pickYourOwn) {
-        this.pickYourOwn = pickYourOwn;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Farm getFarm() {
-        return farm;
-    }
-
-    public void setFarm(Farm farm) {
-        this.farm = farm;
-    }
 }

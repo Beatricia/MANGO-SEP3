@@ -14,4 +14,6 @@ public interface IOfferDao
     /// </summary>
     /// <returns> A Collection of Offers </returns>
     Task<IEnumerable<Offer>> GetAsync();
+
+    Task<Offer> GetOfferByIdAsync(int id);
 }

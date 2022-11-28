@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\DataTier\DatabaseAccess\src\main\proto\contract.proto" OutputDir="./Proto/Cotract.proto" GrpcServices="Client" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Google.Protobuf" Version="3.21.9" />
       <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
       <PackageReference Include="Grpc.Tools" Version="2.50.0">
@@ -24,6 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="..\..\DataTier\DatabaseAccess\src\main\proto">
+        <Link>proto</Link>
+      </Folder>
       <Folder Include="Proto\Cotract.proto" />
     </ItemGroup>
 

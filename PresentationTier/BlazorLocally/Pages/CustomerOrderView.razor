@@ -1,0 +1,133 @@
+﻿@page "/CustomerOrderView"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@inject IOrderService orderService
+@inject IFarmService farmService
+
+<AuthorizeView>
+    <div class="title">
+        <h1>Orders</h1>
+    </div>
+    @if (orders == null)
+    {
+        <span>Loading..</span>
+    }
+    else if (orders.Any())
+    {
+        @if (pickUpOrders.Any())
+        {
+            <div class="orders">
+                <label>Pick Up</label>
+                <div class="ordersTable">
+                    @foreach (var order in pickUpOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="nameCell">@order.FarmName</div>
+                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                            <Table class="detailTable">
+                            <th class="AddressRow">
+                                @GetFarmByName(order.FarmName).Address.ToString()
+                            </th>
+                            @foreach (var item in order.OrderOffers)
+                            {
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
+                            }
+                        </Table>
+                        }
+                </div>
+            </div>
+        }
+        @if (deliveryOrders.Any())
+        {
+            <div class="orders">
+                <label>Delivery</label>
+                <div class="ordersTable">
+                    @foreach (var order in deliveryOrders)
+                    {
+                        <div class="rowDiv">
+                            <div class="nameCell">@order.FarmName</div>
+                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
+                                <img src="Img/downArrow.png">
+                            </div>
+                        </div>
+                        <Table class="detailTable">
+                            <th></th>
+                            @foreach (var item in order.OrderOffers)
+                            {
+                                <tr>
+                                    <td>@item.Offer.Name</td>
+                                    <td class="QuantityCell">@item.Quantity</td>
+                                </tr>
+                            }
+                        </Table>
+                    }
+                </div>
+            </div>
+        }
+    }
+</AuthorizeView>
+
+@code {
+    private IEnumerable<Order>? orders;
+    private List<Order> deliveryOrders = new List<Order>();
+    private List<Order> pickUpOrders = new List<Order>();
+    private string msg = "";
+    private string username;
+    
+    protected override async Task OnInitializedAsync()
+    {
+      //  var authstate = await GetAuthenticationState.GetAuthenticationStateAsync();
+       // var principal = authstate.User;
+       // username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
+
+        try
+        {
+            orders = await orderService.GetAllOrdersAsync(username);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+
+        foreach (var order in orders)
+        {
+            if (order.CollectionOption.Equals("Delivery"))
+            {
+                deliveryOrders.Add(order);
+            }
+            else if(order.CollectionOption.Equals("PickUp"))
+            {
+                pickUpOrders.Add(order);
+            }
+        }
+    }
+
+    private Farm GetFarmByName(string farmName)
+    {
+        Farm farm = farmService.GetFarmByNameAsync(farmName).GetAwaiter().GetResult();
+        return farm;
+    }
+
+    private double TotalPrice(List<OrderOffer> items)
+    {
+        double totalPrice = 0;
+        for (int i = 0; i < items.Count; i++)
+        {
+            totalPrice += items[i].Quantity * items[i].Offer.Price;
+        }
+
+        return totalPrice;
+    }
+
+}

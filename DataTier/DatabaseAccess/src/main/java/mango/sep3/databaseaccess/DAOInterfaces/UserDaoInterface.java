@@ -15,6 +15,20 @@ public interface UserDaoInterface {
     User registerUser(UserAuth userAuth);
 
     /**
+     * Registers a farmer in the database
+     * @param farmer The farmer to register.
+     * @return The registered farmer.
+     */
+    Farmer registerFarmer(Farmer farmer);
+
+    /**
+     * Registers a customer in the database
+     * @param customer The customer to register.
+     * @return The registered customer.
+     */
+    Customer registerCustomer(Customer customer);
+
+    /**
      * Checks for user in the database. If Exists -> Logs the user in
      * @param userAuth The user to login.
      * @return The logged-in user.
@@ -36,4 +50,18 @@ public interface UserDaoInterface {
     UserAuth getUserAuthByUsername(String username);
 
 
+
+    /**
+     * Gets a customer by username.
+     * @param username The username of the customer
+     * @return The customer.
+     */
+    Customer getCustomer(String username);
+
+    /**
+     * Gets a farmer by username.
+     * @param username The username of the farmer.
+     * @return The farmer.
+     */
+    Farmer getFarmer(String username);
 }

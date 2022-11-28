@@ -51,6 +51,9 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
       offer.setPickyourOwn(request.getPickYourOwn());
       offer.setDescription(request.getDescription());
 
+      var farm = farmDaoInterface.getFarmByName(request.getFarmName());
+      offer.setFarm(farm);
+
 
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase =  offerDao.CreateOffer(offer);
 

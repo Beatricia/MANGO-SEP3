@@ -2,6 +2,7 @@ package mango.sep3.databaseaccess.Shared;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Customer", schema = "locally")
@@ -20,9 +21,13 @@ public class Customer implements Serializable
   @Column(nullable = true, length = 100, name = "phone")
   private String phone;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "address_id")
   private Address address;
+
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn
+  private Set<CartItem> cartItems;
 
   public Customer(String username, String firstName, String lastName,
       String phone)

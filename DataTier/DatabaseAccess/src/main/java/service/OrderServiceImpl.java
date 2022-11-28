@@ -2,6 +2,7 @@ package service;
 
 import com.google.common.collect.Sets;
 import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.protobuf.OrderServiceGrpc;
 import mango.sep3.databaseaccess.protobuf.*;
@@ -16,6 +17,7 @@ import java.util.*;
 public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 {
   @Autowired private OrderDaoInterface orderDao;
+  @Autowired private FarmDaoInterface farmDaoInterface;
 
   public OrderServiceImpl()
   {
@@ -143,7 +145,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
           .setQuantity(item.getOffer().getQuantity())
           .setName(item.getOffer().getName())
           .setDescription(item.getOffer().getDescription())
-          .setUnit(item.getOffer().getUnit()).build();
+          .setUnit(item.getOffer().getUnit())
+          .setFarmName(item.getOffer().getFarm().getName()).build();
 
       orderOfferList.add(
           mango.sep3.databaseaccess.protobuf.OrderOffer.newBuilder()
@@ -187,6 +190,9 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     item.setPickyourOwn(offer.getPickYourOwn());
     item.setUnit(item.getUnit());
     item.setPrice(offer.getPrice());
+
+    var farm = farmDaoInterface.getFarmByName(offer.getFarmName());
+    item.setFarm(farm);
 
     return item;
   }

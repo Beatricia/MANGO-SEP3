@@ -10,7 +10,7 @@ import java.util.Set;
   @Column(name = "id")
   private int id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name="offerId")
   private Offer offer;
 

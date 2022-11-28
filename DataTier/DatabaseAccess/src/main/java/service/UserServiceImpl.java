@@ -3,6 +3,7 @@ package service;
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.protobuf.*;
+import mango.sep3.databaseaccess.protobuf.Void;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,6 +55,25 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override public void registerUser(UserAuth request,
+        StreamObserver<UserAuth> responseObserver)
+    {
+        var user = convertUserAuthToShared(request);
+        userDao.registerUser(user);
+
+        responseObserver.onNext(request);
+        responseObserver.onCompleted();
+    }
+
+    private mango.sep3.databaseaccess.Shared.UserAuth convertUserAuthToShared(UserAuth request)
+    {
+        var userAuth = new mango.sep3.databaseaccess.Shared.UserAuth();
+        userAuth.setUsername(request.getUsername());
+        userAuth.setHash(request.getHash());
+        userAuth.setSalt(request.getSalt());
+        return userAuth;
+    }
+
     @Override
     public void registerFarmer(Farmer request, StreamObserver<Farmer> responseObserver) {
         var farmer = convertToShared(request);
@@ -86,6 +106,23 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                 .setFirstname(user.getFirstName())
                 .setLastname(user.getLastName())
                 .build();
+    }
+
+    @Override public void getFarmer(Text request,
+        StreamObserver<Farmer> responseObserver)
+    {
+        mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getText());
+
+        if (farmer == null)
+        {
+            responseObserver.onError(new Exception("Farmer not found"));
+            return;
+        }
+
+        Farmer customerResponse = convertToGrpc(farmer);
+
+        responseObserver.onNext(customerResponse);
+        responseObserver.onCompleted();
     }
 
     private UserAuth convertUserAuthToGrpc(mango.sep3.databaseaccess.Shared.UserAuth user) {

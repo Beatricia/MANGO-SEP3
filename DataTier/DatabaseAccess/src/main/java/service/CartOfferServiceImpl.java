@@ -5,6 +5,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.CartOfferInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.CartItem;
+import mango.sep3.databaseaccess.Shared.Customer;
 import mango.sep3.databaseaccess.Shared.Offer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.protobuf.*;
@@ -41,10 +42,9 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
     cartItem.setQuantity(request.getQuantity());
 
     String userName = request.getUsername();
-    User user = userDaoInterface.getUserByUsername(userName);
+    Customer customer = userDaoInterface.getCustomer(userName);
 
-    user.setUsername(userName);
-    cartItem.setUsername(user);
+    cartItem.setCustomer(customer);
     cartItem.setCollectionOption(request.getCollectionOption());
 
     cartOfferDAO.createCartOffer(cartItem);
@@ -57,10 +57,9 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
   //not working
   @Override public void getAllCartOffers(Username request,
       StreamObserver<CartOffers> responseObserver) {
-    User usr = new User();
-    usr.setUsername(request.getUsername());
+    Customer customer = userDaoInterface.getCustomer(request.getUsername());
 
-    Collection<CartItem >cartItems =  cartOfferDAO.getAllCartOffers(usr);
+    Collection<CartItem >cartItems =  cartOfferDAO.getAllCartOffers(customer);
     Collection<CartOffer> cartOffersBuf = new ArrayList<>();
 
     //proto
@@ -78,7 +77,7 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
           .setOfferId(item.getOfferId().getId())
           .setQuantity(item.getQuantity())
           .setCollectionOption(item.getCollectionOption())
-          .setUsername(item.getUsername().getUsername())
+          .setUsername(item.getCustomer().getUsername())
           .build();
       cartOffersBuf.add(co);
     }
@@ -91,9 +90,9 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
   @Transactional
   @Override public void deleteAllCartOffers(Username request,
       StreamObserver<Void> responseObserver) {
-    User user = new User();
-    user.setUsername(request.getUsername());
-    cartOfferDAO.deleteAllCartOffers(user);
+    Customer customer = userDaoInterface.getCustomer(request.getUsername());
+
+    cartOfferDAO.deleteAllCartOffers(customer);
 
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();

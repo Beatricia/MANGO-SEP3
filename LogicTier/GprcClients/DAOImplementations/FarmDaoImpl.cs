@@ -20,8 +20,7 @@ public class FarmDaoImpl : IFarmDao
             DeliveryDistance = farm.DeliveryDistance,
             FarmStatus = farm.FarmStatus,
             Farmer = ConvertFarmerToGrpc(farm.Farmer),
-            Address = ConvertSharedToGrpc(farm.Address),
-            
+            Address = ConvertSharedToGrpc(farm.Address)
         };
 
         await farmServiceClient.CreateFarmAsync(toCreate);
@@ -97,7 +96,8 @@ public class FarmDaoImpl : IFarmDao
                 City = grpcFarm.Address.City
             },
             DeliveryDistance = grpcFarm.DeliveryDistance,
-            FarmStatus = grpcFarm.FarmStatus
+            FarmStatus = grpcFarm.FarmStatus,
+            Farmer = ConvertFarmerFromGrpc(grpcFarm.Farmer)
         };
     }
     

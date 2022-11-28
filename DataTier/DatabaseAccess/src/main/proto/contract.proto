@@ -56,7 +56,6 @@ message Farm{
   string name = 1;
   Address address =2;
   Farmer farmer = 3;
-  string city = 4;
   optional string farmStatus = 5;
   optional int32 deliveryDistance = 6;
   string phone = 7;

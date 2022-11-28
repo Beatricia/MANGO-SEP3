@@ -32,7 +32,7 @@ public class Farm implements Serializable
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Offer> offers;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="farmer", nullable=true, referencedColumnName = "username")
     private Farmer farmer;
 

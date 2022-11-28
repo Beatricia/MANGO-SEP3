@@ -1,6 +1,7 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
+import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,12 +20,16 @@ public class OfferDAO implements OfferDaoInterface {
   @Autowired
   private OfferRepository offerRepository;
 
+  @Autowired
+  private FarmRepository farmRepository;
+
   public OfferDAO() {
   }
 
 
   @Override
     public Offer CreateOffer(Offer offer) {
+        offer.setFarm(farmRepository.findByName(offer.getFarm().getName()));
         return offerRepository.save(offer);
     }
 
@@ -35,6 +40,6 @@ public class OfferDAO implements OfferDaoInterface {
 
   @Override public Offer getOfferById(int id)
   {
-    return offerRepository.getReferenceById(id);
+    return offerRepository.findById(id).orElse(null);
   }
 }

@@ -12,7 +12,7 @@ public class Order
   @Column(name = "orderId")
   private int id;
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(mappedBy = "order", cascade = CascadeType.REFRESH)
   private Set<OrderOffer> orderOffers;
 
   @Column

@@ -1,7 +1,5 @@
 package mango.sep3.databaseaccess.Shared;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -23,8 +21,8 @@ public class CartItem implements Serializable
   private int quantity;
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  @JoinColumn(name = "userName")
-  private User username;
+  @JoinColumn(name = "customer", referencedColumnName = "username")
+  private Customer customer;
 
   @Column(name  = "collectionOption", nullable = true)
   private String collectionOption;
@@ -63,14 +61,14 @@ public class CartItem implements Serializable
     this.quantity = quantity;
   }
 
-  public User getUsername()
+  public Customer getCustomer()
   {
-    return username;
+    return customer;
   }
 
-  public void setUsername(User username)
+  public void setCustomer(Customer username)
   {
-    this.username = username;
+    this.customer = username;
   }
 
   public String getCollectionOption()

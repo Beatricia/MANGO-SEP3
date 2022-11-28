@@ -73,12 +73,7 @@ import org.springframework.beans.factory.annotation.Autowired;
         return;
       }
 
-      Farm farmToSend = Farm.newBuilder().setName(farm.getName())
-          .setPhone(farm.getPhone()).setFarmStatus(farm.getDescription())
-          .setDeliveryDistance(farm.getDeliveryDistance())
-          .setAddress(convertAddressToGrpc(farm.getAddress()))
-          .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
-          .build();
+      Farm farmToSend = convertFarmToGrpc(farm);
 
       responseObserver.onNext(farmToSend);
       responseObserver.onCompleted();
@@ -137,6 +132,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
   // convert shared farm to grpc in a method
     private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
-      return Farm.newBuilder().setName(farm.getName()).build();
+      return Farm.newBuilder()
+          .setName(farm.getName())
+          .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
+          .setAddress(convertAddressToGrpc(farm.getAddress()))
+          .setFarmStatus(farm.getDescription())
+          .setDeliveryDistance(farm.getDeliveryDistance())
+          .setPhone(farm.getPhone())
+          .build();
     }
 }

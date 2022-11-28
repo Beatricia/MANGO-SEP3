@@ -54,7 +54,7 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public Customer registerCustomer(Customer customer) {
-        return customerRepository.save(customer);
+        return customerRepository.saveAndFlush(customer);
     }
 
     @Override
@@ -81,6 +81,6 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public Farmer getFarmer(String username) {
-        return farmerRepository.getReferenceById(username);
+        return farmerRepository.findById(username).orElse(null);
     }
 }

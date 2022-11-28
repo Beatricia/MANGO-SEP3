@@ -17,7 +17,7 @@ public class Farmer
   @Column(name = "lastname")
   private String lastName;
 
-  @OneToMany(mappedBy = "farmer")
+  @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL)
   private Set<Farm> farms;
 
   public Farmer(){}

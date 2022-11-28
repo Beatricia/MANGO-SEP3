@@ -37,7 +37,7 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public void createOrders(Collection<Order> orders)
   {
-    orderRepository.saveAll(orders);
+    orderRepository.saveAllAndFlush(orders);
   }
 
   @Override public Collection<Order> getAllOrders(String username)

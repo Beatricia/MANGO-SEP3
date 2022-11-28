@@ -3,6 +3,7 @@ package mango.sep3.databaseaccess.DAOImplementations;
 import mango.sep3.databaseaccess.DAOInterfaces.CartOfferInterface;
 import mango.sep3.databaseaccess.Repositories.CartRepository;
 import mango.sep3.databaseaccess.Shared.CartItem;
+import mango.sep3.databaseaccess.Shared.Customer;
 import mango.sep3.databaseaccess.Shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,12 +24,12 @@ public class CartOfferDAO implements CartOfferInterface
     cartRepository.saveAndFlush(cartItem);
   }
 
-  @Override public Collection<CartItem> getAllCartOffers(User username){
-    return cartRepository.findAllByUsername(username);
+  @Override public Collection<CartItem> getAllCartOffers(Customer customer){
+    return cartRepository.findAllByCustomer(customer);
   }
 
-  @Override public void deleteAllCartOffers(User username)
+  @Override public void deleteAllCartOffers(Customer customer)
   {
-    cartRepository.deleteAllByUsername(username);
+    cartRepository.deleteAllByCustomer(customer);
   }
 }

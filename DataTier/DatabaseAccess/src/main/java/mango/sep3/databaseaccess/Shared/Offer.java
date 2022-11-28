@@ -40,8 +40,8 @@ public class Offer implements Serializable
     @Column(nullable = true)
     private boolean pickyourOwn;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "farmId", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "farmId", nullable = false, referencedColumnName = "id")
     private Farm farm;
 
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)

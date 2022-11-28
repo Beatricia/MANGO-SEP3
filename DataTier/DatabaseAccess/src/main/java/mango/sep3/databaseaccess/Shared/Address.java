@@ -15,13 +15,13 @@ public class Address implements Serializable
   private Long id;
 
   @Column(name = "city")
-  private String city;
+  private String city = "";
 
   @Column(name = "street")
-  private String street;
+  private String street = "";
 
   @Column(name = "zip")
-  private String zip;
+  private String zip = "";
 
   @OneToMany(mappedBy = "address")
   private Set<Customer> customers = new HashSet<>();

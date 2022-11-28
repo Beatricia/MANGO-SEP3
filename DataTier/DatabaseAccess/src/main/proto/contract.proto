@@ -46,12 +46,12 @@ message User{
 
 message Farm{
   string name = 1;
-  string phone = 2;
-  string zip = 3;
-  string address = 4;
-  string city = 5;
-  optional string farmStatus = 6;
-  optional int32 deliveryDistance = 7;
+  Address address =2;
+  Farmer farmer = 3;
+  string city = 4;
+  optional string farmStatus = 5;
+  optional int32 deliveryDistance = 6;
+  string phone = 7;
 }
 
 message Offer{

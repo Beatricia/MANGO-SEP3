@@ -31,12 +31,8 @@ public class FarmLogic : IFarmLogic
             Phone = dto.Phone,
             DeliveryDistance = dto.DeliveryDistance,
             FarmStatus = dto.FarmStatus,
-            Address = new Address
-            {
-                City = dto.City,
-                ZIP = dto.ZIP,
-                Street = dto.Address
-            },
+            Address = dto.Address,
+            Farmer = dto.Farmer
         };
 
         await farmDao.CreateAsync(farmToSend);

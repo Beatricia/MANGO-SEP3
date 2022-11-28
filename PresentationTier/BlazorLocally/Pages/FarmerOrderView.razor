@@ -23,7 +23,7 @@
                     {
                         <div class="rowDiv">
                             <div class="customerNameCell">@order.OrderOffers.First().Username</div>
-                            <div class="cityCell">@GetCustomer(order.OrderOffers.First().Username).Address.City</div>
+                            <div class="cityCell">@GetCustomer(order.OrderOffers.First().Username).Address?.City</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
@@ -53,8 +53,8 @@
                     @foreach (var order in deliveryOrders)
                     {
                         <div class="rowDiv">
-                            <div class="nameCell">@order.FarmName</div>
-                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="nameCell">@GetCustomer(order.OrderOffers.First().Username)</div>
+                            <div class="phoneCell">@order.FarmName</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">

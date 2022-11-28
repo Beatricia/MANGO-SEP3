@@ -20,78 +20,84 @@ public interface FarmOrBuilder extends
       getNameBytes();
 
   /**
-   * <code>string phone = 2;</code>
-   * @return The phone.
+   * <code>.Address address = 2;</code>
+   * @return Whether the address field is set.
    */
-  java.lang.String getPhone();
+  boolean hasAddress();
   /**
-   * <code>string phone = 2;</code>
-   * @return The bytes for phone.
-   */
-  com.google.protobuf.ByteString
-      getPhoneBytes();
-
-  /**
-   * <code>string zip = 3;</code>
-   * @return The zip.
-   */
-  java.lang.String getZip();
-  /**
-   * <code>string zip = 3;</code>
-   * @return The bytes for zip.
-   */
-  com.google.protobuf.ByteString
-      getZipBytes();
-
-  /**
-   * <code>string address = 4;</code>
+   * <code>.Address address = 2;</code>
    * @return The address.
    */
-  java.lang.String getAddress();
+  mango.sep3.databaseaccess.protobuf.Address getAddress();
   /**
-   * <code>string address = 4;</code>
-   * @return The bytes for address.
+   * <code>.Address address = 2;</code>
    */
-  com.google.protobuf.ByteString
-      getAddressBytes();
+  mango.sep3.databaseaccess.protobuf.AddressOrBuilder getAddressOrBuilder();
 
   /**
-   * <code>string city = 5;</code>
+   * <code>.Farmer farmer = 3;</code>
+   * @return Whether the farmer field is set.
+   */
+  boolean hasFarmer();
+  /**
+   * <code>.Farmer farmer = 3;</code>
+   * @return The farmer.
+   */
+  mango.sep3.databaseaccess.protobuf.Farmer getFarmer();
+  /**
+   * <code>.Farmer farmer = 3;</code>
+   */
+  mango.sep3.databaseaccess.protobuf.FarmerOrBuilder getFarmerOrBuilder();
+
+  /**
+   * <code>string city = 4;</code>
    * @return The city.
    */
   java.lang.String getCity();
   /**
-   * <code>string city = 5;</code>
+   * <code>string city = 4;</code>
    * @return The bytes for city.
    */
   com.google.protobuf.ByteString
       getCityBytes();
 
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 5;</code>
    * @return Whether the farmStatus field is set.
    */
   boolean hasFarmStatus();
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 5;</code>
    * @return The farmStatus.
    */
   java.lang.String getFarmStatus();
   /**
-   * <code>optional string farmStatus = 6;</code>
+   * <code>optional string farmStatus = 5;</code>
    * @return The bytes for farmStatus.
    */
   com.google.protobuf.ByteString
       getFarmStatusBytes();
 
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 6;</code>
    * @return Whether the deliveryDistance field is set.
    */
   boolean hasDeliveryDistance();
   /**
-   * <code>optional int32 deliveryDistance = 7;</code>
+   * <code>optional int32 deliveryDistance = 6;</code>
    * @return The deliveryDistance.
    */
   int getDeliveryDistance();
+
+  /**
+   * <code>string phone = 7;</code>
+   * @return The phone.
+   */
+  java.lang.String getPhone();
+  /**
+   * <code>string phone = 7;</code>
+   * @return The bytes for phone.
+   */
+  com.google.protobuf.ByteString
+      getPhoneBytes();
 }

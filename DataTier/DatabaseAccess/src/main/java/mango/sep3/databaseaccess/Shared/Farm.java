@@ -33,20 +33,21 @@ public class Farm implements Serializable
     private Set<Offer> offers;
 
     @ManyToOne
-    @JoinColumn(name="farmer", nullable=false)
+    @JoinColumn(name="farmer", nullable=true)
     private Farmer farmer;
 
     public Farm()
     {}
 
     public Farm(String name, String phone, String description,
-        int deliveryDistance, Address address)
+        int deliveryDistance, Address address, Farmer farmer)
     {
         this.name = name;
         this.phone = phone;
         this.description = description;
         this.deliveryDistance = deliveryDistance;
         this.address = address;
+        this.farmer = farmer;
     }
     public Farm(String name, String phone, String description,
         int deliveryDistance, Address address, Set<Offer> offers)
@@ -140,4 +141,5 @@ public class Farm implements Serializable
     {
         this.farmer = farmer;
     }
+
 }

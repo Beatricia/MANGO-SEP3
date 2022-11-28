@@ -1,4 +1,5 @@
-﻿using Shared.DTOs;
+﻿using System.Security.Claims;
+using Shared.DTOs;
 using Shared.Models;
 
 namespace HttpClient.ClientInterfaces;
@@ -24,4 +25,9 @@ public interface IAuthService
     /// <param name="isFarmer"></param>
     /// <returns></returns>
     Task<User> RegisterAsync(string username, string password, bool isFarmer);
+
+    Task<ClaimsPrincipal> GetAuthAsync();
+
+    Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
+
 }

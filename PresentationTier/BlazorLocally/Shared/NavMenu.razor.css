@@ -11,13 +11,14 @@
     font-size: 1.1rem;
 }
 
-.nav-flex{
+.nav-flex, .flex-column{
     height: 100%;
     display: flex;
     flex-direction: column;
     
     justify-content: space-between;
 }
+
 
 .oi {
     width: 2rem;

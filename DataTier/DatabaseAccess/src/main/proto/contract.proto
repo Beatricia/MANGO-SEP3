@@ -28,8 +28,8 @@ service UserService{
 }
 
 service OrderService{
-  rpc CreateOrderOffers(OrderOffersToCreate) returns(Void);
-  rpc CreateOrders(OrdersToCreate) returns(Void);
+  rpc CreateOrderOffers(OrderOffers) returns(Void);
+  rpc CreateOrders(Orders) returns(Void);
   rpc GetAllOrders(Text) returns(Orders);
   rpc GetOrderOffers(Text) returns(OrderOffers);
 }
@@ -100,17 +100,6 @@ message OrderOffers{
   repeated OrderOffer orderOffers = 1;
 }
 
-message OrderOfferToCreate{
-  Offer offer = 1;
-  int32 quantity = 2;
-  string username = 3;
-  string collectionOption = 4;
-}
-
-message OrderOffersToCreate{
-  repeated OrderOfferToCreate orderOffers = 1;
-}
-
 message Order{
   int32 id = 1;
   repeated OrderOffer orderOffers = 2;
@@ -120,16 +109,6 @@ message Order{
 }
 message Orders{
   repeated Order orders = 1;
-}
-
-message OrderToCreate{
-  repeated OrderOffer orderOffers = 1;
-  bool isDone = 2;
-  string farmName = 3;
-  string collectionOption = 4;
-}
-message OrdersToCreate{
-  repeated OrderToCreate orders = 1;
 }
 
 message OfferItems{

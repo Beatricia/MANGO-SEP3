@@ -1,7 +1,6 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
-import mango.sep3.databaseaccess.DAOImplementations.CartOfferDAO;
 import mango.sep3.databaseaccess.DAOInterfaces.CartOfferInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
@@ -23,7 +22,6 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
   @Autowired private CartOfferInterface cartOfferDAO;
   @Autowired private OfferDaoInterface offerDaoInterface;
   @Autowired private UserDaoInterface userDaoInterface;
-
 
 
   public CartOfferServiceImpl()

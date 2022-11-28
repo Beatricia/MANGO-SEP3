@@ -69,7 +69,6 @@ public class Farm implements Serializable
     // just add @Column('attribute' = "'nameOfTheColumn'")
 
     //at least one empty constructor
-    public Farm(){}
 
     public Farm(String name){
         this.name = name;

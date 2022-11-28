@@ -1,5 +1,7 @@
 package mango.sep3.databaseaccess.DAOInterfaces;
 
+import mango.sep3.databaseaccess.Shared.Customer;
+import mango.sep3.databaseaccess.Shared.Farmer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.Shared.UserAuth;
 

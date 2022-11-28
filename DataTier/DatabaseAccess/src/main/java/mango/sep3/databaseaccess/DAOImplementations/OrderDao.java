@@ -6,11 +6,13 @@ import mango.sep3.databaseaccess.Repositories.OrderRepository;
 import mango.sep3.databaseaccess.Shared.Order;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Repository
 public class OrderDao implements OrderDaoInterface
 {
   private OrderRepository orderRepository;

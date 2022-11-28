@@ -1,14 +1,9 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
-import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
-import mango.sep3.databaseaccess.protobuf.Farm;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import mango.sep3.databaseaccess.Repositories.FarmerRepository;
+import mango.sep3.databaseaccess.Shared.Farm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
@@ -42,8 +37,6 @@ public class FarmDAO implements FarmDaoInterface
 
   @Override public Farm getFarmByName(String farmName)
   {
-    Farm farm = farmRepository.findByName(farmName);
-    return farm;
-    farmRepository.save(farm);
+    return farmRepository.findByName(farmName);
   }
 }

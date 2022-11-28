@@ -1,23 +1,13 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
-import mango.sep3.databaseaccess.DAOImplementations.FarmDAO;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
-import mango.sep3.databaseaccess.FileData.FileContext;
-import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.Shared.Address;
-import mango.sep3.databaseaccess.Shared.Offer;
 import mango.sep3.databaseaccess.protobuf.*;
-import mango.sep3.databaseaccess.protobuf.Void;
-import mango.sep3.databaseaccess.protobuf.Farm;
-import mango.sep3.databaseaccess.protobuf.FarmServiceGrpc;
-import mango.sep3.databaseaccess.protobuf.Text;
+
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @GRpcService public class FarmServiceImpl
     extends FarmServiceGrpc.FarmServiceImplBase
@@ -41,7 +31,7 @@ import java.util.Set;
 
 
   @Override public void createFarm(Farm request,
-      StreamObserver<Void> responseObserver)
+      StreamObserver<Farm> responseObserver)
   {
     mango.sep3.databaseaccess.Shared.Farm farm = new mango.sep3.databaseaccess.Shared.Farm(
         request.getName(), request.getPhone(), request.getFarmStatus(),
@@ -55,9 +45,9 @@ import java.util.Set;
 
 
     farmDAO.createFarm(farm);
-    Void response = Void.newBuilder().build();
+    Farm farmGrpc = convertFarmToGrpc(farm);
 
-    responseObserver.onNext(response);
+    responseObserver.onNext(farmGrpc);
     responseObserver.onCompleted();
   }
 
@@ -76,20 +66,20 @@ import java.util.Set;
     {
       mango.sep3.databaseaccess.Shared.Farm farm = farmDAO.getFarmByName(
           request.getText());
-  
+
       if (farm == null)
       {
         responseObserver.onError(new Exception("User not found"));
         return;
       }
-  
+
       Farm farmToSend = Farm.newBuilder().setName(farm.getName())
           .setPhone(farm.getPhone()).setFarmStatus(farm.getDescription())
           .setDeliveryDistance(farm.getDeliveryDistance())
           .setAddress(convertAddressToGrpc(farm.getAddress()))
           .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
           .build();
-  
+
       responseObserver.onNext(farmToSend);
       responseObserver.onCompleted();
     }
@@ -132,7 +122,7 @@ import java.util.Set;
   @Override
   public void getFarmByName(Text request, StreamObserver<Farm> responseObserver) {
     var farm = farmDAO.getFarmByName(request.getText());
-    var grpcFarm = convertToGrpc(farm);
+    var grpcFarm = convertFarmToGrpc(farm);
 
     responseObserver.onNext(grpcFarm);
     responseObserver.onCompleted();
@@ -146,7 +136,7 @@ import java.util.Set;
   }
 
   // convert shared farm to grpc in a method
-    private Farm convertToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
+    private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
       return Farm.newBuilder().setName(farm.getName()).build();
     }
 }

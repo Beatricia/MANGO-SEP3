@@ -3,10 +3,6 @@ package service;
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
-import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
-import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
-import mango.sep3.databaseaccess.FileData.FileContext;
-import mango.sep3.databaseaccess.Repositories.OfferRepository;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
 import org.lognet.springboot.grpc.GRpcService;
@@ -14,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * A class responsable for taking the data from the database (currently from
@@ -34,15 +29,14 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   }
 
   /**
-   * The method creates a grpc Offer object using the parameters send in the
-   * request. Then directly calls the FileContext instance to write the object to
-   * the file and save the changes (this will be changed when the DB is implemented).
-   * Finally, returns the created object.
-   * @param request  the Offer object send from the Logic Tier
-   * @param responseObserver the object returned to the Logic Tier
+   *   The method creates a grpc Offer object using the parameters send in the
+   *   request. Then directly calls the FileContext instance to write the object to
+   *   the file and save the changes (this will be changed when the DB is implemented).
+   *   Finally, returns the created object.
+   *   @param request  the Offer object send from the Logic Tier
+   *   @param responseObserver the object returned to the Logic Tier
    */
-
-  @Override public void createOffer(OfferCreation request,
+  @Override public void createOffer(Offer request,
       StreamObserver<Offer> responseObserver)
   {
 
@@ -56,7 +50,6 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
       offer.setPickUp(request.getPickUp());
       offer.setPickyourOwn(request.getPickYourOwn());
       offer.setDescription(request.getDescription());
-      offer.setImgPath(request.getImagePath());
 
 
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase =  offerDao.CreateOffer(offer);
@@ -72,10 +65,9 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
     offer.setName(request.getName());
     offer.setDescription(request.getDescription());
-    offer.setImage(request.getImagePath());
     offer.setDelivery(request.getDelivery());
     offer.setPickUp(request.getPickUp());
-    offer.setPickYourOwn(request.getPickYourOwn());
+    offer.setPickyourOwn(request.getPickYourOwn());
     offer.setPrice(request.getPrice());
     offer.setUnit(request.getUnit());
 
@@ -91,10 +83,9 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
         .setId(offer.getId())
         .setName(offer.getName())
         .setDescription(offer.getDescription())
-        .setImagePath(offer.getImage())
         .setDelivery(offer.isDelivery())
         .setPickUp(offer.isPickUp())
-        .setPickYourOwn(offer.isPickYourOwn())
+        .setPickYourOwn(offer.isPickyourOwn())
         .setPrice(offer.getPrice())
         .setUnit(offer.getUnit())
         .setFarmName(offer.getFarm().getName())
@@ -106,7 +97,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   /**
    * Getting the offers from the database(currently from the file context)
    * @param request is a Void object that contains null
-   * @param responseObserver the object returned to the Logic Tier
+   *                 @param responseObserver the object returned to the Logic Tier
    */
   @Override public void getOffers(Void request,
       StreamObserver<OfferItems> responseObserver)
@@ -119,7 +110,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     {
       Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
           .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-          .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+          .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).build();
       offersList.add(offerToSend);
     }
 
@@ -138,7 +129,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     Offer response = Offer.newBuilder().setId(offerFromDatabase.getId()).setName(offerFromDatabase.getName()).setQuantity(
             offerFromDatabase.getQuantity()).setUnit(offerFromDatabase.getUnit())
         .setPrice(offerFromDatabase.getPrice()).setDelivery(offerFromDatabase.isDelivery()).setPickUp(offerFromDatabase.isPickUp())
-        .setPickYourOwn(offerFromDatabase.isPickyourOwn()).setDescription(offerFromDatabase.getDescription()).setImagePath(offerFromDatabase.getImgPath()).build();
+        .setPickYourOwn(offerFromDatabase.isPickyourOwn()).setDescription(offerFromDatabase.getDescription()).build();
 
 
     responseObserver.onNext(response);
@@ -151,7 +142,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     {
         Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
             .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-            .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setImagePath(offer.getImgPath()).build();
+            .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).build();
         return offerToSend;
     }
 }

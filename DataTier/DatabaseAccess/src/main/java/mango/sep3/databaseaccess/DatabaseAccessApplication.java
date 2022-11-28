@@ -3,7 +3,6 @@ package mango.sep3.databaseaccess;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import mango.sep3.databaseaccess.DAOImplementations.FarmDAO;
-import mango.sep3.databaseaccess.FileData.FileContext;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

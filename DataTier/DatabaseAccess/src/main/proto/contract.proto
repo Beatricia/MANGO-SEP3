@@ -28,8 +28,8 @@ service UserService{
 }
 
 service OrderService{
-  rpc CreateOrderOffers(OrderOffersToCreate) returns(Void);
-  rpc CreateOrders(OrdersToCreate) returns(Void);
+  rpc CreateOrderOffers(OrderOffers) returns(Void);
+  rpc CreateOrders(Orders) returns(Void);
   rpc GetAllOrders(Text) returns(Orders);
   rpc GetOrderOffers(Text) returns(OrderOffers);
 }

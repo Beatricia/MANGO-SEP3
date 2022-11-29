@@ -8,4 +8,5 @@ public interface ICartService
     public Task<ICollection<CartOffer>> GetAllCartItemsAsync(string username);
     public Task DeleteAllCartOffersAsync(string username);
 
+    public Task DeleteCartOfferAsync(int cartItemId);
 }

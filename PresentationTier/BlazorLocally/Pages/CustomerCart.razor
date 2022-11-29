@@ -1,5 +1,5 @@
 ﻿@page "/CustomerCart"
-@attribute [Authorize(Roles = "customer")] 
+<!--@attribute [Authorize(Roles = "customer")]--> 
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
@@ -40,9 +40,15 @@
             <td>@cartOff.Quantity</td>
             <td>@cartOff.Offer.Name</td>
             <td>@cartOff.CollectionOption</td>
-            <td>Farm</td>
+            <td>@cartOff.Offer.FarmName</td>
             <td>@cartOff.Offer.Price</td>
-        </tr>
+                <td>
+                     <label @onclick="@(() => RemoveTodo(@cartOff.Id))" style="cursor:pointer; color: red; font-weight: bold">
+                                            @*A cross icon*@
+                                            &#x2717;
+                                        </label>
+                </td>
+                </tr>
         }
         </tbody>
     </table>
@@ -63,12 +69,12 @@
     {
         try
         {
-            cartOffers = await cartService.GetAllCartItemsAsync("Uafa");
+            cartOffers = await cartService.GetAllCartItemsAsync("customer");
             Console.WriteLine("The cart offers received: " + cartOffers);
 
             foreach (var cartOffer in cartOffers)
             {
-                totalPrice += cartOffer.Offer.Price;
+                totalPrice += (cartOffer.Offer.Price*cartOffer.Quantity);
             }
         }
         catch (Exception e)
@@ -80,12 +86,32 @@
 
     private async Task RemoveAll()
     {
-        await cartService.DeleteAllCartOffersAsync("Agata");
+        await cartService.DeleteAllCartOffersAsync("customer");
         cartOffers = null;
     }
 
     private async Task Order()
     {
+        await orderService.CreateOrderAsync();
+    }
+
+    private async void RemoveTodo(int cartItemId)
+    {
+        try
+        {
+            await cartService.DeleteCartOfferAsync(cartItemId);
+
+            <!--Removing the cart items from the view-->
+            var list = new List<CartOffer>(cartOffers!);
+            list.RemoveAll(cartItem => cartItem.Id == cartItemId);
+            cartOffers = list.AsEnumerable();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+        throw new NotImplementedException();
         await orderService.CreateOrderAsync();
     }
 

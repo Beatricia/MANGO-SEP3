@@ -62,4 +62,28 @@ public class CartLogic : ICartLogic
 
         await cartDao.DeleteAllCartOffersAsync(username);
     }
+
+    public async Task DeleteCartOfferAsync(int id)
+    {
+        CartOffer? existing = await cartDao.GetByIdAsync(id);
+
+        if (existing == null)
+        {
+            throw new Exception($"The cart item with {id} does now exist");
+        }
+
+        await cartDao.DeleteCartOfferAsync(id);
+    }
+
+    public async Task<CartOffer> GetCartOfferById(int id)
+    {
+        CartOffer? existing = await cartDao.GetByIdAsync(id);
+
+        if (existing == null)
+        {
+            throw new Exception($"The cart item with {id} does now exist");
+        }
+
+        return existing;
+    }
 }

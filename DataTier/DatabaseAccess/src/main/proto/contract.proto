@@ -38,6 +38,8 @@ service CartOfferService{
   rpc AddToCart(CartOffer) returns(Void);
   rpc GetAllCartOffers(Username) returns(CartOffers);
   rpc DeleteAllCartOffers(Username) returns(Void);
+  rpc GetById(Id) returns(CartOffer);
+  rpc DeleteCartOffer(Id) returns(Void);
 }
 
 message UserAuth{

@@ -61,4 +61,15 @@ public class CartHttpClient : ICartService
             throw new Exception(content);
         }
     }
+
+    public async Task DeleteCartOfferAsync(int cartItemId)
+    {
+        HttpResponseMessage response = await client.DeleteAsync($"/Cart/{cartItemId}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+    }
 }

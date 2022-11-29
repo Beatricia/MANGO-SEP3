@@ -1,5 +1,4 @@
 ﻿@page "/CustomerCart"
-<!--@attribute [Authorize(Roles = "customer")]--> 
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
@@ -14,14 +13,16 @@
 {
     <p>
         <em>Currently you have no cart items. For discovering for offers please go to 
-             <NavLink class="nav-link" href="DisplayOffers">
-                                    <span class="oi oi-list-rich" aria-hidden="true"></span> Our Offers
-                                </NavLink></em>
+            <NavLink class="nav-link" href="DisplayOffers">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Our Offers
+            </NavLink>
+        </em>
     </p>
 }
-<button class="removeAllBtn" @onclick="RemoveAll">EMPTY CART</button>
+
 @if (cartOffers != null)
 {
+    <button class="removeAllBtn" @onclick="RemoveAll">EMPTY CART</button>
 	 
     <table class="table">
         <thead>
@@ -31,6 +32,7 @@
             <th>Collect Option</th>
             <th>Farm</th>
             <th>Price</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -43,10 +45,11 @@
             <td>@cartOff.Offer.FarmName</td>
             <td>@cartOff.Offer.Price</td>
                 <td>
-                     <label @onclick="@(() => RemoveTodo(@cartOff.Id))" style="cursor:pointer; color: red; font-weight: bold">
+                    <label @onclick=
+                           "@(() => RemoveTodo(@cartOff.Id))" style="cursor:pointer; color: red; font-weight: bold">
                                             @*A cross icon*@
                                             &#x2717;
-                                        </label>
+                    </label>
                 </td>
                 </tr>
         }
@@ -99,20 +102,18 @@
     {
         try
         {
-            await cartService.DeleteCartOfferAsync(cartItemId);
 
             <!--Removing the cart items from the view-->
             var list = new List<CartOffer>(cartOffers!);
             list.RemoveAll(cartItem => cartItem.Id == cartItemId);
             cartOffers = list.AsEnumerable();
+            await cartService.DeleteCartOfferAsync(cartItemId);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             msg = e.Message;
         }
-        throw new NotImplementedException();
-        await orderService.CreateOrderAsync();
     }
 
 }

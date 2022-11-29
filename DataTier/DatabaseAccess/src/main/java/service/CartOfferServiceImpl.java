@@ -97,4 +97,34 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
   }
+
+  @Override public void getById(Id request,
+      StreamObserver<CartOffer> responseObserver) {
+    CartItem cartItem = cartOfferDAO.getById(request.getId());
+
+      CartOffer co = CartOffer.newBuilder()
+          .setId(cartItem.getCartItemId())
+          .setOfferId(cartItem.getOfferId().getId())
+          .setQuantity(cartItem.getQuantity())
+          .setCollectionOption(cartItem.getCollectionOption())
+          .setUsername(cartItem.getCustomer().getUsername())
+          .build();
+
+    responseObserver.onNext(co);
+    responseObserver.onCompleted();
+  }
+
+  /**
+   */
+  @Override  public void deleteCartOffer(Id request,
+      StreamObserver<Void> responseObserver) {
+   cartOfferDAO.deleteCartOffer(request.getId());
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+
+  }
+
+
+
 }

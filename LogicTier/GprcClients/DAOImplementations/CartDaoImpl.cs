@@ -1,6 +1,5 @@
 ﻿using Application.DAOInterfaces;
 using Shared.Models;
-using Offer = Shared.Models.Offer;
 
 namespace GprcClients.DAOImplementations;
 
@@ -19,7 +18,7 @@ public class CartDaoImpl : ICartDao
     {
         // wew need to convert the dto to a proto bc when calling it 
         // from the cartOfferServiceClient we need to insert a proto
-        var toAddCartOffer = new CartOffer
+        var toAddCartOffer = new global::CartOffer
         {
             OfferId = dto.OfferId,
             Quantity = dto.Quantity,
@@ -86,5 +85,50 @@ public class CartDaoImpl : ICartDao
         };
 
        await cartOfferServiceClient.DeleteAllCartOffersAsync(user);
+    }
+
+    public async Task<Shared.Models.CartOffer?> GetByIdAsync(int id)
+    {
+        var idBuff = new Id { Id_ = id };
+        global::CartOffer? existing = await cartOfferServiceClient.GetByIdAsync(idBuff);
+        // Getting the offers from the database as an OfferItem class from the buffer
+        OfferItems offersBuff = await offerServiceClient.GetOffersAsync(new Void());
+        Shared.Models.Offer off = new Shared.Models.Offer();
+        
+        //getting the offer by id
+        foreach (var offer in offersBuff.Offers)
+        {
+            if (offer.Id == existing.OfferId)
+            {
+                off.Id = offer.Id;
+                off.Delivery = offer.Delivery;
+                off.Name = offer.Name;
+                off.Price = offer.Price;
+            }
+        }
+        //converting to model
+        Shared.Models.CartOffer coModel = new Shared.Models.CartOffer()
+        {
+            Id = existing.Id,
+            Offer = off,
+            Quantity = existing.Quantity,
+            UserName = existing.Username,
+            CollectionOption = existing.CollectionOption
+        };
+
+        return await Task.FromResult(coModel);
+    }
+
+    public async Task DeleteCartOfferAsync(int id)
+    {
+        var idBuff = new Id { Id_ = id };
+        global::CartOffer? existing = await cartOfferServiceClient.GetByIdAsync(idBuff);
+        
+        if (existing == null)
+        {
+            throw new Exception($"The cart item with id {id} could not be found");
+        }
+        
+        cartOfferServiceClient.DeleteCartOfferAsync(idBuff);
     }
 }

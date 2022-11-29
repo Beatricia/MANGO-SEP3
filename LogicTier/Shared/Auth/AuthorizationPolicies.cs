@@ -11,10 +11,13 @@ public static class AuthorizationPolicies
         {
             //define our own policies below ---------------------------------------
             
-            /*
-            options.AddPolicy("MustBeTeacher", a =>
-                a.RequireAuthenticatedUser().RequireClaim("Role", "Teacher"));
-    
+            
+            options.AddPolicy("MustBeFarmer", a =>
+                a.RequireAuthenticatedUser().RequireClaim("Role", "farmer"));
+                
+                options.AddPolicy("MustBeCustomer", a =>
+                a.RequireAuthenticatedUser().RequireClaim("Role", "customer"));
+    /*
             options.AddPolicy("SecurityLevel2OrAbove", a =>
                 a.RequireAuthenticatedUser().RequireAssertion(context =>
                 {

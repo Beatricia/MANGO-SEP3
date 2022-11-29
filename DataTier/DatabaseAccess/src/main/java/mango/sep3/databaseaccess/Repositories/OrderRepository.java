@@ -9,5 +9,4 @@ import java.util.Collection;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer>
 {
-
 }

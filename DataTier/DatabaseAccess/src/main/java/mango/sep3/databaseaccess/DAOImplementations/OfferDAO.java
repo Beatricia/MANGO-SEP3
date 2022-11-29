@@ -30,7 +30,8 @@ public class OfferDAO implements OfferDaoInterface {
   @Override
     public Offer CreateOffer(Offer offer) {
         offer.setFarm(farmRepository.findByName(offer.getFarm().getName()));
-        return offerRepository.save(offer);
+        offer = offerRepository.save(offer);
+        return offer;
     }
 
   @Override

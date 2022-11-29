@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface OrderDaoInterface
 {
   void createOrderOffers(Collection<OrderOffer> orderOffers);
-  Collection<OrderOffer> getOrderOffers(String username);
+  Collection<OrderOffer> getOrderOffers(Order order);
   void createOrders(Collection<Order> orders);
   Collection<Order> getAllOrders(String username);
 }

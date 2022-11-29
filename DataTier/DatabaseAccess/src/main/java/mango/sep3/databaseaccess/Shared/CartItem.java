@@ -20,7 +20,7 @@ public class CartItem implements Serializable
   @Column(name = "quantity")
   private int quantity;
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
   @JoinColumn(name = "customer", referencedColumnName = "username")
   private Customer customer;
 

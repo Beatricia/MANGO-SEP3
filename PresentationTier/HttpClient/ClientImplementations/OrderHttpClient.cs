@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using Shared.Models;
@@ -7,16 +8,16 @@ namespace HttpClient.ClientImplementations;
 
 public class OrderHttpClient : IOrderService
 {
-    private readonly System.Net.Http.HttpClient client;
-
-    public OrderHttpClient(System.Net.Http.HttpClient client)
+    private System.Net.Http.HttpClient Client => apiAccess.HttpClient;
+    private readonly ApiAccess apiAccess;
+    public OrderHttpClient(ApiAccess apiAccess)
     {
-        this.client = client;
+        this.apiAccess = apiAccess;
     } 
     
-    public async Task CreateOrderAsync(string username)
+    public async Task CreateOrderAsync()
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/order", username);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/order",string.Empty);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -24,10 +25,10 @@ public class OrderHttpClient : IOrderService
         }
     }
 
-    public async Task<ICollection<Order>> GetAllOrdersAsync(string username)
+    public async Task<ICollection<Order>> GetAllOrdersAsync()
     {
         
-        HttpResponseMessage response = await client.GetAsync($"/order?username={username}");
+        HttpResponseMessage response = await Client.GetAsync("/order");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -38,9 +39,41 @@ public class OrderHttpClient : IOrderService
         {
             PropertyNameCaseInsensitive = true
         })!;
-        /*Offer offer1 = new Offer(1, "tomato", 1, "kg", 20.5, true, true, true, null, "sth");
-        Offer offer2 = new Offer(2, "onion", 1, "kg", 13.5, true, true, true, null, "sth");
-        Offer offer3 = new Offer(3, "milk", 1, "kg", 18.75, true, true, true, null, "sth");
+        /*
+        Offer offer1 = new Offer
+            {Id = 1,
+                Name = "tomato",
+                Delivery = true,
+                FarmName = "Happy Farm",
+                PickYourOwn = true,
+                PickUp = false,
+                Quantity = 3,
+                Unit = "kg",
+                Price = 20.5
+            };
+        Offer offer2 = new Offer
+        {Id = 1,
+            Name = "potato",
+            Delivery = true,
+            FarmName = "Happy Farm",
+            PickYourOwn = true,
+            PickUp = false,
+            Quantity = 3,
+            Unit = "kg",
+            Price = 20.5
+        };
+        Offer offer3 = new Offer
+        {Id = 1,
+            Name = "milk",
+            Delivery = true,
+            FarmName = "Happy Farm",
+            PickYourOwn = true,
+            PickUp = false,
+            Quantity = 3,
+            Unit = "kg",
+            Price = 20.5
+        };
+       
         OrderOffer orderItem1 = new OrderOffer
         {
             Id = 1,

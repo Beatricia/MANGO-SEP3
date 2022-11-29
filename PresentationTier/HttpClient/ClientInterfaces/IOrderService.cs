@@ -4,6 +4,6 @@ namespace HttpClient.ClientInterfaces;
 
 public interface IOrderService
 {
-    Task CreateOrderAsync(string username);
-    Task<ICollection<Order>> GetAllOrdersAsync(string username);
+    Task CreateOrderAsync();
+    Task<ICollection<Order>> GetAllOrdersAsync();
 }

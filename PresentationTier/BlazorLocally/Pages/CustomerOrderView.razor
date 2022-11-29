@@ -1,17 +1,15 @@
 ﻿@page "/CustomerOrderView"
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
-@using Microsoft.AspNetCore.Components.Authorization
+@using System.Runtime.Versioning
 @inject IOrderService orderService
 @inject IFarmService farmService
 
-<AuthorizeView>
     <div class="title">
         <h1>Orders</h1>
     </div>
     @if (orders == null)
     {
-        <span>Loading..</span>
     }
     else if (orders.Any())
     {
@@ -24,7 +22,7 @@
                     {
                         <div class="rowDiv">
                             <div class="nameCell">@order.FarmName</div>
-                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="phoneCell">(+45) @farms[order.FarmName].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
@@ -32,7 +30,7 @@
                         </div>
                             <Table class="detailTable">
                             <th class="AddressRow">
-                                @GetFarmByName(order.FarmName).Address.ToString()
+                                @farms[order.FarmName].Address.ToString()
                             </th>
                             @foreach (var item in order.OrderOffers)
                             {
@@ -55,7 +53,7 @@
                     {
                         <div class="rowDiv">
                             <div class="nameCell">@order.FarmName</div>
-                            <div class="phoneCell">@GetFarmByName(order.FarmName).Phone</div>
+                            <div class="phoneCell">(+45) @farms[order.FarmName].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
@@ -76,24 +74,38 @@
             </div>
         }
     }
-</AuthorizeView>
 
 @code {
+    
     private IEnumerable<Order>? orders;
-    private List<Order> deliveryOrders = new List<Order>();
-    private List<Order> pickUpOrders = new List<Order>();
+    private List<Order> deliveryOrders = new();
+    private List<Order> pickUpOrders = new();
     private string msg = "";
     private string username;
-    
+    private Dictionary<string,Farm> farms = new ();
+
     protected override async Task OnInitializedAsync()
     {
-      //  var authstate = await GetAuthenticationState.GetAuthenticationStateAsync();
-       // var principal = authstate.User;
-       // username = (from claim in principal.Claims where claim.Type == "Username" select claim.Value).FirstOrDefault();
-
         try
         {
-            orders = await orderService.GetAllOrdersAsync(username);
+            
+            orders = await orderService.GetAllOrdersAsync();
+            if (orders != null)
+            {
+                List<string> farmNames = new();
+                foreach (var order in orders)
+                {
+                    farmNames.Add(order.FarmName);
+                }
+                foreach (var farmName in farmNames)
+                {
+                    if (!farms.ContainsKey(farmName))
+                    { 
+                        Farm farm = await farmService.GetFarmByNameAsync(farmName);
+                        farms.Add(farmName,farm);
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
@@ -101,24 +113,24 @@
             msg = e.Message;
         }
 
-        foreach (var order in orders)
+        if (orders != null)
         {
-            if (order.CollectionOption.Equals("Delivery"))
-            {
-                deliveryOrders.Add(order);
-            }
-            else if(order.CollectionOption.Equals("PickUp"))
-            {
-                pickUpOrders.Add(order);
-            }
-        }
-    }
+            foreach (var order in orders)
+                    {
+                        if (order.CollectionOption.Equals("Delivery"))
+                        {
+                            deliveryOrders.Add(order);
+                        }
+                        else if(order.CollectionOption.Equals("PickUp"))
+                        {
+                            pickUpOrders.Add(order);
+                        }
+                    }
 
-    private Farm GetFarmByName(string farmName)
-    {
-        Farm farm = farmService.GetFarmByNameAsync(farmName).GetAwaiter().GetResult();
-        return farm;
+        }
+        
     }
+    
 
     private double TotalPrice(List<OrderOffer> items)
     {

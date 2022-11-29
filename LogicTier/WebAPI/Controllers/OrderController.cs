@@ -2,12 +2,13 @@ using Application.LogicInterfaces;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
+using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrderController : ControllerBase
+public class OrderController : LocallyController
 {
     private readonly IOrderLogic orderLogic;
 
@@ -17,8 +18,9 @@ public class OrderController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(string username)
+    public async Task<IActionResult> CreateAsync()
     {
+        string? username = LoggedInUsername;
         try
         {
             await orderLogic.CreateOrderAsync(username);
@@ -32,8 +34,9 @@ public class OrderController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAsync([FromQuery]string username)
+    public async Task<IActionResult> GetAsync()
     {
+        string? username = LoggedInUsername;
         try
         {
             var created = await orderLogic.GetAllOrders(username);

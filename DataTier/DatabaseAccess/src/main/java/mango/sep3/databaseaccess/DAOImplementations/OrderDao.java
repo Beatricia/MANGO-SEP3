@@ -8,6 +8,7 @@ import mango.sep3.databaseaccess.Shared.Order;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +43,7 @@ public class OrderDao implements OrderDaoInterface
     return orderOfferRepository.findAllByOrder(order);
   }
 
+  @Transactional  //we put this in order to be able to delete the cart items!
   @Override public void createOrders(Collection<Order> orders)
   {
     for (var order : orders)
@@ -64,6 +66,7 @@ public class OrderDao implements OrderDaoInterface
     return orderRepository.findAllById(order_ids);
   }
 
+
   private void createOrderOffersWithOrder(Order order)
   {
     Customer customer = customerRepository.findById(order.getUsername()).orElse(null);
@@ -80,7 +83,7 @@ public class OrderDao implements OrderDaoInterface
       orderOfferRepository.saveAndFlush(orderOffer);
 
       //remove the cartItem from the order object
-      //order.getCartItems().remove(cartOffer);
     }
+    cartRepository.deleteAllByCustomer(customer);
   }
 }

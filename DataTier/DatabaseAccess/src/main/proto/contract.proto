@@ -105,6 +105,7 @@ message Order{
   bool isDone = 3;
   string farmName = 4;
   string collectionOption = 5;
+  string username = 6;
 }
 message Orders{
   repeated Order orders = 1;

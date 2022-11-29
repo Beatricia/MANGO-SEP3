@@ -20,9 +20,10 @@ public class OrderDaoImpl : IOrderDao
     {
         this.orderService = orderService;
     }
+   
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
-        OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
+        /* OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
 
         try
         {
@@ -32,7 +33,7 @@ public class OrderDaoImpl : IOrderDao
         {
             Console.WriteLine(e);
             throw;
-        }
+        }*/
     }
     
 
@@ -135,7 +136,7 @@ public class OrderDaoImpl : IOrderDao
             {
                 OrderOffers_ = { order.OrderOffers }
             };
-            List<Shared.Models.OrderOffer> orderOffersList = ConvertOrderOffersFromGrpc(orderOffers).ToList();
+           // List<Shared.Models.OrderOffer> orderOffersList = ConvertOrderOffersFromGrpc(orderOffers).ToList();
 
             var item = new Shared.Models.Order
             {
@@ -143,7 +144,7 @@ public class OrderDaoImpl : IOrderDao
                 CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
-                OrderOffers = orderOffersList
+                //OrderOffers = orderOffersList
             };
             listToReturn.Add(item);
         }
@@ -188,7 +189,8 @@ public class OrderDaoImpl : IOrderDao
             Quantity = offer.Quantity,
             Unit = offer.Unit,
             PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn
+            PickYourOwn = offer.PickYourOwn,
+            FarmName = offer.FarmName
         };
         return offerToReturn;
     }
@@ -201,7 +203,8 @@ public class OrderDaoImpl : IOrderDao
         foreach (var order in orders)
         {
            
-            OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
+           // OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
+           
 
             Console.WriteLine("Order");
             Console.WriteLine("Farm name: " + order.FarmName);
@@ -212,9 +215,10 @@ public class OrderDaoImpl : IOrderDao
                 CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
-                
+                Username = order.Username,
+                OrderOffers = { new OrderOffer() },
             };
-            orderGrpc.OrderOffers.AddRange(orderOffersGrpc.OrderOffers_);
+          //  orderGrpc.OrderOffers.AddRange(orderOffersGrpc.OrderOffers_);
             ordersListGrpc.Add(orderGrpc);
         }
 

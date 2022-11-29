@@ -99,6 +99,7 @@ public class OfferDaoImpl : IOfferDao
             PickUp = offer.PickUp,
             PickYourOwn = offer.PickYourOwn,
             Description = offer.Description,
+            FarmName = offer.FarmName
         };
         return offerToSend;
     }

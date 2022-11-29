@@ -1,10 +1,8 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
-import mango.sep3.databaseaccess.Repositories.CustomerRepository;
-import mango.sep3.databaseaccess.Repositories.OrderOfferRepository;
-import mango.sep3.databaseaccess.Repositories.OrderRepository;
-import mango.sep3.databaseaccess.Repositories.UserRepository;
+import mango.sep3.databaseaccess.Repositories.*;
+import mango.sep3.databaseaccess.Shared.CartItem;
 import mango.sep3.databaseaccess.Shared.Customer;
 import mango.sep3.databaseaccess.Shared.Order;
 import mango.sep3.databaseaccess.Shared.OrderOffer;
@@ -15,19 +13,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 @Repository
 public class OrderDao implements OrderDaoInterface
 {
   private OrderRepository orderRepository;
   private OrderOfferRepository orderOfferRepository;
   private CustomerRepository customerRepository;
+  private CartRepository cartRepository;
 
   @Autowired
-  public OrderDao(OrderRepository orderRepository, OrderOfferRepository orderOfferRepository,CustomerRepository customerRepository)
+  public OrderDao(OrderRepository orderRepository, OrderOfferRepository orderOfferRepository,
+      CustomerRepository customerRepository, CartRepository cartRepository)
   {
     this.orderRepository = orderRepository;
     this.orderOfferRepository = orderOfferRepository;
     this.customerRepository = customerRepository;
+    this.cartRepository = cartRepository;
   }
 
   @Override public void createOrderOffers(Collection<OrderOffer> orderOffers)
@@ -37,26 +39,16 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public Collection<OrderOffer> getOrderOffers(String username)
   {
-    return orderOfferRepository.findAllByUsername(username);
+   // return orderOfferRepository.findAllByUsername(username);
+    return null;
   }
 
   @Override public void createOrders(Collection<Order> orders)
   {
-    for (Order order: orders)
+    for (var order : orders)
     {
-      Customer customer = customerRepository.findById(order.getOrderOffers().iterator().next().getUsername()).orElse(null);
-      order.setUsername(customer);
-    }
-    orderRepository.saveAllAndFlush(orders);
-
-    List<Order> ordersFromDatabase = orderRepository.findAllByUsername(orders.iterator().next().getUsername().getUsername());
-
-    for (Order order:ordersFromDatabase)
-    {
-      for (OrderOffer offer: order.getOrderOffers())
-      {
-        orderOfferRepository.updateOrder(offer.getId(),order);
-      }
+      order = orderRepository.saveAndFlush(order); //set up the object to have the generated id
+      createOrderOffersWithOrder(order);
     }
   }
 
@@ -72,5 +64,25 @@ public class OrderDao implements OrderDaoInterface
       order_ids.add(orderOffer.getOrder().getId());
     }
     return orderRepository.findAllById(order_ids);
+  }
+
+  private void createOrderOffersWithOrder(Order order)
+  {
+    Customer customer = customerRepository.findById(order.getUsername()).orElse(null);
+    Collection<CartItem> cartItemSet = cartRepository.findAllByCustomer(customer);
+    for (var cartOffer : cartItemSet)
+    {
+      //create order offer
+      OrderOffer orderOffer = new OrderOffer();
+      orderOffer.setOffer(cartOffer.getOfferId());
+      orderOffer.setCollectionOption(cartOffer.getCollectionOption());
+      orderOffer.setQuantity(cartOffer.getQuantity());
+      orderOffer.setOrder(order);
+      orderOffer.setUsername(order.getUsername());
+      orderOfferRepository.saveAndFlush(orderOffer);
+
+      //remove the cartItem from the order object
+      order.getCartItems().remove(cartOffer);
+    }
   }
 }

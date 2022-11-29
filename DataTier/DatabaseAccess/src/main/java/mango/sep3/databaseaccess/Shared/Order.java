@@ -24,22 +24,17 @@ public class Order
   @Column
   private String collectionOption;
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-  @JoinColumn(name="customer", nullable=true, referencedColumnName = "username")
-  private Customer username;
+  @Transient
+  private String username;
 
-  public Customer getUsername()
+  @Transient
+  private Set<CartItem> cartItems;
+
+  public String getUsername()
   {
     return username;
   }
-  public void setUsername(Customer username)
-{
-  this.username = username;
-}
-  public int getId()
-  {
-    return id;
-  }
+
 
   public void setId(int id)
   {
@@ -84,5 +79,22 @@ public class Order
   public void setCollectionOption(String collectionOption)
   {
     this.collectionOption = collectionOption;
+  }
+  public void setUsername(String username)
+  {
+    this.username = username;
+  }
+  public int getId()
+  {
+    return id;
+  }
+  public Set<CartItem> getCartItems()
+  {
+    return cartItems;
+  }
+
+  public void setCartItems(Set<CartItem> cartItems)
+  {
+    this.cartItems = cartItems;
   }
 }

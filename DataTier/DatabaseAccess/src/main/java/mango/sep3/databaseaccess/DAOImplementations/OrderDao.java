@@ -37,24 +37,22 @@ public class OrderDao implements OrderDaoInterface
     orderOfferRepository.saveAll(orderOffers);
   }
 
-  @Override public Collection<OrderOffer> getOrderOffers(String username)
+  @Override public Collection<OrderOffer> getOrderOffers(Order order)
   {
-   // return orderOfferRepository.findAllByUsername(username);
-    return null;
+    return orderOfferRepository.findAllByOrder(order);
   }
 
   @Override public void createOrders(Collection<Order> orders)
   {
     for (var order : orders)
     {
-      order = orderRepository.saveAndFlush(order); //set up the object to have the generated id
+      order = orderRepository.saveAndFlush(order);//set up the object to have the generated id
       createOrderOffersWithOrder(order);
     }
   }
 
   @Override public Collection<Order> getAllOrders(String username)
   {
-
     Collection<OrderOffer> orderOffers = orderOfferRepository.findAllByUsername(username);
 
     List<Integer> order_ids = new ArrayList<>();
@@ -82,7 +80,7 @@ public class OrderDao implements OrderDaoInterface
       orderOfferRepository.saveAndFlush(orderOffer);
 
       //remove the cartItem from the order object
-      order.getCartItems().remove(cartOffer);
+      //order.getCartItems().remove(cartOffer);
     }
   }
 }

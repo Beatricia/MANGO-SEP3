@@ -113,7 +113,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     {
       Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
           .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-          .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).build();
+          .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setFarmName(offer.getFarm().getName()).build();
       offersList.add(offerToSend);
     }
 
@@ -145,7 +145,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     {
         Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
             .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-            .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).build();
+            .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setFarmName(offer.getFarm().getName()).build();
         return offerToSend;
     }
 }

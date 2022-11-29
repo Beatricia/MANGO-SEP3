@@ -12,7 +12,7 @@ public class OrderLogic : IOrderLogic
     private readonly ICartDao cartDao;
     private readonly IOfferDao offerDao;
 
-    public OrderLogic(IOrderDao orderDao,ICartDao cartDao,IOfferDao offerDao)
+    public OrderLogic(IOrderDao orderDao, ICartDao cartDao, IOfferDao offerDao)
     {
         this.orderDao = orderDao;
         this.cartDao = cartDao;
@@ -22,34 +22,7 @@ public class OrderLogic : IOrderLogic
     public async Task CreateOrderAsync(string username)
     {
         ICollection<CartOffer> cartOffers = await cartDao.GetAllCartItemsAsync(username);
-        
-        Console.WriteLine(cartOffers.First().Offer.Name);
-        List<OrderOffer> orderOffers = new List<OrderOffer>();
-        
-        /*
-        //converting cartItems into OrderOffers
-        foreach (var cartOffer in cartOffers)
-        {
-            Offer offer = await offerDao.GetOfferByIdAsync(cartOffer.Id);
-            OrderOffer orderOffer = new OrderOffer
-            {
-                Offer = offer,
-                Quantity = cartOffer.Quantity,
-                Username = cartOffer.UserName,
-                CollectionOption = cartOffer.CollectionOption,
-            };
-            orderOffers.Add(orderOffer);
-        }
-        */
 
-        /*
-        //adding OrderItems to database
-        await orderDao.CreateOrderOffersAsync(orderOffers);
-        IEnumerable<OrderOffer> orderOffersList = await orderDao.GetOrdersOffersAsync(username);
-
-        Console.WriteLine(JsonSerializer.Serialize(orderOffersList));
-        
-*/
         //sorting the cartItems to get types of orders
         var orders = from cartOffer in cartOffers
             group cartOffer by cartOffer.Offer.FarmName
@@ -62,16 +35,15 @@ public class OrderLogic : IOrderLogic
         {
             List<CartOffer> deliveryOffers =
                 order.CartOffer.Where(offer => offer.CollectionOption == "delivery").ToList();
-            List<CartOffer> pickUpOffers = 
+            List<CartOffer> pickUpOffers =
                 order.CartOffer.Where(offer => offer.CollectionOption == "pickUp").ToList();
-            
-            Console.WriteLine("Farm name in Logic:" + order.FarmName);
-            
+
             if (deliveryOffers.Any())
             {
                 Order orderToSend = new Order
                 {
-                   //CartOffers = deliveryOffers,
+                    //---> we don't really need to assign CartOffers since we use the username to get them in the db
+                    //CartOffers = deliveryOffers,
                     IsDone = false,
                     FarmName = order.FarmName,
                     CollectionOption = "delivery",
@@ -93,10 +65,7 @@ public class OrderLogic : IOrderLogic
                 ordersToSend.Add(orderToSend);
             }
         }
-        //now all orders are created and sorted but we still need to create the order offers (assign the order_ids to it)
-        //in the database
-
-        await orderDao.CreateOrdersAsync(ordersToSend); 
+        await orderDao.CreateOrdersAsync(ordersToSend);
     }
 
     public Task<IEnumerable<Order>> GetAllOrders(string username)

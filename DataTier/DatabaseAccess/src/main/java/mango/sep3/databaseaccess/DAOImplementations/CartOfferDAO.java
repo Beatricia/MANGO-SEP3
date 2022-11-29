@@ -21,7 +21,7 @@ public class CartOfferDAO implements CartOfferInterface
   }
 
   @Override public void createCartOffer(CartItem cartItem){
-    cartRepository.saveAndFlush(cartItem);
+    cartItem = cartRepository.saveAndFlush(cartItem);
   }
 
   @Override public Collection<CartItem> getAllCartOffers(Customer customer){

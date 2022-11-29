@@ -37,6 +37,7 @@ public class OfferLogic : IOfferLogic
 
         Offer offerToSend = new Offer
         {
+            FarmName = dto.FarmName,
             Name = dto.Name,
             Quantity = dto.Quantity,
             Unit = dto.Unit,
@@ -49,7 +50,6 @@ public class OfferLogic : IOfferLogic
             {
                 RelativeUrl = ""
             },
-            FarmName = dto.FarmName
         };
 
         var created = await offerDao.CreateAsync(offerToSend);

@@ -15,6 +15,7 @@ import java.util.List;
 public interface OrderOfferRepository extends JpaRepository<OrderOffer, Integer>
 {
   Collection<OrderOffer> findAllByUsername(String username);
+  Collection<OrderOffer> findAllByOrder(Order order);
 
   @Modifying
   @Query("update OrderOffer orderOffer set orderOffer.order = :order where orderOffer.id = :id")

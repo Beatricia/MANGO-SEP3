@@ -59,6 +59,12 @@ public class CartDaoImpl : ICartDao
                     off.Delivery = offer.Delivery;
                     off.Name = offer.Name;
                     off.Price = offer.Price;
+                    off.FarmName = offer.FarmName;
+                    off.Description = offer.Description;
+                    off.Quantity = offer.Quantity;
+                    off.Unit = offer.Unit;
+                    off.PickYourOwn = offer.PickYourOwn;
+                    off.PickUp = offer.PickUp;
                 }
             }
             
@@ -104,6 +110,12 @@ public class CartDaoImpl : ICartDao
                 off.Delivery = offer.Delivery;
                 off.Name = offer.Name;
                 off.Price = offer.Price;
+                off.FarmName = offer.FarmName;
+                off.Description = offer.Description;
+                off.Quantity = offer.Quantity;
+                off.Unit = offer.Unit;
+                off.PickYourOwn = offer.PickYourOwn;
+                off.PickUp = offer.PickUp;
             }
         }
         //converting to model

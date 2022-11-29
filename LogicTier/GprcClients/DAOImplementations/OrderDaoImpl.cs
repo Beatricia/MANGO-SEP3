@@ -20,7 +20,8 @@ public class OrderDaoImpl : IOrderDao
     {
         this.orderService = orderService;
     }
-   
+
+    //TODO check if this method is actually needed
     public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
     {
         /* OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
@@ -35,7 +36,7 @@ public class OrderDaoImpl : IOrderDao
             throw;
         }*/
     }
-    
+
 
     public async Task<IEnumerable<Shared.Models.Order>> GetAllOrdersAsync(string username)
     {
@@ -67,7 +68,6 @@ public class OrderDaoImpl : IOrderDao
             throw;
         }
     }
-
 
     public async Task<IEnumerable<Shared.Models.OrderOffer>> GetOrdersOffersAsync(string username)
     {
@@ -136,7 +136,7 @@ public class OrderDaoImpl : IOrderDao
             {
                 OrderOffers_ = { order.OrderOffers }
             };
-           // List<Shared.Models.OrderOffer> orderOffersList = ConvertOrderOffersFromGrpc(orderOffers).ToList();
+            List<Shared.Models.OrderOffer> orderOffersList = ConvertOrderOffersFromGrpc(orderOffers).ToList();
 
             var item = new Shared.Models.Order
             {
@@ -144,72 +144,27 @@ public class OrderDaoImpl : IOrderDao
                 CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
-                //OrderOffers = orderOffersList
+                OrderOffers = orderOffersList
             };
             listToReturn.Add(item);
         }
 
         return listToReturn;
     }
-    
-    private OrderOffers ConvertOrderOffersToGrpc(List<Shared.Models.OrderOffer> orderOffers)
-    {
-        List<OrderOffer> orderOffersGrpcList = new List<OrderOffer>();
 
-        foreach (var orderOffer in orderOffers)
-        {
-            var item = new OrderOffer
-            {
-                Id = orderOffer.Id,
-                Quantity = orderOffer.Quantity,
-                Username = orderOffer.Username,
-                CollectionOption = orderOffer.CollectionOption,
-                Offer = ConvertOfferToGrpc(orderOffer.Offer)
-            };
-            orderOffersGrpcList.Add(item);
-        }
-
-        OrderOffers orderOffersGprc = new OrderOffers
-        {
-            OrderOffers_ = { orderOffersGrpcList }
-        };
-        return orderOffersGprc;
-    }
-    
-
-    private global::Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
-    {
-        var offerToReturn = new global::Offer
-        {
-            Name = offer.Name,
-            Delivery = offer.Delivery,
-            Description = offer.Description,
-            Id = offer.Id,
-            Price = offer.Price,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            FarmName = offer.FarmName
-        };
-        return offerToReturn;
-    }
-    
-    
     private Orders ConvertOrdersToGrpc(IEnumerable<Shared.Models.Order> orders)
     {
-        List<global::Order> ordersListGrpc = new ();
+        List<global::Order> ordersListGrpc = new();
 
         foreach (var order in orders)
         {
-           
-           // OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
-           
+            // OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
+
 
             Console.WriteLine("Order");
             Console.WriteLine("Farm name: " + order.FarmName);
-            
-            
+
+
             var orderGrpc = new global::Order()
             {
                 CollectionOption = order.CollectionOption,
@@ -218,11 +173,11 @@ public class OrderDaoImpl : IOrderDao
                 Username = order.Username,
                 OrderOffers = { new OrderOffer() },
             };
-          //  orderGrpc.OrderOffers.AddRange(orderOffersGrpc.OrderOffers_);
+            //  orderGrpc.OrderOffers.AddRange(orderOffersGrpc.OrderOffers_);
             ordersListGrpc.Add(orderGrpc);
         }
 
-        Orders ordersToReturn = new ()
+        Orders ordersToReturn = new()
         {
             Orders_ = { ordersListGrpc }
         };

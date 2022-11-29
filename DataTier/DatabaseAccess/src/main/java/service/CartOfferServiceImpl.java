@@ -98,7 +98,7 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
     responseObserver.onCompleted();
   }
 
-  @Override public void getById(Id request,
+   public void getById(Id request,
       StreamObserver<CartOffer> responseObserver) {
     CartItem cartItem = cartOfferDAO.getById(request.getId());
 
@@ -116,7 +116,7 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
 
   /**
    */
-  @Override  public void deleteCartOffer(Id request,
+ public void deleteCartOffer(Id request,
       StreamObserver<Void> responseObserver) {
    cartOfferDAO.deleteCartOffer(request.getId());
 

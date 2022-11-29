@@ -42,11 +42,12 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 
   }
 
+  //TODO check if we actually need this method
   @Override public void getOrderOffers(Text request,
       StreamObserver<OrderOffers> responseObserver)
   {
 
-    Collection<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = orderDao.getOrderOffers(
+    /*Collection<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = orderDao.getOrderOffers(
         request.getText());
 
     if (orderOffers == null)
@@ -58,7 +59,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     OrderOffers orderOffersResponse = convertOrderOffersToGrpc(orderOffers);
 
     responseObserver.onNext(orderOffersResponse);
-    responseObserver.onCompleted();
+    responseObserver.onCompleted();*/
   }
 
   @Override public void createOrders(Orders request,
@@ -108,6 +109,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
       item.setDone(order.getIsDone());
       item.setFarmName(order.getFarmName());
       item.setOrderOffers(orderOffersSet);
+      item.setUsername(order.getUsername());
 
       listToReturn.add(item);
     }
@@ -127,7 +129,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
       item.setId(orderOffer.getId());
       item.setCollectionOption(orderOffer.getCollectionOption());
       item.setOffer(convertOfferFromGrpc(orderOffer.getOffer()));
-      //todo might need to add setOrder here
 
       orderOffers.add(item);
     }
@@ -152,29 +153,12 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
           mango.sep3.databaseaccess.protobuf.OrderOffer.newBuilder()
               .setId(item.getId()).setOffer(offer)
               .setQuantity(item.getQuantity())
-              .setCollectionOption(item.getCollectionOption()).setOffer(offer)
+              .setCollectionOption(item.getCollectionOption())
+              .setOffer(offer)
               .build());
     }
 
     return OrderOffers.newBuilder().addAllOrderOffers(orderOfferList).build();
-  }
-
-  private Collection<mango.sep3.databaseaccess.Shared.OrderOffer> ConvertOrderOffersToCreateFromGrpc(OrderOffers request)
-  {
-    List<OrderOffer> orderOffersList = request.getOrderOffersList();
-
-    List<mango.sep3.databaseaccess.Shared.OrderOffer> listToReturn = new ArrayList<>();
-    for (var orderOffer : orderOffersList)
-    {
-      var item = new mango.sep3.databaseaccess.Shared.OrderOffer();
-      item.setOffer(convertOfferFromGrpc(orderOffer.getOffer()));
-      item.setQuantity(orderOffer.getQuantity());
-      item.setUsername(orderOffer.getUsername());
-      item.setCollectionOption(orderOffer.getCollectionOption());
-      listToReturn.add(item);
-    }
-
-    return listToReturn;
   }
 
   private mango.sep3.databaseaccess.Shared.Offer convertOfferFromGrpc(
@@ -205,21 +189,23 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     for (var order : orders)
     {
       OrderOffers orderOffersGrpc = convertOrderOffersToGrpc(
-          order.getOrderOffers());
+          orderDao.getOrderOffers(order));
       Set<mango.sep3.databaseaccess.protobuf.OrderOffer> orderOffersToAdd = Sets.newHashSet(
           orderOffersGrpc.getOrderOffersList());
 
-      var orderGrpc = Order.newBuilder().setId(order.getId())
+      var orderGrpc = Order.newBuilder()
+          .setId(order.getId())
           .setCollectionOption(order.getCollectionOption())
           .setFarmName(order.getFarmName()).addAllOrderOffers(orderOffersToAdd)
-          .setIsDone(order.isDone()).build();
+          .setIsDone(order.isDone())
+          .setUsername(order.getOrderOffers().stream().findFirst().get().getUsername())
+          .build();
 
       ordersListGrpc.add(orderGrpc);
     }
-    Orders ordersToReturn = Orders.newBuilder().addAllOrders(ordersListGrpc)
-        .build();
 
-    return ordersToReturn;
+    return Orders.newBuilder().addAllOrders(ordersListGrpc)
+        .build();
   }
 }
 

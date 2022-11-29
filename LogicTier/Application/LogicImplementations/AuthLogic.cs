@@ -98,7 +98,16 @@ public class AuthLogic : IAuthLogic
         }
 
         User? user = await userDao.GetCustomer(username);
+        if (user != null)
+        {
+           user.Role = "customer"; 
+        }
         user ??= await userDao.GetFarmer(username);
+        if (user != null)
+        {
+            user.Role??= "farmer";
+        }
+        
 
         return user;
     }

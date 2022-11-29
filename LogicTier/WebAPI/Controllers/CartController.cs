@@ -7,7 +7,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
+[Authorize(Roles = "customer")]
 public class CartController : ControllerBase
 {
     private readonly ICartLogic cartLogic;

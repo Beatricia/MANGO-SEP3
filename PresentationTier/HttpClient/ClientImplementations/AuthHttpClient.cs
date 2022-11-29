@@ -45,7 +45,10 @@ public class AuthHttpClient : IAuthService
 
 
         await _access.LoginAsync(loginResponse.Token);
-        
+
+        ClaimsPrincipal claimsPrincipal = CreateClaimsPrincipal();
+        OnAuthStateChanged.Invoke(claimsPrincipal);
+
         //was returning Login response but isnt User better?
         return loginResponse.User;
     }

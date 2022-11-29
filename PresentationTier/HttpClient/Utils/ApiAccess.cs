@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using HttpClient = System.Net.Http.HttpClient;
 
 /// <summary>

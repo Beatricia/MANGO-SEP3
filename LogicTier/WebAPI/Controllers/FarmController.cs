@@ -10,7 +10,8 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
+[Authorize(Roles = "farmer")]
+
 public class FarmController : LocallyController
 {
     private readonly IFarmLogic farmLogic;

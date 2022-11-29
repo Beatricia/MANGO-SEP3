@@ -15,7 +15,7 @@ public class UserController : ControllerBase
         this.userLogic = userLogic;
     }
 
-    [HttpGet("customer")]
+    [HttpGet("customer"), Authorize(Roles = "farmer")]
     public async Task<IActionResult> GetAsync([FromQuery] string username)
     {
         try

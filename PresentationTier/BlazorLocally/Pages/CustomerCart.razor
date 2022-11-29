@@ -1,4 +1,6 @@
 ﻿@page "/CustomerCart"
+@attribute [Authorize(Roles = "customer")] 
+
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @inject ICartService cartService;

@@ -24,6 +24,18 @@ public class Order
   @Column
   private String collectionOption;
 
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @JoinColumn(name="customer", nullable=true, referencedColumnName = "username")
+  private Customer username;
+
+  public Customer getUsername()
+  {
+    return username;
+  }
+  public void setUsername(Customer username)
+{
+  this.username = username;
+}
   public int getId()
   {
     return id;

@@ -29,6 +29,11 @@ public class Customer implements Serializable
   @JoinColumn
   private Set<CartItem> cartItems;
 
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn
+  private Set<Order> orders;
+
+
   public Customer(String username, String firstName, String lastName,
       String phone)
   {

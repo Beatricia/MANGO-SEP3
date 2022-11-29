@@ -1,4 +1,5 @@
 ﻿using Application.LogicInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Models;
@@ -9,6 +10,8 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Roles = "farmer")]
+
 public class FarmController : LocallyController
 {
     private readonly IFarmLogic farmLogic;

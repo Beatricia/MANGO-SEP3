@@ -1,4 +1,6 @@
 ﻿@page "/CreateOffer"
+@attribute [Authorize(Roles = "farmer")] 
+
 @using Components
 @using global::Shared.DTOs
 @inject IOfferService httpClient

@@ -1,5 +1,6 @@
 using Application.LogicInterfaces;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
 using WebAPI.Controllers.Base;
@@ -8,6 +9,8 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
+public class OrderController : ControllerBase
 public class OrderController : LocallyController
 {
     private readonly IOrderLogic orderLogic;

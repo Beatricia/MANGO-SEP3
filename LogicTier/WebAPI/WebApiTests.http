@@ -1,0 +1,10 @@
+// log in as Farmer
+POST https://localhost:7086/auth/login
+Content-Type: application/json
+
+{ "Username" : "farmer", "Password" : "12345678" }
+
+###
+
+GET https://localhost:7086/farm/
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiI4Y2RiMDMxNC0zZWZlLTQzMmYtYWVlMC1hODYzZTYxMDRkZDAiLCJpYXQiOiIxMS8yOS8yMDIyIDE6MTA6MTggUE0iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZmFybWVyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiZmFybWVyIiwiZXhwIjoxNjY5NzMxMDE4LCJpc3MiOiJKV1RBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkpXVFNlcnZpY2VCbGF6b3JXYXNtQ2xpZW50In0.TjqN3WsEB1SGaxXDM8VV1xyG18uQE22B2tFeZrEGI1FNdMhEqvYbk17y12Wrc_IWuoM_o99bZLrLolycvbHtEg

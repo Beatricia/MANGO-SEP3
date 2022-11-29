@@ -56,6 +56,7 @@ public class AuthLogic : IAuthLogic
                 Username = dto.Username,
                 LastName = "",
                 FirstName = "",
+                Role = "farmer",
             };
             return await userDao.RegisterFarmer(farmer);
         }
@@ -64,6 +65,7 @@ public class AuthLogic : IAuthLogic
             Customer customer = new Customer()
             {
                 Username = dto.Username,
+                Role = "customer"
             };
             return await userDao.RegisterCustomer(customer);
         }
@@ -96,7 +98,16 @@ public class AuthLogic : IAuthLogic
         }
 
         User? user = await userDao.GetCustomer(username);
+        if (user != null)
+        {
+           user.Role = "customer"; 
+        }
         user ??= await userDao.GetFarmer(username);
+        if (user != null)
+        {
+            user.Role??= "farmer";
+        }
+        
 
         return user;
     }

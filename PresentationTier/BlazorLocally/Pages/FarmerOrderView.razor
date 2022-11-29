@@ -1,4 +1,6 @@
 ﻿@page "/FarmerOrderView"
+@attribute [Authorize(Roles = "farmer")] 
+
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @inject IOrderService orderService

@@ -1,4 +1,5 @@
 ﻿using Application.LogicInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Models;
@@ -8,7 +9,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-
+[Authorize(Roles = "farmer")]
 public class OfferController : ControllerBase
 {
     private readonly IOfferLogic offerLogic;
@@ -69,7 +70,7 @@ public class OfferController : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
+    [HttpGet, AllowAnonymous]
     public async Task<IActionResult> GetAsync()
     {
         try

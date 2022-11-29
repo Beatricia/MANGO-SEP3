@@ -1,4 +1,5 @@
 ﻿@page "/AddFarm"
+@attribute [Authorize(Roles = "farmer")] 
 
 @using HttpClient.ClientInterfaces
 @using System.Text.RegularExpressions

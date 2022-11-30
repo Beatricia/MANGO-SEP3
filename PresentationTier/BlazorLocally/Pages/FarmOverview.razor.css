@@ -1,0 +1,59 @@
+﻿#shape{
+    overflow: hidden;
+    margin-left: 8em;
+}
+#farmImg{
+    padding-top: 17px;
+    padding-left: 12px;
+}
+
+
+#circle{
+    background-color: #B7BF96;
+    width: 12em;
+    height: 12em;
+    border-radius: 50%;
+    float:left;
+    margin-right: -25px;
+}
+
+#rectangle{
+    background-color: #B7BF96;
+    width: 40em;
+    height: 7em;
+    overflow: hidden;
+    margin-top: 45px;
+}
+
+#farmName{
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+    color: white;
+    font-size: xxx-large;
+}
+
+#status{
+    background-color: #6d735f;
+    border-radius: 10px;
+    width: 30em;
+    height: 3em;
+    overflow: hidden;
+    margin-top: -20px;
+    float: right;
+    margin-right: 10em;
+}
+
+h5{
+    text-align: left;
+    text-decoration: #606748;
+    margin-bottom: 0;
+    margin-left: 5px;
+    color: white;
+}
+
+#statusLabel{
+    text-align: center;
+    color: white;
+    margin-left: 10px;
+}

@@ -69,4 +69,23 @@ public class FarmController : LocallyController
         }
     }
     
+        
+
+    [Route("allFarmsByFarmer")]
+    [HttpGet]
+    public async Task<IActionResult> GetAllFarmsByFarmer([FromQuery] string username)
+    {
+        try
+        {
+            var created = await farmLogic.GetAllFarmsByFarmer(username);
+            return Created($"/farms", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    
 }

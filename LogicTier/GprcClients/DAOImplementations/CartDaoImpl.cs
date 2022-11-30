@@ -12,6 +12,8 @@ public class CartDaoImpl : ICartDao
     {
         this.cartOfferServiceClient = cartOfferServiceClient;
         this.offerServiceClient = offerServiceClient;
+
+        string s = String.Empty;
     }
     
     public async Task AddToCartAsync(CartOfferDto dto)

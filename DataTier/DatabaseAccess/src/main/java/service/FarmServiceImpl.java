@@ -9,6 +9,9 @@ import mango.sep3.databaseaccess.protobuf.*;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @GRpcService public class FarmServiceImpl
     extends FarmServiceGrpc.FarmServiceImplBase
 {
@@ -38,6 +41,8 @@ import org.springframework.beans.factory.annotation.Autowired;
         request.getDeliveryDistance(),
         convertAddressFromGrpc(request.getAddress()),
         convertFarmerFromGrpc(request.getFarmer()));
+
+    farm.setIconPath(request.getIconPath());
 
     // get the farmer from the database by username
     mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getFarmer().getUsername());
@@ -78,6 +83,50 @@ import org.springframework.beans.factory.annotation.Autowired;
       responseObserver.onNext(farmToSend);
       responseObserver.onCompleted();
     }
+
+  @Override public void getFarms(mango.sep3.databaseaccess.protobuf.Farmer request,
+      io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farms> responseObserver) {
+
+    mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getUsername());
+    if(farmer == null){
+      responseObserver.onError(new Exception("This farmer does not exist"));
+    }
+
+    assert farmer != null;
+    farmer.setUsername(request.getUsername());
+
+    //the response to send back
+    Farms.Builder response = Farms.newBuilder();
+
+    //model collection
+    Collection<mango.sep3.databaseaccess.Shared.Farm> farms = farmDAO.getFarms(farmer);
+    //protobuff collection
+    Collection<Farm> protoFarms = new ArrayList<>();
+
+    if(farms == null){
+      responseObserver.onError(new Exception("No Farms found"));
+      return;
+    }
+
+    for(mango.sep3.databaseaccess.Shared.Farm farm : farms){
+      Farm f = Farm.newBuilder()
+          .setName(farm.getName())
+          .setAddress(convertAddressToGrpc(farm.getAddress()))
+          .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
+          .setFarmStatus(farm.getDescription())
+          .setDeliveryDistance(farm.getDeliveryDistance())
+          .setPhone(farm.getPhone())
+          .build();
+      protoFarms.add(f);
+    }
+    response.addAllFarms(protoFarms);
+
+    responseObserver.onNext(response.build());
+    responseObserver.onCompleted();
+
+  }
+
+
 
   private Farmer convertFarmerToGrpc(
       mango.sep3.databaseaccess.Shared.Farmer farmer)
@@ -123,12 +172,6 @@ import org.springframework.beans.factory.annotation.Autowired;
     responseObserver.onCompleted();
   }
 
-  // convert grpc farm to shared in a method
-  private mango.sep3.databaseaccess.Shared.Farm convertToShared(Farm request) {
-    mango.sep3.databaseaccess.Shared.Farm farm = new mango.sep3.databaseaccess.Shared.Farm();
-    farm.setName(request.getName());
-    return farm;
-  }
 
   // convert shared farm to grpc in a method
     private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
@@ -139,6 +182,7 @@ import org.springframework.beans.factory.annotation.Autowired;
           .setFarmStatus(farm.getDescription())
           .setDeliveryDistance(farm.getDeliveryDistance())
           .setPhone(farm.getPhone())
+          .setIconPath(farm.getIconPath())
           .build();
     }
 }

@@ -64,14 +64,21 @@ public class FarmIconResource : IFarmIconDao
     /// <returns></returns>
     public FarmIcon CreateIcon(string icon)
     {
-        string iconName = icon[..icon.LastIndexOf(".", StringComparison.Ordinal)].Replace('-', ' ');
-        
-        return new()
+        try
         {
-            IconName = iconName,
-            FileName = icon,
-            AbsoluteUrl = request.Scheme + "://" + request.Host + DisplayFolder + icon
-        };
+            string iconName = icon[..icon.LastIndexOf(".", StringComparison.Ordinal)].Replace('-', ' ');
+
+            return new()
+            {
+                IconName = iconName,
+                FileName = icon,
+                AbsoluteUrl = request.Scheme + "://" + request.Host + DisplayFolder + icon
+            };
+        }
+        catch
+        {
+            return DefaultIcon;
+        }
     }
 
 

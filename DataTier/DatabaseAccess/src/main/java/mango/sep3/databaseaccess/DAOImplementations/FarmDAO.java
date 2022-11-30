@@ -4,9 +4,12 @@ import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.Repositories.FarmerRepository;
 import mango.sep3.databaseaccess.Shared.Farm;
+import mango.sep3.databaseaccess.Shared.Farmer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
 
 /**
  * Data access object accessing farm related data.
@@ -39,4 +42,11 @@ public class FarmDAO implements FarmDaoInterface
   {
     return farmRepository.findByName(farmName);
   }
+
+ @Override public Collection<Farm> getFarms(Farmer farmer)
+  {
+    System.out.println(farmRepository.findAllByFarmer(farmer));
+    return farmRepository.findAllByFarmer(farmer);
+  }
+
 }

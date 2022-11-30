@@ -7,6 +7,7 @@ service FarmService{
   rpc CreateFarm(Farm) returns(Farm);
   rpc GetFarm(Text) returns(Farm);
   rpc GetFarmByName(Text) returns(Farm);
+  rpc GetFarms(Farmer) returns(Farms);
 }
 
 service OfferService{
@@ -62,8 +63,13 @@ message Farm{
   optional string farmStatus = 5;
   optional int32 deliveryDistance = 6;
   string phone = 7;
+  string iconPath = 8;
 }
 
+
+message Farms{
+  repeated Farm farms = 1;
+}
 
 message Offer{
   int32 id = 1;

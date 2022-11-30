@@ -19,11 +19,26 @@ public class UserController : LocallyController
 
     //TODO authorized
     [HttpGet("customer")]
-    public async Task<IActionResult> GetAsync([FromQuery] string username)
+    public async Task<IActionResult> GetCustomerAsync([FromQuery] string username)
     {
         try
         {
             var returned = await userLogic.GetCustomer(username);
+            return Ok(returned);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpGet("farmer")]
+    public async Task<IActionResult> GetFarmerAsync([FromQuery] string username)
+    {
+        try
+        {
+            var returned = await userLogic.GetFarmer(username);
             return Ok(returned);
         }
         catch (Exception e)

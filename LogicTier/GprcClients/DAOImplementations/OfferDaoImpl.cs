@@ -32,26 +32,6 @@ public class OfferDaoImpl : IOfferDao
         return ConvertOfferToShared(returnedOffer);
     }
 
-    private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
-    {
-        // Convert shared offer to grpc
-        var offerToCreate = new Offer
-        {
-            Id = offer.Id,
-            Name = offer.Name,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            Description = offer.Description,
-            FarmName = offer.FarmName,
-        };
-
-        return offerToCreate;
-    }
-
     /// <summary>
     /// Getting all the offers from the database 
     /// </summary>
@@ -103,8 +83,25 @@ public class OfferDaoImpl : IOfferDao
         };
         return offerToSend;
     }
-    
-    
+
+    public async Task<IEnumerable<Shared.Models.Offer>> GetByFarmNameAsync(string farmName)
+    {
+        var farmNameGrpc = new Text
+        {
+            Text_ = farmName
+        };
+        OfferItems offersBuff = await offerService.GetOffersByFarmNameAsync(farmNameGrpc );
+        
+        var list = new List<Shared.Models.Offer>();
+        foreach (var created in offersBuff.Offers)
+        {
+            if (created is null)
+                continue;
+            Shared.Models.Offer offerToPresentationTier = ConvertOfferToShared(created);
+            list.Add(offerToPresentationTier);
+        }
+        return list;
+    }
     // convert from grpc object to shared offer
     private Shared.Models.Offer ConvertOfferToShared(Offer offer)
     {
@@ -122,5 +119,26 @@ public class OfferDaoImpl : IOfferDao
             Image = _imageDao.GetImageForOffer(offer.Id),
             FarmName = offer.FarmName
         };
+    }
+    
+    
+    private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
+    {
+        // Convert shared offer to grpc
+        var offerToCreate = new Offer
+        {
+            Id = offer.Id,
+            Name = offer.Name,
+            Quantity = offer.Quantity,
+            Unit = offer.Unit,
+            Price = offer.Price,
+            Delivery = offer.Delivery,
+            PickUp = offer.PickUp,
+            PickYourOwn = offer.PickYourOwn,
+            Description = offer.Description,
+            FarmName = offer.FarmName,
+        };
+
+        return offerToCreate;
     }
 }

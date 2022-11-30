@@ -1,4 +1,8 @@
-﻿@page "/FarmOverview"
+﻿@page "/FarmOverview/{FarmName}"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@inject IFarmService farmHttpClient;
+@inject IOfferService offerHttpClient;
 @attribute [Authorize(Roles = "farmer")] 
 
 <div id="shape">
@@ -6,12 +10,60 @@
         <img id="farmImg" src="Img/farming-circle.png" height="180" width="180">
     </div>
     <div id="rectangle">
-        <label id="farmName">Farm name</label>
+        <label id="farmName">@FarmName</label>
     </div>
 </div>
 <div id="status"><h5>Status:</h5>
-                 <label id="statusLabel">this is the status of this farm</label></div>
+    <label id="statusLabel"  contenteditable="true">This is the status of this farm</label></div>
+<div class="buttonContainer"><button id="updateButton">Update</button></div>
+<div class="buttonContainer"><button id="addButton">Add Offer</button></div>
+
+@if (offers == null)
+{
+    <p>
+        <em>Loading offers...</em>
+    </p>
+}
+
+@if(offers!=null){
+    <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
+        @foreach (var offer in offers)
+        {
+            <div class="card col-5 m-3">
+                <div class="card-header">
+                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage"/>
+                </div>
+                <div class="card-body d-flex justify-content-between flex-wrap">
+                    <h5 class="col-8">@offer.Name</h5>
+                    <h6 class="col-4 d-flex justify-content-end">@offer.Price</h6>
+                    <span class="col-8">@offer.Description</span>
+                </div>
+            </div>
+        }
+    </div>}
 
 @code {
+    //get the farm from the previous view
+    [Parameter] 
+    public string FarmName {get;set;}
+    private  Farm Farm {get;set;}
+    private string msg = "";
+    private IEnumerable<Offer> offers {get;set;}
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Farm = await farmHttpClient.GetFarmByNameAsync(FarmName);
+            offers = await offerHttpClient.GetByFarmNameAsync(FarmName);
+            Console.WriteLine(offers.First().ToString());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+    
 
 }

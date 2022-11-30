@@ -2,6 +2,7 @@ package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
+import mango.sep3.databaseaccess.Shared.Farm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -42,5 +43,11 @@ public class OfferDAO implements OfferDaoInterface {
   @Override public Offer getOfferById(int id)
   {
     return offerRepository.findById(id).orElse(null);
+  }
+
+  @Override public Collection<Offer> getOffersByFarmName(String farmName)
+  {
+    Farm farm = farmRepository.findByName(farmName);
+    return offerRepository.findAllByFarm(farm);
   }
 }

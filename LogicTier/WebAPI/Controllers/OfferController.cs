@@ -84,4 +84,19 @@ public class OfferController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet("farmName"), AllowAnonymous]
+    public async Task<IActionResult> GetByFarmNameAsync([FromQuery] string farmName)
+    {
+        try
+        {
+            var created = await offerLogic.GetByFarmNameAsync(farmName);
+            return Created($"/offers/{farmName}", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

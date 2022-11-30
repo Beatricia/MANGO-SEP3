@@ -41,12 +41,7 @@ public class FarmLogic : IFarmLogic
             DeliveryDistance = dto.DeliveryDistance,
             FarmStatus = dto.FarmStatus,
             Address = dto.Address,
-            Farmer = new Farmer()
-            {
-                Username = dto.FarmerUsername,
-                FirstName = "",
-                LastName = "",
-            },
+            Farmer = dto.Farmer, 
             FarmIcon = icon
         };
 

@@ -24,6 +24,7 @@ service UserService{
   rpc GetUserByUsername(Text) returns (User);
   rpc GetCustomer(Text) returns(Customer);
   rpc GetFarmer(Text) returns(Farmer);
+  rpc UpdateCustomer(CustomerUpdate) returns(Void);
 
 }
 
@@ -123,6 +124,14 @@ message Customer{
   string lastname = 3;
   string phone = 4;
   Address address = 5;
+}
+
+message CustomerUpdate{
+  string username = 1;
+  optional string phone = 2;
+  optional string city = 3;
+  optional string street = 4;
+  optional string zip = 5;
 }
 
 message Farmer{

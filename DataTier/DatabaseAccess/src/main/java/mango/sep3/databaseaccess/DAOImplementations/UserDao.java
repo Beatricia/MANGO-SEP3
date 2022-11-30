@@ -1,16 +1,13 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
+import io.grpc.internal.DnsNameResolver;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
-import mango.sep3.databaseaccess.Repositories.CustomerRepository;
-import mango.sep3.databaseaccess.Repositories.FarmerRepository;
-import mango.sep3.databaseaccess.Repositories.UserAuthRepository;
-import mango.sep3.databaseaccess.Repositories.UserRepository;
-import mango.sep3.databaseaccess.Shared.Customer;
-import mango.sep3.databaseaccess.Shared.Farmer;
-import mango.sep3.databaseaccess.Shared.User;
-import mango.sep3.databaseaccess.Shared.UserAuth;
+import mango.sep3.databaseaccess.Repositories.*;
+import mango.sep3.databaseaccess.Shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.zip.ZipEntry;
 
 /**
  * Data access object accessing user related data.
@@ -28,6 +25,8 @@ public class UserDao implements UserDaoInterface {
 
     @Autowired
     private FarmerRepository farmerRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     public UserDao()
     { }
@@ -82,5 +81,37 @@ public class UserDao implements UserDaoInterface {
     @Override
     public Farmer getFarmer(String username) {
         return farmerRepository.findById(username).orElse(null);
+    }
+
+    @Override public void updateCustomer(String username, String phone,
+        String city, String street, String zip)
+    {
+        Customer customer = customerRepository.findById(username).orElse(null);
+        Address address = customer.getAddress();
+
+        if (!phone.isEmpty())
+        {
+            customer.setPhone(phone);
+            customerRepository.saveAndFlush(customer);
+        }
+
+        if (!city.isEmpty())
+        {
+            address.setCity(city);
+            addressRepository.saveAndFlush(address);
+        }
+
+        if (!street.isEmpty())
+        {
+            address.setStreet(street);
+            addressRepository.saveAndFlush(address);
+        }
+
+        if (!zip.isEmpty())
+        {
+            address.setZip(zip);
+            addressRepository.saveAndFlush(address);
+        }
+
     }
 }

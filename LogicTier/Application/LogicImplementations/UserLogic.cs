@@ -1,5 +1,6 @@
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
+using Shared.DTOs;
 using Shared.Models;
 
 namespace Application.LogicImplementations;
@@ -13,8 +14,13 @@ public class UserLogic : IUserLogic
         this.userDao = userDao;
     }
 
-    public Task<Customer> GetCustomer(string username)
+    public async Task<Customer?> GetCustomer(string username)
     {
-        return userDao.GetCustomer(username);
+        return await userDao.GetCustomer(username);
+    }
+
+    public async Task UpdateCustomerAsync(CustomerUpdateDto dto, string username)
+    {
+        await userDao.UpdateCustomerAsync(dto,username);
     }
 }

@@ -1,4 +1,5 @@
 using Application.DAOInterfaces;
+using Shared.DTOs;
 
 namespace GprcClients.DAOImplementations;
 
@@ -69,6 +70,42 @@ public class UserDaoImpl : IUserDao
         catch
         {
             return null;
+        }
+    }
+
+    public async Task UpdateCustomerAsync(CustomerUpdateDto dto,string username)
+    {
+        var customerUpdate = new CustomerUpdate
+        {
+            Username = username
+        };
+        Console.WriteLine("        1:        " + dto.Phone);
+        if (!string.IsNullOrEmpty(dto.Phone))
+        {
+            customerUpdate.Phone = dto.Phone;
+            Console.WriteLine("        2:        " + dto.Phone);
+        }
+        if (!string.IsNullOrEmpty(dto.City))
+        {
+            customerUpdate.City = dto.City;
+        }
+        if (!string.IsNullOrEmpty(dto.Street))
+        {
+            customerUpdate.Street = dto.Street;
+        }
+        if (!string.IsNullOrEmpty(dto.Zip))
+        {
+            customerUpdate.Zip = dto.Zip;
+        }
+        
+        try
+        {
+            await client.UpdateCustomerAsync(customerUpdate);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 

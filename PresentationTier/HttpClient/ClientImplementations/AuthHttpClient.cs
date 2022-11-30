@@ -15,6 +15,8 @@ public class AuthHttpClient : IAuthService
     // accept httpclient from constructor to field
     private System.Net.Http.HttpClient Client => _access.HttpClient;
     public static string? Jwt { get; private set; } = "";
+    
+    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
     private readonly ApiAccess _access;
     public AuthHttpClient(ApiAccess apiAccess)
@@ -43,12 +45,13 @@ public class AuthHttpClient : IAuthService
         if(loginResponse == null)
             throw new Exception("Cannot read user from response");
 
-
+        
         await _access.LoginAsync(loginResponse.Token);
-
+        
+        Jwt = loginResponse.Token;
         ClaimsPrincipal claimsPrincipal = CreateClaimsPrincipal();
         OnAuthStateChanged.Invoke(claimsPrincipal);
-
+        
         //was returning Login response but isnt User better?
         return loginResponse.User;
     }
@@ -83,8 +86,6 @@ public class AuthHttpClient : IAuthService
         ClaimsPrincipal principal = CreateClaimsPrincipal();
         return Task.FromResult(principal);  
     }
-
-    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
 
 
     // Below methods stolen from https://github.com/SteveSandersonMS/presentation-2019-06-NDCOslo/blob/master/demos/MissionControl/MissionControl.Client/Util/ServiceExtensions.cs

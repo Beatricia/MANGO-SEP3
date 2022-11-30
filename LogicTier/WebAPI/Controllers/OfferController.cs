@@ -85,9 +85,10 @@ public class OfferController : ControllerBase
         }
     }
     
-    [HttpGet("farmName"), AllowAnonymous]
-    public async Task<IActionResult> GetByFarmNameAsync([FromQuery] string farmName)
+    [HttpGet("{farmName}"), AllowAnonymous]
+    public async Task<IActionResult> GetAsync([FromRoute] string farmName)
     {
+        //get offers by farm name
         try
         {
             var created = await offerLogic.GetByFarmNameAsync(farmName);

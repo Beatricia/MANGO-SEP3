@@ -10,7 +10,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "farmer")]
+//[Authorize(Roles = "farmer")]
 
 public class FarmController : LocallyController
 {
@@ -28,7 +28,7 @@ public class FarmController : LocallyController
     /// </summary>
     /// <param name="dto">A FarmCreationDto containing all information Required to create a Farm object</param>
     /// <returns>Returns the farm object or a status code to indicate an error</returns>
-    [HttpPost]
+    [HttpPost, Authorize(Roles = "farmer")]
     public async Task<IActionResult> CreateAsync(FarmCreationDto dto)
     {
         try
@@ -54,7 +54,7 @@ public class FarmController : LocallyController
         return Ok(farmLogic.GetAllIcons());
     }
     
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "farmer,customer")]
     public async Task<IActionResult> GetAsync([FromQuery]string farmName)
     {
         try

@@ -92,6 +92,15 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onCompleted();
   }
 
+  @Override public void deleteOrder(Text request,
+      StreamObserver<Void> responseObserver)
+  {
+    orderDao.deleteOrder(Integer.parseInt(request.getText()));
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+  }
+
   private List<mango.sep3.databaseaccess.Shared.Order> ConvertOrdersFromGrpc(
       List<Order> ordersList)
   {

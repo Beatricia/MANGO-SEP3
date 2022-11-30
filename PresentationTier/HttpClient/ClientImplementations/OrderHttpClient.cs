@@ -151,4 +151,14 @@ public class OrderHttpClient : IOrderService
         Order[] orders = { order1, order2, order3, order4 };*/
         return orders;
     }
+
+    public async Task DeleteOrderAsync(int id)
+    {
+        HttpResponseMessage response = await Client.DeleteAsync($"/order/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+    }
 }

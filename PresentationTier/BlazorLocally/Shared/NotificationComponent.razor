@@ -74,6 +74,7 @@
     {
         try
         {
+            notifications = null;
             notifications = await NotificationService.GetNotifications();
         }
         catch (Exception e)

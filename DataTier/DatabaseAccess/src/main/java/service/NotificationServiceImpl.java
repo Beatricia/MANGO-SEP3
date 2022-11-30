@@ -73,6 +73,7 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
     private Notification convertToGrpc(NotificationFarmer notification) {
         return Notification.newBuilder()
+                .setId(notification.getId())
                 .setToUsername(notification.getFarmer().getUsername())
                 .setText(notification.getMessage())
                 .setCreatedAt(notification.getCreatedAt())
@@ -80,6 +81,7 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
     }
     private Notification convertToGrpc(NotificationCustomer notification) {
         return Notification.newBuilder()
+                .setId(notification.getId())
                 .setToUsername(notification.getCustomer().getUsername())
                 .setText(notification.getMessage())
                 .setCreatedAt(notification.getCreatedAt())
@@ -95,6 +97,7 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
         }
 
         var not = new NotificationFarmer();
+        not.setId(notification.getId());
         not.setMessage(notification.getText());
         not.setFarmer(farmer);
         not.setCreatedAt(notification.getCreatedAt());
@@ -109,6 +112,7 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
         }
 
         var not = new NotificationCustomer();
+        not.setId(notification.getId());
         not.setMessage(notification.getText());
         not.setCustomer(customer);
         not.setCreatedAt(notification.getCreatedAt());

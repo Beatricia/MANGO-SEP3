@@ -12,10 +12,12 @@
   }
 
   .bell{
-    width: 100%;
-    height: 100%;
+    $bell-size: 30px;
 
-    background: white;
+    width: $bell-size;
+    height: $bell-size;
+
+    background: #B7BF96;
     border-radius: $notification-wrapper-size / 7.5;
 
     display: flex;
@@ -25,7 +27,7 @@
     user-select: none;
 
     img{
-      $image-size: 95%;
+      $image-size: 70%;
 
       width: $image-size;
       height: $image-size;
@@ -79,7 +81,7 @@
     transform: translateY($notification-wrapper-size + 10);
     transition: visibility 0s, opacity 0.2s;
 
-    background: #f3f5f9;
+    background: #B7BF96;
     box-shadow: 5px 5px 30px 1px #b2b2b2;
 
     overflow-y: auto;
@@ -178,7 +180,7 @@
         cursor: pointer;
 
         padding: 5px 15px 5px 15px;
-        background-color: #d5d5d5;
+        background-color: #e5e5e5;
 
         border-radius: 5px;
 
@@ -200,7 +202,7 @@
         }
 
         &:hover{
-          background-color: #bdbdbd;
+          background-color: #f1f0f0;
           span{
             letter-spacing: 1px;
           }

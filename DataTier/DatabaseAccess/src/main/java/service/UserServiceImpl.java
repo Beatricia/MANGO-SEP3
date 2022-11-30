@@ -125,6 +125,15 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override public void updateCustomer(CustomerUpdate request,
+        StreamObserver<Void> responseObserver)
+    {
+        userDao.updateCustomer(request.getUsername(),request.getPhone(),request.getCity(),request.getStreet(),request.getZip());
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
     private UserAuth convertUserAuthToGrpc(mango.sep3.databaseaccess.Shared.UserAuth user) {
         return UserAuth.newBuilder()
                 .setUsername(user.getUsername())

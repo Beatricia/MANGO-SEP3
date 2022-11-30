@@ -20,7 +20,7 @@ public class OrderController : LocallyController
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody]string username)
+    public async Task<IActionResult> CreateAsync(string username)
     {
         //string? username = LoggedInUsername;
         try

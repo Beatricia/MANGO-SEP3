@@ -5,10 +5,12 @@ namespace GprcClients.DAOImplementations;
 public class FarmDaoImpl : IFarmDao
 {
     private FarmService.FarmServiceClient farmServiceClient;
+    private IFarmIconDao farmIconDao;
 
-    public FarmDaoImpl(FarmService.FarmServiceClient farmServiceClient)
+    public FarmDaoImpl(FarmService.FarmServiceClient farmServiceClient, IFarmIconDao farmIconDao)
     {
         this.farmServiceClient = farmServiceClient;
+        this.farmIconDao = farmIconDao;
     }
 
     public async Task<Shared.Models.Farm> CreateAsync(Shared.Models.Farm farm)
@@ -20,7 +22,8 @@ public class FarmDaoImpl : IFarmDao
             DeliveryDistance = farm.DeliveryDistance,
             FarmStatus = farm.FarmStatus,
             Farmer = ConvertFarmerToGrpc(farm.Farmer),
-            Address = ConvertSharedToGrpc(farm.Address)
+            Address = ConvertSharedToGrpc(farm.Address),
+            IconPath = farm.FarmIcon.FileName
         };
 
         await farmServiceClient.CreateFarmAsync(toCreate);
@@ -97,7 +100,8 @@ public class FarmDaoImpl : IFarmDao
             },
             DeliveryDistance = grpcFarm.DeliveryDistance,
             FarmStatus = grpcFarm.FarmStatus,
-            Farmer = ConvertFarmerFromGrpc(grpcFarm.Farmer)
+            Farmer = ConvertFarmerFromGrpc(grpcFarm.Farmer),
+            FarmIcon = farmIconDao.CreateIcon(grpcFarm.IconPath!),
         };
     }
     

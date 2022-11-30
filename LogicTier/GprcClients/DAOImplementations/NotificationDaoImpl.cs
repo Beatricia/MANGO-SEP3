@@ -31,7 +31,7 @@ public class NotificationDaoImpl : INotificationDao
         return list;
     }
 
-    public async Task AddNotificationAsync(ICollection<Shared.Models.Notification> notification)
+    public async Task AddNotificationsAsync(ICollection<Shared.Models.Notification> notification)
     {
         var notifications = new RepeatedNotification();
         foreach (Shared.Models.Notification item in notification)
@@ -49,6 +49,7 @@ public class NotificationDaoImpl : INotificationDao
     {
         return new Shared.Models.Notification
         {
+            Id = notification.Id,
             Text = notification.Text,
             CreatedAt = new DateTime(notification.CreatedAt),
             ToUsername = notification.ToUsername
@@ -60,6 +61,7 @@ public class NotificationDaoImpl : INotificationDao
     {
         return new Notification
         {
+            Id = notification.Id,
             Text = notification.Text,
             CreatedAt = notification.CreatedAt.Ticks,
             ToUsername = notification.ToUsername

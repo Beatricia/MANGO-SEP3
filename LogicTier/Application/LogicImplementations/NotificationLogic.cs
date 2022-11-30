@@ -19,7 +19,7 @@ public class NotificationLogic : INotificationLogic
     {
         return notificationDao.GetNotificationsByUserAsync(username);
     }
-
+    
     public Task AddNotificationAsync(NotificationCreationDto dto)
     {
         var not = new Notification
@@ -29,6 +29,6 @@ public class NotificationLogic : INotificationLogic
             CreatedAt = DateTime.Now
         };
         
-        return notificationDao.AddNotificationAsync(new List<Notification>{not});
+        return notificationDao.AddNotificationsAsync(new List<Notification>{not});
     }
 }

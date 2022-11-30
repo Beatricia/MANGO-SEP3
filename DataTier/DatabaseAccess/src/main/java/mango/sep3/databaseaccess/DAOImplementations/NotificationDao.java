@@ -1,8 +1,10 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.NotificationDaoInterface;
-import mango.sep3.databaseaccess.Repositories.NotificationRepository;
-import mango.sep3.databaseaccess.Shared.Notification;
+import mango.sep3.databaseaccess.Repositories.NotificationCustomerRepository;
+import mango.sep3.databaseaccess.Repositories.NotificationFarmerRepository;
+import mango.sep3.databaseaccess.Shared.NotificationCustomer;
+import mango.sep3.databaseaccess.Shared.NotificationFarmer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,18 +14,31 @@ import java.util.Collection;
 public class NotificationDao implements NotificationDaoInterface {
 
     @Autowired
-    private NotificationRepository notificationRepository;
+    private NotificationFarmerRepository notificationRepository;
+
+    @Autowired
+    private NotificationCustomerRepository notificationCustomerRepository;
 
     public NotificationDao(){}
 
 
     @Override
-    public void addNotifications(Collection<Notification> notification) {
+    public void addNotificationsFarmer(Collection<NotificationFarmer> notification) {
         notificationRepository.saveAll(notification);
     }
 
     @Override
-    public Collection<Notification> getNotifications(String username) {
-        return notificationRepository.findByToUsername(username);
+    public void addNotificationsCustomer(Collection<NotificationCustomer> notification) {
+        notificationCustomerRepository.saveAll(notification);
+    }
+
+    @Override
+    public Collection<NotificationFarmer> getNotificationsFarmer(String username) {
+        return notificationRepository.findByFarmerUsername(username);
+    }
+
+    @Override
+    public Collection<NotificationCustomer> getNotificationsCustomer(String username) {
+        return notificationCustomerRepository.findByCustomerUsername(username);
     }
 }

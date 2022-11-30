@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Notification", schema = "locally")
-public class Notification {
+public class NotificationFarmer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -14,13 +14,14 @@ public class Notification {
     @Column
     private String message;
 
-    @Column
-    private String toUsername;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn
+    private Farmer farmer;
 
     @Column
     private long createdAt;
 
-    public Notification() {
+    public NotificationFarmer() {
     }
 
     public long getId() {
@@ -39,19 +40,19 @@ public class Notification {
         this.message = message;
     }
 
-    public String getToUsername() {
-        return toUsername;
-    }
-
-    public void setToUsername(String toUsername) {
-        this.toUsername = toUsername;
-    }
-
     public long getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Farmer getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(Farmer farmer) {
+        this.farmer = farmer;
     }
 }

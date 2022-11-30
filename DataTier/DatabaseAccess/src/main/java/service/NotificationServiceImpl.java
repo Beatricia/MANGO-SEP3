@@ -2,19 +2,24 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.NotificationDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
+import mango.sep3.databaseaccess.Shared.NotificationCustomer;
+import mango.sep3.databaseaccess.Shared.NotificationFarmer;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @GRpcService
 public class NotificationServiceImpl extends NotificationServiceGrpc.NotificationServiceImplBase {
 
     @Autowired
     private NotificationDaoInterface notificationDao;
+
+    @Autowired
+    private UserDaoInterface userDao;
 
 
 
@@ -23,7 +28,11 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
         String username = request.getText();
 
-        notificationDao.getNotifications(username).forEach(notification -> {
+        notificationDao.getNotificationsFarmer(username).forEach(notification -> {
+            var protoNotification = convertToGrpc(notification);
+            responseObserver.onNext(protoNotification);
+        });
+        notificationDao.getNotificationsCustomer(username).forEach(notification -> {
             var protoNotification = convertToGrpc(notification);
             responseObserver.onNext(protoNotification);
         });
@@ -34,21 +43,44 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
     @Override
     public void addNotifications(RepeatedNotification request, StreamObserver<Void> responseObserver) {
-        var list = new ArrayList<mango.sep3.databaseaccess.Shared.Notification>();
+        var farmerNots = new ArrayList<NotificationFarmer>();
+        var customerNots = new ArrayList<NotificationCustomer>();
 
         for (var notification : request.getNotificationsList()) {
-            list.add(convertToShared(notification));
+
+            var notificationFarmer = convertToSharedFarmerNotification(notification);
+            if(notificationFarmer != null){
+                farmerNots.add(notificationFarmer);
+                continue;
+            }
+
+            var notificationCustomer = convertToSharedCustomerNotification(notification);
+            if(notificationCustomer != null){
+                customerNots.add(notificationCustomer);
+                continue;
+            }
+
+            responseObserver.onError(new Exception("Couldn't find user " + notification.getToUsername()));
+            return;
         }
 
-        notificationDao.addNotifications(list);
+        notificationDao.addNotificationsCustomer(customerNots);
+        notificationDao.addNotificationsFarmer(farmerNots);
 
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();
     }
 
-    private Notification convertToGrpc(mango.sep3.databaseaccess.Shared.Notification notification) {
+    private Notification convertToGrpc(NotificationFarmer notification) {
         return Notification.newBuilder()
-                .setToUsername(notification.getToUsername())
+                .setToUsername(notification.getFarmer().getUsername())
+                .setText(notification.getMessage())
+                .setCreatedAt(notification.getCreatedAt())
+                .build();
+    }
+    private Notification convertToGrpc(NotificationCustomer notification) {
+        return Notification.newBuilder()
+                .setToUsername(notification.getCustomer().getUsername())
                 .setText(notification.getMessage())
                 .setCreatedAt(notification.getCreatedAt())
                 .build();
@@ -56,10 +88,29 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
 
     // convert from grpc to shared notifications
-    private mango.sep3.databaseaccess.Shared.Notification convertToShared(Notification notification) {
-        var not = new mango.sep3.databaseaccess.Shared.Notification();
+    private NotificationFarmer convertToSharedFarmerNotification(Notification notification) {
+        var farmer = userDao.getFarmer(notification.getToUsername());
+        if(farmer == null) {
+            return null;
+        }
+
+        var not = new NotificationFarmer();
         not.setMessage(notification.getText());
-        not.setToUsername(notification.getToUsername());
+        not.setFarmer(farmer);
+        not.setCreatedAt(notification.getCreatedAt());
+
+        return not;
+    }
+
+    private NotificationCustomer convertToSharedCustomerNotification(Notification notification) {
+        var customer = userDao.getCustomer(notification.getToUsername());
+        if(customer == null) {
+            return null;
+        }
+
+        var not = new NotificationCustomer();
+        not.setMessage(notification.getText());
+        not.setCustomer(customer);
         not.setCreatedAt(notification.getCreatedAt());
 
         return not;

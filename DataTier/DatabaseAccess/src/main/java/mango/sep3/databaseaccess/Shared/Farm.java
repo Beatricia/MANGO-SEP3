@@ -36,6 +36,9 @@ public class Farm implements Serializable
     @JoinColumn(name="farmer", nullable=true, referencedColumnName = "username")
     private Farmer farmer;
 
+    @Column(name = "iconpath")
+    private String iconPath;
+
     public Farm()
     {}
 
@@ -62,13 +65,6 @@ public class Farm implements Serializable
 
     //TODO add Farmer reference (nut sure if it should be a new Farmer table or just from the User)
 
-
-    @Column(name = "iconpath")
-    private String iconPath;
-    //if column in database table is called differently
-    // just add @Column('attribute' = "'nameOfTheColumn'")
-
-    //at least one empty constructor
 
     public Farm(String name){
         this.name = name;

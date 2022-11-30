@@ -39,6 +39,8 @@ import org.springframework.beans.factory.annotation.Autowired;
         convertAddressFromGrpc(request.getAddress()),
         convertFarmerFromGrpc(request.getFarmer()));
 
+    farm.setIconPath(request.getIconPath());
+
     // get the farmer from the database by username
     mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getFarmer().getUsername());
     farm.setFarmer(farmer);
@@ -123,12 +125,6 @@ import org.springframework.beans.factory.annotation.Autowired;
     responseObserver.onCompleted();
   }
 
-  // convert grpc farm to shared in a method
-  private mango.sep3.databaseaccess.Shared.Farm convertToShared(Farm request) {
-    mango.sep3.databaseaccess.Shared.Farm farm = new mango.sep3.databaseaccess.Shared.Farm();
-    farm.setName(request.getName());
-    return farm;
-  }
 
   // convert shared farm to grpc in a method
     private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
@@ -139,6 +135,7 @@ import org.springframework.beans.factory.annotation.Autowired;
           .setFarmStatus(farm.getDescription())
           .setDeliveryDistance(farm.getDeliveryDistance())
           .setPhone(farm.getPhone())
+          .setIconPath(farm.getIconPath())
           .build();
     }
 }

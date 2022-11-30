@@ -61,6 +61,7 @@ message Farm{
   optional string farmStatus = 5;
   optional int32 deliveryDistance = 6;
   string phone = 7;
+  string iconPath = 8;
 }
 
 

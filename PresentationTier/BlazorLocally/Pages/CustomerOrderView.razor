@@ -79,7 +79,7 @@
 
 @code {
     
-    private IEnumerable<Order>? orders;
+    private ICollection<Order>? orders;
     private List<Order> deliveryOrders = new();
     private List<Order> pickUpOrders = new();
     private string msg = "";
@@ -92,6 +92,11 @@
         {
             
             orders = await orderService.GetAllOrdersAsync();
+            foreach (var order in orders)
+            {
+                 Console.WriteLine("Orders:               " + order.Id);
+            }
+           
             if (orders != null)
             {
                 List<string> farmNames = new();
@@ -107,7 +112,19 @@
                         farms.Add(farmName,farm);
                     }
                 }
+                 foreach (var order in orders)
+                 {
+                     if (order.CollectionOption.Equals("Delivery"))
+                     {
+                         deliveryOrders.Add(order);
+                     }
+                     else if(order.CollectionOption.Equals("PickUp"))
+                     {
+                         pickUpOrders.Add(order);
+                     }
+                 }
             }
+            
         }
         catch (Exception e)
         {
@@ -115,21 +132,7 @@
             msg = e.Message;
         }
 
-        if (orders != null)
-        {
-            foreach (var order in orders)
-                    {
-                        if (order.CollectionOption.Equals("Delivery"))
-                        {
-                            deliveryOrders.Add(order);
-                        }
-                        else if(order.CollectionOption.Equals("PickUp"))
-                        {
-                            pickUpOrders.Add(order);
-                        }
-                    }
-
-        }
+        
         
     }
     

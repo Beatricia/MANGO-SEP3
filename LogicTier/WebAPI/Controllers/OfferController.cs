@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize(Roles = "farmer")]
+[Authorize(Roles = "farmer")]
 public class OfferController : ControllerBase
 {
     private readonly IOfferLogic offerLogic;

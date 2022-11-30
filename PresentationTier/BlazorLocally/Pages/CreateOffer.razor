@@ -1,12 +1,9 @@
 ﻿@page "/CreateOffer"
 @attribute [Authorize(Roles = "farmer")] 
 
-@using Components
 @using global::Shared.DTOs
 @inject IOfferService httpClient
-@using System.Reflection.Metadata
 @using HttpClient.ClientInterfaces
-@using Microsoft.Extensions.Options
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 

@@ -125,4 +125,27 @@ public class FarmDaoImpl : IFarmDao
             Zip = farmAddress.ZIP
         };
     }
+    
+    
+    public async Task<ICollection<Shared.Models.Farm>> GetAllFarmsByFarmer(string username)
+    {
+        var user = new Farmer()
+        {
+            Username = username
+        };   
+        
+        //Getting the farms from the database as buffers
+        Farms farmsBuff = farmServiceClient.GetFarms(user);
+
+        Console.WriteLine(farmsBuff.ToString());
+        ICollection<Shared.Models.Farm> list = new List<Shared.Models.Farm>();
+
+        foreach (var farm in farmsBuff.Farms_)
+        {
+            Shared.Models.Farm modelFarm = ConvertToSharedFarm(farm);
+            list.Add(modelFarm);
+        }
+
+        return list;
+    }
 }

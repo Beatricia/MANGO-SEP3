@@ -59,6 +59,20 @@ public class FarmLogic : IFarmLogic
     {
         return await farmDao.GetFarmByNameAsync(farmName);
     }
+    
+    public async Task<ICollection<Farm>> GetAllFarmsByFarmer(string username)
+    {
+        ICollection<Farm> farms = await farmDao.GetAllFarmsByFarmer(username);
+
+        Console.WriteLine(farms);
+        if (farms == null)
+        {
+            throw new Exception($"The farmer has no farms");
+        }
+
+        return farms;
+    }
+
 
     /// <inheritdoc/>
     public ICollection<FarmIcon> GetAllIcons() => farmIconDao.AllIcons;

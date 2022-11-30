@@ -19,4 +19,6 @@ public interface IFarmLogic
     /// </summary>
     /// <returns></returns>
     ICollection<FarmIcon> GetAllIcons();
+    
+    Task<ICollection<Farm>> GetAllFarmsByFarmer(string username);
 }

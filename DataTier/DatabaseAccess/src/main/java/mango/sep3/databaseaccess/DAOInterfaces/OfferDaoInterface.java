@@ -10,4 +10,5 @@ public interface OfferDaoInterface
   Offer CreateOffer(Offer offer);
   Collection<Offer> GetOffer();
   Offer getOfferById(int id);
+  Collection<Offer> getOffersByFarmName(String farmName);
 }

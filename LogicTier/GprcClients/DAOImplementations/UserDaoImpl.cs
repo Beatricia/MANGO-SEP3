@@ -35,8 +35,8 @@ public class UserDaoImpl : IUserDao
 
         try
         {
-            global::Farmer customer = await client.GetFarmerAsync(text);
-            return ConvertFromGrpc(customer);
+            Farmer farmer = await client.GetFarmerAsync(text);
+            return ConvertFromGrpc(farmer);
         }
         catch
         {

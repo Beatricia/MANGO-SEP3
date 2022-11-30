@@ -8,6 +8,7 @@ namespace Application.LogicInterfaces;
 /// </summary>
 public interface IOfferLogic
 {
-    Task<Shared.Models.Offer> CreateAsync(OfferCreationDto dto); //OfferCreation dto
-    Task<IEnumerable<Shared.Models.Offer>> GetAsync();
+    Task<Offer> CreateAsync(OfferCreationDto dto); //OfferCreation dto
+    Task<IEnumerable<Offer>> GetAsync();
+    Task<IEnumerable<Offer>> GetByFarmNameAsync(string farmName);
 }

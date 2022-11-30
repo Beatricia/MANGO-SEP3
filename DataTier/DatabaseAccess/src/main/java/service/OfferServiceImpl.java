@@ -39,21 +39,10 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   @Override public void createOffer(Offer request,
       StreamObserver<Offer> responseObserver)
   {
-
-    mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
-
-      offer.setName(request.getName());
-      offer.setQuantity(request.getQuantity());
-      offer.setUnit(request.getUnit());
-      offer.setPrice(request.getPrice());
-      offer.setDelivery(request.getDelivery());
-      offer.setPickUp(request.getPickUp());
-      offer.setPickyourOwn(request.getPickYourOwn());
-      offer.setDescription(request.getDescription());
+    mango.sep3.databaseaccess.Shared.Offer offer = convertOfferToShared(request);
 
       var farm = farmDaoInterface.getFarmByName(request.getFarmName());
       offer.setFarm(farm);
-
 
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase =  offerDao.CreateOffer(offer);
 
@@ -63,44 +52,10 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
     responseObserver.onCompleted();
   }
 
-
-  private mango.sep3.databaseaccess.Shared.Offer convertToShared(Offer request) {
-    mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
-    offer.setName(request.getName());
-    offer.setDescription(request.getDescription());
-    offer.setDelivery(request.getDelivery());
-    offer.setPickUp(request.getPickUp());
-    offer.setPickyourOwn(request.getPickYourOwn());
-    offer.setPrice(request.getPrice());
-    offer.setUnit(request.getUnit());
-
-    var farm = farmDaoInterface.getFarmByName(request.getFarmName());
-    offer.setFarm(farm);
-
-    return offer;
-  }
-
-  // convert from shared to grpc offer
-  private Offer convertToGrpc(mango.sep3.databaseaccess.Shared.Offer offer) {
-    Offer offerResponse = Offer.newBuilder()
-        .setId(offer.getId())
-        .setName(offer.getName())
-        .setDescription(offer.getDescription())
-        .setDelivery(offer.isDelivery())
-        .setPickUp(offer.isPickUp())
-        .setPickYourOwn(offer.isPickyourOwn())
-        .setPrice(offer.getPrice())
-        .setUnit(offer.getUnit())
-        .setFarmName(offer.getFarm().getName())
-        .build();
-
-    return offerResponse;
-  }
-
   /**
    * Getting the offers from the database(currently from the file context)
    * @param request is a Void object that contains null
-   *                 @param responseObserver the object returned to the Logic Tier
+   * @param responseObserver the object returned to the Logic Tier
    */
   @Override public void getOffers(Void request,
       StreamObserver<OfferItems> responseObserver)
@@ -111,9 +66,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 
     for (var offer: offers)
     {
-      Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
-          .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-          .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setFarmName(offer.getFarm().getName()).build();
+      Offer offerToSend = convertOfferToGrpc(offer);
       offersList.add(offerToSend);
     }
 
@@ -129,23 +82,62 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   {
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase = offerDao.getOfferById(request.getId());
 
-    Offer response = Offer.newBuilder().setId(offerFromDatabase.getId()).setName(offerFromDatabase.getName()).setQuantity(
-            offerFromDatabase.getQuantity()).setUnit(offerFromDatabase.getUnit())
-        .setPrice(offerFromDatabase.getPrice()).setDelivery(offerFromDatabase.isDelivery()).setPickUp(offerFromDatabase.isPickUp())
-        .setPickYourOwn(offerFromDatabase.isPickyourOwn()).setDescription(offerFromDatabase.getDescription()).build();
-
+    Offer response = convertOfferToGrpc(offerFromDatabase);
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
 
+  @Override public void getOffersByFarmName(Text request,
+      StreamObserver<OfferItems> responseObserver)
+  {
+    Collection<mango.sep3.databaseaccess.Shared.Offer> offersFromDatabase = offerDao.getOffersByFarmName(request.getText());
 
-  // create method to convert offer to grpc
-    private Offer convertOfferToGrpc(mango.sep3.databaseaccess.Shared.Offer offer)
+    Collection<Offer> offersList = new ArrayList<>();
+
+    for (var offer: offersFromDatabase)
     {
-        Offer offerToSend = Offer.newBuilder().setId(offer.getId()).setName(offer.getName()).setQuantity(offer.getQuantity())
-            .setUnit(offer.getUnit()).setPrice(offer.getPrice()).setDelivery(offer.isDelivery()).setPickUp(offer.isPickUp())
-            .setPickYourOwn(offer.isPickyourOwn()).setDescription(offer.getDescription()).setFarmName(offer.getFarm().getName()).build();
-        return offerToSend;
+      Offer offerToSend = convertOfferToGrpc(offer);
+      offersList.add(offerToSend);
     }
+
+    OfferItems response = OfferItems.newBuilder().addAllOffers(offersList).build();
+
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
+
+  private mango.sep3.databaseaccess.Shared.Offer convertOfferToShared(Offer request) {
+    mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
+    offer.setName(request.getName());
+    offer.setDescription(request.getDescription());
+    offer.setDelivery(request.getDelivery());
+    offer.setPickUp(request.getPickUp());
+    offer.setPickyourOwn(request.getPickYourOwn());
+    offer.setPrice(request.getPrice());
+    offer.setUnit(request.getUnit());
+    //might need Farm here
+    //might need id here
+    var farm = farmDaoInterface.getFarmByName(request.getFarmName());
+    offer.setFarm(farm);
+
+    return offer;
+  }
+
+  // convert from shared to grpc offer
+  private Offer convertOfferToGrpc(mango.sep3.databaseaccess.Shared.Offer offer) {
+
+    return Offer.newBuilder()
+        .setId(offer.getId())
+        .setName(offer.getName())
+        .setQuantity(offer.getQuantity())
+        .setUnit(offer.getUnit())
+        .setPrice(offer.getPrice())
+        .setDelivery(offer.isDelivery())
+        .setPickUp(offer.isPickUp())
+        .setPickYourOwn(offer.isPickyourOwn())
+        .setDescription(offer.getDescription())
+        .setFarmName(offer.getFarm().getName())
+        .build();
+  }
 }

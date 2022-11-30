@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using Shared.Models;
@@ -8,6 +9,7 @@ namespace HttpClient.ClientImplementations;
 
 public class OrderHttpClient : IOrderService
 {
+
     private System.Net.Http.HttpClient Client => apiAccess.HttpClient;
     private readonly ApiAccess apiAccess;
     public OrderHttpClient(ApiAccess apiAccess)
@@ -150,6 +152,19 @@ public class OrderHttpClient : IOrderService
         };
         Order[] orders = { order1, order2, order3, order4 };*/
         return orders;
+    }
+    
+    public async Task CompleteOrderAsync(int id)
+    {
+        string dtoAsJson = JsonSerializer.Serialize(id);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await Client.PutAsync("/order",body);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 
     public async Task DeleteOrderAsync(int id)

@@ -16,4 +16,5 @@ public interface IOfferDao
     Task<IEnumerable<Offer>> GetAsync();
 
     Task<Offer> GetOfferByIdAsync(int id);
+    Task<IEnumerable<Offer>> GetByFarmNameAsync(string farmName);
 }

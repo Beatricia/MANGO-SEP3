@@ -5,9 +5,10 @@
 @using System.Text.RegularExpressions
 @using global::Shared.DTOs
 @using global::Shared.Models
+@using System.Security.Claims
 @inject IJSRuntime JsRuntime
 @inject IFarmService farmService
-
+@inject IUserService userService;
 
 <div class="center add-farm-root">
     <div class="title">Create Farm</div>
@@ -68,6 +69,8 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } =  null;
     private string farmName = string.Empty;
     private string city = string.Empty;
     private string zip = string.Empty;
@@ -75,10 +78,9 @@
     private string phone = string.Empty;
     private int deliveryDistance = 0;
     private string status = string.Empty;
-
     private string zipClasses = string.Empty;
     private string phoneClasses = string.Empty;
-
+    private Farmer farmer;
     private ICollection<FarmIcon>? icons;
     private FarmIcon? selectedIcon;
     private string? selectedIconUrl = "";
@@ -98,6 +100,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        if (user.Identity?.Name != null) farmer = await userService.GetFarmer(user.Identity?.Name);
         try
         {
             var tempIcons = (await farmService.GetAllIconsAsync()).ToList();
@@ -134,7 +139,7 @@
             Street = street,
             ZIP = zip
         };
-        
+
         var farmCreationDto = new FarmCreationDto
         {
             Name = farmName,
@@ -143,7 +148,8 @@
             FarmStatus = status,
             Address = address,
             FarmerUsername = "First farm",
-            FarmIconFileName = selectedIcon.FileName
+            FarmIconFileName = selectedIcon.FileName,
+            Farmer = farmer
         };
         
         await farmService.CreateAsync(farmCreationDto);

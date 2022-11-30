@@ -134,6 +134,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+
     private UserAuth convertUserAuthToGrpc(mango.sep3.databaseaccess.Shared.UserAuth user) {
         return UserAuth.newBuilder()
                 .setUsername(user.getUsername())
@@ -154,6 +155,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
             .setUsername(customer.getUsername())
             .setFirstname(customer.getFirstName())
             .setLastname(customer.getLastName())
+            .setPhone(customer.getPhone())
             .setAddress(address)
             .build();
     }

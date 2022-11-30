@@ -14,6 +14,7 @@ service OfferService{
   rpc CreateOffer(Offer) returns(Offer);
   rpc GetOffers(Void) returns(OfferItems);
   rpc GetOfferById(Id) returns(Offer);
+  rpc GetOffersByFarmName(Text) returns(OfferItems);
 }
 
 service UserService{
@@ -34,6 +35,7 @@ service OrderService{
   rpc CreateOrders(Orders) returns(Void);
   rpc GetAllOrders(Text) returns(Orders);
   rpc GetOrderOffers(Text) returns(OrderOffers);
+  rpc CompleteOrder(Id) returns(Void);
   rpc DeleteOrder(Text) returns(Void);
 }
 
@@ -184,9 +186,10 @@ message Id{
 }
 
 message Notification{
-  string toUsername = 1;
-  string text = 2;
-  int64 createdAt = 3;
+  int64 id = 1;
+  string toUsername = 2;
+  string text = 3;
+  int64 createdAt = 4;
 }
 
 message RepeatedNotification{

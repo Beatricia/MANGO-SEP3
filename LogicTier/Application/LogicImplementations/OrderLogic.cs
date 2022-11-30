@@ -68,8 +68,13 @@ public class OrderLogic : IOrderLogic
         await orderDao.CreateOrdersAsync(ordersToSend);
     }
 
-    public Task<IEnumerable<Order>> GetAllOrders(string username)
+    public async Task<IEnumerable<Order>> GetAllOrders(string username)
     {
-        return orderDao.GetAllOrdersAsync(username);
+        return  await orderDao.GetAllOrdersAsync(username);
+    }
+
+    public async Task CompleteOrderAsync(int id)
+    {
+        await orderDao.CompleteOrderAsync(id);
     }
 }

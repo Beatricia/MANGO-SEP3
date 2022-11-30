@@ -68,6 +68,12 @@ public class OfferLogic : IOfferLogic
         return results;
     }
 
+    public async Task<IEnumerable<Offer>> GetByFarmNameAsync(string farmName)
+    {
+        var results = await offerDao.GetByFarmNameAsync(farmName);
+        return results;
+    }
+
 
     /// <summary>
     /// Validating the data when creating an offer

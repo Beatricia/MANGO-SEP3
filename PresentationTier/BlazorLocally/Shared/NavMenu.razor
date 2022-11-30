@@ -26,15 +26,7 @@
                         </NavLink>
                     </div>
                 </AuthorizeView>
-                
-                <AuthorizeView Roles="farmer">
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="CreateOffer">
-                            <span class="oi oi-plus" aria-hidden="true"></span> Create Offer
-                        </NavLink>
-                    </div>
-                </AuthorizeView>
-                
+
                 <AuthorizeView Roles="farmer">
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="DisplayFarms">
@@ -83,7 +75,15 @@
                     </div>
                 </div>
             </NotAuthorized>
-        </AuthorizeView>
+            </AuthorizeView>
+             <AuthorizeView Roles="customer">
+                 <div class="nav-item px-3">
+                     <NavLink class="nav-link" href="AccountDetails">
+                     <img src="Img/account.png">My Profile
+                     </NavLink>
+                 </div>
+                 </AuthorizeView>
+        
     </nav>
 </div>
 

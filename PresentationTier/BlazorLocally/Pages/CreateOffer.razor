@@ -1,4 +1,4 @@
-﻿@page "/CreateOffer"
+﻿@page "/CreateOffer/{FarmName}"
 @attribute [Authorize(Roles = "farmer")] 
 
 @using global::Shared.DTOs
@@ -80,6 +80,9 @@
 </div>
 
 @code {
+    [Parameter] 
+    public string FarmName {get;set;}
+    
     private string productName = "";
     private int quantity;
     private string unit = "kg";

@@ -25,5 +25,12 @@ public interface IOfferService
     /// <param name="offerId"></param>
     /// <returns></returns>
     Task UploadImageAsync(IBrowserFile file, int offerId);
-    
+
+    /// <summary>
+    /// Gets all offers from a specific farm
+    /// </summary>
+    /// <param name="farmName"></param>
+    /// <returns></returns>
+    Task<ICollection<Offer>> GetByFarmNameAsync(string farmName);
+
 }

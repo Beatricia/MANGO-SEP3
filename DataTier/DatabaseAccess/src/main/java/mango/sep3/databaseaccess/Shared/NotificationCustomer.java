@@ -1,11 +1,10 @@
 package mango.sep3.databaseaccess.Shared;
 
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Notification", schema = "locally")
-public class Notification {
+@Table(name = "NotificationCustomer", schema = "locally")
+public class NotificationCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -14,13 +13,14 @@ public class Notification {
     @Column
     private String message;
 
-    @Column
-    private String toUsername;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn
+    private Customer customer;
 
     @Column
     private long createdAt;
 
-    public Notification() {
+    public NotificationCustomer() {
     }
 
     public long getId() {
@@ -39,19 +39,19 @@ public class Notification {
         this.message = message;
     }
 
-    public String getToUsername() {
-        return toUsername;
-    }
-
-    public void setToUsername(String toUsername) {
-        this.toUsername = toUsername;
-    }
-
     public long getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

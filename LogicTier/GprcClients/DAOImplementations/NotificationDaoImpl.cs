@@ -50,7 +50,7 @@ public class NotificationDaoImpl : INotificationDao
         return new Shared.Models.Notification
         {
             Text = notification.Text,
-            CreatedAt = new DateTime(2),
+            CreatedAt = new DateTime(notification.CreatedAt),
             ToUsername = notification.ToUsername
         };
     }

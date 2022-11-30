@@ -20,9 +20,9 @@ public class OrderController : LocallyController
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(string username)
+    public async Task<IActionResult> CreateAsync()
     {
-        //string? username = LoggedInUsername;
+        string username = LoggedInUsername;
         try
         {
             await orderLogic.CreateOrderAsync(username);
@@ -36,9 +36,9 @@ public class OrderController : LocallyController
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAsync(string username)
+    public async Task<IActionResult> GetAsync()
     {
-        //string? username = LoggedInUsername;
+        string username = LoggedInUsername;
         try
         {
             var created = await orderLogic.GetAllOrders(username);

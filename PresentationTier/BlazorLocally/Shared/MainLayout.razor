@@ -7,6 +7,10 @@
 
     <main>
         <div class="top-row px-4">
+            <AuthorizeView Roles="farmer, customer">
+                <NotificationComponent></NotificationComponent>
+            </AuthorizeView>
+            
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 

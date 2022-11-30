@@ -1,0 +1,115 @@
+﻿@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@inject INotificationService NotificationService
+
+
+
+<div class="notification-wrapper">
+    <input id="notification-checkbox" type="checkbox" style="display: none">
+    <label class="notification-toggle-label" for="notification-checkbox">
+        <div class="bell">
+            <img src="Img/notifications/bell.png" alt="">
+        </div>
+        @if (notifications is { Count: >0 })
+        {
+            <div class="alert-num">
+                <span class="alert-num-text">
+                    @notifications.Count
+                </span>
+            </div>
+        }
+        
+    </label>
+
+
+    <div class="notification-display">
+        <div class="notifications">
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <span style="color:red">Error: @errorMessage</span>
+            }
+            
+            @if (notifications == null)
+            {
+                <span>Loading...</span>
+            }
+            else if (notifications.Count == 0)
+            {
+                <span>You don't have any notifications</span>
+            }
+            else
+            {
+                foreach (var notification in notifications)
+                {
+                    <div class="notification">
+                        <div class="top-row">
+                            <span class="notification-timestamp">@GetNotificationTimeStamp(notification.CreatedAt)</span>
+                            <div class="notification-delete-button" @onclick="async () => await DeleteNotificationAsync(notification.Id)">
+                                <img src="Img/notifications/delete-button.png" alt="">
+                            </div>
+                        </div>
+                        <div class="text">
+                            @notification.Text
+                        </div>
+                    </div>
+                }
+            }
+            
+            <span class="refresh" @onclick="RefreshAsync"><span>Refresh</span> <img src="Img/notifications/refresh-icon.png" alt=""></span>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    ICollection<Notification>? notifications;
+    string errorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshAsync();
+    }
+
+    protected async Task RefreshAsync()
+    {
+        try
+        {
+            notifications = await NotificationService.GetNotifications();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorMessage = e.Message;
+        }
+    }
+
+    async Task DeleteNotificationAsync(long id)
+    {
+        Console.WriteLine("Deleting notification with id: " + id);
+    }
+
+
+    static string GetNotificationTimeStamp(DateTime time)
+    {
+        var now = DateTime.Now;
+        var diff = now - time;
+        
+        if(diff.TotalSeconds < 60)
+            return diff.TotalSeconds.ToString("0") + " seconds ago";
+        
+        // minutes
+        if(diff.TotalMinutes < 60)
+            return diff.TotalMinutes.ToString("0") + " minutes ago";
+        
+        // hours
+        if(diff.TotalHours < 24)
+            return diff.TotalHours.ToString("0") + " hours ago";
+        
+        // days
+        if(diff.TotalDays < 7)
+            return diff.TotalDays.ToString("0") + " days ago";
+        
+        // return date
+        return time.ToString("dd/MM/yyyy");
+    }
+}

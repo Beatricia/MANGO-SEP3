@@ -19,6 +19,7 @@ builder.Services.AddScoped<IOrderService,OrderHttpClient>();
 builder.Services.AddScoped<IAuthService, AuthHttpClient>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<ICartService, CartHttpClient>();
+builder.Services.AddScoped<INotificationService, NotificationHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();

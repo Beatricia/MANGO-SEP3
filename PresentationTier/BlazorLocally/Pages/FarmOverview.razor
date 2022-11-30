@@ -3,6 +3,7 @@
 @using HttpClient.ClientInterfaces
 @inject IFarmService farmHttpClient;
 @inject IOfferService offerHttpClient;
+@inject NavigationManager navMgr;
 @attribute [Authorize(Roles = "farmer")] 
 
 <div id="shape">
@@ -15,8 +16,7 @@
 </div>
 <div id="status"><h5>Status:</h5>
     <label id="statusLabel"  contenteditable="true">This is the status of this farm</label></div>
-<div class="buttonContainer"><button id="updateButton">Update</button></div>
-<div class="buttonContainer"><button id="addButton">Add Offer</button></div>
+ <a href="CreateOffer/@FarmName"><div class="buttonContainer"><button id="updateButton">Update</button></div></a>
 
 @if (offers == null)
 {
@@ -41,11 +41,12 @@
             </div>
         }
     </div>}
-
+<div class="buttonContainer"><button id="addButton" @onclick="@CreateOfferPage">Add Offer</button></div>
 @code {
     //get the farm from the previous view
     [Parameter] 
     public string FarmName {get;set;}
+    
     private  Farm Farm {get;set;}
     private string msg = "";
     private IEnumerable<Offer> offers {get;set;}
@@ -56,7 +57,6 @@
         {
             Farm = await farmHttpClient.GetFarmByNameAsync(FarmName);
             offers = await offerHttpClient.GetByFarmNameAsync(FarmName);
-            Console.WriteLine(offers.First().ToString());
         }
         catch (Exception e)
         {
@@ -64,6 +64,11 @@
             msg = e.Message;
         }
     }
-    
+
+
+    private void CreateOfferPage()
+    {
+        navMgr.NavigateTo("/CreateOffer/FarmName");
+    }
 
 }

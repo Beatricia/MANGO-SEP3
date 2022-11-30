@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize]
+[Authorize]
 public class OrderController : LocallyController
 {
     private readonly IOrderLogic orderLogic;

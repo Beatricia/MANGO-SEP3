@@ -25,7 +25,7 @@ builder.Services.AddBlazoredLocalStorageAsSingleton();
 builder.Services.AddSingleton(sp => 
     new ApiAccess(sp.GetRequiredService<ILocalStorageService>()){ BaseApiAddress = "https://localhost:7086" });
 
-AuthorizationPolicies.AddPolicies(builder.Services); //idk if this should be here
+AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 

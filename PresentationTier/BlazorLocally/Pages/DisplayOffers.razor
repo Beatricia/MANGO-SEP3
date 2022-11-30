@@ -1,4 +1,6 @@
 ﻿@page "/DisplayOffers"
+@attribute [Authorize(Roles = "customer")] 
+
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @inject IOfferService httpOfferClient

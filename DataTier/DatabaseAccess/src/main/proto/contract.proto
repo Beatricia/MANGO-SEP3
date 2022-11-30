@@ -36,6 +36,7 @@ service OrderService{
   rpc GetAllOrders(Text) returns(Orders);
   rpc GetOrderOffers(Text) returns(OrderOffers);
   rpc CompleteOrder(Id) returns(Void);
+  rpc DeleteOrder(Text) returns(Void);
 }
 
 service CartOfferService{

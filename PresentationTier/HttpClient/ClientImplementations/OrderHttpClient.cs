@@ -166,4 +166,14 @@ public class OrderHttpClient : IOrderService
             throw new Exception(content);
         }
     }
+
+    public async Task DeleteOrderAsync(int id)
+    {
+        HttpResponseMessage response = await Client.DeleteAsync($"/order/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+    }
 }

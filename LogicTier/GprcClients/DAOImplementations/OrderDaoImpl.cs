@@ -102,6 +102,21 @@ public class OrderDaoImpl : IOrderDao
         }
     }
 
+    public async Task DeleteOrderAsync(int id)
+    {
+        var text = new Text { Text_ = String.Format("{0}", id) };
+
+        try
+        {
+            await orderService.DeleteOrderAsync(text);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
     private IEnumerable<Shared.Models.OrderOffer> ConvertOrderOffersFromGrpc(OrderOffers orderOffers)
     {
         IEnumerable<OrderOffer> orderOffersList = orderOffers.OrderOffers_;

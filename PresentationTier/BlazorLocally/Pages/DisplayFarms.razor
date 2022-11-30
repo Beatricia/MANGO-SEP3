@@ -1,0 +1,51 @@
+@page "/DisplayFarms"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@inject IFarmService farmHttpClient;
+
+
+<h3>DisplayOffers</h3>
+@if (farms == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+
+@if(farms != null){
+    Console.WriteLine("not null");
+    <div class="d-flex justify-content-around flex-wrap">
+        @foreach (var farm in farms)
+        {
+            <div class="card col-5 m-3">
+                <div class="card-header">
+                    <img src="@farm.FarmIcon.AbsoluteUrl" class="rounded" alt="farmImage"/>
+                </div>
+            <div class="card-body d-flex justify-content-between flex-wrap">
+                <h5 class="col-8">@farm.Name</h5>
+            </div>
+            </div>
+        }
+    </div>}
+
+
+
+@code {
+    private IEnumerable<Farm>? farms;
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Console.WriteLine( farmHttpClient.GetAllFarmsByFarmer("farmer").ToString());
+            farms = await farmHttpClient.GetAllFarmsByFarmer("farmer");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+}

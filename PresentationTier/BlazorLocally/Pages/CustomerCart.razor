@@ -74,7 +74,6 @@
         try
         {
             cartOffers = await cartService.GetAllCartItemsAsync("customer");
-            Console.WriteLine("The cart offers received: " + cartOffers);
 
             foreach (var cartOffer in cartOffers)
             {

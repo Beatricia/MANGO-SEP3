@@ -64,4 +64,22 @@ public class FarmHttpClient : IFarmService
         
         return deserialized ?? new List<FarmIcon>(); 
     }
+
+    public async Task<ICollection<Farm>?> GetAllFarmsByFarmer(string farmer)
+    {
+        HttpResponseMessage response = await Client.GetAsync($"/Farm/allFarmsByFarmer?username={farmer}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+        
+        ICollection<Farm> farms = JsonSerializer.Deserialize<ICollection<Farm>>(content,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return farms;
+    }
 }

@@ -31,7 +31,7 @@ public class NotificationDaoImpl : INotificationDao
         return list;
     }
 
-    public async Task AddNotification(ICollection<Shared.Models.Notification> notification)
+    public async Task AddNotificationAsync(ICollection<Shared.Models.Notification> notification)
     {
         var notifications = new RepeatedNotification();
         foreach (Shared.Models.Notification item in notification)

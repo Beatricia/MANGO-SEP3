@@ -66,4 +66,6 @@ public interface UserDaoInterface {
      * @return The farmer.
      */
     Farmer getFarmer(String username);
+
+    void updateCustomer(String username, String phone, String city, String street, String zip);
 }

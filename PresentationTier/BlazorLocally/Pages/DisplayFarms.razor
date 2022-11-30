@@ -3,33 +3,55 @@
 @using HttpClient.ClientInterfaces
 @inject IFarmService farmHttpClient;
 
+<div class="text">
+    <h3 class="yourFarmsText">YOUR FARMS</h3>
+</div>
 
-<h3>DisplayOffers</h3>
 @if (farms == null)
 {
     <p>
-        <em>Loading...</em>
+        <em>You don not have farms.</em>
     </p>
 }
-
-@if(farms != null){
-    Console.WriteLine("not null");
-    <div class="d-flex justify-content-around flex-wrap">
-        @foreach (var farm in farms)
+<div class="d-flex justify-content-around flex-wrap">
+@if (farms != null)
+{
+    @foreach (var farm in farms)
         {
-            <div class="card col-5 m-3">
-                <div class="card-header">
-                    <img src="@farm.FarmIcon.AbsoluteUrl" class="rounded" alt="farmImage"/>
+            <a href="FarmOverview/{@farm.Name}">
+                <div class="card mb-3" style="max-width: 400px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="@farm.FarmIcon.AbsoluteUrl" alt="farmImage"/>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <h2 class="card-text">@farm.Name</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            <div class="card-body d-flex justify-content-between flex-wrap">
-                <h5 class="col-8">@farm.Name</h5>
-            </div>
-            </div>
+                </a>
         }
-    </div>}
+}
 
+<a href="/AddFarm" class="addFarm">
+    <div class="card mb-2" style="max-width: 200px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="Img/plus.png" alt="addFarmImage"/>
+            </div>
+            <div class="col-md-5">
+                <div class="text-center">
+                    <h6 class="card-text">Add a farm here</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
 
-
+</div>
+  
 @code {
     private IEnumerable<Farm>? farms;
     private string msg = "";
@@ -38,8 +60,8 @@
     {
         try
         {
-            Console.WriteLine( farmHttpClient.GetAllFarmsByFarmer("farmer").ToString());
-            farms = await farmHttpClient.GetAllFarmsByFarmer("farmer");
+            Console.WriteLine(farmHttpClient.GetAllFarmsByFarmer("FARMER").ToString());
+            farms = await farmHttpClient.GetAllFarmsByFarmer("FARMER");
         }
         catch (Exception e)
         {

@@ -54,7 +54,8 @@ public class FarmController : LocallyController
         return Ok(farmLogic.GetAllIcons());
     }
     
-    [HttpGet, Authorize(Roles = "farmer,customer")]
+    //TODO authorized
+    [HttpGet]
     public async Task<IActionResult> GetAsync([FromQuery]string farmName)
     {
         try

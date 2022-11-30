@@ -32,9 +32,9 @@ public class CartHttpClient : ICartService
         return user;
     }
 
-    public async Task<ICollection<CartOffer>> GetAllCartItemsAsync(string username)
+    public async Task<ICollection<CartOffer>> GetAllCartItemsAsync()
     {
-        HttpResponseMessage response = await client.GetAsync($"/Cart?username={username}");
+        HttpResponseMessage response = await client.GetAsync("/Cart");
         string content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);
 

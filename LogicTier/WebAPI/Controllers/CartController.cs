@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
+using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 [Authorize(Roles = "customer")]
-public class CartController : ControllerBase
+public class CartController : LocallyController
 {
     private readonly ICartLogic cartLogic;
 
@@ -33,8 +34,9 @@ public class CartController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAsync([FromQuery] string username)
+    public async Task<IActionResult> GetAsync()
     {
+        string username = LoggedInUsername;
         try
         {
             var created = await cartLogic.GetAllCartItemsAsync(username);

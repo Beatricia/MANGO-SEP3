@@ -1,9 +1,8 @@
 ﻿@page "/CustomerOrderView"
-@attribute [Authorize(Roles = "customer")] 
+@attribute [Authorize(Roles = "customer")]
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
-@using System.Runtime.Versioning
 @inject IOrderService orderService
 @inject IFarmService farmService
 
@@ -90,13 +89,8 @@
     {
         try
         {
-            
             orders = await orderService.GetAllOrdersAsync();
-            foreach (var order in orders)
-            {
-                 Console.WriteLine("Orders:               " + order.Id);
-            }
-           
+
             if (orders != null)
             {
                 List<string> farmNames = new();

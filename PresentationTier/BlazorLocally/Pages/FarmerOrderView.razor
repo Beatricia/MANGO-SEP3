@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>@item.Offer.Name</td>
                                     <td class="QuantityCell">@item.Quantity</td>
-                                    <td><button class="btn btn-danger" @onclick="() => DeleteOrder(@item.Id)" >DELETE</button></td>
+                                    <td><button class="btn btn-danger" onclick="@DeleteOrder(item.Id)">DELETE</button></td>
                                 </tr>
                             }
                         </Table>
@@ -69,7 +69,7 @@
                                 <tr>
                                     <td>@item.Offer.Name</td>
                                     <td class="QuantityCell">@item.Quantity</td>
-                                    <td><button class="btn btn-danger" @onclick="() => DeleteOrder(@item.Id)" >DELETE</button></td>
+                                    <td><button class="btn btn-danger" onclick="@DeleteOrder(item.Id)">DELETE</button></td>
                                 </tr>
                             }
                         </Table>
@@ -147,9 +147,10 @@
         return totalPrice;
     }
     
-    private void DeleteOrder(int id)
+    private bool DeleteOrder(int id)
     {
         orderService.DeleteOrderAsync(id);
+        return true;
     }
 
 

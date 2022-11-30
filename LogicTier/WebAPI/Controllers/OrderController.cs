@@ -66,4 +66,19 @@ public class OrderController : LocallyController
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteAsync(int id)
+    {
+        try
+        {
+            await orderLogic.DeleteOrderAsync(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

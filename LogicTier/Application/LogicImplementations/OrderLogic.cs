@@ -77,4 +77,18 @@ public class OrderLogic : IOrderLogic
     {
         await orderDao.CompleteOrderAsync(id);
     }
+
+    public Task DeleteOrderAsync(int OrderId)
+    {
+        try
+        {
+            return orderDao.DeleteOrderAsync(OrderId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Order does no longer exist");
+            throw;
+        }
+        
+    }
 }

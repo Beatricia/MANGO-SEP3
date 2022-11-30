@@ -44,6 +44,11 @@ service CartOfferService{
   rpc DeleteCartOffer(Id) returns(Void);
 }
 
+service NotificationService{
+  rpc AddNotifications(RepeatedNotification) returns(Void);
+  rpc GetNotifications(Text) returns(stream Notification);
+}
+
 message UserAuth{
   string username = 1;
   string hash = 2;
@@ -175,4 +180,14 @@ message Username{
 
 message Id{
   int32 id =1;
+}
+
+message Notification{
+  string toUsername = 1;
+  string text = 2;
+  int64 createdAt = 3;
+}
+
+message RepeatedNotification{
+  repeated Notification notifications = 1;
 }

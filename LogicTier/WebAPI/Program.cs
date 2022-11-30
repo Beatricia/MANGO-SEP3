@@ -46,6 +46,9 @@ builder.Services.AddGrpcClient<CartOfferService.CartOfferServiceClient>(grpcOpti
 builder.Services.AddScoped<ICartDao, CartDaoImpl>();
 builder.Services.AddScoped<ICartLogic, CartLogic>();
 
+builder.Services.AddGrpcClient<NotificationService.NotificationServiceClient>(grpcOptions);
+builder.Services.AddScoped<INotificationDao, NotificationDaoImpl>();
+
 builder.Services.AddTransient<IImageDao, ImageResource>();
 builder.Services.AddTransient<ImageResource>();
 builder.Services.AddTransient<IFarmIconDao, FarmIconResource>();

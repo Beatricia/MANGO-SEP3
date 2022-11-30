@@ -27,4 +27,8 @@ public class ServerConfig {
     @Bean public OfferServiceImpl getOfferServiceImpl(){
         return new OfferServiceImpl();
     }
+
+    @Bean public NotificationServiceImpl getNotificationServiceImpl(){
+        return new NotificationServiceImpl();
+    }
 }

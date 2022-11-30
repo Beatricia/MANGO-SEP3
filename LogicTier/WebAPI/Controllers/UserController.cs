@@ -34,8 +34,8 @@ public class UserController : LocallyController
     }
     
     //TODO authorized
-    [HttpPost("customer")]
-    public async Task<ActionResult> UpdateAsync(CustomerUpdateDto dto)
+    [HttpPatch("customer")]
+    public async Task<ActionResult> UpdateAsync([FromBody]CustomerUpdateDto dto)
     {
         string username = LoggedInUsername;
         try

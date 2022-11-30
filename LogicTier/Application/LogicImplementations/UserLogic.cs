@@ -23,4 +23,9 @@ public class UserLogic : IUserLogic
     {
         await userDao.UpdateCustomerAsync(dto,username);
     }
+
+    public async Task<Farmer?> GetFarmer(string username)
+    {
+        return await userDao.GetFarmer(username);
+    }
 }

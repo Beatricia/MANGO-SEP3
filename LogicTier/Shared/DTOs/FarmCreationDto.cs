@@ -14,6 +14,8 @@ public class FarmCreationDto
 
     public string FarmerUsername { get; set; }
     
+    public Farmer Farmer { get; set; }
+    
     /// <summary>
     /// File name of the image (for example: "default.png")
     /// </summary>

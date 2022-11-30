@@ -15,6 +15,22 @@ public class UserHttpClient : IUserService
         this.client = client;
     }
 
+    public async Task<Farmer> GetFarmer(string username)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/user/farmer?username={username}");
+        string content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        Farmer farmer = JsonSerializer.Deserialize<Farmer>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return farmer;
+    }
+
     public async Task<Customer> GetCustomer(string username)
     {
         HttpResponseMessage response = await client.GetAsync($"/user/customer?username={username}");

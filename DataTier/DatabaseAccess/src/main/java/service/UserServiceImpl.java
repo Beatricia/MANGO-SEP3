@@ -154,6 +154,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
             .setUsername(customer.getUsername())
             .setFirstname(customer.getFirstName())
             .setLastname(customer.getLastName())
+            .setPhone(customer.getPhone())
             .setAddress(address)
             .build();
     }

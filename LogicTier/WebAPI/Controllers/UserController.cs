@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
+using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController : ControllerBase
+public class UserController : LocallyController
 {
     private IUserLogic userLogic;
 
@@ -16,7 +17,8 @@ public class UserController : ControllerBase
         this.userLogic = userLogic;
     }
 
-    [HttpGet("customer"), Authorize(Roles = "farmer")]
+    //TODO authorized
+    [HttpGet("customer")]
     public async Task<IActionResult> GetAsync([FromQuery] string username)
     {
         try
@@ -31,11 +33,14 @@ public class UserController : ControllerBase
         }
     }
     
-    [HttpPost("customer"), /*Authorize(Roles = "customer")*/]
-    public async Task<ActionResult> UpdateAsync(CustomerUpdateDto dto, string username)
+    //TODO authorized
+    [HttpPost("customer")]
+    public async Task<ActionResult> UpdateAsync(CustomerUpdateDto dto)
     {
+        string username = LoggedInUsername;
         try
         {
+            
             await userLogic.UpdateCustomerAsync(dto, username);
             return Ok();
         }

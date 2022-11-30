@@ -1,0 +1,129 @@
+﻿@page "/AccountDetails"
+@using global::Shared.Models
+@using HttpClient.ClientInterfaces
+@using System.Security.Claims
+@using System.IO.Compression
+@using global::Shared.DTOs
+@inject IUserService userService
+
+<AuthorizeView>
+    <div class="main">
+        <div class="topLabel">
+            <label class="helloLabel">Hello @context.User.Identity.Name</label>
+        </div>
+        <div class="row">
+            <label class="provided">First Name: @firstName</label>
+        </div>
+        <div class="row">
+            <label class="provided">Last Name: @lastName</label>
+        </div>
+        <div class="row">
+            <label class="required">Phone:</label>
+            <div class="phone">
+                <label class="directNumber">+45</label>
+                <input class="phoneLabel" @bind="phone" type="text" placeholder="@phone">
+            </div>
+        </div>
+        <div class="row">
+            <label class="required">Address:</label>
+            <input @bind="address" type="text" placeholder="@address">
+        </div>
+        <div class="row" id="lastRow">
+            <div id="city">
+                <label class="required">City:</label>
+                <input @bind="city" type="text" placeholder="@city">
+            </div>
+            <div id="zip">
+                <label class="required">Zip:</label>
+                <input @bind="zip" type="text" placeholder="@zip">
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(msg))
+        {
+           <div>
+               <span>@msg</span>
+               </div> 
+        }
+        
+        <div class="button">
+            <button @onclick="UpdateDeatils">UPDATE</button>
+        </div>
+        
+
+    </div>
+</AuthorizeView>
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } =  null;
+
+    private string firstName;
+    private string lastName;
+    private string phone = String.Empty;
+    private string address = String.Empty;
+    private string city = String.Empty;
+    private string zip = String.Empty;
+    private string msg = String.Empty;
+
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            AuthenticationState authState = await AuthState;
+            ClaimsPrincipal user = authState.User;
+
+            Customer customer = await userService.GetCustomer(user.Identity.Name);
+            firstName = customer.FirstName;
+            lastName = customer.LastName;
+            phone = customer.Phone;
+            address = customer.Address.Street;
+            city = customer.Address.City;
+            zip = customer.Address.ZIP;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async void UpdateDeatils()
+    {
+        CustomerUpdateDto dto = new();
+        if (!IsDigitsOnly(zip))
+        {
+            msg = "Zip can only contains digits";
+            return;
+        }
+        if ( zip.Length != 4)
+        {
+            msg = "Zip must be 4 digits";
+            return;
+        }
+        if ( phone.Length>15 )
+        {
+            msg = "Phone number is too long";
+            return;
+        }
+        dto.Phone = phone;
+        dto.City = city;
+        dto.Street = address;
+        dto.Zip = zip;
+        
+        await userService.UpdateCustomerAsync(dto);
+        msg = "";
+
+    }
+    
+    private bool IsDigitsOnly(string str)
+    {
+        foreach (char c in str)
+        {
+            if (c < '0' || c > '9')
+                return false;
+        }
+
+        return true;
+    }
+}

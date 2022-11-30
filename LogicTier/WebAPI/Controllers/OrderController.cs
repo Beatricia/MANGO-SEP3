@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
+//[Authorize]
 public class OrderController : LocallyController
 {
     private readonly IOrderLogic orderLogic;
@@ -42,6 +42,7 @@ public class OrderController : LocallyController
         try
         {
             var created = await orderLogic.GetAllOrders(username);
+            Console.WriteLine("Number Of Orders:  "+created.ToString());
             return Created($"/orders", created);
         }
         catch (Exception e)

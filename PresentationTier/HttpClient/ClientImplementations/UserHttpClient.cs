@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using Shared.DTOs;
@@ -49,7 +50,9 @@ public class UserHttpClient : IUserService
 
     public async Task UpdateCustomerAsync(CustomerUpdateDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/user/customer", dto);
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PatchAsync("/user/customer", body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

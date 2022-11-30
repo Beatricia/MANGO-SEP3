@@ -85,6 +85,23 @@ public class OrderDaoImpl : IOrderDao
         }
     }
 
+    public async Task CompleteOrderAsync(int id)
+    {
+        Id orderId = new Id
+        {
+            Id_ = id
+        };
+        try
+        {
+            await orderService.CompleteOrderAsync(orderId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
     private IEnumerable<Shared.Models.OrderOffer> ConvertOrderOffersFromGrpc(OrderOffers orderOffers)
     {
         IEnumerable<OrderOffer> orderOffersList = orderOffers.OrderOffers_;

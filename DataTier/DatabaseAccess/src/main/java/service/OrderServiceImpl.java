@@ -62,6 +62,16 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onCompleted();*/
   }
 
+  @Override public void completeOrder(Id request,
+      StreamObserver<Void> responseObserver)
+  {
+    orderDao.completeOrder(request.getId());
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+
+  }
+
   @Override public void createOrders(Orders request,
       StreamObserver<Void> responseObserver)
   {

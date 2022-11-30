@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "farmer")]
+//[Authorize(Roles = "farmer")]
 public class OfferController : ControllerBase
 {
     private readonly IOfferLogic offerLogic;
@@ -77,6 +77,21 @@ public class OfferController : ControllerBase
         {
             var created = await offerLogic.GetAsync();
             return Created($"/offers", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("farmName"), AllowAnonymous]
+    public async Task<IActionResult> GetByFarmNameAsync([FromQuery] string farmName)
+    {
+        try
+        {
+            var created = await offerLogic.GetByFarmNameAsync(farmName);
+            return Created($"/offers/{farmName}", created);
         }
         catch (Exception e)
         {

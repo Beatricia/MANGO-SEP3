@@ -14,6 +14,7 @@ service OfferService{
   rpc CreateOffer(Offer) returns(Offer);
   rpc GetOffers(Void) returns(OfferItems);
   rpc GetOfferById(Id) returns(Offer);
+  rpc GetOffersByFarmName(Text) returns(OfferItems);
 }
 
 service UserService{

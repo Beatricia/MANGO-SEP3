@@ -74,4 +74,23 @@ public class OfferHttpClient : IOfferService
         if (!response.IsSuccessStatusCode)
             throw new Exception("Failed to upload image.");
     }
+
+    ///summary///
+    /// Sends GET by farm name request to a WebAPI server
+    /// summary///
+    public async Task<ICollection<Offer>> GetByFarmNameAsync(string farmName)
+    {
+        HttpResponseMessage response = await client.GetAsync("/offer/farmName");
+        string content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        ICollection<Offer> offers = JsonSerializer.Deserialize<ICollection<Offer>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return offers;
+    }
 }

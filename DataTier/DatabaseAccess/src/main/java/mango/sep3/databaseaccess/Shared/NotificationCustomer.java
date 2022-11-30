@@ -2,6 +2,8 @@ package mango.sep3.databaseaccess.Shared;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "NotificationCustomer", schema = "locally")
 public class NotificationCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

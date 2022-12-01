@@ -78,11 +78,6 @@
                                                 onchange="@(() => PickUp())"/>
                                          <label for="pickUp"> Pick Up</label>
                                      </div>
-                                     <div class="col-8 d-flex flex-nowrap">
-                                         <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
-                                                onchange="@(() => PickYO())"/>
-                                         <label for="pickYO"> Pick Your Own</label>
-                                     </div>
                                  </div>
                              </div>
                          </div>
@@ -121,7 +116,6 @@
     private int quantity;
     private bool delivery = true;
     private bool pickUp;
-    private bool pickYO;
     private int offerId;
 
     bool showAddToCartComponent;
@@ -160,10 +154,6 @@
             if (pickUp.Equals(true))
             {
                 dto.CollectOption = "pick up";
-            }
-            else if (pickYO.Equals(true))
-            {
-                dto.CollectOption = "pick your own";
             }
             else
             {dto.CollectOption = "delivery";
@@ -207,7 +197,6 @@
     {
         delivery = true;
         pickUp = false;
-        pickYO = false;
     }
 
     ///summary///
@@ -217,17 +206,7 @@
     {
         delivery = false;
         pickUp = true;
-        pickYO = false;
     }
 
-    ///summary///
-    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
-    /// summary///
-    private void PickYO()
-    {
-        delivery = false;
-        pickUp = false;
-        pickYO = true;
-    }
 
 }

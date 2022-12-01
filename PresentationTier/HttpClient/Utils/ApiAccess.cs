@@ -83,4 +83,9 @@ public class ApiAccess
         JWT = token;
         await localStorageService.SetItemAsStringAsync(CookieKey, token);
     }
+
+    public async Task LogoutAsync()
+    {
+        await localStorageService.RemoveItemAsync(CookieKey);
+    }
 }

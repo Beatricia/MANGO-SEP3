@@ -11,6 +11,11 @@
     </div>
     @if (orders == null)
     {
+        <span>Loading..</span>
+    }
+    else if (orders.Count() == 0)
+    {
+        <span>You don't have any orders yet.</span>
     }
     else if (orders.Any())
     {
@@ -56,6 +61,7 @@
                             <div class="nameCell">@order.FarmName</div>
                             <div class="phoneCell">(+45) @farms[order.FarmName].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            @*<div><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>*@
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
@@ -89,12 +95,12 @@
     {
         try
         {
-            orders = await orderService.GetAllOrdersAsync();
+           var ordersToGet = await orderService.GetAllOrdersAsync();
 
-            if (orders != null)
+            if (ordersToGet != null)
             {
                 List<string> farmNames = new();
-                foreach (var order in orders)
+                foreach (var order in ordersToGet)
                 {
                     farmNames.Add(order.FarmName);
                 }
@@ -106,19 +112,21 @@
                         farms.Add(farmName,farm);
                     }
                 }
-                 foreach (var order in orders)
+                 foreach (var order in ordersToGet)
                  {
-                     if (order.CollectionOption.Equals("Delivery"))
+                     if (order.CollectionOption.Equals("delivery"))
                      {
                          deliveryOrders.Add(order);
                      }
-                     else if(order.CollectionOption.Equals("PickUp"))
+                     else if(order.CollectionOption.Equals("pickUp"))
                      {
                          pickUpOrders.Add(order);
                      }
                  }
             }
-            
+
+            orders = ordersToGet;
+
         }
         catch (Exception e)
         {
@@ -126,8 +134,6 @@
             msg = e.Message;
         }
 
-        
-        
     }
     
 

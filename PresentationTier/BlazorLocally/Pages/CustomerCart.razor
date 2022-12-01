@@ -96,6 +96,7 @@
     private async Task Order()
     {
         await orderService.CreateOrderAsync();
+        await OnInitializedAsync();
     }
 
     private async void RemoveTodo(int cartItemId)

@@ -3,8 +3,6 @@
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
-@using System.Net.Mail
-@using System.Security.AccessControl
 @inject IOrderService orderService
 @inject IUserService userService
 
@@ -111,7 +109,6 @@
         {
             var ordersToGet = await orderService.GetAllOrdersAsync();
             
-            Console.WriteLine("orders: " + ordersToGet.Count());
             if (ordersToGet != null)
             {
                  foreach (var order in ordersToGet)

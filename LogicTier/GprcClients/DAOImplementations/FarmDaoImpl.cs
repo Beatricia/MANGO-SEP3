@@ -45,25 +45,7 @@ public class FarmDaoImpl : IFarmDao
         };
 
         Farm farmGrpc = await farmServiceClient.GetFarmAsync(name);
-        global::Address addressGrpc = farmGrpc.Address;
-        
-        
-        Shared.Models.Address address = new Shared.Models.Address
-        {
-            City = addressGrpc.City,
-            Street = addressGrpc.Street,
-            ZIP = addressGrpc.Zip
-        };
-
-        Shared.Models.Farm farm = new Shared.Models.Farm
-        {
-            Address = address,
-            DeliveryDistance = farmGrpc.DeliveryDistance,
-            FarmStatus = farmGrpc.FarmStatus,
-            Name = farmGrpc.Name,
-            Phone = farmGrpc.Phone,
-            Farmer = ConvertFarmerFromGrpc(farmGrpc.Farmer)
-        };
+        Shared.Models.Farm farm = ConvertToSharedFarm(farmGrpc);
 
         return farm;
     }

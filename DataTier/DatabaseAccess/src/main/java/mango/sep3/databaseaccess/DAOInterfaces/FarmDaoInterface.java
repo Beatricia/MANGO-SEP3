@@ -10,6 +10,5 @@ public interface FarmDaoInterface
   Farm createFarm(Farm farm);
   Farm getFarmByName(String farmName);
   Collection<Farm> getFarms(Farmer farmer);
-
-    Farm updateFarm(String name, String status);
+  Farm updateFarm(String name, String status);
 }

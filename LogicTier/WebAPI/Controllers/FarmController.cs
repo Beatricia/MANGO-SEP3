@@ -54,8 +54,8 @@ public class FarmController : LocallyController
         return Ok(farmLogic.GetAllIcons());
     }
     
-    //TODO authorized
-    [HttpGet, Authorize(Roles = "customer")]
+    [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAsync([FromQuery]string farmName)
     {
         try
@@ -72,13 +72,13 @@ public class FarmController : LocallyController
     
         
 
-    [Route("allFarmsByFarmer")]
-    [HttpGet]
-    public async Task<IActionResult> GetAllFarmsByFarmer([FromQuery] string username)
+    [HttpGet("me")]
+    [Authorize(Roles = "farmer")]
+    public async Task<IActionResult> GetAllFarmsByFarmer()
     {
         try
         {
-            var created = await farmLogic.GetAllFarmsByFarmer(username);
+            var created = await farmLogic.GetAllFarmsByFarmer(LoggedInUsername!);
             return Created($"/farms", created);
         }
         catch (Exception e)
@@ -87,6 +87,7 @@ public class FarmController : LocallyController
             return StatusCode(500, e.Message);
         }
     }
+    
     
     [HttpPatch]
     public async Task<ActionResult> UpdateAsync([FromBody]FarmUpdateDto dto)

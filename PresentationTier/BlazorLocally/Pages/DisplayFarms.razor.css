@@ -53,3 +53,8 @@ img {
     bottom: 20px;
     right: 20px;
 }
+
+.farm-link{
+    text-decoration: none;
+    color: black;
+}

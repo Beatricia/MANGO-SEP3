@@ -1,0 +1,21 @@
+﻿@page "/Logout"
+@using BlazorWasm.Auth
+@using System.Security.Claims
+@inject ApiAccess ApiAccess
+@inject AuthenticationStateProvider AuthProvider
+
+<h3>Logout</h3>
+
+<h5>You are now logged out, hehe</h5>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthProvider is CustomAuthProvider customAuthProvider)
+        {
+            var emptyPrincipal = new ClaimsPrincipal();
+            customAuthProvider.AuthStateChanged(emptyPrincipal);
+        }
+        await ApiAccess.LogoutAsync();
+    }
+}

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using Shared.DTOs;
@@ -65,9 +66,9 @@ public class FarmHttpClient : IFarmService
         return deserialized ?? new List<FarmIcon>();
     }
 
-    public async Task<ICollection<Farm>?> GetAllFarmsByFarmer(string farmer)
+    public async Task<ICollection<Farm>?> GetAllFarmsByFarmerAsync()
     {
-        HttpResponseMessage response = await Client.GetAsync($"/Farm/allFarmsByFarmer?username={farmer}");
+        HttpResponseMessage response = await Client.GetAsync($"/Farm/me");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

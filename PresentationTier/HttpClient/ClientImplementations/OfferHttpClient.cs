@@ -13,18 +13,22 @@ namespace HttpClient.ClientImplementations;
 
 public class OfferHttpClient : IOfferService
 {
-    private readonly System.Net.Http.HttpClient client;
-
-    public OfferHttpClient(System.Net.Http.HttpClient client)
+    private System.Net.Http.HttpClient Client => apiAccess.HttpClient;
+    private readonly ApiAccess apiAccess;
+    public OfferHttpClient(ApiAccess apiAccess)
     {
-        this.client = client;
+        this.apiAccess = apiAccess;
     } 
-    ///summary///
+    
+    /// <summary>
     /// Sends POST request to a WebAPI server
-    /// summary///
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<Offer?> CreateAsync(OfferCreationDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/offer", dto);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/offer", dto);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -40,12 +44,14 @@ public class OfferHttpClient : IOfferService
     
     
 
-    ///summary///
+    /// <summary>
     /// Sends GET request to a WebAPI server
-    /// summary///
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<ICollection<Offer>> GetAsync()
     {
-        HttpResponseMessage response = await client.GetAsync("/offer");
+        HttpResponseMessage response = await Client.GetAsync("/offer");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -69,18 +75,21 @@ public class OfferHttpClient : IOfferService
         imageContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
         imageContent.Add(new StreamContent(reader, Convert.ToInt32(file.Size)), "image", file.Name);
         
-        HttpResponseMessage response = await client.PostAsync($"/offer/{offerId}/image", imageContent);
+        HttpResponseMessage response = await Client.PostAsync($"/offer/{offerId}/image", imageContent);
 
         if (!response.IsSuccessStatusCode)
             throw new Exception("Failed to upload image.");
     }
 
-    ///summary///
+    /// <summary>
     /// Sends GET by farm name request to a WebAPI server
-    /// summary///
+    /// </summary>
+    /// <param name="farmName"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<ICollection<Offer>> GetAsync(string farmName)
     {
-        HttpResponseMessage response = await client.GetAsync($"offer/farmName?farmName={farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"offer/farmName?farmName={farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

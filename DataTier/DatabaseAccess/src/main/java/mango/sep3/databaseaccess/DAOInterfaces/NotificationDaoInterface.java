@@ -11,4 +11,8 @@ public interface NotificationDaoInterface {
 
     Collection<NotificationFarmer> getNotificationsFarmer(String username);
     Collection<NotificationCustomer> getNotificationsCustomer(String username);
+
+    void deleteNotificationFarmer(NotificationFarmer notificationFarmer);
+
+    void deleteNotificationCustomer(NotificationCustomer notificationCustomer);
 }

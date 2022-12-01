@@ -129,7 +129,7 @@
         flex-direction: column;
         gap: 10px;
 
-        transition: box-shadow 100ms, transform 100ms;
+        transition: box-shadow 100ms, transform 100ms, background-color 100ms;
 
         .top-row{
           height: 20px;
@@ -169,6 +169,7 @@
 
           box-shadow: 2px 2px 10px #a8a8a8;
           transform: translateY(-2px);
+          background: #f5f5f5;
 
           .notification-delete-button{
             opacity: 1;

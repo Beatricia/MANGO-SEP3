@@ -21,6 +21,7 @@ public class UserController : LocallyController
     [HttpGet("customer")]
     public async Task<IActionResult> GetCustomerAsync([FromQuery] string username)
     {
+        Console.WriteLine(username);
         try
         {
             var returned = await userLogic.GetCustomer(username);
@@ -53,7 +54,7 @@ public class UserController : LocallyController
     public async Task<ActionResult> UpdateAsync([FromBody]CustomerUpdateDto dto)
     {
         string username = LoggedInUsername;
-        Console.WriteLine("username:         " + username);
+        
         try
         {
             

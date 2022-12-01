@@ -34,6 +34,7 @@ public class UserHttpClient : IUserService
 
     public async Task<Customer> GetCustomer(string username)
     {
+        Console.WriteLine(username);
         HttpResponseMessage response = await Client.GetAsync($"/user/customer?username={username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)

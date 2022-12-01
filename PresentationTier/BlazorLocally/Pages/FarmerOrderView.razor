@@ -3,6 +3,7 @@
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
+@using System.Net.Mail
 @inject IOrderService orderService
 @inject IUserService userService
 
@@ -17,6 +18,7 @@
     {
         @if (deliveryOrders.Any())
         {
+            <div>Delivery orders: @deliveryOrders.Count</div>
             <div class="orders">
                 <label>Delivery</label>
                 <div class="ordersTable">
@@ -78,6 +80,10 @@
             </div>
         }
     }
+else
+    {
+        <span>@msg</span>
+    }
 
 
 
@@ -85,7 +91,7 @@
     private IEnumerable<Order>? orders;
     private List<Order> deliveryOrders = new List<Order>();
     private List<Order> pickUpOrders = new List<Order>();
-    private string msg = "";
+    private string msg = "No input";
     private string username;
     private Dictionary<string,Customer> customers = new ();
     
@@ -93,8 +99,8 @@
     {
         try
         {
-            
             orders = await orderService.GetAllOrdersAsync();
+            msg = "orders: " + orders.Count();
             if (orders != null)
             {
                 List<string> customersUsername = new();

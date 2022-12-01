@@ -11,4 +11,6 @@ public interface OrderDaoInterface
   Collection<OrderOffer> getOrderOffers(Order order);
   void createOrders(Collection<Order> orders);
   Collection<Order> getAllOrders(String username);
+
+    void deleteOrder(int id);
 }

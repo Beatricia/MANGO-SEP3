@@ -34,7 +34,6 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
-      <Content Include="wwwroot\scripts\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -56,10 +55,6 @@
       <_ContentIncludedByDefault Remove="wwwroot\index.html" />
       <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
       <_ContentIncludedByDefault Remove="wwwroot\scripts\set-image-custom.js" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\scripts" />
     </ItemGroup>
 
 </Project>

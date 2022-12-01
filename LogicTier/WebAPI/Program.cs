@@ -8,7 +8,9 @@ using Grpc.Net.ClientFactory;
 using WebAPI.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Shared.Auth;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,34 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.OperationFilter<SecurityRequirementsOperationFilter>(true, "Bearer");
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Standard Authorization header using the Bearer scheme (JWT). Example: \"bearer {token}\"",
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+    options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+});
+
+
+
 Action<GrpcClientFactoryOptions> grpcOptions = options =>
 {
     options.Address = new Uri("http://localhost:6565");
@@ -48,6 +77,7 @@ builder.Services.AddScoped<ICartLogic, CartLogic>();
 
 builder.Services.AddGrpcClient<NotificationService.NotificationServiceClient>(grpcOptions);
 builder.Services.AddScoped<INotificationDao, NotificationDaoImpl>();
+builder.Services.AddScoped<INotificationLogic, NotificationLogic>();
 
 builder.Services.AddTransient<IImageDao, ImageResource>();
 builder.Services.AddTransient<ImageResource>();
@@ -80,7 +110,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(options => options.EnableTryItOutByDefault());
+    app.UseSwaggerUI(options =>
+    {
+        options.EnableTryItOutByDefault();
+        options.OAuthScopes("bearer");
+    });
 }
 
 app.UseHttpsRedirection();

@@ -62,7 +62,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onCompleted();*/
   }
 
-  @Override public void completeOrder(Id request,
+  /*@Override public void completeOrder(Id request,
       StreamObserver<Void> responseObserver)
   {
     orderDao.completeOrder(request.getId());
@@ -70,7 +70,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
 
-  }
+  }*/
 
   @Override public void createOrders(Orders request,
       StreamObserver<Void> responseObserver)
@@ -99,6 +99,15 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     Orders ordersResponse = convertOrdersToGrpc(orders);
 
     responseObserver.onNext(ordersResponse);
+    responseObserver.onCompleted();
+  }
+
+  @Override public void deleteOrder(Text request,
+      StreamObserver<Void> responseObserver)
+  {
+    orderDao.deleteOrder(Integer.parseInt(request.getText()));
+
+    responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
   }
 

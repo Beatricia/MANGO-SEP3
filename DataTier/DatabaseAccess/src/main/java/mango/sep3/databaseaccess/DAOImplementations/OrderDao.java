@@ -66,6 +66,11 @@ public class OrderDao implements OrderDaoInterface
     return orderRepository.findAllById(order_ids);
   }
 
+  @Override
+  public void deleteOrder(int id) {
+    orderRepository.deleteById(id);
+  }
+
 
   private void createOrderOffersWithOrder(Order order)
   {

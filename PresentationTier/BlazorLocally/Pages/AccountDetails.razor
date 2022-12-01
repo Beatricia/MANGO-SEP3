@@ -11,36 +11,36 @@
         <div class="topLabel">
             <label class="helloLabel">Hello @context.User.Identity.Name</label>
         </div>
-        <div class="row">
+        <div class="detail-row">
             <label class="provided">First Name: @firstName</label>
         </div>
-        <div class="row">
+        <div class="detail-row">
             <label class="provided">Last Name: @lastName</label>
         </div>
-        <div class="row">
+        <div class="detail-row">
             <label class="required">Phone:</label>
             <div class="phone">
                 <label class="directNumber">+45</label>
                 <input class="phoneLabel" @bind="phone" type="text" placeholder="@phone">
             </div>
         </div>
-        <div class="row">
+        <div class="detail-row">
             <label class="required">Address:</label>
             <input @bind="address" type="text" placeholder="@address">
         </div>
-        <div class="row" id="lastRow">
-            <div id="city">
+        <div class="detail-row" id="lastRow">
+            <div class="city">
                 <label class="required">City:</label>
                 <input @bind="city" type="text" placeholder="@city">
             </div>
-            <div id="zip">
+            <div class="zip">
                 <label class="required">Zip:</label>
                 <input @bind="zip" type="text" placeholder="@zip">
             </div>
         </div>
         @if (!string.IsNullOrEmpty(msg))
         {
-           <div>
+           <div class="msgLabel">
                <span>@msg</span>
                </div> 
         }
@@ -71,6 +71,7 @@
     {
         try
         {
+            msg = "";
             AuthenticationState authState = await AuthState;
             ClaimsPrincipal user = authState.User;
 
@@ -93,7 +94,7 @@
         CustomerUpdateDto dto = new();
         if (!IsDigitsOnly(zip))
         {
-            msg = "Zip can only contains digits";
+            msg = "Zip must only contains digits";
             return;
         }
         if ( zip.Length != 4)
@@ -106,14 +107,43 @@
             msg = "Phone number is too long";
             return;
         }
+        if ( phone.Length <8 )
+        {
+            msg = "Phone number is too short";
+            return;
+        }
+        if (!IsDigitsOnly(phone))
+        {
+            msg = "Phone must only contains digits";
+            return; 
+        }
+        if (string.IsNullOrEmpty(phone))
+        {
+            msg = "Phone cannot be empty";
+            return; 
+        }
+        if (string.IsNullOrEmpty(city))
+        {
+            msg = "City cannot be empty";
+            return; 
+        }
+        if (string.IsNullOrEmpty(address))
+        {
+            msg = "Address cannot be empty";
+            return; 
+        }
+        if (string.IsNullOrEmpty(zip))
+        {
+            msg = "Zip cannot be empty";
+            return; 
+        }
         dto.Phone = phone;
         dto.City = city;
         dto.Street = address;
         dto.Zip = zip;
         
-        await userService.UpdateCustomerAsync(dto);
         msg = "";
-
+        await userService.UpdateCustomerAsync(dto);
     }
     
     private bool IsDigitsOnly(string str)

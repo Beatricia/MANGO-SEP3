@@ -26,7 +26,7 @@ public class Offer implements Serializable
     private String description;
 
     @Column
-    private String imgPath;
+    private String imgPath; // TODO: Remove image path from here
 
     @Column
     private int quantity;

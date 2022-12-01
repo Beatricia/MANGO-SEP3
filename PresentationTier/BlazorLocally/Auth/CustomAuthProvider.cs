@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using HttpClient.ClientInterfaces;
+using HttpClient.Utils;
 using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor.Services;
 
 namespace BlazorWasm.Auth;
 
@@ -21,7 +23,7 @@ public class CustomAuthProvider: AuthenticationStateProvider
         return new AuthenticationState(principal);
     }
     
-    private void AuthStateChanged(ClaimsPrincipal principal)
+    public void AuthStateChanged(ClaimsPrincipal principal)
     {
         NotifyAuthenticationStateChanged(
             Task.FromResult(

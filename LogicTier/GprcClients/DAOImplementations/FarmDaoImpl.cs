@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using Application.DAOInterfaces;
+using Grpc.Core;
 using Shared.DTOs;
 
 namespace GprcClients.DAOImplementations;
@@ -83,18 +85,44 @@ public class FarmDaoImpl : IFarmDao
             throw;
         }
     }
-    
-    private Shared.Models.Farmer ConvertFarmerFromGrpc(global::Farmer farmGrpcFarmer)
+
+    public async Task<ICollection<Shared.Models.Farm>> GetAllFarmsByFarmer(string username)
     {
-        var farmer = new Shared.Models.Farmer
+        var user = new Farmer()
         {
-            FirstName = farmGrpcFarmer.Firstname,
-            LastName = farmGrpcFarmer.Lastname,
-            Username = farmGrpcFarmer.Username
-        };
-        return farmer;
+            Username = username
+        };   
+        
+        //Getting the farms from the database as buffers
+        Farms farmsBuff = farmServiceClient.GetFarms(user);
+
+        Console.WriteLine(farmsBuff.ToString());
+        ICollection<Shared.Models.Farm> list = new List<Shared.Models.Farm>();
+
+        foreach (var farm in farmsBuff.Farms_)
+        {
+            Shared.Models.Farm modelFarm = ConvertToSharedFarm(farm);
+            list.Add(modelFarm);
+        }
+
+        return list;
     }
-    
+    public async Task<Collection<string>> GetAllCustomersUncompletedOrder(string farmName)
+    {
+        var text = new Text
+        {
+            Text_ = farmName
+        };
+        
+        var usernamesGrpc = farmServiceClient.GetAllCustomersUncompletedOrder(text);
+        Collection<string> usernames = new Collection<string>();
+        foreach (var user in usernamesGrpc.Username)
+        {
+            usernames.Add(user.Text_);
+        }
+
+        return usernames;
+    }
 
     public async Task<Shared.Models.Farm?> GetByName(string name)
     {
@@ -147,26 +175,15 @@ public class FarmDaoImpl : IFarmDao
     }
     
     
-    public async Task<ICollection<Shared.Models.Farm>> GetAllFarmsByFarmer(string username)
+    private Shared.Models.Farmer ConvertFarmerFromGrpc(global::Farmer farmGrpcFarmer)
     {
-        var user = new Farmer()
+        var farmer = new Shared.Models.Farmer
         {
-            Username = username
-        };   
-        
-        //Getting the farms from the database as buffers
-        Farms farmsBuff = farmServiceClient.GetFarms(user);
-
-        Console.WriteLine(farmsBuff.ToString());
-        ICollection<Shared.Models.Farm> list = new List<Shared.Models.Farm>();
-
-        foreach (var farm in farmsBuff.Farms_)
-        {
-            Shared.Models.Farm modelFarm = ConvertToSharedFarm(farm);
-            list.Add(modelFarm);
-        }
-
-        return list;
+            FirstName = farmGrpcFarmer.Firstname,
+            LastName = farmGrpcFarmer.Lastname,
+            Username = farmGrpcFarmer.Username
+        };
+        return farmer;
     }
 
 

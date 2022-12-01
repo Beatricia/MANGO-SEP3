@@ -1,4 +1,5 @@
-﻿using Application.DAOInterfaces;
+﻿using System.Collections.ObjectModel;
+using Application.DAOInterfaces;
 using Application.LogicInterfaces;
 using Shared.DTOs;
 using Shared.Models;
@@ -9,11 +10,13 @@ public class FarmLogic : IFarmLogic
 {
     private IFarmIconDao farmIconDao;
     private IFarmDao farmDao;
+    private INotificationLogic notificationLogic;
 
-    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao)
+    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic)
     {
         this.farmIconDao = farmIconDao;
         this.farmDao = farmDao;
+        this.notificationLogic = notificationLogic;
     }
     
     /// <summary>
@@ -71,6 +74,18 @@ public class FarmLogic : IFarmLogic
     public async Task UpdateFarmAsync(FarmUpdateDto dto)
     { 
         await farmDao.UpdateFarmAsync(dto);
+
+        Task<Collection<String>> usernames = farmDao.GetAllCustomersUncompletedOrder(dto.Name);
+        foreach (var username in usernames.Result)
+        {
+            var notification = new NotificationCreationDto
+            {
+                Username = username,
+                Text = $"The status of the {dto.Name} farm, from which you have an order, has been changed!"
+            };
+            await notificationLogic.AddNotificationAsync(notification);
+        }
+    
     }
 
 

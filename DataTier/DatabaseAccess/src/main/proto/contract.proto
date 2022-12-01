@@ -9,6 +9,7 @@ service FarmService{
   rpc GetFarmByName(Text) returns(Farm);
   rpc GetFarms(Farmer) returns(Farms);
   rpc UpdateFarm(FarmUpdate) returns(Farm);
+  rpc GetAllCustomersUncompletedOrder(Text) returns(RepeatedUsername);
 }
 
 service OfferService{
@@ -200,4 +201,12 @@ message Notification{
 
 message RepeatedNotification{
   repeated Notification notifications = 1;
+}
+
+message RepeatedUsername{
+  repeated Text username= 1;
+}
+
+message RepeatedUsername{
+  repeated Text username= 1;
 }

@@ -206,7 +206,3 @@ message RepeatedNotification{
 message RepeatedUsername{
   repeated Text username= 1;
 }
-
-message RepeatedUsername{
-  repeated Text username= 1;
-}

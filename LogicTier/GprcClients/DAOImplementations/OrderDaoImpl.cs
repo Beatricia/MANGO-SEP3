@@ -176,7 +176,8 @@ public class OrderDaoImpl : IOrderDao
                 CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
-                OrderOffers = orderOffersList
+                OrderOffers = orderOffersList,
+                Username = order.Username
             };
             listToReturn.Add(item);
         }

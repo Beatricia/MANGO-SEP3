@@ -36,9 +36,9 @@ public class OrderController : LocallyController
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAsync(string username)
+    public async Task<IActionResult> GetAsync()
     {
-        //string username = LoggedInUsername;
+        string username = LoggedInUsername;
         try
         {
             var created = await orderLogic.GetAllOrders(username);
@@ -52,8 +52,8 @@ public class OrderController : LocallyController
         }
     }
 
-    [HttpPatch]
-    public async Task<ActionResult> CompleteOrder([FromBody]int id)
+    [HttpPatch("{id:int}")]
+    public async Task<ActionResult> CompleteOrder([FromRoute] int id)
     {
         try
         {
@@ -67,8 +67,8 @@ public class OrderController : LocallyController
         }
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteAsync(int id)
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
         try
         {

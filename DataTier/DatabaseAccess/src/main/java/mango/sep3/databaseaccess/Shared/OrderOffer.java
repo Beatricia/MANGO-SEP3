@@ -27,6 +27,7 @@ import java.util.Set;
 
   @Column(name = "collectionOption")
   private String collectionOption;
+  // TODO: remove collectionOption from OrderOffer (as it is in the order)
 
   public int getId()
   {

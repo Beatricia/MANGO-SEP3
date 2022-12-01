@@ -103,6 +103,7 @@ public class OrderDao implements OrderDaoInterface
 
   @Override
   public void deleteOrder(int id) {
+    //orderOfferRepository.deleteAllByOrder(orderRepository.findById(id).orElse(null));
     orderRepository.deleteById(id);
   }
 
@@ -111,6 +112,25 @@ public class OrderDao implements OrderDaoInterface
     Order order = orderRepository.findById(id).orElse(null);
     order.setDone(true);
     orderRepository.saveAndFlush(order);
+  }
+
+  @Override public Collection<String> getUsersWithUncompletedOrder(Collection<Order> orders)
+  {
+    Collection<String> usernames = new ArrayList<>();
+    Collection<OrderOffer> orderOffersFromOrder = new ArrayList<>();
+    for (var orderOffer: orders)
+    {
+      orderOffersFromOrder.addAll(orderOfferRepository.findAllByOrder(orderOffer));
+    }
+    for (var orderOfferUser: orderOffersFromOrder)
+    {
+      String username = orderOfferUser.getUsername();
+      if (!usernames.contains(username))
+      {
+        usernames.add(username);
+      }
+    }
+    return usernames;
   }
 
   private void createOrderOffersWithOrder(Order order)

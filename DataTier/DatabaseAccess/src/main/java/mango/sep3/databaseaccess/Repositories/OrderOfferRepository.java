@@ -17,6 +17,8 @@ public interface OrderOfferRepository extends JpaRepository<OrderOffer, Integer>
   Collection<OrderOffer> findAllByUsername(String username);
   Collection<OrderOffer> findAllByOrder(Order order);
 
+  //void deleteAllByOrder(Order order);
+
   @Modifying
   @Query("update OrderOffer orderOffer set orderOffer.order = :order where orderOffer.id = :id")
   void updateOrder(@Param(value ="id") int id, @Param(value = "order") Order order);

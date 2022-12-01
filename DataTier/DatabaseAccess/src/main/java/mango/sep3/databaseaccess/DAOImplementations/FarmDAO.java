@@ -3,12 +3,17 @@ package mango.sep3.databaseaccess.DAOImplementations;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.Repositories.FarmRepository;
 import mango.sep3.databaseaccess.Repositories.FarmerRepository;
+import mango.sep3.databaseaccess.Repositories.OrderRepository;
 import mango.sep3.databaseaccess.Shared.Farm;
 import mango.sep3.databaseaccess.Shared.Farmer;
+import mango.sep3.databaseaccess.Shared.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Data access object accessing farm related data.
@@ -20,6 +25,8 @@ public class FarmDAO implements FarmDaoInterface
   private FarmRepository farmRepository;
   @Autowired
   private FarmerRepository farmerRepository;
+  @Autowired
+  private OrderRepository orderRepository;
 
   /**
    *
@@ -59,4 +66,10 @@ public class FarmDAO implements FarmDaoInterface
     }
     return farm;
   }
+
+  @Override public Collection<Order> getUncompletedOrdersFromFarm(String farmName)
+  {
+   return orderRepository.findAllByFarmNameAndDoneIsFalse(farmName);
+  }
+
 }

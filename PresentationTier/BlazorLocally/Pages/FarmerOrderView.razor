@@ -4,6 +4,7 @@
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @using System.Net.Mail
+@using System.Security.AccessControl
 @inject IOrderService orderService
 @inject IUserService userService
 
@@ -14,15 +15,21 @@
     {
         <span>Loading..</span>
     }
+    else if (orders.Count() == 0)
+    {
+        <span>You don't have any orders yet.</span>
+    }
     else if (orders.Any())
     {
+        <div>Orders are ANY</div>
         @if (deliveryOrders.Any())
         {
+            <div>Deliver Orders NIce</div>
             <div>Delivery orders: @deliveryOrders.Count</div>
             <div class="orders">
                 <label>Delivery</label>
                 <div class="ordersTable">
-                    @foreach (var order in pickUpOrders)
+                    @foreach (var order in deliveryOrders)
                     {
                         <div class="rowDiv">
                             <div class="collectCell">
@@ -30,23 +37,23 @@
                                     <img src="Img/tic.png"/>
                                 </button>
                             </div>
-                            <div class="customerNameCell">@order.OrderOffers.First().Username</div>
-                            <div class="cityCell">@customers[order.OrderOffers.First().Username].Address?.City</div>
+                            <div class="customerNameCell">@order.Username</div>
+                            <div class="cityCell"></div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
                         </div>
                             <Table class="detailTable">
                             <th class="AddressRow">
-                                @customers[order.OrderOffers.First().Username].Address?.ToString()
+                                @customers[order.Username].Address?.ToString()
                             </th>
                             @foreach (var item in order.OrderOffers)
                             {
                                 <tr>
                                     <td>@item.Offer.Name</td>
                                     <td class="QuantityCell">@item.Quantity</td>
-                                    <td><button class="btn btn-danger" onclick="@DeleteOrder(item.Id)">DELETE</button></td>
                                 </tr>
                             }
                         </Table>
@@ -59,7 +66,7 @@
             <div class="orders">
                 <label>Pick up</label>
                 <div class="ordersTable">
-                    @foreach (var order in deliveryOrders)
+                    @foreach (var order in pickUpOrders)
                     {
                         <div class="rowDiv">
                             <div class="collectCell">
@@ -67,9 +74,10 @@
                                     <img src="Img/tic.png"/>
                                     </button>
                                 </div>
-                            <div class="nameCell">@order.OrderOffers.First().Username</div>
-                            <div class="phoneCell">@customers[order.OrderOffers.First().Username].Phone</div>
+                            <div class="nameCell">@order.Username</div>
+                            <div class="phoneCell">@customers[order.Username].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                            <div><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
@@ -81,7 +89,6 @@
                                 <tr>
                                     <td>@item.Offer.Name</td>
                                     <td class="QuantityCell">@item.Quantity</td>
-                                    <td><button class="btn btn-danger" onclick="@DeleteOrder(item.Id)">DELETE</button></td>
                                 </tr>
                             }
                         </Table>
@@ -89,10 +96,6 @@
                 </div>
             </div>
         }
-    }
-else
-    {
-        <span>@msg</span>
     }
 
 
@@ -109,15 +112,29 @@ else
     {
         try
         {
-            orders = await orderService.GetAllOrdersAsync();
-            msg = "orders: " + orders.Count();
-            if (orders != null)
+            var ordersToGet = await orderService.GetAllOrdersAsync();
+            
+            Console.WriteLine("orders: " + ordersToGet.Count());
+            if (ordersToGet != null)
             {
+                 foreach (var order in ordersToGet)
+                 {
+                     if (order.CollectionOption.Equals("delivery"))
+                     {
+                         deliveryOrders.Add(order);
+                     }
+                     else if(order.CollectionOption.Equals("pickUp"))
+                     {
+                         pickUpOrders.Add(order);
+                     }
+                 }
+                
                 List<string> customersUsername = new();
                 
-                foreach (var order in orders)
+                foreach (var order in ordersToGet)
                 {
-                    customersUsername.Add(order.OrderOffers.First().Username);
+                    customersUsername.Add(order.Username);
+                    Console.WriteLine("Username: " + order.Username);
                 }
                 foreach (var customerUsername in customersUsername)
                 {
@@ -127,7 +144,9 @@ else
                         customers.Add(customerUsername,customer);
                     }
                 }
+                Console.WriteLine("Customers: " + customers.Count);
             }
+            orders = ordersToGet;
         }
         catch (Exception e)
         {
@@ -135,21 +154,6 @@ else
             msg = e.Message;
         }
 
-        if (orders != null)
-        {
-            foreach (var order in orders)
-            {
-                if (order.CollectionOption.Equals("Delivery"))
-                {
-                    deliveryOrders.Add(order);
-                }
-                else if(order.CollectionOption.Equals("PickUp"))
-                {
-                    pickUpOrders.Add(order);
-                }
-            }
-
-        }
     }
 
     private double TotalPrice(List<OrderOffer> items)
@@ -163,10 +167,11 @@ else
         return totalPrice;
     }
     
-    private bool DeleteOrder(int id)
+    private async Task DeleteOrder(int id)
     {
-        orderService.DeleteOrderAsync(id);
-        return true;
+        Console.WriteLine("Delete order: " + id);
+        await orderService.DeleteOrderAsync(id);
+        await OnInitializedAsync();
     }
 
     private async Task CollectOrder(int id)

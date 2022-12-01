@@ -10,18 +10,19 @@ public class FarmHttpClient : IFarmService
 {
     private System.Net.Http.HttpClient Client => apiAccess.HttpClient;
     private readonly ApiAccess apiAccess;
+
     public FarmHttpClient(ApiAccess apiAccess)
     {
         this.apiAccess = apiAccess;
-    } 
-    
-    
-    
+    }
+
+
+
     public async Task CreateAsync(FarmCreationDto dto)
     {
         HttpResponseMessage response = await Client.PostAsJsonAsync("/farm", dto);
         string content = await response.Content.ReadAsStringAsync();
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(content);
@@ -32,12 +33,12 @@ public class FarmHttpClient : IFarmService
     {
         HttpResponseMessage response = await Client.GetAsync($"/farm?farmName={farmName}");
         string content = await response.Content.ReadAsStringAsync();
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(content);
         }
-        
+
         Farm farm = JsonSerializer.Deserialize<Farm>(content, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -50,7 +51,7 @@ public class FarmHttpClient : IFarmService
     {
         var response = await Client.GetAsync("/farm/icons");
         var content = await response.Content.ReadAsStringAsync();
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(content);
@@ -60,8 +61,8 @@ public class FarmHttpClient : IFarmService
         {
             PropertyNameCaseInsensitive = true
         });
-        
-        return deserialized ?? new List<FarmIcon>(); 
+
+        return deserialized ?? new List<FarmIcon>();
     }
 
     public async Task<ICollection<Farm>?> GetAllFarmsByFarmer(string farmer)
@@ -73,12 +74,24 @@ public class FarmHttpClient : IFarmService
         {
             throw new Exception(content);
         }
-        
+
         ICollection<Farm> farms = JsonSerializer.Deserialize<ICollection<Farm>>(content,
             new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             })!;
         return farms;
+    }
+
+    public async Task UpdateAsync(FarmUpdateDto dto)
+    {
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await Client.PatchAsync("/farm", body);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 }

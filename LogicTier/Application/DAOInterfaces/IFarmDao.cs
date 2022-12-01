@@ -12,6 +12,5 @@ public interface IFarmDao
     Task<ICollection<Farm>> GetAllFarmsByFarmer(string username);
 
 
-
-    
+    Task UpdateFarmAsync(FarmUpdateDto dto);
 }

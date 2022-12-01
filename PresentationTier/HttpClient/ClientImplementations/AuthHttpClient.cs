@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
+using HttpClient.Utils;
 using Shared.DTOs;
 using Shared.Models;
 
@@ -49,7 +50,7 @@ public class AuthHttpClient : IAuthService
         await _access.LoginAsync(loginResponse.Token);
         
         Jwt = loginResponse.Token;
-        ClaimsPrincipal claimsPrincipal = CreateClaimsPrincipal();
+        ClaimsPrincipal claimsPrincipal = AuthUtils.CreateClaimsPrincipal(Jwt);
         OnAuthStateChanged.Invoke(claimsPrincipal);
         
         //was returning Login response but isnt User better?
@@ -83,50 +84,13 @@ public class AuthHttpClient : IAuthService
 
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
-        ClaimsPrincipal principal = CreateClaimsPrincipal();
+        ClaimsPrincipal principal = AuthUtils.CreateClaimsPrincipal(Jwt);
         return Task.FromResult(principal);  
     }
 
 
     // Below methods stolen from https://github.com/SteveSandersonMS/presentation-2019-06-NDCOslo/blob/master/demos/MissionControl/MissionControl.Client/Util/ServiceExtensions.cs
-    private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
-    {
-        string payload = jwt.Split('.')[1];
-        byte[] jsonBytes = ParseBase64WithoutPadding(payload);
-        Dictionary<string, object>? keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
-        return keyValuePairs!.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()!));
-    }
     
-    
-    private static ClaimsPrincipal CreateClaimsPrincipal()
-    {
-        if (string.IsNullOrEmpty(Jwt))
-        {
-            return new ClaimsPrincipal();
-        }
-
-        IEnumerable<Claim> claims = ParseClaimsFromJwt(Jwt);
-    
-        ClaimsIdentity identity = new(claims, "jwt");
-
-        ClaimsPrincipal principal = new(identity);
-        return principal;
-    }
-
-    private static byte[] ParseBase64WithoutPadding(string base64)
-    {
-        switch (base64.Length % 4)
-        {
-            case 2:
-                base64 += "==";
-                break;
-            case 3:
-                base64 += "=";
-                break;
-        }
-
-        return Convert.FromBase64String(base64);
-    }
 
     
 }

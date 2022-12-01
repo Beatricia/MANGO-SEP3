@@ -1,4 +1,9 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorWasm.Auth
+@using HttpClient.Utils
+@using MudBlazor
+@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthProvider
+@inject ApiAccess ApiAccess
 
 <div class="page">
     <div class="sidebar">
@@ -19,3 +24,16 @@
         </article>
     </main>
 </div>
+
+@code
+{
+    protected override  async Task OnInitializedAsync()
+    {
+        if (AuthProvider is CustomAuthProvider customAuthProvider)
+        {
+            await ApiAccess.ManualSetupAsync();
+            var principal = AuthUtils.CreateClaimsPrincipal(ApiAccess.JWT);
+            customAuthProvider.AuthStateChanged(principal);
+        }
+    }
+}

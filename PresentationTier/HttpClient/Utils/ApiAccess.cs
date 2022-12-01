@@ -44,7 +44,7 @@ public class ApiAccess
     
     private readonly Blazored.LocalStorage.ILocalStorageService localStorageService;
     private const string CookieKey = "jwt";
-
+    
     public ApiAccess(Blazored.LocalStorage.ILocalStorageService localStorageService)
     {
         this.localStorageService = localStorageService;
@@ -55,6 +55,16 @@ public class ApiAccess
     /// Sets up the class by getting the cookie from the localstorage
     /// </summary>
     private async void Setup()
+    {
+        var jwtToken = await localStorageService.GetItemAsStringAsync(CookieKey);
+        
+        if (jwtToken is { Length: > 0 })
+        {
+            JWT = jwtToken;
+        }
+    }
+
+    public async Task ManualSetupAsync()
     {
         var jwtToken = await localStorageService.GetItemAsStringAsync(CookieKey);
         

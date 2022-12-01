@@ -1,12 +1,11 @@
 ﻿#shape{
     overflow: hidden;
-    margin-left: 20em;
+    margin-left: 15em;
 }
 #farmImg{
     padding-top: 17px;
     padding-left: 12px;
 }
-
 
 #circle{
     background-color: #B7BF96;
@@ -34,14 +33,27 @@
 }
 
 #status{
-    background-color: #6d735f;
+    background-color: #606748;
     border-radius: 10px;
     width: 25em;
-    height: 3em;
+    height: 5em;
     overflow: hidden;
     margin-top: -20px;
     float: right;
-    margin-right: 20em;
+    margin-right: 15em;
+}
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #606748;;
+    color: white;
+}
+
+::placeholder {
+    color: #9f9c9c;
 }
 
 #statusLabel{
@@ -56,6 +68,7 @@
     text-align: center;
     color: white;
     margin-left: 10px;
+    background-color: #606748;
 }
 
 .buttonContainer{

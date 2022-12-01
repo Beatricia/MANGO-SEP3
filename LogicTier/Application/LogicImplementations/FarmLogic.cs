@@ -93,7 +93,7 @@ public class FarmLogic : IFarmLogic
             throw new Exception("Farm name is too long!");
         }
 
-        if (phone.Length != 8)
+        if (phone.Length < 8)
         {
             throw new Exception("Invalid phone number!");
         }

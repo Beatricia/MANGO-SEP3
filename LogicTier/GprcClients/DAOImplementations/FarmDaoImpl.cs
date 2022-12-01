@@ -1,4 +1,5 @@
 using Application.DAOInterfaces;
+using Shared.DTOs;
 
 namespace GprcClients.DAOImplementations;
 
@@ -64,6 +65,25 @@ public class FarmDaoImpl : IFarmDao
         return farm;
     }
 
+    public async Task UpdateFarmAsync(FarmUpdateDto dto)
+    {
+        var farmUpdate = new FarmUpdate
+        {
+            Name = dto.Name,
+            Status = dto.FarmStatus
+        };
+        
+        try
+        {
+            await farmServiceClient.UpdateFarmAsync(farmUpdate);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
     private Shared.Models.Farmer ConvertFarmerFromGrpc(global::Farmer farmGrpcFarmer)
     {
         var farmer = new Shared.Models.Farmer
@@ -148,4 +168,6 @@ public class FarmDaoImpl : IFarmDao
 
         return list;
     }
+
+
 }

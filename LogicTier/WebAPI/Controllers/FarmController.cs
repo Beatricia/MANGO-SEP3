@@ -87,6 +87,23 @@ public class FarmController : LocallyController
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpPatch]
+    public async Task<ActionResult> UpdateAsync([FromBody]FarmUpdateDto dto)
+    {
+        string username = LoggedInUsername;
+        try
+        {
+            
+            await farmLogic.UpdateFarmAsync(dto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
+    }
 
     
 }

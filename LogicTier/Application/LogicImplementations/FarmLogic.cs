@@ -68,6 +68,11 @@ public class FarmLogic : IFarmLogic
         return farms;
     }
 
+    public async Task UpdateFarmAsync(FarmUpdateDto dto)
+    { 
+        await farmDao.UpdateFarmAsync(dto);
+    }
+
 
     /// <inheritdoc/>
     public ICollection<FarmIcon> GetAllIcons() => farmIconDao.AllIcons;

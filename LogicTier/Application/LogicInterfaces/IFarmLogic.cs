@@ -21,4 +21,5 @@ public interface IFarmLogic
     ICollection<FarmIcon> GetAllIcons();
     
     Task<ICollection<Farm>> GetAllFarmsByFarmer(string username);
+    Task UpdateFarmAsync(FarmUpdateDto dto);
 }

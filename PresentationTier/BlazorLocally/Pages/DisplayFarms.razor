@@ -61,7 +61,7 @@
         try
         {
             Console.WriteLine(farmHttpClient.GetAllFarmsByFarmer("FARMER").ToString());
-            farms = await farmHttpClient.GetAllFarmsByFarmer("FARMER");
+            farms = await farmHttpClient.GetAllFarmsByFarmer("mangoFarmer");
         }
         catch (Exception e)
         {

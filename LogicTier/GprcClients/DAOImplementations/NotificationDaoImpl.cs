@@ -41,9 +41,13 @@ public class NotificationDaoImpl : INotificationDao
         
         await notificationService.AddNotificationsAsync(notifications);
     }
-    
-    
-    
+
+    public async Task DeleteNotificationAsync(Shared.Models.Notification notification)
+    {
+        await notificationService.DeleteNotificationAsync(ConvertNotification(notification));
+    }
+
+
     // convert grpc notification to shared
     private Shared.Models.Notification ConvertNotification(Notification notification)
     {

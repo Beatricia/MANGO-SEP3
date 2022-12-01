@@ -71,6 +71,22 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void deleteNotification(Notification request, StreamObserver<Void> responseObserver) {
+        var notificationFarmer = convertToSharedFarmerNotification(request);
+        var notificationCustomer = convertToSharedCustomerNotification(request);
+
+        if(notificationFarmer != null){
+            notificationDao.deleteNotificationFarmer(notificationFarmer);
+        }
+        else if(notificationCustomer != null){
+            notificationDao.deleteNotificationCustomer(notificationCustomer);
+        }
+
+        responseObserver.onNext(Void.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
     private Notification convertToGrpc(NotificationFarmer notification) {
         return Notification.newBuilder()
                 .setId(notification.getId())

@@ -14,7 +14,7 @@ import java.util.Collection;
 public class NotificationDao implements NotificationDaoInterface {
 
     @Autowired
-    private NotificationFarmerRepository notificationRepository;
+    private NotificationFarmerRepository notificationFarmerRepository;
 
     @Autowired
     private NotificationCustomerRepository notificationCustomerRepository;
@@ -24,7 +24,7 @@ public class NotificationDao implements NotificationDaoInterface {
 
     @Override
     public void addNotificationsFarmer(Collection<NotificationFarmer> notification) {
-        notificationRepository.saveAll(notification);
+        notificationFarmerRepository.saveAll(notification);
     }
 
     @Override
@@ -34,11 +34,21 @@ public class NotificationDao implements NotificationDaoInterface {
 
     @Override
     public Collection<NotificationFarmer> getNotificationsFarmer(String username) {
-        return notificationRepository.findByFarmerUsername(username);
+        return notificationFarmerRepository.findByFarmerUsername(username);
     }
 
     @Override
     public Collection<NotificationCustomer> getNotificationsCustomer(String username) {
         return notificationCustomerRepository.findByCustomerUsername(username);
+    }
+
+    @Override
+    public void deleteNotificationFarmer(NotificationFarmer notificationFarmer) {
+        notificationFarmerRepository.delete(notificationFarmer);
+    }
+
+    @Override
+    public void deleteNotificationCustomer(NotificationCustomer notificationCustomer) {
+        notificationCustomerRepository.delete(notificationCustomer);
     }
 }

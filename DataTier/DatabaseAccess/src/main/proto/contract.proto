@@ -50,6 +50,7 @@ service CartOfferService{
 service NotificationService{
   rpc AddNotifications(RepeatedNotification) returns(Void);
   rpc GetNotifications(Text) returns(stream Notification);
+  rpc DeleteNotification(Notification) returns(Void);
 }
 
 message UserAuth{

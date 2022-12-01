@@ -31,4 +31,9 @@ public class NotificationLogic : INotificationLogic
         
         return notificationDao.AddNotificationsAsync(new List<Notification>{not});
     }
+
+    public Task DeleteNotificationAsync(Notification notification)
+    {
+        return notificationDao.DeleteNotificationAsync(notification);
+    }
 }

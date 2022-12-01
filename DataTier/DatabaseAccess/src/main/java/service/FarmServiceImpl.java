@@ -32,7 +32,6 @@ import java.util.Collection;
    * @param responseObserver the object returned to the Logic Tier
    */
 
-
   @Override public void createFarm(Farm request,
       StreamObserver<Farm> responseObserver)
   {
@@ -45,9 +44,9 @@ import java.util.Collection;
     farm.setIconPath(request.getIconPath());
 
     // get the farmer from the database by username
-    mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getFarmer().getUsername());
+    mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(
+        request.getFarmer().getUsername());
     farm.setFarmer(farmer);
-
 
     farmDAO.createFarm(farm);
     Farm farmGrpc = convertFarmToGrpc(farm);
@@ -56,39 +55,33 @@ import java.util.Collection;
     responseObserver.onCompleted();
   }
 
-  private mango.sep3.databaseaccess.Shared.Farmer convertFarmerFromGrpc(Farmer farmerGrpc)
-  {
-    var farmer = new mango.sep3.databaseaccess.Shared.Farmer();
-    farmer.setFirstName(farmerGrpc.getFirstname());
-    farmer.setLastName(farmerGrpc.getLastname());
-    farmer.setUsername(farmerGrpc.getUsername());
-
-    return farmer;
-  }
-
   @Override public void getFarm(Text request,
-        StreamObserver<Farm> responseObserver)
+      StreamObserver<Farm> responseObserver)
+  {
+    mango.sep3.databaseaccess.Shared.Farm farm = farmDAO.getFarmByName(
+        request.getText());
+
+    if (farm == null)
     {
-      mango.sep3.databaseaccess.Shared.Farm farm = farmDAO.getFarmByName(
-          request.getText());
-
-      if (farm == null)
-      {
-        responseObserver.onError(new Exception("User not found"));
-        return;
-      }
-
-      Farm farmToSend = convertFarmToGrpc(farm);
-
-      responseObserver.onNext(farmToSend);
-      responseObserver.onCompleted();
+      responseObserver.onError(new Exception("User not found"));
+      return;
     }
 
-  @Override public void getFarms(mango.sep3.databaseaccess.protobuf.Farmer request,
-      io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farms> responseObserver) {
+    Farm farmToSend = convertFarmToGrpc(farm);
 
-    mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(request.getUsername());
-    if(farmer == null){
+    responseObserver.onNext(farmToSend);
+    responseObserver.onCompleted();
+  }
+
+  @Override public void getFarms(
+      mango.sep3.databaseaccess.protobuf.Farmer request,
+      io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Farms> responseObserver)
+  {
+
+    mango.sep3.databaseaccess.Shared.Farmer farmer = userDao.getFarmer(
+        request.getUsername());
+    if (farmer == null)
+    {
       responseObserver.onError(new Exception("This farmer does not exist"));
     }
 
@@ -99,24 +92,25 @@ import java.util.Collection;
     Farms.Builder response = Farms.newBuilder();
 
     //model collection
-    Collection<mango.sep3.databaseaccess.Shared.Farm> farms = farmDAO.getFarms(farmer);
+    Collection<mango.sep3.databaseaccess.Shared.Farm> farms = farmDAO.getFarms(
+        farmer);
     //protobuff collection
     Collection<Farm> protoFarms = new ArrayList<>();
 
-    if(farms == null){
+    if (farms == null)
+    {
       responseObserver.onError(new Exception("No Farms found"));
       return;
     }
 
-    for(mango.sep3.databaseaccess.Shared.Farm farm : farms){
-      Farm f = Farm.newBuilder()
-          .setName(farm.getName())
+    for (mango.sep3.databaseaccess.Shared.Farm farm : farms)
+    {
+      Farm f = Farm.newBuilder().setName(farm.getName())
           .setAddress(convertAddressToGrpc(farm.getAddress()))
           .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
           .setFarmStatus(farm.getDescription())
           .setDeliveryDistance(farm.getDeliveryDistance())
-          .setPhone(farm.getPhone())
-          .build();
+          .setPhone(farm.getPhone()).build();
       protoFarms.add(f);
     }
     response.addAllFarms(protoFarms);
@@ -126,16 +120,31 @@ import java.util.Collection;
 
   }
 
+  @Override public void getFarmByName(Text request,
+      StreamObserver<Farm> responseObserver)
+  {
+    var farm = farmDAO.getFarmByName(request.getText());
+    var grpcFarm = convertFarmToGrpc(farm);
 
+    responseObserver.onNext(grpcFarm);
+    responseObserver.onCompleted();
+  }
+
+  @Override public void updateFarm(FarmUpdate request,
+      StreamObserver<Farm> responseObserver)
+  {
+    var updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
+
+    responseObserver.onNext(convertFarmToGrpc(updatedFarm));
+    responseObserver.onCompleted();
+  }
 
   private Farmer convertFarmerToGrpc(
       mango.sep3.databaseaccess.Shared.Farmer farmer)
   {
 
-    return Farmer.newBuilder()
-        .setFirstname(farmer.getFirstName())
-        .setUsername(farmer.getUsername())
-        .setLastname(farmer.getLastName())
+    return Farmer.newBuilder().setFirstname(farmer.getFirstName())
+        .setUsername(farmer.getUsername()).setLastname(farmer.getLastName())
         .build();
   }
 
@@ -144,10 +153,8 @@ import java.util.Collection;
   {
 
     return mango.sep3.databaseaccess.protobuf.Address.newBuilder()
-        .setCity(address.getCity())
-        .setZip(address.getZip())
-        .setStreet(address.getCity())
-        .build();
+        .setCity(address.getCity()).setZip(address.getZip())
+        .setStreet(address.getCity()).build();
   }
 
   private Address convertAddressFromGrpc(
@@ -161,28 +168,25 @@ import java.util.Collection;
     return address1;
   }
 
-
-
-  @Override
-  public void getFarmByName(Text request, StreamObserver<Farm> responseObserver) {
-    var farm = farmDAO.getFarmByName(request.getText());
-    var grpcFarm = convertFarmToGrpc(farm);
-
-    responseObserver.onNext(grpcFarm);
-    responseObserver.onCompleted();
+  // convert shared farm to grpc in a method
+  private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm)
+  {
+    return Farm.newBuilder().setName(farm.getName())
+        .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
+        .setAddress(convertAddressToGrpc(farm.getAddress()))
+        .setFarmStatus(farm.getDescription())
+        .setDeliveryDistance(farm.getDeliveryDistance())
+        .setPhone(farm.getPhone()).setIconPath(farm.getIconPath()).build();
   }
 
+  private mango.sep3.databaseaccess.Shared.Farmer convertFarmerFromGrpc(
+      Farmer farmerGrpc)
+  {
+    var farmer = new mango.sep3.databaseaccess.Shared.Farmer();
+    farmer.setFirstName(farmerGrpc.getFirstname());
+    farmer.setLastName(farmerGrpc.getLastname());
+    farmer.setUsername(farmerGrpc.getUsername());
 
-  // convert shared farm to grpc in a method
-    private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm) {
-      return Farm.newBuilder()
-          .setName(farm.getName())
-          .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
-          .setAddress(convertAddressToGrpc(farm.getAddress()))
-          .setFarmStatus(farm.getDescription())
-          .setDeliveryDistance(farm.getDeliveryDistance())
-          .setPhone(farm.getPhone())
-          .setIconPath(farm.getIconPath())
-          .build();
-    }
+    return farmer;
+  }
 }

@@ -8,6 +8,7 @@ service FarmService{
   rpc GetFarm(Text) returns(Farm);
   rpc GetFarmByName(Text) returns(Farm);
   rpc GetFarms(Farmer) returns(Farms);
+  rpc UpdateFarm(FarmUpdate) returns(Farm);
 }
 
 service OfferService{
@@ -74,6 +75,10 @@ message Farm{
   string iconPath = 8;
 }
 
+message FarmUpdate{
+  string name = 1;
+  string status = 2;
+}
 
 message Farms{
   repeated Farm farms = 1;

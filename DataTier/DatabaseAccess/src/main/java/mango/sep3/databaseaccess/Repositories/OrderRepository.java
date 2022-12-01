@@ -11,5 +11,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Integer>
 {
     Collection<Order> findAllByFarmName(String farmName);
-    // List<Order> findAllByUsername(String username);
+    Collection<Order> findAllByFarmNameAndDoneIsFalse(String farmName);
+  // List<Order> findAllByUsername(String username);
 }

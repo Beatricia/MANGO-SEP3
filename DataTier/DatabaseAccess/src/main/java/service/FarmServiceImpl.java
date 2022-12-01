@@ -2,6 +2,7 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.Address;
 import mango.sep3.databaseaccess.protobuf.*;
@@ -11,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @GRpcService public class FarmServiceImpl
     extends FarmServiceGrpc.FarmServiceImplBase
 {
   @Autowired private FarmDaoInterface farmDAO;
   @Autowired private UserDaoInterface userDao;
+  @Autowired private OrderDaoInterface orderDao;
 
   public FarmServiceImpl()
   {
@@ -137,6 +140,33 @@ import java.util.Collection;
 
     responseObserver.onNext(convertFarmToGrpc(updatedFarm));
     responseObserver.onCompleted();
+  }
+
+  @Override public void getAllCustomersUncompletedOrder(Text request,
+      StreamObserver<RepeatedUsername> responseObserver)
+  {
+    //get the ids of all uncompleted orders from the specific farm
+    var orderIds = farmDAO.getUncompletedOrdersFromFarm(request.getText());
+
+    //get all the usersNames from those orders
+    var usernames = orderDao.getUsersWithUncompletedOrder(orderIds);
+
+    responseObserver.onNext(convertUsernamesToGrpc(usernames));
+    responseObserver.onCompleted();
+  }
+
+  private RepeatedUsername convertUsernamesToGrpc(Collection<String> usernames)
+  {
+    Collection<Text> usernamesGrpc = new ArrayList<>();
+    for (var user : usernames)
+    {
+      var text = Text.newBuilder().setText(user).build();
+      usernamesGrpc.add(text);
+    }
+    RepeatedUsername repeatedUsername = RepeatedUsername.newBuilder()
+        .addAllUsername(usernamesGrpc).build();
+
+    return repeatedUsername;
   }
 
   private Farmer convertFarmerToGrpc(

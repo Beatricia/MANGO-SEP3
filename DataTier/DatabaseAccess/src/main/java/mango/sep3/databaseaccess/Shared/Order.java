@@ -16,7 +16,7 @@ public class Order
   private Set<OrderOffer> orderOffers;
 
   @Column
-  private boolean isDone;
+  private boolean done;
 
   @Column
   private String farmName;
@@ -53,12 +53,12 @@ public class Order
 
   public boolean isDone()
   {
-    return isDone;
+    return done;
   }
 
   public void setDone(boolean done)
   {
-    isDone = done;
+    this.done = done;
   }
 
   public String getFarmName()

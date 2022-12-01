@@ -114,6 +114,25 @@ public class OrderDao implements OrderDaoInterface
     orderRepository.saveAndFlush(order);
   }
 
+  @Override public Collection<String> getUsersWithUncompletedOrder(Collection<Order> orders)
+  {
+    Collection<String> usernames = new ArrayList<>();
+    Collection<OrderOffer> orderOffersFromOrder = new ArrayList<>();
+    for (var orderOffer: orders)
+    {
+      orderOffersFromOrder.addAll(orderOfferRepository.findAllByOrder(orderOffer));
+    }
+    for (var orderOfferUser: orderOffersFromOrder)
+    {
+      String username = orderOfferUser.getUsername();
+      if (!usernames.contains(username))
+      {
+        usernames.add(username);
+      }
+    }
+    return usernames;
+  }
+
   private void createOrderOffersWithOrder(Order order)
   {
     Customer customer = customerRepository.findById(order.getUsername()).orElse(null);

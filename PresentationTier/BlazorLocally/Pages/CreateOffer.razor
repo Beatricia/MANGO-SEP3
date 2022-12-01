@@ -4,6 +4,7 @@
 @using global::Shared.DTOs
 @inject IOfferService httpClient
 @using HttpClient.ClientInterfaces
+@using System.Security.AccessControl
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 
@@ -15,7 +16,6 @@
         <label>Product Name <span class="required">*</span></label>
         <input type="text" @bind="productName" required="required"/>
     </div>
-
     <!--image-->
     <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0">
         <div class=" d-flex flex-column">
@@ -24,59 +24,51 @@
             <InputFile OnChange="GetImage"></InputFile>
         </div>
     </div>
-
     <div class="col-6">
         <label>Quantity <span class="required">*</span></label>
-
+        <input type="text" @bind="quantity" required="required"/>
         <div class="col-9 d-flex flex-nowrap">
-            <input type="text" @bind="quantity" required="required"/>
             <!--dropdown menu-->
             <div class="dropdown col-2 ms-1">
-                <button onclick="@(() => DropDownVisible())" class="dropbtn">@unit</button>
-                <div id="myDropdown" class="dropdown-content" style="display: @displayDropdown">
-                    <span onclick="@(() => SetUnit("kg"))">kg</span>
-                    <span onclick="@(() => SetUnit("l"))">l</span>
-                </div>
+                @{
+                    var list = new List<string> { "kilogram", "gram", "liter", "piece", "bag", "box", "jar" };
+                }
+                <select @onchange="((evenArgs) => SetUnit((string)evenArgs.Value))">
+                    @foreach (var item in list)
+                    {
+                        <option @onclick="(() => SetUnit(item))">@item</option>
+                    }
+                    </select>
             </div>
         </div>
     </div>
-
-
-
-
+    
     <div class="col-6">
         <label>Price <span class="required">*</span></label>
         <input type="text" @bind="price" required="required"/>
     </div>
 
     <!--radio buttons for delivery option-->
-    <label class="col-6" for="radioGroup">Delivery Option:</label>
-    <div id="radioGroup" class="d-flex flex-column">
-        <div class="col-4 d-flex flex-nowrap">
-            <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
-                   onchange="@(() => Delivery())"
-                   checked="@delivery"/>
-            <label for="delivery"> Delivery</label>
-        </div>
-        <div class="col-4 d-flex flex-nowrap">
-            <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
-                   onchange="@(() => PickUp())"/>
-            <label for="pickUp"> Pick Up</label>
-        </div>
-        <div class="col-4 d-flex flex-nowrap">
-            <input type="radio" value="@pickYO" id="pickYO" name="deliveryOption" class="me-2"
-                   onchange="@(() => PickYO())"/>
-            <label for="pickYO"> Pick Your Own</label>
-        </div>
-
-    </div>
-    <!--textarea for description-->
+    <label class="col-6">Delivery Option:</label>
+    <label class="container">Delivery
+      <input type="checkbox" @bind="delivery">
+      <span class="checkmark"></span>
+    </label>
+    <label class="container" >Pick Your Own 
+      <input type="checkbox"  @bind="delivery">
+      <span class="checkmark"></span>
+    </label>
+    <label class="container">Pick Up
+        <input type="checkbox" @bind="delivery"></input>
+      <span class="checkmark"></span>
+    </label>
+    
+<!--textarea for description-->
     <label for="textarea">Description:</label>
     <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
 
     <!--submit button-->
     <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
-
 </div>
 
 @code {
@@ -85,11 +77,11 @@
     
     private string productName = "";
     private int quantity;
-    private string unit = "kg";
+    private string unit;
     private int price;
     private bool delivery = true;
-    private bool pickUp;
-    private bool pickYO;
+    private bool pickUp = true;
+    private bool pickYO = true;
     private string description = "";
     private string displayDropdown = "none";
     private string errorMessage = "";
@@ -135,6 +127,8 @@
                 Description = description,
                 FarmName = FarmName
             };
+            Console.WriteLine("delivery " + dto.Delivery + " pick up " + dto.PickUp + " pick your own " +dto.PickYourOwn + " unit " +dto.Unit
+                              );
 
             try
             {
@@ -156,41 +150,12 @@
     }
 
     ///summary///
-    /// sets the delivery boolean to true to simulate 'chosen from the radio'
-    /// summary///
-    private void Delivery()
-    {
-        delivery = true;
-        pickUp = false;
-        pickYO = false;
-    }
-    
-    ///summary///
-    /// sets the pickUp boolean to true to simulate 'chosen from the radio'
-    /// summary///
-    private void PickUp()
-    {
-        delivery = false;
-        pickUp = true;
-        pickYO = false;
-    }
-    
-    ///summary///
-    /// sets the pickYO boolean to true to simulate 'chosen from the radio'
-    /// summary///
-    private void PickYO()
-    {
-        delivery = false;
-        pickUp = false;
-        pickYO = true;
-    }
-
-    ///summary///
     /// sets variable unit 
     /// summary///
-    private void SetUnit(string unit)
+    private void SetUnit(string unitToSet)
     {
-        this.unit = unit;
+        Console.WriteLine("The unit was set: " +unit);
+        unit = unitToSet;
     }
 
     ///summary///

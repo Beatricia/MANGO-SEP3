@@ -67,6 +67,8 @@ public class AuthLogic : IAuthLogic
                 Username = dto.Username,
                 Role = "customer"
             };
+
+            
             return await userDao.RegisterCustomer(customer);
         }
     }

@@ -13,4 +13,5 @@ public interface OrderDaoInterface
   Collection<Order> getAllOrders(String username);
 
     void deleteOrder(int id);
+  void completeOrder(int id);
 }

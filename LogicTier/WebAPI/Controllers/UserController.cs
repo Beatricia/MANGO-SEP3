@@ -53,6 +53,7 @@ public class UserController : LocallyController
     public async Task<ActionResult> UpdateAsync([FromBody]CustomerUpdateDto dto)
     {
         string username = LoggedInUsername;
+        Console.WriteLine("username:         " + username);
         try
         {
             

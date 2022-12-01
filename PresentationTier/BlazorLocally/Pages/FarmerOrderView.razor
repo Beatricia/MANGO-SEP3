@@ -25,6 +25,11 @@
                     @foreach (var order in pickUpOrders)
                     {
                         <div class="rowDiv">
+                            <div class="collectCell">
+                                <button @onclick="()=>CollectOrder(order.Id)">
+                                    <img src="Img/tic.png"/>
+                                </button>
+                            </div>
                             <div class="customerNameCell">@order.OrderOffers.First().Username</div>
                             <div class="cityCell">@customers[order.OrderOffers.First().Username].Address?.City</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
@@ -57,6 +62,11 @@
                     @foreach (var order in deliveryOrders)
                     {
                         <div class="rowDiv">
+                            <div class="collectCell">
+                                <button @onclick="()=>CollectOrder(order.Id)">
+                                    <img src="Img/tic.png"/>
+                                    </button>
+                                </div>
                             <div class="nameCell">@order.OrderOffers.First().Username</div>
                             <div class="phoneCell">@customers[order.OrderOffers.First().Username].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
@@ -157,6 +167,12 @@ else
     {
         orderService.DeleteOrderAsync(id);
         return true;
+    }
+
+    private async Task CollectOrder(int id)
+    {
+        await orderService.CompleteOrderAsync(id);
+        await OnInitializedAsync();
     }
 
 

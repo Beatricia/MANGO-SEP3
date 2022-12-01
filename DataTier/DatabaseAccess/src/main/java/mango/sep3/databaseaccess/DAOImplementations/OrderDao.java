@@ -2,10 +2,7 @@ package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.Repositories.*;
-import mango.sep3.databaseaccess.Shared.CartItem;
-import mango.sep3.databaseaccess.Shared.Customer;
-import mango.sep3.databaseaccess.Shared.Order;
-import mango.sep3.databaseaccess.Shared.OrderOffer;
+import mango.sep3.databaseaccess.Shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +19,19 @@ public class OrderDao implements OrderDaoInterface
   private OrderOfferRepository orderOfferRepository;
   private CustomerRepository customerRepository;
   private CartRepository cartRepository;
+  private FarmerRepository farmerRepository;
+  private  FarmRepository farmRepository;
 
   @Autowired
   public OrderDao(OrderRepository orderRepository, OrderOfferRepository orderOfferRepository,
-      CustomerRepository customerRepository, CartRepository cartRepository)
+      CustomerRepository customerRepository, CartRepository cartRepository, FarmerRepository farmerRepository, FarmRepository farmRepository)
   {
     this.orderRepository = orderRepository;
     this.orderOfferRepository = orderOfferRepository;
     this.customerRepository = customerRepository;
     this.cartRepository = cartRepository;
+    this.farmerRepository = farmerRepository;
+    this.farmRepository = farmRepository;
   }
 
   @Override public void createOrderOffers(Collection<OrderOffer> orderOffers)
@@ -55,17 +56,40 @@ public class OrderDao implements OrderDaoInterface
 
   @Override public Collection<Order> getAllOrders(String username)
   {
-    Collection<OrderOffer> orderOffers = orderOfferRepository.findAllByUsername(username);
-
     List<Integer> order_ids = new ArrayList<>();
+    Collection<Order> orders = new ArrayList<>();
 
-    for (OrderOffer orderOffer: orderOffers)
+    System.out.println("username: " + username);
+    if (customerRepository.existsById(username)){
+      Collection<OrderOffer> orderOffers = orderOfferRepository.findAllByUsername(username);
+
+      for (OrderOffer orderOffer: orderOffers)
+      {
+        order_ids.add(orderOffer.getOrder().getId());
+      }
+
+      orders =  orderRepository.findAllById(order_ids);
+    }
+    else if (farmerRepository.existsById(username))
     {
-      order_ids.add(orderOffer.getOrder().getId());
+
+      Farmer farmer = farmerRepository.findById(username).orElse(null);
+      Collection<Farm> farms = farmRepository.findAllByFarmer(farmer);
+
+      for(Farm farm: farms)
+      {
+        System.out.println("farm name: " + farm.getName());
+        Collection<Order> farmsOrders = orderRepository.findAllByFarmName(farm.getName());
+        System.out.println("Number of orders " + farmsOrders.size());
+        orders.addAll(farmsOrders);
+      }
+      System.out.println("Orders size: " + orders.size());
+
     }
 
+
     //ToDo find better way to get only not done orders
-    List<Order> orders =  orderRepository.findAllById(order_ids);
+
     Collection<Order> notDoneOrders = new ArrayList<>();
     for (Order order:orders)
     {

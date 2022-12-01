@@ -133,7 +133,7 @@ import java.util.Collection;
   @Override public void updateFarm(FarmUpdate request,
       StreamObserver<Farm> responseObserver)
   {
-    var updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
+    mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
 
     responseObserver.onNext(convertFarmToGrpc(updatedFarm));
     responseObserver.onCompleted();

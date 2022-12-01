@@ -36,13 +36,13 @@ public class OrderController : LocallyController
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync(string username)
     {
-        string username = LoggedInUsername;
+        //string username = LoggedInUsername;
         try
         {
             var created = await orderLogic.GetAllOrders(username);
-            Console.WriteLine("Number Of Orders:  "+created.ToString());
+            
             return Created($"/orders", created);
         }
         catch (Exception e)

@@ -55,7 +55,7 @@ public class FarmController : LocallyController
     }
     
     //TODO authorized
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "customer")]
     public async Task<IActionResult> GetAsync([FromQuery]string farmName)
     {
         try

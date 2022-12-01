@@ -25,10 +25,30 @@ img{
     height: 30px;
     padding: 5px;
 }
+.collectCell{
+    width: 10%;
+    padding: 5px;
+}
 .customerNameCell{
     width: 40%;
     font-size: 20px;
     padding: 5px;
+}
+.cityCell{
+    width: 20%;
+    font-size: 20px;
+    padding: 5px;
+}
+.priceCell{
+    width:15% ;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.imgCell{
+    text-align: right;
+    padding: 5px;
+    width: 15%;
 }
 .phoneCell{
     width: 25%;
@@ -40,21 +60,7 @@ img{
     font-size: 20px;
     padding: 5px;
 }
-.cityCell{
-    width: 25%;
-    font-size: 20px;
-    padding: 5px;
-}
-.priceCell{
-    width:15% ;
-    font-size: 20px;
-    padding: 5px;
-}
-.imgCell{
-    text-align: right;
-    padding: 5px;
-    width: 20%;
-}
+
 
 .AddressRow{
     border-bottom: 1px solid #6a7246;

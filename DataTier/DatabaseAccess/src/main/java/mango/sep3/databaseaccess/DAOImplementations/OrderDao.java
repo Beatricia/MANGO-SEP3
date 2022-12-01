@@ -59,11 +59,22 @@ public class OrderDao implements OrderDaoInterface
 
     List<Integer> order_ids = new ArrayList<>();
 
-    for (var orderOffer: orderOffers)
+    for (OrderOffer orderOffer: orderOffers)
     {
       order_ids.add(orderOffer.getOrder().getId());
     }
-    return orderRepository.findAllById(order_ids);
+
+    //ToDo find better way to get only not done orders
+    List<Order> orders =  orderRepository.findAllById(order_ids);
+    Collection<Order> notDoneOrders = new ArrayList<>();
+    for (Order order:orders)
+    {
+      if (!order.isDone())
+      {
+        notDoneOrders.add(order);
+      }
+    }
+    return notDoneOrders;
   }
 
   @Override
@@ -71,6 +82,12 @@ public class OrderDao implements OrderDaoInterface
     orderRepository.deleteById(id);
   }
 
+  @Override public void completeOrder(int id)
+  {
+    Order order = orderRepository.findById(id).orElse(null);
+    order.setDone(true);
+    orderRepository.saveAndFlush(order);
+  }
 
   private void createOrderOffersWithOrder(Order order)
   {

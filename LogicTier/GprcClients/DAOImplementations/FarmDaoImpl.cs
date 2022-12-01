@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using Application.DAOInterfaces;
 using Grpc.Core;
@@ -114,13 +115,9 @@ public class FarmDaoImpl : IFarmDao
             Text_ = farmName
         };
         
-        var usernamesGrpc = farmServiceClient.GetAllCustomersUncompletedOrder(text);
-        Collection<string> usernames = new Collection<string>();
-        foreach (var user in usernamesGrpc.Username)
-        {
-            usernames.Add(user.Text_);
-        }
+        var usernamesGrpc = await farmServiceClient.GetAllCustomersUncompletedOrderAsync(text);
 
+        Collection<string> usernames = ConvertRepeatedUsernamesFromGrpc(usernamesGrpc);
         return usernames;
     }
 
@@ -184,6 +181,17 @@ public class FarmDaoImpl : IFarmDao
             Username = farmGrpcFarmer.Username
         };
         return farmer;
+    }
+    
+    private Collection<string> ConvertRepeatedUsernamesFromGrpc(RepeatedUsername usernamesGrpc)
+    {
+        Collection<string> usernames = new Collection<string>();
+        foreach (var text in usernamesGrpc.Username)
+        {
+          usernames.Add(text.Text_);
+        }
+
+        return usernames;
     }
 
 

@@ -81,7 +81,7 @@ public class FarmLogic : IFarmLogic
             var notification = new NotificationCreationDto
             {
                 Username = username,
-                Text = $"The status of the {dto.Name} farm, from which you have an order, has been changed!"
+                Text = $"{dto.Name} status changed: {dto.FarmStatus}" 
             };
             await notificationLogic.AddNotificationAsync(notification);
         }

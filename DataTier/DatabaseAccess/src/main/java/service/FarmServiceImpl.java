@@ -150,6 +150,23 @@ import java.util.List;
 
     //get all the usersNames from those orders
     var usernames = orderDao.getUsersWithUncompletedOrder(orderIds);
+
+    responseObserver.onNext(convertUsernamesToGrpc(usernames));
+    responseObserver.onCompleted();
+  }
+
+  private RepeatedUsername convertUsernamesToGrpc(Collection<String> usernames)
+  {
+    Collection<Text> usernamesGrpc = new ArrayList<>();
+    for (var user : usernames)
+    {
+      var text = Text.newBuilder().setText(user).build();
+      usernamesGrpc.add(text);
+    }
+    RepeatedUsername repeatedUsername = RepeatedUsername.newBuilder()
+        .addAllUsername(usernamesGrpc).build();
+
+    return repeatedUsername;
   }
 
   private Farmer convertFarmerToGrpc(

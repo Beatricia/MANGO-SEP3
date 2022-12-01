@@ -71,12 +71,6 @@ public class OrderLogic : IOrderLogic
     public async Task<IEnumerable<Order>> GetAllOrders(string username)
     {
         var orders = await orderDao.GetAllOrdersAsync(username);
-
-        if (!orders.Any())
-        {
-            throw new Exception("No orders found");
-        }
-        
         return  orders;
     }
 

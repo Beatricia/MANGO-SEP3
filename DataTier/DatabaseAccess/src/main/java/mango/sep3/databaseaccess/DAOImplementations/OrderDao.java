@@ -103,6 +103,7 @@ public class OrderDao implements OrderDaoInterface
 
   @Override
   public void deleteOrder(int id) {
+    //orderOfferRepository.deleteAllByOrder(orderRepository.findById(id).orElse(null));
     orderRepository.deleteById(id);
   }
 

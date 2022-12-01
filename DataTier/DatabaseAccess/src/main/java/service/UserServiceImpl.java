@@ -188,6 +188,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         sharedCustomer.setUsername(customer.getUsername());
         sharedCustomer.setFirstName(customer.getFirstname());
         sharedCustomer.setLastName(customer.getLastname());
+        sharedCustomer.setPhone(customer.getPhone());
 
         mango.sep3.databaseaccess.Shared.Address address = new mango.sep3.databaseaccess.Shared.Address();
         address.setCity(customer.getAddress().getCity());

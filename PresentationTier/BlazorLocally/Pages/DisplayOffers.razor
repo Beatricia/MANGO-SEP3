@@ -149,21 +149,19 @@
     {
         try
         {
-            CartOfferDto dto = new();
-            dto.Quantity = quantity;
-            if (pickUp.Equals(true))
-            {
-                dto.CollectOption = "pick up";
-            }
-            else
-            {dto.CollectOption = "delivery";
-            }
-            dto.OfferId = offerId;
-
             if (quantity < 0)
             {
                 msg = "Quantity should be bigger than 0.";
             }
+            
+            CartOfferDto dto = new()
+            {
+                Quantity = quantity,
+                Username = "",
+                CollectOption = pickUp ? "pick up" : "delivery",
+                OfferId = offerId
+            };
+
             
             await HttpCartClient.AddToCartAsync(dto);
 

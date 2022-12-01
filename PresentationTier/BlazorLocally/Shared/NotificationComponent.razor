@@ -14,7 +14,14 @@
         {
             <div class="alert-num">
                 <span class="alert-num-text">
-                    @notifications.Count
+                    @if(notifications.Count > 99)
+                    {
+                        <span>:D</span>
+                    }
+                    else
+                    {
+                        <span>@notifications.Count</span>
+                    }
                 </span>
             </div>
         }
@@ -44,7 +51,7 @@
                     <div class="notification">
                         <div class="top-row">
                             <span class="notification-timestamp">@GetNotificationTimeStamp(notification.CreatedAt)</span>
-                            <div class="notification-delete-button" @onclick="async () => await DeleteNotificationAsync(notification.Id)">
+                            <div class="notification-delete-button" @onclick="async () => await DeleteNotificationAsync(notification)">
                                 <img src="Img/notifications/delete-button.png" alt="">
                             </div>
                         </div>
@@ -84,9 +91,10 @@
         }
     }
 
-    async Task DeleteNotificationAsync(long id)
+    async Task DeleteNotificationAsync(Notification notification)
     {
-        Console.WriteLine("Deleting notification with id: " + id);
+        await NotificationService.DeleteAsync(notification);
+        await RefreshAsync();
     }
 
 

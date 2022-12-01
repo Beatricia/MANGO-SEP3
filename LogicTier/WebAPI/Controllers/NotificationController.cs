@@ -23,8 +23,7 @@ public class NotificationController : LocallyController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    //[Authorize("MustBeFarmer")]
-    //[Authorize("MustBeCustomer")]
+    [Authorize("FarmerOrCustomer")]
     public async Task<IActionResult> Get()
     {
         var nots = await dao.GetNotificationsAsync(LoggedInUsername!);
@@ -55,6 +54,15 @@ public class NotificationController : LocallyController
         
         await dao.AddNotificationAsync(dto);
 
+        return Ok();
+    }
+    
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody] Shared.Models.Notification notification)
+    {
+        notification.ToUsername = LoggedInUsername!;
+        
+        await dao.DeleteNotificationAsync(notification);
         return Ok();
     }
 }

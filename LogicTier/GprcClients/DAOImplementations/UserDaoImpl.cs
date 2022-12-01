@@ -79,11 +79,9 @@ public class UserDaoImpl : IUserDao
         {
             Username = username
         };
-        Console.WriteLine("        1:        " + dto.Phone);
         if (!string.IsNullOrEmpty(dto.Phone))
         {
             customerUpdate.Phone = dto.Phone;
-            Console.WriteLine("        2:        " + dto.Phone);
         }
         if (!string.IsNullOrEmpty(dto.City))
         {

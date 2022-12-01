@@ -5,7 +5,7 @@
 }
 .topLabel{
     width: 100%;
-    
+
 }
 .helloLabel{
     font-size: 45px;!important;
@@ -14,12 +14,13 @@
     text-align: center;
     margin-bottom: 5%;
 }
-.row{
+.detail-row{
     margin-bottom: 2%;
     border-left: #1a1e21 solid 2px;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    height: 45px;
+    padding-left: 1%;
 }
 button{
     margin-right: 5%;
@@ -30,27 +31,26 @@ button{
     font-weight: bold;
     border-radius: 10px;
 }
-#lastRow{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-}
+
 label{
     font-size: 30px;
 }
+
 input{
     font-size: 30px;
     background-color: #B7BF96;
     border: #B7BF96;
     border-radius: 10px;
-    padding: 2%;
+    padding: 1%;
 }
 
 .phone{
     background-color: #B7BF96;
     width: 15%;
     margin-left: 1%;
-    border-radius: 10px
+    border-radius: 10px;
+    text-align:center ;
+    display: flex;
 }
 .directNumber{
     background-color: #fafaf7;
@@ -63,7 +63,24 @@ input{
     width: 45%;
     float: left;
 }
-
 .city{
     width: 45%;
+}
+.zip, .city{
+    display: flex;
+}
+
+.zip input, .city input{
+    width: 50%;
+}
+
+#lastRow{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+span{
+    font-size: 25px;
+    color: red;
 }

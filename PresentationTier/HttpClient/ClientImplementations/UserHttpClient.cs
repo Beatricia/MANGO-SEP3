@@ -9,16 +9,16 @@ namespace HttpClient.ClientImplementations;
 
 public class UserHttpClient : IUserService
 {
-    private readonly System.Net.Http.HttpClient client;
-
-    public UserHttpClient(System.Net.Http.HttpClient client)
+    private System.Net.Http.HttpClient Client => apiAccess.HttpClient;
+    private readonly ApiAccess apiAccess;
+    public UserHttpClient(ApiAccess apiAccess)
     {
-        this.client = client;
-    }
+        this.apiAccess = apiAccess;
+    } 
 
     public async Task<Farmer> GetFarmer(string username)
     {
-        HttpResponseMessage response = await client.GetAsync($"/user/farmer?username={username}");
+        HttpResponseMessage response = await Client.GetAsync($"/user/farmer?username={username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -34,7 +34,7 @@ public class UserHttpClient : IUserService
 
     public async Task<Customer> GetCustomer(string username)
     {
-        HttpResponseMessage response = await client.GetAsync($"/user/customer?username={username}");
+        HttpResponseMessage response = await Client.GetAsync($"/user/customer?username={username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -52,7 +52,7 @@ public class UserHttpClient : IUserService
     {
         string dtoAsJson = JsonSerializer.Serialize(dto);
         StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await client.PatchAsync("/user/customer", body);
+        HttpResponseMessage response = await Client.PatchAsync("/user/customer", body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

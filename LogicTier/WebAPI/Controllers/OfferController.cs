@@ -60,12 +60,13 @@ public class OfferController : ControllerBase
 
         var file = Request.Form.Files[0];
         Image image = imageResource.GetImageForOffer(id);
+        FileInfo info = new FileInfo(image.RelativeUrl);
 
-        await imageResource.SaveImageAsync(imageResource.OfferImages, image.RelativeUrl, file);
+        await imageResource.SaveImageAsync(imageResource.OfferImages, info.Name, file);
 
 
         // check if the file is an image
-        await imageResource.CheckImageAsync(imageResource.OfferImages, image.RelativeUrl);
+        await imageResource.CheckImageAsync(imageResource.OfferImages, info.Name);
 
         return Ok();
     }

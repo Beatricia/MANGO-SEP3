@@ -4,9 +4,9 @@ namespace HttpClient.ClientInterfaces;
 
 public interface ICartService
 {
-    public Task<User> AddToCartAsync(CartOfferDto dto);
+    public Task AddToCartAsync(CartOfferDto dto);
     public Task<ICollection<CartOffer>> GetAllCartItemsAsync();
-    public Task DeleteAllCartOffersAsync(string username);
+    public Task DeleteAllCartOffersAsync();
 
     public Task DeleteCartOfferAsync(int cartItemId);
 }

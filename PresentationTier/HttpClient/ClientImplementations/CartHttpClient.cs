@@ -7,14 +7,14 @@ namespace HttpClient.ClientImplementations;
 
 public class CartHttpClient : ICartService
 {
-    private readonly System.Net.Http.HttpClient client;
-
-    public CartHttpClient(System.Net.Http.HttpClient client)
+    private System.Net.Http.HttpClient client => _apiAccess.HttpClient;
+    private ApiAccess _apiAccess;
+    public CartHttpClient(ApiAccess access)
     {
-        this.client = client;
+        _apiAccess = access;
     }
     
-    public async Task<User> AddToCartAsync(CartOfferDto dto)
+    public async Task AddToCartAsync(CartOfferDto dto)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync("/Cart", dto);
         string content = await response.Content.ReadAsStringAsync();
@@ -23,13 +23,6 @@ public class CartHttpClient : ICartService
         {
             throw new Exception(content);
         }
-
-        User user = JsonSerializer.Deserialize<User>(content, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-
-        return user;
     }
 
     public async Task<ICollection<CartOffer>> GetAllCartItemsAsync()
@@ -51,9 +44,9 @@ public class CartHttpClient : ICartService
         return cartOffers;
     }
 
-    public async Task DeleteAllCartOffersAsync(string username)
+    public async Task DeleteAllCartOffersAsync()
     {
-        HttpResponseMessage response = await client.DeleteAsync($"/Cart?username={username}");
+        HttpResponseMessage response = await client.DeleteAsync($"/Cart");
         string content = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

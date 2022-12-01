@@ -89,7 +89,7 @@
 
     private async Task RemoveAll()
     {
-        await cartService.DeleteAllCartOffersAsync("customer");
+        await cartService.DeleteAllCartOffersAsync();
         cartOffers = null;
     }
 

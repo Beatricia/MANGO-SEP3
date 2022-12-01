@@ -68,19 +68,7 @@ public class OfferDaoImpl : IOfferDao
 
         Offer offer = await offerService.GetOfferByIdAsync(offerId);
 
-        Shared.Models.Offer offerToSend = new Shared.Models.Offer
-        {
-            Id = offer.Id,
-            Name = offer.Name,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            Description = offer.Description,
-            FarmName = offer.FarmName
-        };
+        Shared.Models.Offer offerToSend = ConvertOfferToShared(offer);
         return offerToSend;
     }
 

@@ -23,6 +23,7 @@ public class CartController : LocallyController
     {
         try
         {
+            dto.Username = LoggedInUsername!;
             await cartLogic.AddToCartAsync(dto);
             return Ok();
         }
@@ -36,7 +37,7 @@ public class CartController : LocallyController
     [HttpGet]
     public async Task<IActionResult> GetAsync()
     {
-        string username = LoggedInUsername;
+        string username = LoggedInUsername!;
         try
         {
             var created = await cartLogic.GetAllCartItemsAsync(username);
@@ -50,11 +51,11 @@ public class CartController : LocallyController
     }
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteCartOffersAsync([FromQuery] string username)
+    public async Task<ActionResult> DeleteCartOffersAsync()
     {
         try
         {
-            await cartLogic.DeleteAllCartOffersAsync(username);
+            await cartLogic.DeleteAllCartOffersAsync(LoggedInUsername!);
             return Ok();
         }
         catch(Exception e)

@@ -136,7 +136,7 @@ import java.util.List;
   @Override public void updateFarm(FarmUpdate request,
       StreamObserver<Farm> responseObserver)
   {
-    var updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
+    mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
 
     responseObserver.onNext(convertFarmToGrpc(updatedFarm));
     responseObserver.onCompleted();
@@ -160,6 +160,8 @@ import java.util.List;
         .setUsername(farmer.getUsername()).setLastname(farmer.getLastName())
         .build();
   }
+
+
 
   private mango.sep3.databaseaccess.protobuf.Address convertAddressToGrpc(
       Address address)

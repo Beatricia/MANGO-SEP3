@@ -13,6 +13,6 @@ public interface IFarmService
     /// <returns></returns>
     Task<ICollection<FarmIcon>> GetAllIconsAsync();
 
-    Task<ICollection<Farm>?> GetAllFarmsByFarmer(string farmer);
+    Task<ICollection<Farm>?> GetAllFarmsByFarmerAsync();
     Task UpdateAsync(FarmUpdateDto dto);
 }

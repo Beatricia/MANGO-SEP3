@@ -1,4 +1,5 @@
 ﻿using Application.DAOInterfaces;
+using GprcClients.Converters;
 
 namespace GprcClients.DAOImplementations;
 
@@ -16,17 +17,10 @@ public class AuthDaoImpl : IAuthDao
     
     public async Task<Shared.Models.UserAuth> RegisterAsync(Shared.Models.UserAuth user)
     {
-        // create grpc UserAuth with username hash and salt
-        var grpcUserAuth = new UserAuth
-        {
-            Username = user.Username,
-            Hash = user.HashPassword,
-            Salt = user.Salt
-        };
-        
+        var grpcUserAuth = user.ToGrpc();
         UserAuth grpcUser = await client.RegisterUserAsync(grpcUserAuth);
         
-        return ConvertGrpcUserAuthToSharedUserAuth(grpcUser);
+        return grpcUser.ToShared();
     }
 
 

@@ -42,7 +42,6 @@ public class FarmHttpClient : IFarmService
         {
             PropertyNameCaseInsensitive = true
         })!;
-    
 
         return farm;
     }

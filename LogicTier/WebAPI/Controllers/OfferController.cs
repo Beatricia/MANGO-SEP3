@@ -28,7 +28,7 @@ public class OfferController : ControllerBase
     /// </summary>
     /// <param name="dto">A OfferCreationDto containing all information Required to create a Offer object</param>
     /// <returns>Returns the Offer object or a status code to indicate an error</returns>
-    [HttpPost]
+    [HttpPost, AllowAnonymous]
     public async Task<IActionResult> CreateAsync(OfferCreationDto dto)
     {
         try
@@ -76,7 +76,7 @@ public class OfferController : ControllerBase
         try
         {
             var created = await offerLogic.GetAsync();
-            return Created($"/offers", created);
+            return Created($"/offer", created);
         }
         catch (Exception e)
         {
@@ -85,14 +85,16 @@ public class OfferController : ControllerBase
         }
     }
     
-    [HttpGet("{farmName}"), AllowAnonymous]
-    public async Task<IActionResult> GetAsync([FromRoute] string farmName)
+    [HttpGet("farmName"), AllowAnonymous]
+    public async Task<IActionResult> GetAsync([FromQuery] string farmName)
     {
         //get offers by farm name
         try
         {
+            Console.WriteLine("--------------------");
+            Console.WriteLine(farmName);
             var created = await offerLogic.GetByFarmNameAsync(farmName);
-            return Created($"/offers/{farmName}", created);
+            return Ok(created);
         }
         catch (Exception e)
         {

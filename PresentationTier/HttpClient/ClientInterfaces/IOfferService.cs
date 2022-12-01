@@ -31,6 +31,6 @@ public interface IOfferService
     /// </summary>
     /// <param name="farmName"></param>
     /// <returns></returns>
-    Task<ICollection<Offer>> GetByFarmNameAsync(string farmName);
+    Task<ICollection<Offer>> GetAsync(string farmName);
 
 }

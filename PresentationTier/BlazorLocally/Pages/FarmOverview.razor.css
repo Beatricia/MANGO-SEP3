@@ -44,7 +44,7 @@
     margin-right: 20em;
 }
 
-h5{
+#statusLabel{
     text-align: left;
     text-decoration: #606748;
     margin-bottom: 0;
@@ -79,8 +79,8 @@ h5{
 
 #addButton{
     border-radius: 5px;
-    margin-right: 20em;
-    margin-top: 15px;
+    margin-right: 15em;
+    margin-top: 20px;
     color: white;
     background-color: #606748;
     border-style: none;

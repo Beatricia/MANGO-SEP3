@@ -78,10 +78,11 @@ public class OfferHttpClient : IOfferService
     ///summary///
     /// Sends GET by farm name request to a WebAPI server
     /// summary///
-    public async Task<ICollection<Offer>> GetByFarmNameAsync(string farmName)
+    public async Task<ICollection<Offer>> GetAsync(string farmName)
     {
-        HttpResponseMessage response = await client.GetAsync("/offer/farmName");
+        HttpResponseMessage response = await client.GetAsync($"offer/farmName?farmName={farmName}");
         string content = await response.Content.ReadAsStringAsync();
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(content);

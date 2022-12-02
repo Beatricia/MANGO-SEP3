@@ -25,6 +25,13 @@ img{
     height: 30px;
     padding: 5px;
 }
+.imgTic{
+    width: 30px !important;
+    height: 30px;
+}
+.deleteCell{
+    padding: 5px;
+}
 .collectCell{
     width: 10%;
     padding: 5px;

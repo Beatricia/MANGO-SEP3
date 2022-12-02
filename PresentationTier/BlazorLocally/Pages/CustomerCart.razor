@@ -73,6 +73,7 @@
     {
         try
         {
+            totalPrice = 0;
             cartOffers = await cartService.GetAllCartItemsAsync();
 
             foreach (var cartOffer in cartOffers)

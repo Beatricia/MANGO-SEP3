@@ -29,13 +29,13 @@
                         <div class="rowDiv">
                             <div class="collectCell">
                                 <button @onclick="()=>CollectOrder(order.Id)">
-                                    <img src="Img/tic.png"/>
+                                    <img class="imgTic" src="Img/tic.png"/>
                                 </button>
                             </div>
                             <div class="customerNameCell">@order.Username</div>
                             <div class="cityCell"></div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
-                            <div><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
+                            <div class="deleteCell"><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
@@ -66,13 +66,13 @@
                         <div class="rowDiv">
                             <div class="collectCell">
                                 <button @onclick="()=>CollectOrder(order.Id)">
-                                    <img src="Img/tic.png"/>
+                                    <img class="imgTic" src="Img/tic.png"/>
                                     </button>
                                 </div>
                             <div class="nameCell">@order.Username</div>
                             <div class="phoneCell">@customers[order.Username].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
-                            <div><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
+                            <div class="deleteCell"><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
@@ -97,8 +97,8 @@
 
 @code {
     private IEnumerable<Order>? orders;
-    private List<Order> deliveryOrders = new List<Order>();
-    private List<Order> pickUpOrders = new List<Order>();
+    private List<Order> deliveryOrders = new();
+    private List<Order> pickUpOrders = new();
     private string msg = "No input";
     private string username;
     private Dictionary<string,Customer> customers = new ();

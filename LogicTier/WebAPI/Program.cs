@@ -103,7 +103,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 AuthorizationPolicies.AddPolicies(builder.Services);
 
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IAddressDao, AddressPositionStack>();
+builder.Services.AddSingleton<IAddressDao, AddressLocationIQ>();
 
 
 
@@ -136,5 +136,14 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials());
 
+var addressDao = app.Services.GetRequiredService<IAddressDao>();
+var coordinates = await addressDao.GetCoordinatesAsync(new Shared.Models.Address()
+{
+    City = "Aarhus",
+    Street = "Skovdalsvej",
+    ZIP = "8260"
+});
+
+Console.WriteLine(coordinates.Latitude + " " + coordinates.Longitude);
 
 app.Run();

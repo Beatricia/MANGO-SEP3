@@ -11,17 +11,25 @@ public class AddressPositionStack : IAddressDao
 {
     private HttpClient Client { get; }
     
-    public AddressPositionStack(HttpClient client)
+    // dotnet user-secrets set "Geolocate:ApiKey" "secret"
+    private IConfiguration configuration; // this is for accessing the api key
+    
+    public AddressPositionStack(HttpClient client, IConfiguration configuration)
     {
         Client = client;
+        this.configuration = configuration;
     }
     
     public async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(Shared.Models.Address address)
     { 
         // get result from api
 
-        string query = $"{address.City} {address.ZIP}, {address.Street}";
-        using var result = await Client.GetAsync($"http://api.positionstack.com/v1/forward?access_key=7a05b023ffaf3864eb2d6f859a946876&query={HttpUtility.UrlEncode(query)}&country=dk");
+        string query = $"{address.City} {address.Street}";
+        string apiKey = configuration["Geolocate:ApiKey"];
+        string requestUrl =
+           $"http://api.positionstack.com/v1/forward?access_key={apiKey}&query={HttpUtility.UrlEncode(query)}&country=dk";
+
+        using HttpResponseMessage result = await Client.GetAsync(requestUrl);
 
         if (!result.IsSuccessStatusCode)
         {

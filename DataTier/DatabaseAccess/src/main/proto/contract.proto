@@ -165,6 +165,8 @@ message Address{
   string city = 1;
   string street = 2;
   string zip = 3;
+  double latitude = 4;
+  double longitude = 5;
 }
 
 message Void{}

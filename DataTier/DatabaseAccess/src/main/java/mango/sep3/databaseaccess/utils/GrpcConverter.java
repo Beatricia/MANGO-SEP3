@@ -160,6 +160,8 @@ public class GrpcConverter {
                 .setCity(address.getCity())
                 .setZip(address.getZip())
                 .setStreet(address.getStreet())
+                .setLatitude(address.getLatitude())
+                .setLongitude(address.getLongitude())
                 .build();
     }
 
@@ -170,6 +172,8 @@ public class GrpcConverter {
         address1.setCity(address.getCity());
         address1.setZip(address.getZip());
         address1.setStreet(address.getStreet());
+        address1.setLatitude(address.getLatitude());
+        address1.setLongitude(address.getLongitude());
 
         return address1;
     }

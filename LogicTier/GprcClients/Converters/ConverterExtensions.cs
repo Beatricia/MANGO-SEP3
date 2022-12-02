@@ -65,6 +65,8 @@ internal static class ConverterExtensions
             Street = message.Street,
             City = message.City,
             ZIP = message.Zip,
+            Latitude = message.Latitude,
+            Longitude = message.Longitude,
         };
     }
     
@@ -75,6 +77,8 @@ internal static class ConverterExtensions
             Street = message.Street,
             City = message.City,
             Zip = message.ZIP,
+            Latitude = message.Latitude,
+            Longitude = message.Longitude,
         };
     }
 

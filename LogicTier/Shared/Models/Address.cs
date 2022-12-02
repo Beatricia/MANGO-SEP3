@@ -8,6 +8,9 @@ public class Address
 
     public string ZIP { get; set; } = "";
     
+    public double Longitude { get; set; }
+    public double Latitude { get; set; }
+    
     public override string ToString()
     {
         return $"City: {City}, Zip: {ZIP}, Address: {Street} ";

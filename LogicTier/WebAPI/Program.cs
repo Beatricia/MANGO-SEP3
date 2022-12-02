@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Shared.Auth;
 using Swashbuckle.AspNetCore.Filters;
+using Address = Shared.Models.Address;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -101,6 +102,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 AuthorizationPolicies.AddPolicies(builder.Services);
 
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IAddressDao, AddressPositionStack>();
+
 
 
 
@@ -131,5 +135,6 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials());
+
 
 app.Run();

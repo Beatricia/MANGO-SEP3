@@ -231,6 +231,7 @@ public class GrpcConverter {
         mango.sep3.databaseaccess.Shared.Offer offer1 = new mango.sep3.databaseaccess.Shared.Offer();
         offer1.setId(offer.getId());
         offer1.setName(offer.getName());
+        offer1.setQuantity(offer.getQuantity());
         offer1.setDescription(offer.getDescription());
         offer1.setDelivery(offer.getDelivery());
         offer1.setPickUp(offer.getPickUp());

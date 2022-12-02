@@ -163,7 +163,6 @@
     
     private async Task DeleteOrder(int id)
     {
-        Console.WriteLine("Delete order: " + id);
         await orderService.DeleteOrderAsync(id);
         await OnInitializedAsync();
     }

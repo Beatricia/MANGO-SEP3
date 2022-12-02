@@ -133,6 +133,11 @@ public class OrderDao implements OrderDaoInterface
     return usernames;
   }
 
+  @Override public Order getOrderById(int id)
+  {
+    return orderRepository.findById(id).orElse(null);
+  }
+
   private void createOrderOffersWithOrder(Order order)
   {
     Customer customer = customerRepository.findById(order.getUsername()).orElse(null);

@@ -70,9 +70,10 @@ public class OrderController : LocallyController
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
+        string username = LoggedInUsername;
         try
         {
-            await orderLogic.DeleteOrderAsync(id);
+            await orderLogic.DeleteOrderAsync(id, username);
             return Ok();
         }
         catch (Exception e)

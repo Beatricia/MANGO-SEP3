@@ -15,4 +15,6 @@ public interface OrderDaoInterface
   void deleteOrder(int id);
   void completeOrder(int id);
   Collection<String> getUsersWithUncompletedOrder(Collection<Order> orderIds);
+
+  Order getOrderById(int id);
 }

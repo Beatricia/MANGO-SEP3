@@ -2,6 +2,7 @@ using System.Collections;
 using System.Text.Json;
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
+using Shared.DTOs;
 using Shared.Models;
 
 namespace Application.LogicImplementations;
@@ -11,12 +12,18 @@ public class OrderLogic : IOrderLogic
     private readonly IOrderDao orderDao;
     private readonly ICartDao cartDao;
     private readonly IOfferDao offerDao;
+    private readonly IUserDao userDao;
+    private readonly INotificationLogic notificationLogic;
+    private readonly IFarmDao farmDao;
 
-    public OrderLogic(IOrderDao orderDao, ICartDao cartDao, IOfferDao offerDao)
+    public OrderLogic(IOrderDao orderDao, ICartDao cartDao, IOfferDao offerDao, IUserDao userDao, INotificationLogic notificationLogic,IFarmDao farmDao)
     {
         this.orderDao = orderDao;
         this.cartDao = cartDao;
         this.offerDao = offerDao;
+        this.userDao = userDao;
+        this.notificationLogic = notificationLogic;
+        this.farmDao = farmDao;
     }
 
     public async Task CreateOrderAsync(string username)
@@ -79,11 +86,32 @@ public class OrderLogic : IOrderLogic
         await orderDao.CompleteOrderAsync(id);
     }
 
-    public Task DeleteOrderAsync(int OrderId)
+    public async Task DeleteOrderAsync(int orderId, string username)
     {
         try
         {
-            return orderDao.DeleteOrderAsync(OrderId);
+            Order order = await orderDao.GetOrderAsync(orderId);
+            
+            Customer? customer = await userDao.GetCustomer(username);
+            Farmer? farmer = await userDao.GetFarmer(username);
+
+            var notification = new NotificationCreationDto();
+            
+            if (customer != null)
+            {
+                Farm farm = await farmDao.GetFarmByNameAsync(order.FarmName);
+                notification.Username = order.Username;
+                notification.Text = $"User: {username} canceled order";
+            }
+            
+            else if(farmer != null)
+            {
+                notification.Username = order.Username;
+                notification.Text = $"Farm: {order.FarmName} canceled your order";
+            }
+            
+            await orderDao.DeleteOrderAsync(orderId);
+            await notificationLogic.AddNotificationAsync(notification);
         }
         catch (Exception e)
         {

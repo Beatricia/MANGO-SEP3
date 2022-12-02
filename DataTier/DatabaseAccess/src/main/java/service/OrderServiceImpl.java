@@ -113,5 +113,15 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
   }
+
+  @Override public void getOrderById(Id request,
+      StreamObserver<Order> responseObserver)
+  {
+    mango.sep3.databaseaccess.Shared.Order order = orderDao.getOrderById(request.getId());
+    Order response = grpcConverter.convertToGrpc(order);
+
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
 }
 

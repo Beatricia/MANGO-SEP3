@@ -17,6 +17,7 @@ public class Address
     }
 
 
+    
     /// <summary>
     /// Gets the distance between two addresses in kilometers.
     /// </summary>

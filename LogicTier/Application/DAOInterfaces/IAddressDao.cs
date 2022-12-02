@@ -4,6 +4,11 @@ namespace Application.DAOInterfaces;
 
 public interface IAddressDao
 {
-    // Gets the coordinates of an address
+    
+    /// <summary>
+    /// Gets the coordinates of an address
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns></returns>
     public Task<(double Latitude, double Longitude)> GetCoordinatesAsync(Address address);
 }

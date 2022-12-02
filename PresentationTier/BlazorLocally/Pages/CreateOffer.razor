@@ -4,7 +4,6 @@
 @using global::Shared.DTOs
 @inject IOfferService httpClient
 @using HttpClient.ClientInterfaces
-@using System.Security.AccessControl
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 
@@ -31,7 +30,7 @@
             <!--dropdown menu-->
             <div class="dropdown col-2 ms-1">
                 @{
-                    var list = new List<string> { "kilogram", "gram", "liter", "piece", "bag", "box", "jar" };
+                    var list = new List<string> { "kilogram", "gram", "liter","milliliter", "piece", "bag", "box", "jar" };
                 }
                 <select @onchange="((evenArgs) => SetUnit((string)evenArgs.Value))">
                     @foreach (var item in list)
@@ -59,7 +58,7 @@
       <span class="checkmark"></span>
     </label>
     <label class="container">Pick Up
-        <input type="checkbox" @bind="pickUp"></input>
+        <input type="checkbox" @bind="pickUp">
       <span class="checkmark"></span>
     </label>
     
@@ -77,8 +76,8 @@
     
     private string productName = "";
     private int quantity;
-    private string unit;
-    private int price;
+    private string unit = "kilogram";
+    private double price;
     private bool delivery = true;
     private bool pickUp = true;
     private bool pickYO = true;
@@ -108,10 +107,9 @@
         try
         {
             errorMessage = "";
-            
-            if (file is null)
+
+            if (ValidateData())
             {
-                errorMessage = "No image selected;";
                 return;
             }
             
@@ -139,6 +137,15 @@
             {
                 errorMessage = e.Message;
             }
+            
+            productName = "";
+            quantity =0;
+            price = 0;
+            delivery = true;
+            pickUp = true;
+            pickYO = true;
+            description = "";
+            displayDropdown = "none";
             
         }
         catch (Exception e)
@@ -168,9 +175,35 @@
     ///summary///
     /// validates inputted data
     /// summary///
-    private void ValidateData()
+    private bool ValidateData()
     {
-        //check if required fields are empty nothing too bad
+          
+        if (file is null)
+        {
+            errorMessage = "No image selected;";
+            return true;
+        }
+        if (productName.Equals(""))
+        {
+            errorMessage = "Product name is required";
+            return true;
+        }
+        if (quantity <= 0)
+        {
+            errorMessage = "Quantity must be greater than 0";
+            return true;
+        }
+        if (price <= 0)
+        {
+            errorMessage = "Price must be greater than 0";
+            return true;
+        }
+        if (!delivery && !pickUp && !pickYO)
+        {
+            errorMessage = "At least one delivery option must be selected";
+            return true;
+        }
+        return false;
     }
 
     public async ValueTask DisposeAsync()

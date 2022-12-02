@@ -7,6 +7,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.Address;
 import mango.sep3.databaseaccess.protobuf.*;
 
+import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,8 @@ import java.util.List;
   @Autowired private FarmDaoInterface farmDAO;
   @Autowired private UserDaoInterface userDao;
   @Autowired private OrderDaoInterface orderDao;
+
+  @Autowired private GrpcConverter grpcConverter;
 
   public FarmServiceImpl()
   {
@@ -38,11 +41,7 @@ import java.util.List;
   @Override public void createFarm(Farm request,
       StreamObserver<Farm> responseObserver)
   {
-    mango.sep3.databaseaccess.Shared.Farm farm = new mango.sep3.databaseaccess.Shared.Farm(
-        request.getName(), request.getPhone(), request.getFarmStatus(),
-        request.getDeliveryDistance(),
-        convertAddressFromGrpc(request.getAddress()),
-        convertFarmerFromGrpc(request.getFarmer()));
+    mango.sep3.databaseaccess.Shared.Farm farm = grpcConverter.convertToShared(request);
 
     farm.setIconPath(request.getIconPath());
 
@@ -52,7 +51,7 @@ import java.util.List;
     farm.setFarmer(farmer);
 
     farmDAO.createFarm(farm);
-    Farm farmGrpc = convertFarmToGrpc(farm);
+    Farm farmGrpc = grpcConverter.convertToGrpc(farm);
 
     responseObserver.onNext(farmGrpc);
     responseObserver.onCompleted();
@@ -70,7 +69,7 @@ import java.util.List;
       return;
     }
 
-    Farm farmToSend = convertFarmToGrpc(farm);
+    Farm farmToSend = grpcConverter.convertToGrpc(farm);
 
     responseObserver.onNext(farmToSend);
     responseObserver.onCompleted();
@@ -108,12 +107,7 @@ import java.util.List;
 
     for (mango.sep3.databaseaccess.Shared.Farm farm : farms)
     {
-      Farm f = Farm.newBuilder().setName(farm.getName())
-          .setAddress(convertAddressToGrpc(farm.getAddress()))
-          .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
-          .setFarmStatus(farm.getDescription())
-          .setDeliveryDistance(farm.getDeliveryDistance())
-          .setPhone(farm.getPhone()).build();
+      Farm f = grpcConverter.convertToGrpc(farm);
       protoFarms.add(f);
     }
     response.addAllFarms(protoFarms);
@@ -127,7 +121,7 @@ import java.util.List;
       StreamObserver<Farm> responseObserver)
   {
     var farm = farmDAO.getFarmByName(request.getText());
-    var grpcFarm = convertFarmToGrpc(farm);
+    var grpcFarm = grpcConverter.convertToGrpc(farm);
 
     responseObserver.onNext(grpcFarm);
     responseObserver.onCompleted();
@@ -138,7 +132,7 @@ import java.util.List;
   {
     mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
 
-    responseObserver.onNext(convertFarmToGrpc(updatedFarm));
+    responseObserver.onNext(grpcConverter.convertToGrpc(updatedFarm));
     responseObserver.onCompleted();
   }
 
@@ -151,74 +145,7 @@ import java.util.List;
     //get all the usersNames from those orders
     var usernames = orderDao.getUsersWithUncompletedOrder(orderIds);
 
-    responseObserver.onNext(convertUsernamesToGrpc(usernames));
+    responseObserver.onNext(grpcConverter.convertToGrpcRU(usernames));
     responseObserver.onCompleted();
-  }
-
-  private RepeatedUsername convertUsernamesToGrpc(Collection<String> usernames)
-  {
-    Collection<Text> usernamesGrpc = new ArrayList<>();
-    for (var user : usernames)
-    {
-      var text = Text.newBuilder().setText(user).build();
-      usernamesGrpc.add(text);
-    }
-    RepeatedUsername repeatedUsername = RepeatedUsername.newBuilder()
-        .addAllUsername(usernamesGrpc).build();
-
-    return repeatedUsername;
-  }
-
-  private Farmer convertFarmerToGrpc(
-      mango.sep3.databaseaccess.Shared.Farmer farmer)
-  {
-
-    return Farmer.newBuilder().setFirstname(farmer.getFirstName())
-        .setUsername(farmer.getUsername()).setLastname(farmer.getLastName())
-        .build();
-  }
-
-
-
-  private mango.sep3.databaseaccess.protobuf.Address convertAddressToGrpc(
-      Address address)
-  {
-
-    return mango.sep3.databaseaccess.protobuf.Address.newBuilder()
-        .setCity(address.getCity()).setZip(address.getZip())
-        .setStreet(address.getCity()).build();
-  }
-
-  private Address convertAddressFromGrpc(
-      mango.sep3.databaseaccess.protobuf.Address address)
-  {
-    Address address1 = new Address();
-    address1.setCity(address.getCity());
-    address1.setZip(address.getZip());
-    address1.setStreet(address.getStreet());
-
-    return address1;
-  }
-
-  // convert shared farm to grpc in a method
-  private Farm convertFarmToGrpc(mango.sep3.databaseaccess.Shared.Farm farm)
-  {
-    return Farm.newBuilder().setName(farm.getName())
-        .setFarmer(convertFarmerToGrpc(farm.getFarmer()))
-        .setAddress(convertAddressToGrpc(farm.getAddress()))
-        .setFarmStatus(farm.getDescription())
-        .setDeliveryDistance(farm.getDeliveryDistance())
-        .setPhone(farm.getPhone()).setIconPath(farm.getIconPath()).build();
-  }
-
-  private mango.sep3.databaseaccess.Shared.Farmer convertFarmerFromGrpc(
-      Farmer farmerGrpc)
-  {
-    var farmer = new mango.sep3.databaseaccess.Shared.Farmer();
-    farmer.setFirstName(farmerGrpc.getFirstname());
-    farmer.setLastName(farmerGrpc.getLastname());
-    farmer.setUsername(farmerGrpc.getUsername());
-
-    return farmer;
   }
 }

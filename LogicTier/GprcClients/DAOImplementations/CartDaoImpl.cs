@@ -1,33 +1,24 @@
 ﻿using Application.DAOInterfaces;
-using Shared.Models;
-
+using GprcClients.Converters;
 namespace GprcClients.DAOImplementations;
 
 public class CartDaoImpl : ICartDao
 {
     private CartOfferService.CartOfferServiceClient cartOfferServiceClient;
-    private OfferService.OfferServiceClient offerServiceClient;
+    private IImageDao imageDao;
 
-    public CartDaoImpl(CartOfferService.CartOfferServiceClient cartOfferServiceClient, OfferService.OfferServiceClient offerServiceClient )
+    public CartDaoImpl(CartOfferService.CartOfferServiceClient cartOfferServiceClient, IImageDao imageDao )
     {
         this.cartOfferServiceClient = cartOfferServiceClient;
-        this.offerServiceClient = offerServiceClient;
+        this.imageDao = imageDao;
 
-        string s = String.Empty;
     }
     
-    public async Task AddToCartAsync(CartOfferDto dto)
+    public async Task AddToCartAsync(Shared.Models.CartOffer cartOffer)
     {
         // wew need to convert the dto to a proto bc when calling it 
         // from the cartOfferServiceClient we need to insert a proto
-        var toAddCartOffer = new global::CartOffer
-        {
-            OfferId = dto.OfferId,
-            Quantity = dto.Quantity,
-            Username = dto.Username,
-            CollectionOption = dto.CollectOption
-        };
-
+        var toAddCartOffer = cartOffer.ToGrpc();
         _ = await cartOfferServiceClient.AddToCartAsync(toAddCartOffer);
     }
 
@@ -43,7 +34,6 @@ public class CartDaoImpl : ICartDao
         // the param from the GetAll ... is a proto 
         CartOffers cartOffers = await cartOfferServiceClient.GetAllCartOffersAsync(user);
         // Getting the offers from the database as an OfferItem class from the buffer
-        OfferItems offersBuff = await offerServiceClient.GetOffersAsync(new Void());
 
         ICollection<Shared.Models.CartOffer> list = new List<Shared.Models.CartOffer>();
 
@@ -52,33 +42,8 @@ public class CartDaoImpl : ICartDao
             if (cartOffer is null)
                 continue;
             
-            Shared.Models.Offer off = new Shared.Models.Offer();
-            foreach (var offer in offersBuff.Offers)
-            {
-                if (offer.Id == cartOffer.OfferId)
-                {
-                    off.Id = offer.Id;
-                    off.Delivery = offer.Delivery;
-                    off.Name = offer.Name;
-                    off.Price = offer.Price;
-                    off.FarmName = offer.FarmName;
-                    off.Description = offer.Description;
-                    off.Quantity = offer.Quantity;
-                    off.Unit = offer.Unit;
-                    off.PickYourOwn = offer.PickYourOwn;
-                    off.PickUp = offer.PickUp;
-                }
-            }
             
-            //Creating a new instance of CartOffer from the Model
-            Shared.Models.CartOffer cartOfferToSend = new Shared.Models.CartOffer()
-            {
-                Id = cartOffer.Id,
-                Offer = off,
-                Quantity = cartOffer.Quantity,
-                UserName = cartOffer.Username,
-                CollectionOption = cartOffer.CollectionOption
-            };
+            Shared.Models.CartOffer cartOfferToSend = cartOffer.ToShared(imageDao);
             list.Add(cartOfferToSend);
         }
 
@@ -97,40 +62,13 @@ public class CartDaoImpl : ICartDao
 
     public async Task<Shared.Models.CartOffer?> GetByIdAsync(int id)
     {
-        var idBuff = new Id { Id_ = id };
-        global::CartOffer? existing = await cartOfferServiceClient.GetByIdAsync(idBuff);
-        // Getting the offers from the database as an OfferItem class from the buffer
-        OfferItems offersBuff = await offerServiceClient.GetOffersAsync(new Void());
-        Shared.Models.Offer off = new Shared.Models.Offer();
-        
-        //getting the offer by id
-        foreach (var offer in offersBuff.Offers)
-        {
-            if (offer.Id == existing.OfferId)
-            {
-                off.Id = offer.Id;
-                off.Delivery = offer.Delivery;
-                off.Name = offer.Name;
-                off.Price = offer.Price;
-                off.FarmName = offer.FarmName;
-                off.Description = offer.Description;
-                off.Quantity = offer.Quantity;
-                off.Unit = offer.Unit;
-                off.PickYourOwn = offer.PickYourOwn;
-                off.PickUp = offer.PickUp;
-            }
-        }
-        //converting to model
-        Shared.Models.CartOffer coModel = new Shared.Models.CartOffer()
-        {
-            Id = existing.Id,
-            Offer = off,
-            Quantity = existing.Quantity,
-            UserName = existing.Username,
-            CollectionOption = existing.CollectionOption
-        };
+        var idBuff = id.ToGrpc();
+        CartOffer? existing = await cartOfferServiceClient.GetByIdAsync(idBuff);
 
-        return await Task.FromResult(coModel);
+        if(existing is null)
+            return null;
+        
+        return existing.ToShared(imageDao);
     }
 
     public async Task DeleteCartOfferAsync(int id)

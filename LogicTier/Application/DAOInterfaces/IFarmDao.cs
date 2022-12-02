@@ -14,5 +14,5 @@ public interface IFarmDao
 
 
     Task UpdateFarmAsync(FarmUpdateDto dto);
-    Task<Collection<string>> GetAllCustomersUncompletedOrder(string farmName);
+    Task<ICollection<string>> GetAllCustomersUncompletedOrder(string farmName);
 }

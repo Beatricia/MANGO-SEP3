@@ -10,6 +10,7 @@ import mango.sep3.databaseaccess.Shared.Offer;
 import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +25,8 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
   @Autowired private OfferDaoInterface offerDaoInterface;
   @Autowired private UserDaoInterface userDaoInterface;
 
+  @Autowired private GrpcConverter grpcConverter;
+
 
   public CartOfferServiceImpl()
   {
@@ -35,8 +38,7 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
     CartItem cartItem = new CartItem();
     cartItem.setCartItemId(request.getId());
 
-    int offerId = request.getOfferId();
-    Offer off = offerDaoInterface.getOfferById(offerId);
+    Offer off = offerDaoInterface.getOfferById(request.getOffer().getId());
 
     cartItem.setOfferId(off);
     cartItem.setQuantity(request.getQuantity());
@@ -72,13 +74,7 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
 
     for (CartItem item : cartItems)
     {
-      CartOffer co = CartOffer.newBuilder()
-          .setId(item.getCartItemId())
-          .setOfferId(item.getOfferId().getId())
-          .setQuantity(item.getQuantity())
-          .setCollectionOption(item.getCollectionOption())
-          .setUsername(item.getCustomer().getUsername())
-          .build();
+      CartOffer co = grpcConverter.convertToGrpc(item);
       cartOffersBuf.add(co);
     }
     response.addAllCartOffers(cartOffersBuf);
@@ -100,15 +96,9 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
 
    public void getById(Id request,
       StreamObserver<CartOffer> responseObserver) {
-    CartItem cartItem = cartOfferDAO.getById(request.getId());
+      CartItem cartItem = cartOfferDAO.getById(request.getId());
 
-      CartOffer co = CartOffer.newBuilder()
-          .setId(cartItem.getCartItemId())
-          .setOfferId(cartItem.getOfferId().getId())
-          .setQuantity(cartItem.getQuantity())
-          .setCollectionOption(cartItem.getCollectionOption())
-          .setUsername(cartItem.getCustomer().getUsername())
-          .build();
+      CartOffer co = grpcConverter.convertToGrpc(cartItem);
 
     responseObserver.onNext(co);
     responseObserver.onCompleted();
@@ -122,9 +112,5 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
 
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
-
   }
-
-
-
 }

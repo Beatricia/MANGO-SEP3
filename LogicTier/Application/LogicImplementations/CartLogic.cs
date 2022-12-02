@@ -37,8 +37,17 @@ public class CartLogic : ICartLogic
               throw new Exception("Invalid collection option for the cart offer");
           }
           */
+        var offer = await offerDao.GetOfferByIdAsync(dto.OfferId);
 
-        await cartDao.AddToCartAsync(dto);
+        var cartOffer = new CartOffer
+        {
+            Offer = offer,
+            Quantity = dto.Quantity,
+            UserName = dto.Username,
+            CollectionOption = dto.CollectOption
+        };
+        
+        await cartDao.AddToCartAsync(cartOffer);
     }
     
 

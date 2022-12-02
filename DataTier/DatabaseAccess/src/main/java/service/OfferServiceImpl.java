@@ -5,6 +5,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +25,9 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   @Autowired
   private FarmDaoInterface farmDaoInterface;
 
+  @Autowired
+  private GrpcConverter grpcConverter;
+
   public OfferServiceImpl()
   {
   }
@@ -39,14 +43,14 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   @Override public void createOffer(Offer request,
       StreamObserver<Offer> responseObserver)
   {
-    mango.sep3.databaseaccess.Shared.Offer offer = convertOfferToShared(request);
+    mango.sep3.databaseaccess.Shared.Offer offer = grpcConverter.convertToShared(request);
 
       var farm = farmDaoInterface.getFarmByName(request.getFarmName());
       offer.setFarm(farm);
 
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase =  offerDao.CreateOffer(offer);
 
-    Offer response =  convertOfferToGrpc(offerFromDatabase);
+    Offer response =  grpcConverter.convertToGrpc(offerFromDatabase);
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
@@ -66,7 +70,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 
     for (var offer: offers)
     {
-      Offer offerToSend = convertOfferToGrpc(offer);
+      Offer offerToSend = grpcConverter.convertToGrpc(offer);
       offersList.add(offerToSend);
     }
 
@@ -82,7 +86,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
   {
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase = offerDao.getOfferById(request.getId());
 
-    Offer response = convertOfferToGrpc(offerFromDatabase);
+    Offer response = grpcConverter.convertToGrpc(offerFromDatabase);
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
@@ -97,7 +101,7 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 
     for (var offer: offersFromDatabase)
     {
-      Offer offerToSend = convertOfferToGrpc(offer);
+      Offer offerToSend = grpcConverter.convertToGrpc(offer);
       offersList.add(offerToSend);
     }
 
@@ -105,39 +109,5 @@ public class OfferServiceImpl extends OfferServiceGrpc.OfferServiceImplBase
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
-  }
-
-  private mango.sep3.databaseaccess.Shared.Offer convertOfferToShared(Offer request) {
-    mango.sep3.databaseaccess.Shared.Offer offer = new mango.sep3.databaseaccess.Shared.Offer();
-    offer.setName(request.getName());
-    offer.setDescription(request.getDescription());
-    offer.setDelivery(request.getDelivery());
-    offer.setPickUp(request.getPickUp());
-    offer.setPickyourOwn(request.getPickYourOwn());
-    offer.setPrice(request.getPrice());
-    offer.setUnit(request.getUnit());
-    //might need Farm here
-    //might need id here
-    var farm = farmDaoInterface.getFarmByName(request.getFarmName());
-    offer.setFarm(farm);
-
-    return offer;
-  }
-
-  // convert from shared to grpc offer
-  private Offer convertOfferToGrpc(mango.sep3.databaseaccess.Shared.Offer offer) {
-
-    return Offer.newBuilder()
-        .setId(offer.getId())
-        .setName(offer.getName())
-        .setQuantity(offer.getQuantity())
-        .setUnit(offer.getUnit())
-        .setPrice(offer.getPrice())
-        .setDelivery(offer.isDelivery())
-        .setPickUp(offer.isPickUp())
-        .setPickYourOwn(offer.isPickyourOwn())
-        .setDescription(offer.getDescription())
-        .setFarmName(offer.getFarm().getName())
-        .build();
   }
 }

@@ -1,4 +1,5 @@
 using Application.DAOInterfaces;
+using GprcClients.Converters;
 
 namespace GprcClients.DAOImplementations;
 
@@ -23,13 +24,10 @@ public class OfferDaoImpl : IOfferDao
     
     public async Task<Shared.Models.Offer> CreateAsync(Shared.Models.Offer offer)
     {
-        Offer response = ConvertOfferToGrpc(offer);//;await offerService.CreateOfferAsync(offerToCreate);
-         
-        var offerToCreate = ConvertOfferToGrpc(offer);
-        
+        var offerToCreate = offer.ToGrpc();
         var returnedOffer = await offerService.CreateOfferAsync(offerToCreate);
 
-        return ConvertOfferToShared(returnedOffer);
+        return returnedOffer.ToShared(_imageDao);
     }
 
     /// <summary>
@@ -49,7 +47,7 @@ public class OfferDaoImpl : IOfferDao
             if (created is null)
                 continue;
             // Creating a new instance of Model offer
-            Shared.Models.Offer offerToPresentationTier = ConvertOfferToShared(created);
+            Shared.Models.Offer offerToPresentationTier = created.ToShared(_imageDao);
             // Adding the new created offer to the list
             list.Add(offerToPresentationTier);
         }
@@ -61,23 +59,16 @@ public class OfferDaoImpl : IOfferDao
     
     public async Task<Shared.Models.Offer> GetOfferByIdAsync(int id)
     {
-        Id offerId = new Id
-        {
-            Id_ = id
-        };
+        Id offerId = id.ToGrpc();
 
         Offer offer = await offerService.GetOfferByIdAsync(offerId);
 
-        Shared.Models.Offer offerToSend = ConvertOfferToShared(offer);
-        return offerToSend;
+        return offer.ToShared(_imageDao);
     }
 
     public async Task<IEnumerable<Shared.Models.Offer>> GetByFarmNameAsync(string farmName)
     {
-        var farmNameGrpc = new Text
-        {
-            Text_ = farmName
-        };
+        var farmNameGrpc = farmName.ToGrpc();
         OfferItems offersBuff = await offerService.GetOffersByFarmNameAsync(farmNameGrpc );
         
         var list = new List<Shared.Models.Offer>();
@@ -85,48 +76,9 @@ public class OfferDaoImpl : IOfferDao
         {
             if (created is null)
                 continue;
-            Shared.Models.Offer offerToPresentationTier = ConvertOfferToShared(created);
+            Shared.Models.Offer offerToPresentationTier = created.ToShared(_imageDao);
             list.Add(offerToPresentationTier);
         }
         return list;
-    }
-    // convert from grpc object to shared offer
-    private Shared.Models.Offer ConvertOfferToShared(Offer offer)
-    {
-        return new Shared.Models.Offer
-        {
-            Id = offer.Id,
-            Name = offer.Name,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            Description = offer.Description,
-            Image = _imageDao.GetImageForOffer(offer.Id),
-            FarmName = offer.FarmName
-        };
-    }
-    
-    
-    private Offer ConvertOfferToGrpc(Shared.Models.Offer offer)
-    {
-        // Convert shared offer to grpc
-        var offerToCreate = new Offer
-        {
-            Id = offer.Id,
-            Name = offer.Name,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-            Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
-            Description = offer.Description,
-            FarmName = offer.FarmName,
-        };
-
-        return offerToCreate;
     }
 }

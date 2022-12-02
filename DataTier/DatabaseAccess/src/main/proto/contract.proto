@@ -174,7 +174,7 @@ message Text{
 }
 message CartOffer{
   int32 id = 1;
-  int32 offerId = 2;
+  Offer offer = 2;
   int32 quantity = 3;
   string username = 4;
   string collectionOption = 5;

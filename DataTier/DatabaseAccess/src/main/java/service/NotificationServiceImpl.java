@@ -7,6 +7,7 @@ import mango.sep3.databaseaccess.Shared.NotificationCustomer;
 import mango.sep3.databaseaccess.Shared.NotificationFarmer;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,8 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
     @Autowired
     private UserDaoInterface userDao;
 
+    @Autowired private GrpcConverter grpcConverter;
+
 
 
     @Override
@@ -29,11 +32,11 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
         String username = request.getText();
 
         notificationDao.getNotificationsFarmer(username).forEach(notification -> {
-            var protoNotification = convertToGrpc(notification);
+            var protoNotification = grpcConverter.convertToGrpc(notification);
             responseObserver.onNext(protoNotification);
         });
         notificationDao.getNotificationsCustomer(username).forEach(notification -> {
-            var protoNotification = convertToGrpc(notification);
+            var protoNotification = grpcConverter.convertToGrpc(notification);
             responseObserver.onNext(protoNotification);
         });
 
@@ -48,13 +51,13 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
         for (var notification : request.getNotificationsList()) {
 
-            var notificationFarmer = convertToSharedFarmerNotification(notification);
+            var notificationFarmer = grpcConverter.convertToSharedNF(notification);
             if(notificationFarmer != null){
                 farmerNots.add(notificationFarmer);
                 continue;
             }
 
-            var notificationCustomer = convertToSharedCustomerNotification(notification);
+            var notificationCustomer = grpcConverter.convertToSharedNC(notification);
             if(notificationCustomer != null){
                 customerNots.add(notificationCustomer);
                 continue;
@@ -73,8 +76,8 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
     @Override
     public void deleteNotification(Notification request, StreamObserver<Void> responseObserver) {
-        var notificationFarmer = convertToSharedFarmerNotification(request);
-        var notificationCustomer = convertToSharedCustomerNotification(request);
+        var notificationFarmer = grpcConverter.convertToSharedNF(request);
+        var notificationCustomer = grpcConverter.convertToSharedNC(request);
 
         if(notificationFarmer != null){
             notificationDao.deleteNotificationFarmer(notificationFarmer);
@@ -85,54 +88,5 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();
-    }
-
-    private Notification convertToGrpc(NotificationFarmer notification) {
-        return Notification.newBuilder()
-                .setId(notification.getId())
-                .setToUsername(notification.getFarmer().getUsername())
-                .setText(notification.getMessage())
-                .setCreatedAt(notification.getCreatedAt())
-                .build();
-    }
-    private Notification convertToGrpc(NotificationCustomer notification) {
-        return Notification.newBuilder()
-                .setId(notification.getId())
-                .setToUsername(notification.getCustomer().getUsername())
-                .setText(notification.getMessage())
-                .setCreatedAt(notification.getCreatedAt())
-                .build();
-    }
-
-
-    // convert from grpc to shared notifications
-    private NotificationFarmer convertToSharedFarmerNotification(Notification notification) {
-        var farmer = userDao.getFarmer(notification.getToUsername());
-        if(farmer == null) {
-            return null;
-        }
-
-        var not = new NotificationFarmer();
-        not.setId(notification.getId());
-        not.setMessage(notification.getText());
-        not.setFarmer(farmer);
-        not.setCreatedAt(notification.getCreatedAt());
-
-        return not;
-    }
-
-    private NotificationCustomer convertToSharedCustomerNotification(Notification notification) {
-        var customer = userDao.getCustomer(notification.getToUsername());
-        if(customer == null) {
-            return null;
-        }
-
-        var not = new NotificationCustomer();
-        not.setId(notification.getId());
-        not.setMessage(notification.getText());
-        not.setCustomer(customer);
-        not.setCreatedAt(notification.getCreatedAt());
-
-        return not;
     }
 }

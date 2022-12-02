@@ -75,8 +75,8 @@ public class FarmLogic : IFarmLogic
     { 
         await farmDao.UpdateFarmAsync(dto);
 
-        Task<Collection<String>> usernames = farmDao.GetAllCustomersUncompletedOrder(dto.Name);
-        foreach (var username in usernames.Result)
+        ICollection<String> usernames = await farmDao.GetAllCustomersUncompletedOrder(dto.Name);
+        foreach (var username in usernames)
         {
             var notification = new NotificationCreationDto
             {

@@ -7,6 +7,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.protobuf.OrderServiceGrpc;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
+import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +19,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 {
   @Autowired private OrderDaoInterface orderDao;
   @Autowired private FarmDaoInterface farmDaoInterface;
+
+  @Autowired private GrpcConverter grpcConverter;
 
   public OrderServiceImpl()
   {
@@ -33,7 +36,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
       StreamObserver<Void> responseObserver)
   {
     //convert the grpc OrderOffers into normal Collection<OrderOffers>
-    List<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = convertOrderOffersFromGrpc(request.getOrderOffersList());
+    List<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = grpcConverter.convertToGrpc(request);
 
     orderDao.createOrderOffers(orderOffers);
 
@@ -75,8 +78,8 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
   @Override public void createOrders(Orders request,
       StreamObserver<Void> responseObserver)
   {
-    List<mango.sep3.databaseaccess.Shared.Order> orders = ConvertOrdersFromGrpc(
-        request.getOrdersList());
+    List<mango.sep3.databaseaccess.Shared.Order> orders = request.getOrdersList().stream()
+            .map(grpcConverter::convertToShared).toList();
 
     orderDao.createOrders(orders);
 
@@ -96,7 +99,7 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
       return;
     }
 
-    Orders ordersResponse = convertOrdersToGrpc(orders);
+    Orders ordersResponse = grpcConverter.convertToGrpc(orders);
 
     responseObserver.onNext(ordersResponse);
     responseObserver.onCompleted();
@@ -109,122 +112,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 
     responseObserver.onNext(Void.newBuilder().build());
     responseObserver.onCompleted();
-  }
-
-  private List<mango.sep3.databaseaccess.Shared.Order> ConvertOrdersFromGrpc(
-      List<Order> ordersList)
-  {
-    List<mango.sep3.databaseaccess.Shared.Order> listToReturn = new ArrayList<>();
-
-    for (var order : ordersList)
-    {
-      List<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = convertOrderOffersFromGrpc(
-          order.getOrderOffersList());
-      Set<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffersSet = Sets.newHashSet(orderOffers);
-
-      var item = new mango.sep3.databaseaccess.Shared.Order();
-      item.setId(order.getId());
-      item.setCollectionOption(order.getCollectionOption());
-      item.setDone(order.getIsDone());
-      item.setFarmName(order.getFarmName());
-      item.setOrderOffers(orderOffersSet);
-      item.setUsername(order.getUsername());
-
-      listToReturn.add(item);
-    }
-    return listToReturn;
-
-  }
-
-  private List<mango.sep3.databaseaccess.Shared.OrderOffer> convertOrderOffersFromGrpc(
-      List<mango.sep3.databaseaccess.protobuf.OrderOffer> orderOffersList)
-  {
-    List<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = new ArrayList<>();
-    for (var orderOffer : orderOffersList)
-    {
-      mango.sep3.databaseaccess.Shared.OrderOffer item = new mango.sep3.databaseaccess.Shared.OrderOffer();
-      item.setUsername(orderOffer.getUsername());
-      item.setQuantity(orderOffer.getQuantity());
-      item.setId(orderOffer.getId());
-      item.setCollectionOption(orderOffer.getCollectionOption());
-      item.setOffer(convertOfferFromGrpc(orderOffer.getOffer()));
-
-      orderOffers.add(item);
-    }
-    return orderOffers;
-  }
-
-  private OrderOffers convertOrderOffersToGrpc(
-      Collection<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers)
-  {
-    List<mango.sep3.databaseaccess.protobuf.OrderOffer> orderOfferList = new ArrayList<>();
-    for (var item : orderOffers)
-    {
-      Offer offer = Offer.newBuilder().setId(item.getOffer().getId())
-          .setPrice(item.getOffer().getPrice())
-          .setQuantity(item.getOffer().getQuantity())
-          .setName(item.getOffer().getName())
-          .setDescription(item.getOffer().getDescription())
-          .setUnit(item.getOffer().getUnit())
-          .setFarmName(item.getOffer().getFarm().getName()).build();
-
-      orderOfferList.add(
-          mango.sep3.databaseaccess.protobuf.OrderOffer.newBuilder()
-              .setId(item.getId()).setOffer(offer)
-              .setQuantity(item.getQuantity())
-              .setCollectionOption(item.getCollectionOption())
-              .setOffer(offer)
-              .build());
-    }
-
-    return OrderOffers.newBuilder().addAllOrderOffers(orderOfferList).build();
-  }
-
-  private mango.sep3.databaseaccess.Shared.Offer convertOfferFromGrpc(
-      Offer offer)
-  {
-    var item = new mango.sep3.databaseaccess.Shared.Offer();
-    item.setDelivery(offer.getDelivery());
-    item.setDescription(offer.getDescription());
-    item.setName(offer.getName());
-    item.setId(offer.getId());
-    item.setQuantity(offer.getQuantity());
-    item.setPickUp(offer.getPickUp());
-    item.setPickyourOwn(offer.getPickYourOwn());
-    item.setUnit(item.getUnit());
-    item.setPrice(offer.getPrice());
-
-    var farm = farmDaoInterface.getFarmByName(offer.getFarmName());
-    item.setFarm(farm);
-
-    return item;
-  }
-
-  private Orders convertOrdersToGrpc(
-      Collection<mango.sep3.databaseaccess.Shared.Order> orders)
-  {
-    List<Order> ordersListGrpc = new ArrayList<>();
-
-    for (var order : orders)
-    {
-      OrderOffers orderOffersGrpc = convertOrderOffersToGrpc(
-          orderDao.getOrderOffers(order));
-      Set<mango.sep3.databaseaccess.protobuf.OrderOffer> orderOffersToAdd = Sets.newHashSet(
-          orderOffersGrpc.getOrderOffersList());
-
-      var orderGrpc = Order.newBuilder()
-          .setId(order.getId())
-          .setCollectionOption(order.getCollectionOption())
-          .setFarmName(order.getFarmName()).addAllOrderOffers(orderOffersToAdd)
-          .setIsDone(order.isDone())
-          .setUsername(order.getOrderOffers().stream().findFirst().get().getUsername())
-          .build();
-
-      ordersListGrpc.add(orderGrpc);
-    }
-
-    return Orders.newBuilder().addAllOrders(ordersListGrpc)
-        .build();
   }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Application.DAOInterfaces;
+using GprcClients.Converters;
 
 namespace GprcClients.DAOImplementations;
 
@@ -17,14 +18,14 @@ public class NotificationDaoImpl : INotificationDao
     public async Task<ICollection<Shared.Models.Notification>> GetNotificationsByUserAsync(string username)
     {
         // create text object with username
-        var text = new Text { Text_ = username };
+        var text = username.ToGrpc();
         var stream =  notificationService.GetNotifications(text);
         
         var list = new List<Shared.Models.Notification>();
         // read stream
         while (await stream.ResponseStream.MoveNext(default))
         {
-            var notification = ConvertNotification(stream.ResponseStream.Current);
+            var notification = stream.ResponseStream.Current.ToShared();
             list.Add(notification);
         }
 
@@ -36,7 +37,7 @@ public class NotificationDaoImpl : INotificationDao
         var notifications = new RepeatedNotification();
         foreach (Shared.Models.Notification item in notification)
         {
-            notifications.Notifications.Add(ConvertNotification(item));
+            notifications.Notifications.Add(item.ToGrpc());
         }
         
         await notificationService.AddNotificationsAsync(notifications);
@@ -44,31 +45,7 @@ public class NotificationDaoImpl : INotificationDao
 
     public async Task DeleteNotificationAsync(Shared.Models.Notification notification)
     {
-        await notificationService.DeleteNotificationAsync(ConvertNotification(notification));
+        await notificationService.DeleteNotificationAsync(notification.ToGrpc());
     }
 
-
-    // convert grpc notification to shared
-    private Shared.Models.Notification ConvertNotification(Notification notification)
-    {
-        return new Shared.Models.Notification
-        {
-            Id = notification.Id,
-            Text = notification.Text,
-            CreatedAt = new DateTime(notification.CreatedAt),
-            ToUsername = notification.ToUsername
-        };
-    }
-    
-    // convert shared notification to grpc
-    private Notification ConvertNotification(Shared.Models.Notification notification)
-    {
-        return new Notification
-        {
-            Id = notification.Id,
-            Text = notification.Text,
-            CreatedAt = notification.CreatedAt.Ticks,
-            ToUsername = notification.ToUsername
-        };
-    }
 }

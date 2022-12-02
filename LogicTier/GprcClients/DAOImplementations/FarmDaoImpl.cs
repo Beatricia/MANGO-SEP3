@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using Application.DAOInterfaces;
+using GprcClients.Converters;
 using Grpc.Core;
 using Shared.DTOs;
 
@@ -19,17 +20,7 @@ public class FarmDaoImpl : IFarmDao
 
     public async Task<Shared.Models.Farm> CreateAsync(Shared.Models.Farm farm)
     {
-        var toCreate = new Farm
-        {
-            Name = farm.Name,
-            Phone = farm.Phone,
-            DeliveryDistance = farm.DeliveryDistance,
-            FarmStatus = farm.FarmStatus,
-            Farmer = ConvertFarmerToGrpc(farm.Farmer),
-            Address = ConvertSharedToGrpc(farm.Address),
-            IconPath = farm.FarmIcon.FileName
-        };
-
+        var toCreate = farm.ToGrpc();
         await farmServiceClient.CreateFarmAsync(toCreate);
         
         return farm;
@@ -39,15 +30,10 @@ public class FarmDaoImpl : IFarmDao
 
     public async Task<Shared.Models.Farm> GetFarmByNameAsync(string farmName)
     {
-        var name = new Text
-        {
-            Text_ = farmName
-        };
-
+        var name = farmName.ToGrpc();
         Farm farmGrpc = await farmServiceClient.GetFarmAsync(name);
-        Shared.Models.Farm farm = ConvertToSharedFarm(farmGrpc);
-
-        return farm;
+        
+        return farmGrpc.ToShared(farmIconDao);
     }
 
     public async Task UpdateFarmAsync(FarmUpdateDto dto)
@@ -79,28 +65,23 @@ public class FarmDaoImpl : IFarmDao
         //Getting the farms from the database as buffers
         Farms farmsBuff = farmServiceClient.GetFarms(user);
 
-        Console.WriteLine(farmsBuff.ToString());
         ICollection<Shared.Models.Farm> list = new List<Shared.Models.Farm>();
 
         foreach (var farm in farmsBuff.Farms_)
         {
-            Shared.Models.Farm modelFarm = ConvertToSharedFarm(farm);
-            list.Add(modelFarm);
+            var farmShared = farm.ToShared(farmIconDao);
+            list.Add(farmShared);
         }
 
         return list;
     }
-    public async Task<Collection<string>> GetAllCustomersUncompletedOrder(string farmName)
+    public async Task<ICollection<string>> GetAllCustomersUncompletedOrder(string farmName)
     {
-        var text = new Text
-        {
-            Text_ = farmName
-        };
+        var text = farmName.ToGrpc();
         
         var usernamesGrpc = await farmServiceClient.GetAllCustomersUncompletedOrderAsync(text);
 
-        Collection<string> usernames = ConvertRepeatedUsernamesFromGrpc(usernamesGrpc);
-        return usernames;
+        return usernamesGrpc.ToShared();
     }
 
     public async Task<Shared.Models.Farm?> GetByName(string name)
@@ -108,73 +89,6 @@ public class FarmDaoImpl : IFarmDao
         var text = new Text{Text_= name};
         var grpcFarm = await farmServiceClient.GetFarmByNameAsync(text);
 
-        return ConvertToSharedFarm(grpcFarm);
+        return grpcFarm.ToShared(farmIconDao);
     }
-    
-    
-    // convert grpc farm to shared farm
-    private Shared.Models.Farm ConvertToSharedFarm(Farm grpcFarm)
-    {
-        return new Shared.Models.Farm
-        {
-            Name = grpcFarm.Name,
-            Phone = grpcFarm.Phone,
-            Address = new Shared.Models.Address
-            {
-                ZIP = grpcFarm.Address.Zip,
-                Street = grpcFarm.Address.Street,
-                City = grpcFarm.Address.City
-            },
-            DeliveryDistance = grpcFarm.DeliveryDistance,
-            FarmStatus = grpcFarm.FarmStatus,
-            Farmer = ConvertFarmerFromGrpc(grpcFarm.Farmer),
-            FarmIcon = farmIconDao.CreateIcon(grpcFarm.IconPath!),
-        };
-    }
-    
-    private Farmer ConvertFarmerToGrpc(Shared.Models.Farmer farmFarmer)
-    {
-        var farmer = new global::Farmer
-        {
-            Firstname = farmFarmer.FirstName,
-            Lastname = farmFarmer.LastName,
-            Username = farmFarmer.Username
-        };
-        return farmer;
-    }
-    
-    private Address ConvertSharedToGrpc(Shared.Models.Address farmAddress)
-    {
-        return new Address
-        {
-            City = farmAddress.City,
-            Street = farmAddress.Street,
-            Zip = farmAddress.ZIP
-        };
-    }
-    
-    
-    private Shared.Models.Farmer ConvertFarmerFromGrpc(global::Farmer farmGrpcFarmer)
-    {
-        var farmer = new Shared.Models.Farmer
-        {
-            FirstName = farmGrpcFarmer.Firstname,
-            LastName = farmGrpcFarmer.Lastname,
-            Username = farmGrpcFarmer.Username
-        };
-        return farmer;
-    }
-    
-    private Collection<string> ConvertRepeatedUsernamesFromGrpc(RepeatedUsername usernamesGrpc)
-    {
-        Collection<string> usernames = new Collection<string>();
-        foreach (var text in usernamesGrpc.Username)
-        {
-          usernames.Add(text.Text_);
-        }
-
-        return usernames;
-    }
-
-
 }

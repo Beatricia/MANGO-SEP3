@@ -136,14 +136,14 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials());
 
-var addressDao = app.Services.GetRequiredService<IAddressDao>();
+/*var addressDao = app.Services.GetRequiredService<IAddressDao>();
 var coordinates = await addressDao.GetCoordinatesAsync(new Shared.Models.Address()
 {
-    City = "Aarhus",
-    Street = "Skovdalsvej",
-    ZIP = "8260"
+    City = "Vinderup",
+    Street = "Vester Alle 16",
+    ZIP = "7830"
 });
 
-Console.WriteLine(coordinates.Latitude + " " + coordinates.Longitude);
+Console.WriteLine(coordinates.Latitude + " " + coordinates.Longitude);*/
 
 app.Run();

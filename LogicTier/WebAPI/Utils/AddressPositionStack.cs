@@ -7,6 +7,7 @@ namespace WebAPI.Utils;
 /// <summary>
 /// Api website: https://positionstack.com
 /// </summary>
+[Obsolete($"Please use {nameof(AddressLocationIQ)} as it is much more accurate")]
 public class AddressPositionStack : IAddressDao
 {
     private HttpClient Client { get; }

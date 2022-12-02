@@ -21,7 +21,7 @@ public class AddressLocationIQ : IAddressDao
     { 
         // get result from api
 
-        string query = $"{address.City} {address.Street}"; 
+        string query = $"Denmark {address.City} {address.Street}"; 
         string apiKey = configuration["LocationIq:ApiKey"];
         string requestUrl = $"https://eu1.locationiq.com/v1/search?key={apiKey}&q={HttpUtility.UrlEncode(query)}&format=json";
 

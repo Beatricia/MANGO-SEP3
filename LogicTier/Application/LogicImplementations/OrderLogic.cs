@@ -100,7 +100,7 @@ public class OrderLogic : IOrderLogic
             if (customer != null)
             {
                 Farm farm = await farmDao.GetFarmByNameAsync(order.FarmName);
-                notification.Username = order.Username;
+                notification.Username = farm.Farmer.Username;
                 notification.Text = $"User: {username} canceled order";
             }
             

@@ -61,6 +61,9 @@
      border-bottom: 1px solid #6a7246;
      width: 100%;
  }
+.deleteCell{
+    padding: 5px;
+}
  
  th{
      width: 100%;

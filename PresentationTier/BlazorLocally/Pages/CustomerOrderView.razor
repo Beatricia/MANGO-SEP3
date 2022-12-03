@@ -30,6 +30,7 @@
                             <div class="nameCell">@order.FarmName</div>
                             <div class="phoneCell">(+45) @farms[order.FarmName].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
+                             <div class="deleteCell"><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
@@ -61,7 +62,7 @@
                             <div class="nameCell">@order.FarmName</div>
                             <div class="phoneCell">(+45) @farms[order.FarmName].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
-                            @*<div><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>*@
+                             <div class="deleteCell"><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">
                                 <img src="Img/downArrow.png">
                             </div>
@@ -146,6 +147,12 @@
         }
 
         return totalPrice;
+    }
+    
+    private async Task DeleteOrder(int id)
+    {
+        await orderService.DeleteOrderAsync(id);
+        await OnInitializedAsync();
     }
 
 }

@@ -33,7 +33,7 @@
                                 </button>
                             </div>
                             <div class="customerNameCell">@order.Username</div>
-                            <div class="cityCell"></div>
+                            <div class="phoneCell">@customers[order.Username].Phone</div>
                             <div class="priceCell">@TotalPrice(order.OrderOffers) dkk</div>
                             <div class="deleteCell"><button class="btn btn-danger" onclick="@(async () => await DeleteOrder(order.Id))">DELETE</button></div>
                             <div class="imgCell" onclick="this.parentElement.classList.toggle('details')">

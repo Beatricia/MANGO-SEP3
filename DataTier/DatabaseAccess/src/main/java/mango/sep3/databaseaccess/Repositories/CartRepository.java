@@ -14,6 +14,6 @@ import java.util.Collection;
 public interface CartRepository extends JpaRepository<CartItem,Integer>
 {
   Collection<CartItem> findAllByCustomer(Customer username);
-  Collection<CartItem> findAllByCustomerAndCollectionOption(Customer username, String collectionOption);
+  Collection<CartItem> findAllByCustomerAndCollectionOption(Customer username, int collectionOption);
   void deleteAllByCustomer(Customer username);
 }

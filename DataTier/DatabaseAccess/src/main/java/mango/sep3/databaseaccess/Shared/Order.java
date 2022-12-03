@@ -22,7 +22,7 @@ public class Order
   private String farmName;
 
   @Column
-  private String collectionOption;
+  private int collectionOption;
 
   @Transient
   private String username;

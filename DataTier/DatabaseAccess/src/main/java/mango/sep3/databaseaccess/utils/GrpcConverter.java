@@ -26,7 +26,6 @@ public class GrpcConverter {
     public GrpcConverter() {
     }
 
-
     // region Text
     public Text convertToGrpc(String text) {
         return Text.newBuilder().setText(text).build();

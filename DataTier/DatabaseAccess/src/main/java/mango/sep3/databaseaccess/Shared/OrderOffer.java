@@ -26,7 +26,7 @@ import java.util.Set;
   private String username;
 
   @Column(name = "collectionOption")
-  private String collectionOption;
+  private int collectionOption;
   // TODO: remove collectionOption from OrderOffer (as it is in the order)
 
   public int getId()

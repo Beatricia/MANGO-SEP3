@@ -220,9 +220,7 @@ public class GrpcConverter {
                 .setQuantity(offer.getQuantity())
                 .setUnit(offer.getUnit())
                 .setPrice(offer.getPrice())
-                .setDelivery(offer.isDelivery())
-                .setPickUp(offer.isPickUp())
-                .setPickYourOwn(offer.isPickyourOwn())
+                .setCollectionOption(offer.getCollectionOption())
                 .setDescription(offer.getDescription())
                 .setFarmName(offer.getFarm().getName())
                 .build();
@@ -236,9 +234,7 @@ public class GrpcConverter {
         offer1.setName(offer.getName());
         offer1.setQuantity(offer.getQuantity());
         offer1.setDescription(offer.getDescription());
-        offer1.setDelivery(offer.getDelivery());
-        offer1.setPickUp(offer.getPickUp());
-        offer1.setPickyourOwn(offer.getPickYourOwn());
+        offer1.setCollectionOption(offer.getCollectionOption());
         offer1.setPrice(offer.getPrice());
         offer1.setUnit(offer.getUnit());
 

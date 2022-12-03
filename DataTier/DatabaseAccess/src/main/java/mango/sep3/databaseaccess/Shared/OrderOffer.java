@@ -69,12 +69,12 @@ import java.util.Set;
     this.username = username;
   }
 
-  public String getCollectionOption()
+  public int getCollectionOption()
   {
     return collectionOption;
   }
 
-  public void setCollectionOption(String collectionOption)
+  public void setCollectionOption(int collectionOption)
   {
     this.collectionOption = collectionOption;
   }

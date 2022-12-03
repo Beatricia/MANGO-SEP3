@@ -71,12 +71,12 @@ public class Order
     this.farmName = farmName;
   }
 
-  public String getCollectionOption()
+  public int getCollectionOption()
   {
     return collectionOption;
   }
 
-  public void setCollectionOption(String collectionOption)
+  public void setCollectionOption(int collectionOption)
   {
     this.collectionOption = collectionOption;
   }

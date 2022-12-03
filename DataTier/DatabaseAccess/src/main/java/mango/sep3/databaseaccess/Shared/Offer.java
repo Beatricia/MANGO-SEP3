@@ -32,13 +32,7 @@ public class Offer implements Serializable
     private int quantity;
 
     @Column(nullable = true)
-    private boolean pickUp;
-
-    @Column(nullable = true)
-    private boolean delivery;
-
-    @Column(nullable = true)
-    private boolean pickyourOwn;
+    private int collectionOption;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "farmId", nullable = false, referencedColumnName = "id")
@@ -117,36 +111,6 @@ public class Offer implements Serializable
         this.quantity = quantity;
     }
 
-    public boolean isPickUp()
-    {
-        return pickUp;
-    }
-
-    public void setPickUp(boolean pickUp)
-    {
-        this.pickUp = pickUp;
-    }
-
-    public boolean isDelivery()
-    {
-        return delivery;
-    }
-
-    public void setDelivery(boolean delivery)
-    {
-        this.delivery = delivery;
-    }
-
-    public boolean isPickyourOwn()
-    {
-        return pickyourOwn;
-    }
-
-    public void setPickyourOwn(boolean pickyourOwn)
-    {
-        this.pickyourOwn = pickyourOwn;
-    }
-
     public Farm getFarm()
     {
         return farm;
@@ -165,5 +129,15 @@ public class Offer implements Serializable
     public void setOrderOffers(Set<OrderOffer> orderOffers)
     {
         this.orderOffers = orderOffers;
+    }
+
+    public int getCollectionOption()
+    {
+        return collectionOption;
+    }
+
+    public void setCollectionOption(int collectionOption)
+    {
+        this.collectionOption = collectionOption;
     }
 }

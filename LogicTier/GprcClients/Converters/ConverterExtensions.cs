@@ -1,5 +1,6 @@
 ﻿using Application.DAOInterfaces;
 using Google.Protobuf;
+using Shared.Models;
 
 namespace GprcClients.Converters;
 
@@ -84,29 +85,60 @@ internal static class ConverterExtensions
 
     #endregion
 
+    #region CollectionOption
+
+    private static int ConvertEnumToInt(CollectionOption messageCollectionOption)
+    {
+        int collectionOptionGrpc = 0;
+        
+        if (messageCollectionOption.HasFlag(CollectionOption.PickUp))
+        {
+            collectionOptionGrpc += 1;
+        }
+        
+        if (messageCollectionOption.HasFlag(CollectionOption.Delivery))
+        {
+            collectionOptionGrpc += 2;
+        }
+        
+        if (messageCollectionOption.HasFlag(CollectionOption.PickYourOwn))
+        {
+            collectionOptionGrpc += 4;
+        }
+
+        return collectionOptionGrpc;
+    }
+
+    #endregion
+
     #region CartOffer
 
     public static CartOffer ToGrpc(this Shared.Models.CartOffer message)
     {
+ 
         return new CartOffer
         {
             Id = message.Id,
             Offer = message.Offer.ToGrpc(),
             Quantity = message.Quantity,
             Username = message.UserName,
-            CollectionOption = message.CollectionOption,
+            CollectionOption = ConvertEnumToInt(message.CollectionOption)
         };
     }
-    
+
+  
+
     public static Shared.Models.CartOffer ToShared(this CartOffer message, IImageDao imageDao)
     {
+        //convert the int to enum flags
+        CollectionOption collectionOption = (CollectionOption)message.CollectionOption;
         return new Shared.Models.CartOffer
         {
             Id = message.Id,
             Offer = message.Offer.ToShared(imageDao),
             Quantity = message.Quantity,
             UserName = message.Username,
-            CollectionOption = message.CollectionOption
+            CollectionOption = collectionOption
         };
     } 
 
@@ -202,6 +234,8 @@ internal static class ConverterExtensions
 
     public static Shared.Models.Offer ToShared(this Offer offer, IImageDao imageDao)
     {
+        //convert the int to enum flags
+        CollectionOption collectionOption = (CollectionOption)offer.CollectionOption;
         return new Shared.Models.Offer
         {
             Id = offer.Id,
@@ -209,9 +243,7 @@ internal static class ConverterExtensions
             Quantity = offer.Quantity,
             Unit = offer.Unit,
             Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
+            CollectionOption = collectionOption,
             Description = offer.Description,
             Image = imageDao.GetImageForOffer(offer.Id),
             FarmName = offer.FarmName
@@ -227,9 +259,7 @@ internal static class ConverterExtensions
             Quantity = offer.Quantity,
             Unit = offer.Unit,
             Price = offer.Price,
-            Delivery = offer.Delivery,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
+            CollectionOption = ConvertEnumToInt(offer.CollectionOption),
             Description = offer.Description,
             FarmName = offer.FarmName,
         };
@@ -241,10 +271,12 @@ internal static class ConverterExtensions
 
     public static Shared.Models.OrderOffer ToShared(this OrderOffer orderOffer, IImageDao imageDao)
     {
+        //convert the int to enum flags
+        CollectionOption collectionOption = (CollectionOption)orderOffer.CollectionOption;
         return new Shared.Models.OrderOffer
         {
             Id = orderOffer.Id,
-            CollectionOption = orderOffer.CollectionOption,
+            CollectionOption = collectionOption,
             Offer = orderOffer.Offer.ToShared(imageDao),
             Quantity = orderOffer.Quantity,
             Username = orderOffer.Username,
@@ -257,7 +289,7 @@ internal static class ConverterExtensions
         return new OrderOffer
         {
             Id = orderOffer.Id,
-            CollectionOption = orderOffer.CollectionOption,
+            CollectionOption = ConvertEnumToInt(orderOffer.CollectionOption),
             Offer = orderOffer.Offer.ToGrpc(),
             Quantity = orderOffer.Quantity,
             Username = orderOffer.Username,
@@ -270,10 +302,12 @@ internal static class ConverterExtensions
     
     public static Shared.Models.Order ToShared(this Order order, IImageDao imageDao)
     {
+        //convert the int to enum flags
+        CollectionOption collectionOption = (CollectionOption)order.CollectionOption;
         return new Shared.Models.Order
         {
             Id = order.Id,
-            CollectionOption = order.CollectionOption,
+            CollectionOption = collectionOption,
             FarmName = order.FarmName,
             IsDone = order.IsDone,
             OrderOffers = order.OrderOffers.Select(orderOffer => orderOffer.ToShared(imageDao)).ToList(),
@@ -286,7 +320,7 @@ internal static class ConverterExtensions
         return new Order
         {
             Id = order.Id,
-            CollectionOption = order.CollectionOption,
+            CollectionOption = ConvertEnumToInt(order.CollectionOption),
             FarmName = order.FarmName,
             IsDone = order.IsDone,
             OrderOffers = { order.OrderOffers.Select(orderOffer => orderOffer.ToGrpc()) },

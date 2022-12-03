@@ -1,4 +1,6 @@
-﻿namespace Shared.DTOs;
+﻿using Shared.Models;
+
+namespace Shared.DTOs;
 
 public class OfferCreationDto
 {
@@ -14,11 +16,7 @@ public class OfferCreationDto
 
     public double Price { get; set; }
 
-    public bool Delivery { get; set; }
-
-    public bool PickUp { get; set; }
-    
-    public bool PickYourOwn { get; set; }
+    public CollectionOption CollectionOption { get; set; }
     public string? Description { get; set; }
     
     

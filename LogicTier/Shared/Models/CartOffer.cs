@@ -6,5 +6,5 @@ public class CartOffer
     public Offer Offer { get; set; }
     public int Quantity { get; set; }
     public string UserName { get; set; }
-    public string CollectionOption { get; set; }
+    public CollectionOption CollectionOption { get; set; }
 }

@@ -145,7 +145,7 @@ public class OrderDaoImpl : IOrderDao
             var item = new Shared.Models.OrderOffer
             {
                 Id = orderOffer.Id,
-                CollectionOption = orderOffer.CollectionOption,
+                //CollectionOption = orderOffer.CollectionOption,
                 Offer = ConvertOfferFromGrpc(orderOffer.Offer),
                 Quantity = orderOffer.Quantity,
                 Username = orderOffer.Username,
@@ -162,14 +162,13 @@ public class OrderDaoImpl : IOrderDao
         Shared.Models.Offer offerToReturn = new Shared.Models.Offer
         {
             Name = offer.Name,
-            Delivery = offer.Delivery,
             Description = offer.Description,
             Id = offer.Id,
             Price = offer.Price,
             Quantity = offer.Quantity,
             Unit = offer.Unit,
-            PickUp = offer.PickUp,
-            PickYourOwn = offer.PickYourOwn,
+           // PickUp = offer.PickUp,
+            //PickYourOwn = offer.PickYourOwn,
             FarmName = offer.FarmName
         };
         return offerToReturn;
@@ -192,7 +191,7 @@ public class OrderDaoImpl : IOrderDao
             var item = new Shared.Models.Order
             {
                 Id = order.Id,
-                CollectionOption = order.CollectionOption,
+                //CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
                 OrderOffers = orderOffersList,
@@ -219,7 +218,7 @@ public class OrderDaoImpl : IOrderDao
 
             var orderGrpc = new global::Order()
             {
-                CollectionOption = order.CollectionOption,
+                //CollectionOption = order.CollectionOption,
                 FarmName = order.FarmName,
                 IsDone = order.IsDone,
                 Username = order.Username,

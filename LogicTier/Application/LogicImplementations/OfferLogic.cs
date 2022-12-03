@@ -42,9 +42,7 @@ public class OfferLogic : IOfferLogic
             Quantity = dto.Quantity,
             Unit = dto.Unit,
             Price = dto.Price,
-            Delivery = dto.Delivery,
-            PickUp = dto.PickUp,
-            PickYourOwn = dto.PickYourOwn,
+            CollectionOption = dto.CollectionOption,
             Description = dto.Description,
             Image = new Image()
             {

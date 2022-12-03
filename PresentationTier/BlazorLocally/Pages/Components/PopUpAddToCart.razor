@@ -98,19 +98,12 @@
         {
             CartOfferDto dto = new();
             dto.Quantity = quantity;
-            if (pickUp.Equals(true))
-            {
-                dto.CollectOption = "pick up";
-            }
-            else if (pickYO.Equals(true))
-            {
-                dto.CollectOption = "pick your own";
-            }
-            else
-            {
-                dto.CollectOption = "delivery";
-            }
+            
+            CollectionOption collectionOption = delivery ? CollectionOption.Delivery : 0;
+                             collectionOption |= pickUp ? CollectionOption.PickUp : 0;
+                             collectionOption |= pickYO ? CollectionOption.PickYourOwn : 0;
 
+            dto.CollectionOption = collectionOption;
             OnAddToCartButton.InvokeAsync();
         }
         catch (Exception e)

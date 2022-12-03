@@ -7,7 +7,6 @@ import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.CartItem;
 import mango.sep3.databaseaccess.Shared.Customer;
 import mango.sep3.databaseaccess.Shared.Offer;
-import mango.sep3.databaseaccess.Shared.User;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
 import mango.sep3.databaseaccess.utils.GrpcConverter;

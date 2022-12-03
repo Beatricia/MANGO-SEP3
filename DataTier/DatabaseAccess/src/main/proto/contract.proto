@@ -93,11 +93,9 @@ message Offer{
   int32 quantity = 3;
   string unit = 4;
   double price = 5;
-  bool delivery = 6;
-  bool pickUp = 7;
-  bool pickYourOwn = 8;
-  optional string description = 9;
-  string farmName = 11;
+  int32 collectionOption = 6;
+  optional string description = 7;
+  string farmName = 8;
 }
 
 message OfferCreation{
@@ -117,7 +115,7 @@ message OrderOffer{
   Offer offer = 2;
   int32 quantity = 3;
   string username = 4;
-  string collectionOption = 5;
+  int32 collectionOption = 5;
 }
 
 message OrderOffers{
@@ -129,7 +127,7 @@ message Order{
   repeated OrderOffer orderOffers = 2;
   bool isDone = 3;
   string farmName = 4;
-  string collectionOption = 5;
+  int32 collectionOption = 5;
   string username = 6;
 }
 message Orders{
@@ -180,7 +178,7 @@ message CartOffer{
   Offer offer = 2;
   int32 quantity = 3;
   string username = 4;
-  string collectionOption = 5;
+  int32 collectionOption = 5;
 }
 
 message CartOffers{

@@ -6,7 +6,7 @@ public class OrderOffer
     public Offer Offer { get; set; }
     public int Quantity { get; set; }
     public string Username { get; set; }
-    public string CollectionOption { get; set; }
+    public CollectionOption CollectionOption { get; set; }
     public string FarmName { get; set; }
     
 }

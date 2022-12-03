@@ -8,6 +8,6 @@ public class Order
     public string Username { get; set;}
     public bool IsDone { get; set; }
     public string FarmName { get; set; }
-    public string CollectionOption { get; set; }
+    public CollectionOption CollectionOption { get; set; }
     
 }

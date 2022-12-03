@@ -44,7 +44,7 @@ public class CartLogic : ICartLogic
             Offer = offer,
             Quantity = dto.Quantity,
             UserName = dto.Username,
-            CollectionOption = dto.CollectOption
+            CollectionOption = dto.CollectionOption
         };
         
         await cartDao.AddToCartAsync(cartOffer);

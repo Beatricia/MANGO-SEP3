@@ -11,11 +11,7 @@ public class Offer
     public string Unit { get; set; }
     public double Price { get; set; }
 
-    public bool Delivery { get; set; }
-
-    public bool PickUp { get; set; }
-    
-    public bool PickYourOwn { get; set; }
+    public CollectionOption CollectionOption { get; set; }
     public string? Description { get; set; }
 
     public Image Image { get; set; }

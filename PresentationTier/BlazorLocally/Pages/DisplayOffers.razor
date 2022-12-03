@@ -77,7 +77,7 @@
                                  <!--radio buttons for delivery option-->
                                  <label class="col-8" for="radioGroup">Delivery Option:<span class="required">*</span></label>
                                  <div id="radioGroup" class="d-flex flex-column">
-                                     @if (offer.Delivery)
+                                     @if ((offer.CollectionOption & CollectionOption.Delivery) != 0)
                                      {
                                          <div class="col-8 d-flex flex-nowrap">
                                              <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
@@ -86,7 +86,7 @@
                                              <label for="delivery"> Delivery</label>
                                          </div>
                                      }
-                                     @if (offer.PickUp)
+                                     @if ((offer.CollectionOption & CollectionOption.PickUp) != 0)
                                      {
                                          <div class="col-8 d-flex flex-nowrap">
                                              <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
@@ -94,7 +94,7 @@
                                              <label for="pickUp"> Pick Up</label>
                                          </div> 
                                      }
-                                     @if (offer.PickYourOwn)
+                                     @if ((offer.CollectionOption & CollectionOption.PickYourOwn) != 0)
                                      {
                                          <div class="col-8 d-flex flex-nowrap">
                                              <label for="pickYO"> Pick Your Own</label>
@@ -181,12 +181,15 @@
                 msg = "Please choose collection option.";
                 return;
             }
+            CollectionOption collectionOption = delivery ? CollectionOption.Delivery : 0;
+                             collectionOption |= pickUp ? CollectionOption.PickUp : 0;
+            
             
             CartOfferDto dto = new()
             {
                 Quantity = quantity,
                 Username = "",
-                CollectOption = pickUp ? "pickUp" : "delivery",
+                CollectionOption = collectionOption,
                 OfferId = offer.Id
             };
             

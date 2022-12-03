@@ -25,7 +25,7 @@ public class CartItem implements Serializable
   private Customer customer;
 
   @Column(name  = "collectionOption", nullable = true)
-  private String collectionOption;
+  private int collectionOption;
 
   public CartItem(){
 
@@ -71,12 +71,12 @@ public class CartItem implements Serializable
     this.customer = username;
   }
 
-  public String getCollectionOption()
+  public int getCollectionOption()
   {
     return collectionOption;
   }
 
-  public void setCollectionOption(String collectionOption)
+  public void setCollectionOption(int collectionOption)
   {
     this.collectionOption = collectionOption;
   }

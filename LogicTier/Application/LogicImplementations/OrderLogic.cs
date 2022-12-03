@@ -40,10 +40,13 @@ public class OrderLogic : IOrderLogic
         List<Order> ordersToSend = new List<Order>();
         foreach (var order in orders)
         {
+            //offer => offer.CollectionOption == "delivery"
             List<CartOffer> deliveryOffers =
-                order.CartOffer.Where(offer => offer.CollectionOption == "delivery").ToList();
+                order.CartOffer.Where(offer => offer.CollectionOption == CollectionOption.Delivery).ToList();
+            
+            //offer => offer.CollectionOption == "pickUp"
             List<CartOffer> pickUpOffers =
-                order.CartOffer.Where(offer => offer.CollectionOption == "pickUp").ToList();
+                order.CartOffer.Where(offer => offer.CollectionOption == CollectionOption.PickUp).ToList();
 
             if (deliveryOffers.Any())
             {
@@ -53,7 +56,8 @@ public class OrderLogic : IOrderLogic
                     //CartOffers = deliveryOffers,
                     IsDone = false,
                     FarmName = order.FarmName,
-                    CollectionOption = "delivery",
+                    //CollectionOption = "delivery",
+                    CollectionOption = CollectionOption.Delivery,
                     Username = username
                 };
                 ordersToSend.Add(orderToSend);
@@ -66,7 +70,8 @@ public class OrderLogic : IOrderLogic
                     //CartOffers = pickUpOffers,
                     IsDone = false,
                     FarmName = order.FarmName,
-                    CollectionOption = "pickUp",
+                    //CollectionOption = "pickUp",
+                    CollectionOption = CollectionOption.PickUp,
                     Username = username
                 };
                 ordersToSend.Add(orderToSend);

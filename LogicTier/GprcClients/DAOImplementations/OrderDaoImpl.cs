@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Application.DAOInterfaces;
 using Google.Protobuf.Collections;
+using GprcClients.Converters;
 using Grpc.Core;
 using Shared.Models;
 using Offer = Shared.Models.Offer;
@@ -11,14 +12,16 @@ namespace GprcClients.DAOImplementations;
 public class OrderDaoImpl : IOrderDao
 {
     private OrderService.OrderServiceClient orderService;
+    private IImageDao imageDao;
 
     /// <summary>
     /// Initializes the OrderDaoImpl with the given gRPC client service
     /// </summary>
     /// <param name="offerService"></param>
-    public OrderDaoImpl(OrderService.OrderServiceClient orderService)
+    public OrderDaoImpl(OrderService.OrderServiceClient orderService, IImageDao imageDao)
     {
         this.orderService = orderService;
+        this.imageDao = imageDao;
     }
 
     //TODO check if this method is actually needed
@@ -109,6 +112,22 @@ public class OrderDaoImpl : IOrderDao
         try
         {
             await orderService.DeleteOrderAsync(text);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<Shared.Models.Order> GetOrderAsync(int orderId)
+    {
+        var id = new Id() { Id_ = orderId};
+
+        try
+        {
+            global::Order order = await orderService.GetOrderByIdAsync(id);
+            return order.ToShared(imageDao);
         }
         catch (Exception e)
         {

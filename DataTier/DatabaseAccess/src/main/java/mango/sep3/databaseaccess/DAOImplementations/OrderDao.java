@@ -133,11 +133,26 @@ public class OrderDao implements OrderDaoInterface
     return usernames;
   }
 
+  @Override public Order getOrderById(int id)
+  {
+    return orderRepository.findById(id).orElse(null);
+  }
+
   private void createOrderOffersWithOrder(Order order)
   {
     Customer customer = customerRepository.findById(order.getUsername()).orElse(null);
-    Collection<CartItem> cartItemSet = cartRepository.findAllByCustomer(customer);
-    for (var cartOffer : cartItemSet)
+    Collection<CartItem> cartItemSet = cartRepository.findAllByCustomerAndCollectionOption(customer, order.getCollectionOption());
+
+    Collection<CartItem> cartItems = new ArrayList<>();
+    for (var cartItem: cartItemSet)
+    {
+      if (cartItem.getOfferId().getFarm().getName().equals(order.getFarmName()))
+      {
+        cartItems.add(cartItem);
+      }
+    }
+
+    for (var cartOffer : cartItems)
     {
       //create order offer
       OrderOffer orderOffer = new OrderOffer();
@@ -150,6 +165,6 @@ public class OrderDao implements OrderDaoInterface
 
       //remove the cartItem from the order object
     }
-    cartRepository.deleteAllByCustomer(customer);
+    cartRepository.deleteAll(cartItems);
   }
 }

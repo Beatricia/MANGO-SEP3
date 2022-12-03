@@ -10,4 +10,5 @@ public interface IOrderDao
     Task<IEnumerable<OrderOffer>> GetOrdersOffersAsync(string username);
     Task CompleteOrderAsync(int id);
     Task DeleteOrderAsync(int id);
+    Task<Order> GetOrderAsync(int orderId);
 }

@@ -124,7 +124,9 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override public void updateCustomer(CustomerUpdate request,
         StreamObserver<Void> responseObserver)
     {
-        userDao.updateCustomer(request.getUsername(),request.getPhone(),request.getCity(),request.getStreet(),request.getZip());
+        userDao.updateCustomer(request.getUsername(),request.getPhone(),
+                request.getCity(),request.getStreet(),request.getZip(),
+                request.getLatitude(), request.getLongitude());
 
         responseObserver.onNext(Void.newBuilder().build());
         responseObserver.onCompleted();

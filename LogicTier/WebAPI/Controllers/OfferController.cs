@@ -76,8 +76,8 @@ public class OfferController : ControllerBase
     {
         try
         {
-            var created = await offerLogic.GetAsync();
-            return Created($"/offer", created);
+            var offers = await offerLogic.GetAsync();
+            return Ok(offers);
         }
         catch (Exception e)
         {
@@ -89,13 +89,11 @@ public class OfferController : ControllerBase
     [HttpGet("farmName"), AllowAnonymous]
     public async Task<IActionResult> GetAsync([FromQuery] string farmName)
     {
-        //get offers by farm name
+        // TODO: make this a rest endpoint
         try
         {
-            Console.WriteLine("--------------------");
-            Console.WriteLine(farmName);
-            var created = await offerLogic.GetByFarmNameAsync(farmName);
-            return Ok(created);
+            var offers = await offerLogic.GetByFarmNameAsync(farmName);
+            return Ok(offers);
         }
         catch (Exception e)
         {

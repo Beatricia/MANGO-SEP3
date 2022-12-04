@@ -1,5 +1,8 @@
 ﻿namespace Shared.Models;
 
+/// <summary>
+/// Represents a review of an offer.
+/// </summary>
 public class Review
 {
     /// <summary>

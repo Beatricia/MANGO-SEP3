@@ -152,6 +152,8 @@ message CustomerUpdate{
   optional string city = 3;
   optional string street = 4;
   optional string zip = 5;
+  optional double longitude = 6;
+  optional double latitude = 7;
 }
 
 message Farmer{

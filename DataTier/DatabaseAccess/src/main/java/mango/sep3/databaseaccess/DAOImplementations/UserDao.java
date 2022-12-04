@@ -84,7 +84,7 @@ public class UserDao implements UserDaoInterface {
     }
 
     @Override public void updateCustomer(String username, String phone,
-        String city, String street, String zip)
+        String city, String street, String zip, double latitude, double longitude)
     {
         Customer customer = customerRepository.findById(username).orElse(null);
         Address address = customer.getAddress();
@@ -96,22 +96,18 @@ public class UserDao implements UserDaoInterface {
         }
 
         if (!city.isEmpty())
-        {
             address.setCity(city);
-            addressRepository.saveAndFlush(address);
-        }
-
         if (!street.isEmpty())
-        {
             address.setStreet(street);
-            addressRepository.saveAndFlush(address);
+        if (!zip.isEmpty())
+            address.setZip(zip);
+
+        if(latitude != -Double.MAX_VALUE && longitude != -Double.MAX_VALUE){
+            address.setLatitude(latitude);
+            address.setLongitude(longitude);
         }
 
-        if (!zip.isEmpty())
-        {
-            address.setZip(zip);
-            addressRepository.saveAndFlush(address);
-        }
+        addressRepository.saveAndFlush(address);
 
     }
 }

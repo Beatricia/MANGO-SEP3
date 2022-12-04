@@ -11,12 +11,14 @@ public class FarmLogic : IFarmLogic
     private IFarmIconDao farmIconDao;
     private IFarmDao farmDao;
     private INotificationLogic notificationLogic;
+    private IAddressDao addressDao;
 
-    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic)
+    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic, IAddressDao addressDao)
     {
         this.farmIconDao = farmIconDao;
         this.farmDao = farmDao;
         this.notificationLogic = notificationLogic;
+        this.addressDao = addressDao;
     }
     
     /// <summary>
@@ -35,7 +37,12 @@ public class FarmLogic : IFarmLogic
             icon = farmIconDao.DefaultIcon;
         else
             icon = farmIconDao.CreateIcon(dto.FarmIconFileName!);
+
+        var address = dto.Address;
+        var coordinates = await addressDao.GetCoordinatesAsync(address);
         
+        address.Latitude = coordinates.Latitude;
+        address.Longitude = coordinates.Longitude;
         
         Farm farmToSend = new Farm
         {

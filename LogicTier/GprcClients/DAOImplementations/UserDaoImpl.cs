@@ -96,6 +96,9 @@ public class UserDaoImpl : IUserDao
             customerUpdate.Zip = dto.Zip;
         }
         
+        customerUpdate.Latitude = dto.Latitude ?? double.MinValue;
+        customerUpdate.Longitude = dto.Longitude ?? double.MinValue;
+        
         try
         {
             await client.UpdateCustomerAsync(customerUpdate);

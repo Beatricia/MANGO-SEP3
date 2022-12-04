@@ -67,5 +67,5 @@ public interface UserDaoInterface {
      */
     Farmer getFarmer(String username);
 
-    void updateCustomer(String username, String phone, String city, String street, String zip);
+    void updateCustomer(String username, String phone, String city, String street, String zip, double latitude, double longitude);
 }

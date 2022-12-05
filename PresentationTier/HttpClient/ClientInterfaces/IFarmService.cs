@@ -19,4 +19,11 @@ public interface IFarmService
     Task<ICollection<Farm>?> GetAllFarmsAsync();
 
     Task<ICollection<Farm>?> GetAllFarmsByNameContainsAsync(string nameContains);
+    
+    /// <summary>
+    /// Creates a new review for a farm
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    Task<Review> CreateReviewAsync(string farmName, ReviewCreationDto dto);
 }

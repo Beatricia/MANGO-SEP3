@@ -9,7 +9,7 @@ public interface IReviewDao
     /// </summary>
     /// <param name="offerId"></param>
     /// <returns></returns>
-    Task<List<Review>> GetReviewsByOfferIdAsync(int offerId);
+    Task<List<Review>> GetReviewsByOfferIdAsync(string farmName);
     
     /// <summary>
     /// Creates a review for an offer

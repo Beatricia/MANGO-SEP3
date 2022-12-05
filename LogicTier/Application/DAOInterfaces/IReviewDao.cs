@@ -9,19 +9,19 @@ public interface IReviewDao
     /// </summary>
     /// <param name="offerId"></param>
     /// <returns></returns>
-    List<Review> GetReviewsByOfferId(int offerId);
+    Task<List<Review>> GetReviewsByOfferIdAsync(int offerId);
     
     /// <summary>
     /// Creates a review for an offer
     /// </summary>
     /// <param name="review"></param>
     /// <returns></returns>
-    Review CreateReview(Review review);
+    Task<Review> CreateReviewAsync(Review review);
     
     /// <summary>
     /// Updates a review for an offer
     /// </summary>
     /// <param name="review"></param>
     /// <returns></returns>
-    Review UpdateReview(Review review);
+    Task<Review> UpdateReviewAsync(Review review);
 }

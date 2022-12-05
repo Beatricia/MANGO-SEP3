@@ -82,6 +82,7 @@ public class FarmLogic : IFarmLogic
     { 
         await farmDao.UpdateFarmAsync(dto);
 
+        //send notification to customers who have an uncompleted order from the farm
         ICollection<String> usernames = await farmDao.GetAllCustomersUncompletedOrder(dto.Name);
         foreach (var username in usernames)
         {

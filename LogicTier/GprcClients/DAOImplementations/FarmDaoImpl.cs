@@ -41,6 +41,7 @@ public class FarmDaoImpl : IFarmDao
         var farmUpdate = new FarmUpdate
         {
             Name = dto.Name,
+            Phone = dto.FarmPhone,
             Status = dto.FarmStatus
         };
         

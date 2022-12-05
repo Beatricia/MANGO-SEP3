@@ -18,6 +18,7 @@
 
 #rectangle{
     background-color: #B7BF96;
+
     width: 45em;
     height: 7em;
     overflow: hidden;
@@ -41,15 +42,19 @@
     margin-top: -20px;
     float: right;
     margin-right: 15em;
+    clear: both;
 }
 input[type=text] {
     width: 100%;
-    padding: 12px 20px;
+    /*padding: 12px 12px;*/
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
     background-color: #606748;;
     color: white;
+}
+#statusText{
+    padding: 12px 12px
 }
 
 ::placeholder {
@@ -78,8 +83,6 @@ input[type=text] {
 
 #updateButton{
     border-radius: 5px;
-    margin-right: 20em;
-    margin-top: 5px;
     color: white;
     background-color: #606748;
     border-style: none;
@@ -99,3 +102,30 @@ input[type=text] {
     border-style: none;
     padding: 10px;
 }
+
+#phone{
+    background-color: #606748;
+    border-radius: 5px;
+    width: 12em;
+    height: 3em;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+}
+
+#updateContainer{
+    clear: both;
+    float: right;
+    margin-right: 15em;
+    margin-top: 15px;
+}
+
+#phoneLabel {
+    padding: 0;
+    margin: 0;
+}
+
+#phoneText{
+    margin-top: -5px;
+}
+

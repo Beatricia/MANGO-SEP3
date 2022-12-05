@@ -24,7 +24,7 @@ public interface IAuthService
     /// <param name="password"></param>
     /// <param name="isFarmer"></param>
     /// <returns></returns>
-    Task<User> RegisterAsync(string username, string password, bool isFarmer);
+    Task<User> RegisterAsync(string firstName, string lastName, string username, string password, bool isFarmer);
 
     Task<ClaimsPrincipal> GetAuthAsync();
 

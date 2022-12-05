@@ -81,6 +81,7 @@ message Farm{
 message FarmUpdate{
   string name = 1;
   string status = 2;
+  string phone = 3;
 }
 
 message Farms{

@@ -11,34 +11,42 @@
 </div>
 <div id="filters">
     <div class="container">
-    <div class="row">
-        <div class="col-3 offset-md-1" id="distanceFilter">
-            <span>
-                <label>Distance: </label><input type="range"/>
-            </span>
-        </div>
-        <div class="col-3" id="nameFilter">
-            <span>
-                <label>Product: </label><input id="productInput" type="text" placeholder=" Name"/>
-            </span>
-        </div>
-        <div class="col-sm-1" id="deliveryFilter">
-            <span>
-                <input type="checkbox"/><label>Delivery</label>
-            </span>
-        </div>
-        <div class="col-sm-1" id="pickUpFilter">
-            <span>
-                <input type="checkbox"/> <label>Pick Up</label>
-            </span>
-        </div>
-        <div class="col-sm-2" id="pickYOFilter">
-            <span>
-                <input type="checkbox"/> <label>Pick Your Own</label>
-            </span>
+        <div class="row">
+            <div class="col-3 offset-md-1" id="distanceFilter">
+                <span>
+                    <label for="distance">Distance: </label>
+                   <span class="distance-km-label">@distance km</span>
+                    <input @bind="distance" type="range" name="distance" id="distance" class="distance-slider" min="0" max="100" step="1" data-display-value="0 km" style="--width-ratio: 2/3; --margin-right-ratio: 1/3;"
+                           onmousemove="this.setAttribute('data-display-value', this.value + ' km');this.style.setProperty('--translateX', this.value);">
+                </span>
+            </div>
+            <div class="col-3" id="nameFilter">
+                <span>
+                    <label>Product: </label><input id="productInput" type="text" placeholder=" Name" @bind="nameContains"/>
+                </span>
+            </div>
+            <div class="col-sm-1" id="deliveryFilter">
+                <span>
+                    <input type="checkbox" @bind="deliveryCheck"/><label>Delivery</label>
+                </span>
+            </div>
+            <div class="col-sm-1" id="pickUpFilter">
+                <span>
+                    <input type="checkbox" @bind="pickUpCheck"/> <label>Pick Up</label>
+                </span>
+            </div>
+            <div class="col-sm-2" id="pickYOFilter">
+                <span>
+                    <input type="checkbox"  @bind="pickYOCheck"/> <label>Pick Your Own</label>
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <button id="searchButton">
+                    <img src="Img/search.png" width="25px" id="searchImg"/>
+                </button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 @if (offers == null)
@@ -177,6 +185,14 @@
 
     bool showAddToCartComponent;
 
+    //filtering
+    private int? distance = 0;
+    private string? nameContains;
+    private bool deliveryCheck;
+    private bool pickUpCheck;
+    private bool pickYOCheck;
+
+
     ///summary///
     /// loads all the offers
     /// summary///
@@ -184,8 +200,8 @@
     {
         try
         {
-    //this below will be used to get the offers from server 
-            offers = await httpOfferClient.GetAsync();
+            //this below will be used to get the offers from server 
+            offers = await httpOfferClient.GetAsync(null,null, null, false, false, false);
         }
         catch (Exception e)
         {

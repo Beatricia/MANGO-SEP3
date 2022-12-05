@@ -11,3 +11,10 @@
     background-color: #f8f7f7;
     border: none;
 }
+
+#searchButton{
+    border: none;
+    background-color: #f8f7f7;
+    border-radius: 5px;
+}
+

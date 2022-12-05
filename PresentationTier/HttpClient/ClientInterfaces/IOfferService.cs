@@ -17,7 +17,7 @@ public interface IOfferService
     /// Gets all the offers
     /// </summary>
     /// <returns></returns>
-    Task<ICollection<Offer>> GetAsync();
+    Task<ICollection<Offer>> GetAsync(string? username , int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo);
     /// <summary>
     /// Uploads an image for an offer
     /// </summary>

@@ -49,9 +49,12 @@ public class OfferHttpClient : IOfferService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<ICollection<Offer>> GetAsync()
+    public async Task<ICollection<Offer>> GetAsync(string? username, int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)
     {
-        HttpResponseMessage response = await Client.GetAsync("/offer");
+        string query = ConstructQuery(username, distance, nameContains, delivery, pickUp, pickYo);
+        
+        
+        HttpResponseMessage response = await Client.GetAsync("/offer"+query);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -64,6 +67,7 @@ public class OfferHttpClient : IOfferService
         })!;
         return offers;
     }
+    
 
     public async Task UploadImageAsync(IBrowserFile file, int offerId)
     {
@@ -102,5 +106,44 @@ public class OfferHttpClient : IOfferService
             PropertyNameCaseInsensitive = true
         })!;
         return offers;
+    }
+    
+    private string ConstructQuery(string? username , int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)
+    {
+        string query = "";
+        if (!string.IsNullOrEmpty(username))
+        {
+            query += $"?username={username}";
+        }
+        if (distance !=null && distance !=0)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"?distance={distance}";
+        }
+
+        if (!string.IsNullOrEmpty(nameContains))
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"nameContains={nameContains}";
+        }
+
+        if (!delivery)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"delivery={delivery}";
+        }
+
+        if (!pickUp)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"pickUp={pickUp}";
+        }
+        if (!pickYo)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"pickYo={pickYo}";
+        }
+
+        return query;
     }
 }

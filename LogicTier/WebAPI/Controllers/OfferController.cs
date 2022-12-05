@@ -72,11 +72,13 @@ public class OfferController : ControllerBase
     }
 
     [HttpGet, AllowAnonymous]
-    public async Task<IActionResult> GetAsync()
+    public async Task<IActionResult> GetAsync([FromQuery] string? username, int? distance, string? nameContains, bool? delivery, bool? pickUp, bool? pickYo)
     {
         try
         {
-            var offers = await offerLogic.GetAsync();
+            SearchOfferParameterDto dto = new SearchOfferParameterDto(username, distance, nameContains, delivery, pickUp, pickYo);
+          
+            var offers = await offerLogic.GetAsync(dto);
             return Ok(offers);
         }
         catch (Exception e)

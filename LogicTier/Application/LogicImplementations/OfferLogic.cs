@@ -14,18 +14,20 @@ public class OfferLogic : IOfferLogic
     private IOfferDao offerDao;
     private IImageDao imageDao;
     private IFarmDao farmDao;
+    private IUserDao userDao;
 
     /// <summary>
     /// Initializing the OfferLogic with the given IOfferDao
     /// </summary>
     /// <param name="offerDao"></param>
-    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao)
+    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao, IUserDao userDao)
     {
         this.offerDao = offerDao;
         this.imageDao = imageDao;
         this.farmDao = farmDao;
+        this.userDao = userDao;
     }
-    
+
     /// <summary>
     /// Create asynchronously a Offer using the OfferCreationDto object. Call the CreateAsync method in gRPC client 
     /// </summary>
@@ -51,7 +53,7 @@ public class OfferLogic : IOfferLogic
         };
 
         var created = await offerDao.CreateAsync(offerToSend);
-        
+
         return created;
     }
 
@@ -59,18 +61,76 @@ public class OfferLogic : IOfferLogic
     /// Getting asynchronously all the offers through the IOfferDao
     /// </summary>
     /// <returns>A Collection of Offers</returns>
-    public async Task<IEnumerable<Offer>> GetAsync()
+    public async Task<IEnumerable<Offer>> GetAsync(SearchOfferParameterDto dto)
     {
+        //get all offers
         var results = await offerDao.GetAsync();
+
+        if (!string.IsNullOrEmpty(dto.NameContains))
+        {
+            results = results.Where(offer => offer.Name.Contains(dto.NameContains, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (dto.Delivery != null && dto.Delivery != false)
+        {
+            results = results.Where(offer => (offer.CollectionOption & CollectionOption.Delivery) != 0);
+        }
+
+        if (dto.PickUp != null && dto.PickUp != false)
+        {
+            results = results.Where(offer => (offer.CollectionOption & CollectionOption.PickUp) != 0);
+        }
+
+        if (dto.PickYO != null && dto.PickYO != false)
+        {
+            results = results.Where(offer => (offer.CollectionOption & CollectionOption.PickYourOwn) != 0);
+        }
+
+        //1.need to check customer's address (get it by username which will be send from the view)
+        //2.then get the farm's address by the farm name in offer
+        //3.remove the offers where the distance is bigger than the distance specified in the dto
+        if (dto.Distance != null && dto.Distance != 0)
+        {
+            List<Offer> offersToRemove = await GetResultsInCorrectDistance(results, dto.Username, dto.Distance);
+            results = results.Except(offersToRemove);
+        }
 
         return results;
     }
-
     public async Task<IEnumerable<Offer>> GetByFarmNameAsync(string farmName)
     {
         var results = await offerDao.GetByFarmNameAsync(farmName);
         return results;
     }
+
+
+    private async Task<List<Offer>> GetResultsInCorrectDistance(IEnumerable<Offer> results, string? dtoUsername,
+        int? dtoDistance)
+    {
+        List<Offer> offersToRemove = new List<Offer>();
+        if (!string.IsNullOrEmpty(dtoUsername))
+        {
+            Customer? customer = await userDao.GetCustomer(dtoUsername);
+
+            foreach (var offer in results)
+            {
+                Farm farm = await farmDao.GetFarmByNameAsync(offer.FarmName);
+                
+                double distance = customer.Address - farm.Address;
+                
+                Console.WriteLine("Offer: " +  offer.Name);
+                Console.WriteLine("Distance: " +  distance);
+                Console.WriteLine("----- -------------------------");
+
+                if (dtoDistance ! <= distance)
+                {
+                    offersToRemove.Add(offer);
+                }
+            }
+        }
+        return offersToRemove;
+    }
+
 
 
     /// <summary>
@@ -80,7 +140,6 @@ public class OfferLogic : IOfferLogic
     /// <exception cref="Exception"></exception>
     private async Task ValidateData(OfferCreationDto dto)
     {
-        
         if (dto.Name.Length > 100)
         {
             throw new Exception("Offer name is too long!");
@@ -95,14 +154,13 @@ public class OfferLogic : IOfferLogic
         {
             throw new Exception("Price must be bigger than 0!");
         }
-        
+
         // get farm by name from dao and check if it exists
         var farm = await farmDao.GetByName(dto.FarmName);
-        
+
         if (farm == null)
         {
             throw new Exception($"Farm {dto.FarmName} does not exist!");
         }
-        
     }
 }

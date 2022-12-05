@@ -1,0 +1,81 @@
+﻿@page "/CustomerFarmsView"
+@using HttpClient.ClientInterfaces
+@using global::Shared.Models
+@using System.Runtime.CompilerServices
+@using HttpClient.ClientImplementations
+@inject IFarmService farmHttpClient;
+
+<div class="text">
+    <h3 class="yourFarmsText">FARMS</h3>
+</div>
+
+@if (farms == null)
+{
+    <p>
+        <em>You don not have farms.</em>
+    </p>
+}
+<div class="d-flex justify-content-around flex-wrap">
+@if (farms != null)
+{
+    <div class="filterRow">
+        <div class="nameLabel"><label >Farm name</label></div>
+        
+        <input class="nameInput" type="text" @bind="nameContains">
+        <button @onclick="Filter">FIND</button>
+    </div>
+    @foreach (var farm in farms)
+        {
+            <a href="CustomerFarmOverview/@farm.Name" class="farm-link">
+                <div class="card mb-3" style="max-width: 400px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="@farm.FarmIcon.AbsoluteUrl" alt="farmImage"/>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <h2 class="card-text">@farm.Name</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+}
+
+</div>
+  
+@code {
+    private IEnumerable<Farm>? farms;
+    private string nameContains = "";
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            farms = await farmHttpClient.GetAllFarmsAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task Filter()
+    {
+        if (string.IsNullOrEmpty(nameContains))
+        {
+            farms = await farmHttpClient.GetAllFarmsAsync();
+                      
+        }
+        else
+        {
+            farms = await farmHttpClient.GetAllFarmsByNameContainsAsync(nameContains);
+                      
+        }
+    }
+
+}
+

@@ -10,6 +10,8 @@ service FarmService{
   rpc GetFarms(Farmer) returns(Farms);
   rpc UpdateFarm(FarmUpdate) returns(Farm);
   rpc GetAllCustomersUncompletedOrder(Text) returns(RepeatedUsername);
+  rpc GetAllFarms(Void) returns(Farms);
+  rpc GetFarmsByName(Text) returns(Farms);
 }
 
 service OfferService{

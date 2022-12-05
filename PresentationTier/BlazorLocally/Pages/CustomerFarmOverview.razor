@@ -1,0 +1,77 @@
+﻿@page "/CustomerFarmOverview/{FarmName}"
+@using HttpClient.ClientInterfaces
+@using global::Shared.Models
+@using global::Shared.DTOs
+@inject IFarmService farmHttpClient;
+@inject IOfferService offerHttpClient;
+@inject NavigationManager navMgr;
+@attribute [Authorize(Roles = "customer")] 
+
+<div id="shape">
+    <div id="circle">
+        <img id="farmImg" src="Img/farming-circle.png" height="180" width="180">
+    </div>
+    <div id="rectangle">
+        <label id="farmName">@FarmName</label>
+    </div>
+</div>
+<div id="status"><h5 id="statusLabel">Status:</h5>
+    <label class="input">@Farm.FarmStatus</label>
+    </div>
+
+@if (offers == null)
+{
+    <p>
+        <em>Loading offers...</em>
+    </p>
+}
+
+@if(offers!=null){
+    <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
+        @foreach (var offer in offers)
+        {
+            <div class="card col-5 m-3">
+                <div class="card-header">
+                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage"/>
+                </div>
+                <div class="card-body d-flex justify-content-between flex-wrap">
+                    <h5 class="col-8">@offer.Name</h5>
+                    <h6 class="col-4 d-flex justify-content-end">Price: @offer.Price dkk</h6>
+                    <span class="col-8">@offer.Description</span>
+                </div>
+            </div>
+            @*<OfferSimple Name="@offer.Name"
+                         Price="@offer.Price" 
+                         Description="@offer.Description" 
+                         ImageUrl="@offer.Image.AbsoluteUrl"
+                         OnClick="@(() => {  })"
+                         DisplayButton="@false"
+            ></OfferSimple>*@
+        }
+    </div>}
+@code {
+    //get the farm from the previous view
+    [Parameter] 
+    public string FarmName {get;set;}
+    private  Farm Farm {get;set;}
+    private string msg = "";
+    private IEnumerable<Offer> offers {get;set;}
+    private string updatedStatus;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Farm = await farmHttpClient.GetFarmByNameAsync(FarmName);
+            Console.WriteLine($"Farm status:       {Farm.FarmStatus}");
+            offers = await offerHttpClient.GetAsync(FarmName);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+    
+
+}

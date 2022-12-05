@@ -10,7 +10,6 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize(Roles = "farmer")]
 
 public class FarmController : LocallyController
 {
@@ -103,6 +102,38 @@ public class FarmController : LocallyController
         {
             Console.WriteLine(e);
             return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpGet("all")]
+    [Authorize]
+    public async Task<IActionResult> GetAllFarms()
+    {
+        try
+        {
+            var created = await farmLogic.GetAllAsync();
+            return Created($"/farms", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("{nameContains}")]
+    [Authorize]
+    public async Task<IActionResult> GetAllFarmsByName([FromRoute]string nameContains)
+    {
+        try
+        {
+            var created = await farmLogic.GetAllByNameAsync(nameContains);
+            return Created($"/farms", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
         }
     }
 

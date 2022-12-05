@@ -15,4 +15,8 @@ public interface IFarmService
 
     Task<ICollection<Farm>?> GetAllFarmsByFarmerAsync();
     Task UpdateAsync(FarmUpdateDto dto);
+
+    Task<ICollection<Farm>?> GetAllFarmsAsync();
+
+    Task<ICollection<Farm>?> GetAllFarmsByNameContainsAsync(string nameContains);
 }

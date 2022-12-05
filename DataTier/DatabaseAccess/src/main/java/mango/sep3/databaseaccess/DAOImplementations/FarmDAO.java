@@ -73,4 +73,14 @@ public class FarmDAO implements FarmDaoInterface
    return orderRepository.findAllByFarmNameAndDoneIsFalse(farmName);
   }
 
+  @Override public Collection<Farm> getAllFarms()
+  {
+    return farmRepository.findAll();
+  }
+
+  @Override public Collection<Farm> getAllFarmsByName(String nameContains)
+  {
+    return farmRepository.findAllByNameContainingIgnoreCase(nameContains);
+  }
+
 }

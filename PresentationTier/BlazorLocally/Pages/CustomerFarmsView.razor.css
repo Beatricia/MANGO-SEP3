@@ -1,0 +1,72 @@
+﻿img {
+    border-radius: 50%;
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+}
+.card-body{
+    text-align: center;
+}
+.yourFarmsText{
+    border-radius: 20px;
+    background: #bcaaa4;
+    padding: 20px;
+    width: 230px;
+    text-align: center;
+    vertical-align: center;
+    margin-bottom: 2%;
+}
+.text{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background: #d7ccc8;
+    transition: all .2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    z-index: 6;
+}
+
+.text-center{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.farm-link{
+    text-decoration: none;
+    color: black;
+}
+
+.filterRow{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    margin-bottom: 5%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.nameInput{
+    width: 10%;
+    margin-right: 2%;
+    margin-left: 7px;
+    background: #d7ccc8;
+    border-color:  #d7ccc8;
+}
+
+.nameLabel{
+    padding-top: 3px;
+}
+
+button{
+    border-radius: 6px;
+}

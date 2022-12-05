@@ -96,6 +96,16 @@ public class FarmLogic : IFarmLogic
     
     }
 
+    public async Task<ICollection<Farm>> GetAllAsync()
+    {
+        return await farmDao.GetAllAsync();
+    }
+
+    public async Task<ICollection<Farm>> GetAllByNameAsync(string nameContains)
+    {
+        return await farmDao.GetAllByNameAsync(nameContains);
+    }
+
 
     /// <inheritdoc/>
     public ICollection<FarmIcon> GetAllIcons() => farmIconDao.AllIcons;

@@ -11,4 +11,6 @@ import java.util.Collection;
 public interface FarmRepository extends JpaRepository<Farm,Long> {
   Farm findByName(String name);
   Collection<Farm> findAllByFarmer(Farmer farmer);
+
+  Collection<Farm> findAllByNameContainingIgnoreCase(String nameContains);
 }

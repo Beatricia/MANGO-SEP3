@@ -58,6 +58,10 @@ service NotificationService{
   rpc DeleteNotification(Notification) returns(Void);
 }
 
+service ReviewService{
+  rpc CreateReview(Review) returns(Review);
+}
+
 message UserAuth{
   string username = 1;
   string hash = 2;
@@ -202,6 +206,13 @@ message Notification{
   int64 id = 1;
   string toUsername = 2;
   string text = 3;
+  int64 createdAt = 4;
+}
+
+message Review{
+  string farmName = 1;
+  string username = 2;
+  string reviewText = 3;
   int64 createdAt = 4;
 }
 

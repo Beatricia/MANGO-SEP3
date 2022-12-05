@@ -36,4 +36,8 @@ public class ServerConfig {
     @Bean public GrpcConverter getGrpcConverter(){
         return new GrpcConverter();
     }
+
+    @Bean public ReviewServiceImpl getReviewServiceImpl(){
+        return new ReviewServiceImpl();
+    }
 }

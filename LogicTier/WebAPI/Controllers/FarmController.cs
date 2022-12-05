@@ -14,10 +14,12 @@ namespace WebAPI.Controllers;
 public class FarmController : LocallyController
 {
     private readonly IFarmLogic farmLogic;
+    private readonly IReviewLogic reviewLogic;
 
-    public FarmController(IFarmLogic farmLogic)
+    public FarmController(IFarmLogic farmLogic, IReviewLogic reviewLogic)
     {
         this.farmLogic = farmLogic;
+        this.reviewLogic = reviewLogic;
     }
     
     /// <summary>
@@ -138,9 +140,18 @@ public class FarmController : LocallyController
     }
 
     [HttpPost("{name:regex([[\\w\\W]]+)}/reviews")]
-    public async Task<IActionResult> PostReview()
+    [Authorize(Roles = "customer")]
+    public async Task<IActionResult> PostReview(string name, ReviewCreationDto dto)
     {
-        return Ok();
+        try
+        {
+            var review = await reviewLogic.CreateReview(name, LoggedInUsername!, dto);
+            return Ok(review);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpGet("{name:regex([[\\w\\W]]+)}/reviews")]

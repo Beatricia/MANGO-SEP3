@@ -55,13 +55,14 @@ public class FarmDAO implements FarmDaoInterface
     return farmRepository.findAllByFarmer(farmer);
   }
 
-  @Override public Farm updateFarm(String name, String status)
+  @Override public Farm updateFarm(String name, String status, String phone)
   {
     Farm farm = farmRepository.findByName(name);
 
     if (!status.isEmpty())
     {
       farm.setDescription(status);
+      farm.setPhone(phone);
       farmRepository.saveAndFlush(farm);
     }
     return farm;

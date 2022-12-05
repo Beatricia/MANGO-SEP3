@@ -130,7 +130,7 @@ import java.util.List;
   @Override public void updateFarm(FarmUpdate request,
       StreamObserver<Farm> responseObserver)
   {
-    mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
+    mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus(), request.getPhone());
 
     responseObserver.onNext(grpcConverter.convertToGrpc(updatedFarm));
     responseObserver.onCompleted();

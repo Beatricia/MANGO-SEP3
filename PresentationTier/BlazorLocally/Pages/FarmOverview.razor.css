@@ -1,6 +1,6 @@
 ﻿#shape{
     overflow: hidden;
-    margin-left: 15em;
+    margin-left: 13%;
 }
 #farmImg{
     padding-top: 17px;
@@ -41,7 +41,7 @@
     overflow: hidden;
     margin-top: -20px;
     float: right;
-    margin-right: 15em;
+    margin-right: 13%;
     clear: both;
 }
 input[type=text] {
@@ -116,7 +116,7 @@ input[type=text] {
 #updateContainer{
     clear: both;
     float: right;
-    margin-right: 15em;
+    margin-right: 13%;
     margin-top: 15px;
 }
 

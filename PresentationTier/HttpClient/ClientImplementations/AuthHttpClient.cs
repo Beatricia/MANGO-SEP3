@@ -58,13 +58,15 @@ public class AuthHttpClient : IAuthService
     }
 
     /// <inheritdoc/>
-    public async Task<User> RegisterAsync(string username, string password, bool isFarmer)
+    public async Task<User> RegisterAsync(string firstName, string lastName, string username, string password, bool isFarmer)
     {
         RegisterDto dto = new RegisterDto()
         {
             Username = username,
             Password = password,
-            IsFarmer = isFarmer
+            IsFarmer = isFarmer,
+            FirstName = firstName,
+            LastName = lastName
         };
         
         

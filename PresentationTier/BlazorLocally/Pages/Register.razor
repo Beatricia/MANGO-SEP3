@@ -16,6 +16,20 @@
             </div>
         </div>
         <div class="row">
+            <div class="row-text">First Name</div>
+            <div class="row-input">
+                <input type="text" @bind="firstName">
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-text">Last Name</div>
+            <div class="row-input">
+                <input type="text" @bind="lastName">
+            </div>
+        </div>
+                       
+                      
+        <div class="row">
             <div class="row-text">Username</div>
             <div class="row-input">
                 <input type="text" @bind="username">
@@ -61,6 +75,8 @@
 
 @code {
     string username = "";
+    string firstName = "";
+    string lastName = "";
     string password = "";
     string repeatPassword = "";
     bool? isFarmer = null;
@@ -92,7 +108,7 @@
 
         try
         {
-            await AuthService.RegisterAsync(username, password, isFarmer.Value);
+            await AuthService.RegisterAsync(firstName, lastName, username, password, isFarmer.Value);
             NavManager.NavigateTo("/Login");
         }
         catch (Exception e)

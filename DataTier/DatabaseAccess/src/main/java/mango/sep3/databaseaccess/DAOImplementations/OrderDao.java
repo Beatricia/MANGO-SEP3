@@ -60,7 +60,9 @@ public class OrderDao implements OrderDaoInterface
     Collection<Order> orders = new ArrayList<>();
 
     System.out.println("username: " + username);
-    if (customerRepository.existsById(username)){
+    if (customerRepository.existsById(username))
+    {
+
       Collection<OrderOffer> orderOffers = orderOfferRepository.findAllByUsername(username);
 
       for (OrderOffer orderOffer: orderOffers)

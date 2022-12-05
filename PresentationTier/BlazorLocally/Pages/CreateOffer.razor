@@ -12,7 +12,7 @@
 <h3>CreateOffer</h3>
 <div class="form d-flex flex-wrap flex-column">
     <div style="color: red">@errorMessage</div>
-    <div class="col-6">
+    <div class="col-6" style="padding-bottom: 2%">
         <label>Product Name <span class="required">*</span></label>
         <input type="text" @bind="productName" required="required"/>
     </div>
@@ -24,12 +24,12 @@
         @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
         <InputFile OnChange="GetImage"></InputFile>
     </div>
-    <div class="col-6">
+    <div class="col-6" style="padding-bottom: 2%">
         <label>Quantity <span class="required">*</span></label>
         <input type="text" @bind="quantity" required="required"/>
-        <div class="col-9 d-flex flex-nowrap">
+        <div class="col-9 d-flex flex-nowrap" style="padding-bottom: 2%">
             <!--dropdown menu-->
-            <div class="dropdown col-2 ms-1">
+            <div class="dropdown col-2 ms-1" style="padding-bottom: 2%">
                 @{
                     var list = new List<string> { "kilogram", "gram", "liter","milliliter", "piece", "bag", "box", "jar" };
                 }
@@ -43,13 +43,13 @@
         </div>
     </div>
     
-    <div class="col-6">
+    <div class="col-6" style="padding-bottom: 2%">
         <label>Price <span class="required">*</span></label>
         <input type="text" @bind="price" required="required"/>
     </div>
 
     <!--radio buttons for delivery option-->
-    <label class="col-6">Delivery Option:</label>
+    <label class="col-6" style="padding-bottom: 2%">Delivery Option:</label>
     <label class="container">Delivery
       <input type="checkbox" @bind="delivery">
       <span class="checkmark"></span>
@@ -64,7 +64,7 @@
     </label>
     
 <!--textarea for description-->
-    <label for="textarea">Description:</label>
+    <label style="padding-top: 2%" for="textarea">Description:</label>
     <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
 
     <!--submit button-->

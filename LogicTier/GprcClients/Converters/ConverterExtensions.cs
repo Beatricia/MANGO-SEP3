@@ -319,14 +319,15 @@ internal static class ConverterExtensions
     {
         return new Order
         {
-            Id = order.Id,
+           // Id = order.Id,
             CollectionOption = ConvertEnumToInt(order.CollectionOption),
             FarmName = order.FarmName,
             IsDone = order.IsDone,
-            OrderOffers = { order.OrderOffers.Select(orderOffer => orderOffer.ToGrpc()) },
+           // OrderOffers = { order.OrderOffers.Select(orderOffer => orderOffer.ToGrpc()) },
             Username = order.Username
         };
     }
+    
     
     #endregion
     

@@ -86,7 +86,7 @@ public class OfferController : ControllerBase
         }
     }
     
-    [HttpGet("farmName"), AllowAnonymous]
+    [HttpGet("{farmName}")]
     public async Task<IActionResult> GetAsync([FromQuery] string farmName)
     {
         // TODO: make this a rest endpoint

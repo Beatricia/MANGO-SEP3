@@ -77,12 +77,21 @@ public class OrderLogic : IOrderLogic
                 ordersToSend.Add(orderToSend);
             }
         }
+
+        foreach (var order in ordersToSend)
+        {
+            Console.WriteLine(order.CollectionOption);
+        }
         await orderDao.CreateOrdersAsync(ordersToSend);
     }
 
     public async Task<IEnumerable<Order>> GetAllOrders(string username)
     {
         var orders = await orderDao.GetAllOrdersAsync(username);
+        foreach (var order in orders)
+        {
+            Console.WriteLine("order delivery: " + order.CollectionOption);
+        }
         return  orders;
     }
 

@@ -23,23 +23,7 @@ public class OrderDaoImpl : IOrderDao
         this.orderService = orderService;
         this.imageDao = imageDao;
     }
-
-    //TODO check if this method is actually needed
-    public async Task CreateOrderOffersAsync(List<Shared.Models.OrderOffer> orderOffers)
-    {
-        /* OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(orderOffers);
-
-        try
-        {
-            await orderService.CreateOrderOffersAsync(orderOffersGrpc);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }*/
-    }
-
+    
 
     public async Task<IEnumerable<Shared.Models.Order>> GetAllOrdersAsync(string username)
     {
@@ -48,7 +32,13 @@ public class OrderDaoImpl : IOrderDao
         try
         {
             Orders orders = await orderService.GetAllOrdersAsync(text);
-            return ConvertOrdersFromGrpc(orders);
+            ICollection<Shared.Models.Order> ordersToReturn = new List<Shared.Models.Order>();
+            foreach (var order in orders.Orders_)
+            {
+                ordersToReturn.Add(order.ToShared(imageDao));
+            }
+
+            return ordersToReturn;
         }
         catch (Exception e)
         {
@@ -60,10 +50,18 @@ public class OrderDaoImpl : IOrderDao
 
     public async Task CreateOrdersAsync(IEnumerable<Shared.Models.Order> orders)
     {
-        var ordersGrpc = ConvertOrdersToGrpc(orders);
+        List<global::Order> ordersGrpc = new List<global::Order>();
+        foreach (var order in orders)
+        {
+            Console.WriteLine("Order: " + order.CollectionOption);
+            ordersGrpc.Add(order.ToGrpc());
+        }
+
+        var ordersToCreate = new Orders();
+        ordersToCreate.Orders_.AddRange(ordersGrpc);
         try
         {
-            await orderService.CreateOrdersAsync(ordersGrpc);
+            await orderService.CreateOrdersAsync(ordersToCreate);
         }
         catch (Exception e)
         {
@@ -142,96 +140,11 @@ public class OrderDaoImpl : IOrderDao
         List<Shared.Models.OrderOffer> listToReturn = new List<Shared.Models.OrderOffer>();
         foreach (var orderOffer in orderOffersList)
         {
-            var item = new Shared.Models.OrderOffer
-            {
-                Id = orderOffer.Id,
-                //CollectionOption = orderOffer.CollectionOption,
-                Offer = ConvertOfferFromGrpc(orderOffer.Offer),
-                Quantity = orderOffer.Quantity,
-                Username = orderOffer.Username,
-                FarmName = orderOffer.Offer.FarmName
-            };
+            var item = orderOffer.ToShared(imageDao);
+            
             listToReturn.Add(item);
         }
 
         return listToReturn;
-    }
-
-    private Shared.Models.Offer ConvertOfferFromGrpc(global::Offer offer)
-    {
-        Shared.Models.Offer offerToReturn = new Shared.Models.Offer
-        {
-            Name = offer.Name,
-            Description = offer.Description,
-            Id = offer.Id,
-            Price = offer.Price,
-            Quantity = offer.Quantity,
-            Unit = offer.Unit,
-           // PickUp = offer.PickUp,
-            //PickYourOwn = offer.PickYourOwn,
-            FarmName = offer.FarmName
-        };
-        return offerToReturn;
-    }
-
-    private IEnumerable<Shared.Models.Order> ConvertOrdersFromGrpc(Orders orders)
-    {
-        IEnumerable<global::Order> ordersList = orders.Orders_;
-        List<Shared.Models.Order> listToReturn = new List<Shared.Models.Order>();
-
-
-        foreach (var order in ordersList)
-        {
-            OrderOffers orderOffers = new OrderOffers
-            {
-                OrderOffers_ = { order.OrderOffers }
-            };
-            List<Shared.Models.OrderOffer> orderOffersList = ConvertOrderOffersFromGrpc(orderOffers).ToList();
-
-            var item = new Shared.Models.Order
-            {
-                Id = order.Id,
-                //CollectionOption = order.CollectionOption,
-                FarmName = order.FarmName,
-                IsDone = order.IsDone,
-                OrderOffers = orderOffersList,
-                Username = order.Username
-            };
-            listToReturn.Add(item);
-        }
-
-        return listToReturn;
-    }
-
-    private Orders ConvertOrdersToGrpc(IEnumerable<Shared.Models.Order> orders)
-    {
-        List<global::Order> ordersListGrpc = new();
-
-        foreach (var order in orders)
-        {
-            // OrderOffers orderOffersGrpc = ConvertOrderOffersToGrpc(order.OrderOffers);
-
-
-            Console.WriteLine("Order");
-            Console.WriteLine("Farm name: " + order.FarmName);
-
-
-            var orderGrpc = new global::Order()
-            {
-                //CollectionOption = order.CollectionOption,
-                FarmName = order.FarmName,
-                IsDone = order.IsDone,
-                Username = order.Username,
-                OrderOffers = { new OrderOffer() },
-            };
-            //  orderGrpc.OrderOffers.AddRange(orderOffersGrpc.OrderOffers_);
-            ordersListGrpc.Add(orderGrpc);
-        }
-
-        Orders ordersToReturn = new()
-        {
-            Orders_ = { ordersListGrpc }
-        };
-        return ordersToReturn;
     }
 }

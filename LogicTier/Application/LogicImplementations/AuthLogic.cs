@@ -24,7 +24,7 @@ public class AuthLogic : IAuthLogic
     {
         string username = dto.Username;
         string passwordPlain = dto.Password;
-        
+
         User? user = await authDao.GetUserAsync(username);
         
         // if user exists
@@ -54,8 +54,8 @@ public class AuthLogic : IAuthLogic
             Farmer farmer = new Farmer
             {
                 Username = dto.Username,
-                LastName = "",
-                FirstName = "",
+                LastName = dto.FirstName,
+                FirstName = dto.LastName,
                 Role = "farmer",
             };
             return await userDao.RegisterFarmer(farmer);
@@ -65,6 +65,8 @@ public class AuthLogic : IAuthLogic
             Customer customer = new Customer()
             {
                 Username = dto.Username,
+                LastName = dto.FirstName,
+                FirstName = dto.LastName,
                 Role = "customer"
             };
 

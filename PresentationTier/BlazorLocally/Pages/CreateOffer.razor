@@ -17,12 +17,12 @@
         <input type="text" @bind="productName" required="required"/>
     </div>
     <!--image-->
-    <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0">
-        <div class=" d-flex flex-column">
-            <img id="image" src="Img/sample-offer.png" alt="default" width="200px" height="auto" class="img col-3 me-4"/>
-            @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
-            <InputFile OnChange="GetImage"></InputFile>
+    <div class="col-3 d-flex flex-column justify-content-end" style="position: absolute; right: 0">
+        <div id="imgDiv">
+            <img id="image" src="Img/sample-offer.png" alt="default" class="img col-3 me-4"/>
         </div>
+        @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
+        <InputFile OnChange="GetImage"></InputFile>
     </div>
     <div class="col-6">
         <label>Quantity <span class="required">*</span></label>

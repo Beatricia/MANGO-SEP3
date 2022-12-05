@@ -106,5 +106,21 @@ public class FarmController : LocallyController
         }
     }
 
+    [HttpPost("{name:regex([[\\w\\W]]+)}/reviews")]
+    public async Task<IActionResult> PostReview()
+    {
+        return Ok();
+    }
     
+    [HttpGet("{name:regex([[\\w\\W]]+)}/reviews")]
+    public async Task<IActionResult> GetReviews()
+    {
+        return Ok();
+    }
+    
+    [HttpPatch("{name:regex([[\\w\\W]]+)}/reviews/{id}")]
+    public async Task<IActionResult> UpdateReview()
+    {
+        return Ok();
+    }
 }

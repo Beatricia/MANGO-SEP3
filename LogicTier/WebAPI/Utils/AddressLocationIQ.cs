@@ -29,7 +29,7 @@ public class AddressLocationIQ : IAddressDao
 
         if (!result.IsSuccessStatusCode)
         {
-            throw new Exception("Could not get coordinates, error " + result.StatusCode);
+            throw new ArgumentException("Could not get coordinates, error " + result.StatusCode);
         }
         
         await using Stream stream = await result.Content.ReadAsStreamAsync(); // get result stream

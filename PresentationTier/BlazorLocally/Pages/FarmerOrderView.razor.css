@@ -1,7 +1,18 @@
 ﻿.title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.titleText{
+    border-radius: 20px;
+    background: rgb(183, 191, 150);
+    padding: 20px;
+    width: 230px;
     text-align: center;
-    margin-bottom: 7%;
-    margin-top: 15px;
+    vertical-align: center;
+    margin-bottom: 4%;
+    font-weight: bold;
 }
 
 label{

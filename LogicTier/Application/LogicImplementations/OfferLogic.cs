@@ -132,22 +132,24 @@ public class OfferLogic : IOfferLogic
     private async Task<List<Offer>> GetResultsInCorrectDistance(IEnumerable<Offer> results, string? dtoUsername,
         int? dtoDistance)
     {
+        if (dtoDistance is null)
+            throw new ArgumentNullException(nameof(dtoDistance));
+
+
         List<Offer> offersToRemove = new List<Offer>();
         if (!string.IsNullOrEmpty(dtoUsername))
         {
             Customer? customer = await userDao.GetCustomer(dtoUsername);
+            if (customer is null)
+                throw new Exception("Customer not found");
 
             foreach (var offer in results)
             {
                 Farm farm = await farmDao.GetFarmByNameAsync(offer.FarmName);
                 
                 double distance = customer.Address - farm.Address;
-                
-                Console.WriteLine("Offer: " +  offer.Name);
-                Console.WriteLine("Distance: " +  distance);
-                Console.WriteLine("-------------------------------");
 
-                if (dtoDistance ! <= distance)
+                if (dtoDistance <= distance)
                 {
                     offersToRemove.Add(offer);
                 }

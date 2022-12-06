@@ -20,6 +20,8 @@ public interface IFarmService
 
     Task<ICollection<Farm>?> GetAllFarmsByNameContainsAsync(string nameContains);
     
+    Task DisableAsync(string farmName);
+    
     /// <summary>
     /// Creates a new review for a farm
     /// </summary>
@@ -27,7 +29,8 @@ public interface IFarmService
     /// <returns></returns>
     Task<Review> CreateReviewAsync(string farmName, ReviewCreationDto dto);
     
-    Task DisableAsync(string farmName);
+    Task<Review> EditReviewAsync(long reviewId, string farmName, UpdateReviewDto dto);
+    
     
     Task<ICollection<Review>> GetAllReviews(string farmName);
 }

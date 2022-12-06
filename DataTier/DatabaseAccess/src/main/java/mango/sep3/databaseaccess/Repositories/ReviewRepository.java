@@ -11,4 +11,5 @@ import java.util.Collection;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     boolean existsByCustomerUsernameAndFarmName(String customerUsername, String farmName);
     Collection<Review> findAllByFarm(Farm farm);
+    Review findByCustomerUsernameAndFarmName(String customerUsername, String farmName);
 }

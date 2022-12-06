@@ -170,7 +170,7 @@ public class FarmController : LocallyController
     {
         try
         {
-            var review = await reviewLogic.CreateReview(name, LoggedInUsername!, dto);
+            var review = await reviewLogic.CreateReviewAsync(name, LoggedInUsername!, dto);
             return Ok(review);
         }
         catch (Exception e)
@@ -184,7 +184,7 @@ public class FarmController : LocallyController
     {
         try
         {
-            var reviews = await reviewLogic.GetAllReviewsByFarm(farmName);
+            var reviews = await reviewLogic.GetAllReviewsByFarmAsync(farmName);
             return Ok(reviews);
         }
         catch (Exception e)
@@ -194,9 +194,13 @@ public class FarmController : LocallyController
         }
     }
     
-    [HttpPatch("{name:regex([[\\w\\W]]+)}/reviews/{id}")]
-    public async Task<IActionResult> UpdateReview()
+    [HttpPatch("{name:regex([[\\w\\W]]+)}/reviews/{id:long}")]
+    [Authorize(Roles = "customer")]
+    public async Task<IActionResult> UpdateReview([FromRoute] long id, [FromBody] UpdateReviewDto review)
     {
-        return Ok();
+        review.Username = LoggedInUsername!;
+        review.Id = id;
+        var reviewEdited = await reviewLogic.EditReviewAsync(review);
+        return Ok(reviewEdited);
     }
 }

@@ -150,6 +150,25 @@ public class FarmHttpClient : IFarmService
         return review;
     }
 
+    public async Task<Review> EditReviewAsync(long reviewId, string farmName, UpdateReviewDto dto)
+    {
+        var requestContent = JsonContent.Create(dto);
+        HttpResponseMessage response = await Client.PatchAsync(new Uri($"/farm/{farmName}/reviews/{reviewId}"), requestContent);
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+        
+        Review review = JsonSerializer.Deserialize<Review>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return review;
+    }
+
     public async Task DisableAsync(string farmName)
     {
         StringContent body = new StringContent("", Encoding.UTF8, "application/json");

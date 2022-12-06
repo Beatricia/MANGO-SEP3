@@ -12,7 +12,14 @@ public interface IReviewLogic
     /// <param name="username"></param>
     /// <param name="reviewCreationDto"></param>
     /// <returns></returns>
-    public Task<Review> CreateReview(string farmName, string username, ReviewCreationDto reviewCreationDto);
+    public Task<Review> CreateReviewAsync(string farmName, string username, ReviewCreationDto reviewCreationDto);
 
-    Task<ICollection<Review>> GetAllReviewsByFarm(string farmName);
+    Task<ICollection<Review>> GetAllReviewsByFarmAsync(string farmName);
+
+    /// <summary>
+    /// Edits an already existing review's text
+    /// </summary>
+    /// <param name="review"></param>
+    /// <returns></returns>
+    public Task<Review> EditReviewAsync(UpdateReviewDto review);
 }

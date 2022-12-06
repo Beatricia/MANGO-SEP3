@@ -18,6 +18,11 @@ internal static class ConverterExtensions
         return new Id { Id_ = id };
     }
 
+    public static Id64 ToGrpc(this long id)
+    {
+        return new Id64 { Id = id };
+    }
+    
     #endregion
     
     #region Text
@@ -389,6 +394,7 @@ internal static class ConverterExtensions
     {
         return new Shared.Models.Review
         {
+            Id = review.Id,
             FarmName = review.FarmName,
             Date = new DateTime(review.CreatedAt),
             WrittenBy = review.Username,
@@ -400,6 +406,7 @@ internal static class ConverterExtensions
     {
         return new Review
         {
+            Id = review.Id,
             FarmName = review.FarmName,
             CreatedAt = review.Date.Ticks,
             Username = review.WrittenBy,

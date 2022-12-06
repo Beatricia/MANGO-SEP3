@@ -1,5 +1,6 @@
 ﻿@page "/CustomerFarmOverview/{FarmName}"
 @using HttpClient.ClientInterfaces
+@using Components
 @using global::Shared.Models
 @using global::Shared.DTOs
 @inject IFarmService farmHttpClient;
@@ -29,7 +30,6 @@
     </div>
     </div>
 </div>
-
 @if (offers == null)
 {
     <p>

@@ -16,7 +16,7 @@ public class ReviewLogic : IReviewLogic
         this.farmDao = farmDao;
     }
     
-    public async Task<Review> CreateReview(string farmName, string username, ReviewCreationDto reviewCreationDto)
+    public async Task<Review> CreateReviewAsync(string farmName, string username, ReviewCreationDto reviewCreationDto)
     {
         var farm = await farmDao.GetFarmByNameAsync(farmName);
         
@@ -34,7 +34,7 @@ public class ReviewLogic : IReviewLogic
         return await reviewDao.CreateReviewAsync(review);
     }
 
-    public async Task<ICollection<Review>> GetAllReviewsByFarm(string farmName)
+    public async Task<ICollection<Review>> GetAllReviewsByFarmAsync(string farmName)
     {
         var farm = await farmDao.GetFarmByNameAsync(farmName);
         
@@ -43,5 +43,16 @@ public class ReviewLogic : IReviewLogic
 
         var result = await reviewDao.GetReviewsByFarmAsync(farm);
         return result;
+    }
+
+    public async Task<Review> EditReviewAsync(UpdateReviewDto review)
+    {
+        var reviewToEdit = await reviewDao.GetReviewByIdAsync(review.Id);
+        
+        if(reviewToEdit.WrittenBy != review.Username)
+            throw new Exception("This is not your review");
+        
+        reviewToEdit.Content = review.UpdatedReview;
+        return await reviewDao.UpdateReviewAsync(reviewToEdit);
     }
 }

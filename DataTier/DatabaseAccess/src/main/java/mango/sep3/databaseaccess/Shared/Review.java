@@ -59,4 +59,12 @@ public class Review {
     public void setFarm(Farm farm) {
         this.farm = farm;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

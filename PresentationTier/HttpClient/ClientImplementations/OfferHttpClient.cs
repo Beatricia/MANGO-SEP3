@@ -106,7 +106,12 @@ public class OfferHttpClient : IOfferService
         })!;
         return offers;
     }
-    
+
+    public Task DisableAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     private string ConstructQuery(string? username , int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)
     {
         string query = "";

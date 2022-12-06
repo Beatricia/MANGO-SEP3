@@ -397,6 +397,7 @@ public class GrpcConverter {
 
     public Review convertToGrpc(mango.sep3.databaseaccess.Shared.Review review) {
         return Review.newBuilder()
+                .setId(review.getId())
                 .setFarmName(review.getFarm().getName())
                 .setUsername(review.getCustomer().getUsername())
                 .setCreatedAt(review.getCreatedAt())
@@ -407,6 +408,7 @@ public class GrpcConverter {
     public mango.sep3.databaseaccess.Shared.Review convertToShared(Review review) {
         var review1 = new mango.sep3.databaseaccess.Shared.Review();
 
+        review1.setId(review.getId());
         var farm = farmDaoInterface.getFarmByName(review.getFarmName());
         review1.setFarm(farm);
         var customer = userDaoInterface.getCustomer(review.getUsername());

@@ -6,6 +6,10 @@
 public class Review
 {
     /// <summary>
+    /// Id of the review.
+    /// </summary>
+    public long Id { get; set; }
+    /// <summary>
     /// Name of the farm the review was given for
     /// </summary>
     public string FarmName { get; set; }

@@ -12,11 +12,6 @@ public class ReviewDaoImpl : IReviewDao
         this.client = client;
     }
 
-    public Task<List<Shared.Models.Review>> GetReviewsByOfferIdAsync(string farmName)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<Shared.Models.Review> CreateReviewAsync(Shared.Models.Review review)
     {
         try
@@ -30,9 +25,10 @@ public class ReviewDaoImpl : IReviewDao
         }
     }
 
-    public Task<Shared.Models.Review> UpdateReviewAsync(Shared.Models.Review review)
+    public async Task<Shared.Models.Review> UpdateReviewAsync(Shared.Models.Review review)
     {
-        throw new NotImplementedException();
+       var grpcReview = await client.EditReviewAsync(review.ToGrpc());
+       return grpcReview.ToShared();
     }
 
     public async Task<ICollection<Shared.Models.Review>> GetReviewsByFarmAsync(Shared.Models.Farm farm)
@@ -57,5 +53,11 @@ public class ReviewDaoImpl : IReviewDao
 
             Console.WriteLine("The list: "+list);
             return list;
+    }
+
+    public async Task<Shared.Models.Review> GetReviewByIdAsync(long id)
+    {
+        var grpcReview = await client.GetReviewByIdAsync(id.ToGrpc());
+        return grpcReview.ToShared();
     }
 }

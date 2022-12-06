@@ -4,12 +4,6 @@ namespace Application.DAOInterfaces;
 
 public interface IReviewDao
 {
-    /// <summary>
-    /// Get reviews by offer id
-    /// </summary>
-    /// <param name="offerId"></param>
-    /// <returns></returns>
-    Task<List<Review>> GetReviewsByOfferIdAsync(string farmName);
     
     /// <summary>
     /// Creates a review for an offer
@@ -26,4 +20,11 @@ public interface IReviewDao
     Task<Review> UpdateReviewAsync(Review review);
 
     Task<ICollection<Review>> GetReviewsByFarmAsync(Farm farm);
+    
+    /// <summary>
+    /// Gets a review by its id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<Review> GetReviewByIdAsync(long id);
 }

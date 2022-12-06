@@ -16,16 +16,16 @@
             @if (currentUserReview is not null)
             {
                 <div class="card">
-                    <div class="review-edit edited">
+                    <div class="review-edit @(isEdited ? "edited" : "")">
                         <div class="info"><span>@CurrentUser</span> • <span class="date">@GetReviewTimeStamp(currentUserReview.Date)</span></div>
                         <div class="content">
                             <label>
-                                <textarea class="cool-hover-wheel" placeholder="Share your opinion about the farm">
+                                <textarea @bind="editedReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm">
                                     @currentUserReview.Content
                                 </textarea>
                             </label>
                         </div>
-                        <button class="submit">Done</button>
+                        <button class="submit" @onclick="SubmitEditedReview">Done</button>
                     </div>
                 </div>
             }
@@ -34,7 +34,7 @@
                 <div class="card">
                     <div class="review-create">
                         <label>
-                            <textarea @bind="newReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
+                            <textarea @onchange="ReviewEdited" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
                         </label>
 
                         <button class="submit" @onclick="CreateReview">Submit</button>
@@ -77,18 +77,43 @@
     
     
     private string newReviewContent = "";
-    
+    private string editedReviewContent = "";
+    private bool isEdited = false;
 
     protected override async Task OnInitializedAsync()
     {
-        reviews = await FarmService.GetAllReviews(FarmName);
-        currentUserReview = reviews.FirstOrDefault(r => r.WrittenBy.Equals(CurrentUser));
+        var reviewsTemp = await FarmService.GetAllReviews(FarmName);
+        currentUserReview = reviewsTemp.FirstOrDefault(r => r.WrittenBy.Equals(CurrentUser));
         if (currentUserReview is not null)
-        {
-            reviews.Remove(currentUserReview);
-        }
+            reviewsTemp.Remove(currentUserReview);
+        
+        reviews = reviewsTemp;
     }
 
+    void ReviewEdited(ChangeEventArgs e)
+    {
+        var value = (string?)e.Value;
+        if (value is null)
+            value = "";
+        
+        editedReviewContent = value;
+        isEdited = value != currentUserReview!.Content;
+    }
+
+    async Task SubmitEditedReview()
+    {
+        if(currentUserReview is not { } review)
+        {
+            throw new Exception("Unexpected error");
+        }
+
+        await FarmService.EditReviewAsync(review.Id, review.FarmName, new UpdateReviewDto
+        {
+            Username = review.WrittenBy,
+            UpdatedReview = editedReviewContent,
+            Id = review.Id
+        });
+    }
 
     async Task CreateReview()
     {

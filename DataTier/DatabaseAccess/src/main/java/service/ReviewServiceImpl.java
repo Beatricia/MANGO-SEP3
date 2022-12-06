@@ -3,6 +3,7 @@ package service;
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.ReviewDaoInterface;
+import mango.sep3.databaseaccess.protobuf.Id64;
 import mango.sep3.databaseaccess.protobuf.Review;
 import mango.sep3.databaseaccess.protobuf.ReviewServiceGrpc;
 import mango.sep3.databaseaccess.protobuf.Reviews;
@@ -39,6 +40,16 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
     }
 
     @Override
+    public void editReview(Review request, StreamObserver<Review> responseObserver) {
+        var sharedReview = grpcConverter.convertToShared(request);
+        var saved = reviewDaoInterface.editReview(sharedReview);
+
+        var savedGrpcReview = grpcConverter.convertToGrpc(saved);
+        responseObserver.onNext(savedGrpcReview);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void getReviewsByFarm(mango.sep3.databaseaccess.protobuf.Farm request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Reviews> responseObserver) {
         try{
@@ -62,4 +73,11 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
         }
     }
 
+    @Override
+    public void getReviewById(Id64 request, StreamObserver<Review> responseObserver) {
+        var review = reviewDaoInterface.getReviewById(request.getId());
+        var savedGrpcReview = grpcConverter.convertToGrpc(review);
+        responseObserver.onNext(savedGrpcReview);
+        responseObserver.onCompleted();
+    }
 }

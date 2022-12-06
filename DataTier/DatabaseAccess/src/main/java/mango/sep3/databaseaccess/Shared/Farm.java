@@ -1,5 +1,7 @@
 package mango.sep3.databaseaccess.Shared;
 
+import org.checkerframework.common.aliasing.qual.Unique;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;

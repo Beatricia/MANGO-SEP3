@@ -108,7 +108,16 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
     responseObserver.onCompleted();
   }
 
-   public void getById(Id request,
+  @Override public void updateCartOffer(CartOfferUpdate request,
+      StreamObserver<Void> responseObserver)
+  {
+    cartOfferDAO.updateCartOffer(request.getId(), request.getQuantity());
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+  }
+
+  public void getById(Id request,
       StreamObserver<CartOffer> responseObserver) {
       CartItem cartItem = cartOfferDAO.getById(request.getId());
 

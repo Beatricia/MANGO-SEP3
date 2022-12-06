@@ -15,4 +15,6 @@ public interface CartOfferInterface
   CartItem getById(int id);
   void deleteCartOffer(int id);
   void deleteAllByOfferId(Offer offerId);
+
+  void updateCartOffer(int cartOfferId, int quantity);
 }

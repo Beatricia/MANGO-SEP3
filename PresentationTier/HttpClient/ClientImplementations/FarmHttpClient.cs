@@ -32,7 +32,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<Farm> GetFarmByNameAsync(string farmName)
     {
-        HttpResponseMessage response = await Client.GetAsync($"/farm?farmName={farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"/farm/{farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

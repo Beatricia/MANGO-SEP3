@@ -87,7 +87,7 @@ public class OfferController : ControllerBase
     }
     
     [HttpGet("{farmName}")]
-    public async Task<IActionResult> GetAsync([FromQuery] string farmName)
+    public async Task<IActionResult> GetAsync([FromRoute] string farmName)
     {
         // TODO: make this a rest endpoint
         try

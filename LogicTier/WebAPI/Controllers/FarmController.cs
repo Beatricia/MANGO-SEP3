@@ -129,8 +129,12 @@ public class FarmController : LocallyController
     {
         try
         {
-            var created = await farmLogic.GetAllByNameAsync(nameContains);
-            return Created($"/farms", created);
+            var farms = await farmLogic.GetAllByNameAsync(nameContains);
+            
+            if(farms.Any())
+                return Ok(farms.First());
+            
+            return NotFound();
         }
         catch (Exception e)
         {

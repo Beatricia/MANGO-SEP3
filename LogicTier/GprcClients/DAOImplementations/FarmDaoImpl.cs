@@ -123,6 +123,16 @@ public class FarmDaoImpl : IFarmDao
         return list;
     }
 
+    public async Task DisableAsync(string farmName)
+    {
+        var text = new Text
+        {
+            Text_ = farmName
+        };   
+
+        await farmServiceClient.DisableFarmByNameAsync(text);
+    }
+
 
     public async Task<Shared.Models.Farm?> GetByName(string name)
     {

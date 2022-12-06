@@ -39,6 +39,9 @@ public class Farm implements Serializable
     @Column(name = "iconpath")
     private String iconPath;
 
+    @Column(name = "isDisabled")
+    private boolean isDisabled = false;
+
     public Farm()
     {}
 
@@ -152,5 +155,13 @@ public class Farm implements Serializable
 
     public void setIconPath(String iconPath) {
         this.iconPath = iconPath;
+    }
+
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
     }
 }

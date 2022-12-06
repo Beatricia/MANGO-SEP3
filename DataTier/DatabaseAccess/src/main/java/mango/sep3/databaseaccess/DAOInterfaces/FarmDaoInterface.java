@@ -17,4 +17,6 @@ public interface FarmDaoInterface
 
   Collection<Farm> getAllFarms();
   Collection<Farm> getAllFarmsByName(String nameContains);
+
+  void disableFarmById(String farmName);
 }

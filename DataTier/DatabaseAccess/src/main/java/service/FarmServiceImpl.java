@@ -188,4 +188,14 @@ import java.util.List;
     responseObserver.onNext(response.build());
     responseObserver.onCompleted();
   }
+
+  @Override
+  public void disableFarmByName(Text request, StreamObserver<Void> responseObserver) {
+
+
+    farmDAO.disableFarmById(request.getText());
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+  }
 }

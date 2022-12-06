@@ -12,13 +12,15 @@ public class FarmLogic : IFarmLogic
     private IFarmDao farmDao;
     private INotificationLogic notificationLogic;
     private IAddressDao addressDao;
+    private IOfferLogic offerLogic;
 
-    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic, IAddressDao addressDao)
+    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic, IAddressDao addressDao, IOfferLogic offerLogic)
     {
         this.farmIconDao = farmIconDao;
         this.farmDao = farmDao;
         this.notificationLogic = notificationLogic;
         this.addressDao = addressDao;
+        this.offerLogic = offerLogic;
     }
     
     /// <summary>
@@ -104,6 +106,32 @@ public class FarmLogic : IFarmLogic
     public async Task<ICollection<Farm>> GetAllByNameAsync(string nameContains)
     {
         return await farmDao.GetAllByNameAsync(nameContains);
+    }
+
+    /// <summary>
+    /// Disables a farm by setting its status to disabled and also called method in offerLogic to disable all offers from that farm
+    /// </summary>
+    /// <param name="farmName">Name of the farmer to be disabled</param>
+    /// <returns></returns>
+    public async Task DisableAsync(string farmName)
+    {
+        try
+        {
+            //disables farm
+            await farmDao.DisableAsync(farmName);
+            
+            //disables all offers from that farm
+            IEnumerable<Offer> farmOffers = await offerLogic.GetByFarmNameAsync(farmName);
+            foreach (var offer in farmOffers)
+            {
+                await offerLogic.DisableAsync(offer.Id);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
 

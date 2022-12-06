@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.DTOs;
+using Shared.Models;
 
 namespace Application.DAOInterfaces;
 
@@ -10,4 +11,5 @@ public interface ICartDao
     public Task<CartOffer?> GetByIdAsync(int id);
     public Task DeleteCartOfferAsync (int id);
     public Task DeleteAllByOfferIdAsync(int offerId);
+    Task UpdateAsync(UpdateCartItemDto dto);
 }

@@ -60,7 +60,6 @@
                         
                         let ignore = filename === "blazor.boot.json" && !checkIfAllLoaded(numObject);
                         
-                        console.log(`Loaded ${filename} (${loadedCount}/${totalCount}) ${numObject.num}%`);
                         setPercentage(numObject.num);
                     });
 

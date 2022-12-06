@@ -10,7 +10,7 @@ import java.util.Collection;
 @Repository
 public interface FarmRepository extends JpaRepository<Farm,Long> {
   Farm findByName(String name);
-  Collection<Farm> findAllByFarmer(Farmer farmer);
+  Collection<Farm> findAllByFarmerAndIsDisabled(Farmer farmer, boolean isDisabled);
 
   Collection<Farm> findAllByNameContainingIgnoreCase(String nameContains);
 }

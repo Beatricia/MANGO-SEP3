@@ -16,15 +16,15 @@
     </div>
 </div>
 <div id="status">
-    <h5 id="statusLabel">Status:</h5>
-    <label id="statusText" >@Farm.FarmStatus</label>
-</div>
+       <h5 id="statusLabel">Status:</h5>
+    <label id="statusText" >@Farm?.FarmStatus</label>
+    </div>
 <div id="updateContainer">
     <div class="container">
     <div class="row">
         <div class="col-4" id="phone">
             <p id="phoneLabel">Phone number:</p>
-            <label id="phoneText" >@Farm.Phone</label>
+            <label id="phoneText" >@Farm?.Phone</label>
         </div>
     </div>
     </div>
@@ -42,9 +42,9 @@
     <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
         @foreach (var offer in offers)
         {
-            <div class="card col-5 m-3">
+            <div class="card col-5 m-3 position-relative">
                 <div class="card-header">
-                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage"/>
+                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage" class="center card-img"/>
                 </div>
                 <div class="card-body d-flex justify-content-between flex-wrap">
                     <h5 class="col-8">@offer.Name</h5>
@@ -71,13 +71,13 @@
     private  Farm Farm {get;set;}
     private string msg = "";
     private IEnumerable<Offer> offers {get;set;}
-    
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Farm = await farmHttpClient.GetFarmByNameAsync(FarmName);
-            Console.WriteLine($"Farm status:       {Farm.FarmStatus}");
+            Console.WriteLine($"Farm name:       {Farm.Name}");
             offers = await offerHttpClient.GetAsync(FarmName);
         }
         catch (Exception e)

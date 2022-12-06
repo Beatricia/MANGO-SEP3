@@ -62,11 +62,15 @@ public class AuthLogic : IAuthLogic
         }
         else
         {
+            Address address = new Address(){Street = dto.Street, City = dto.City, ZIP = dto.ZIP};
+            
             Customer customer = new Customer()
             {
                 Username = dto.Username,
                 LastName = dto.FirstName,
                 FirstName = dto.LastName,
+                Address = address,
+                Phone = dto.PhoneNumber,
                 Role = "customer"
             };
 

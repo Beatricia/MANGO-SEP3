@@ -101,4 +101,24 @@ public class OfferController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    /// <summary>
+    /// The method asynchronously disables an Offer object.
+    /// </summary>
+    /// <param name="id">An id of the offer to be disabled</param>
+    /// <returns>Returns Action result e.g. Ok if request was completed</returns>
+    [HttpPatch("{id:int}"), AllowAnonymous]
+    public async Task<ActionResult> DisableAsync([FromRoute] int id)
+    {
+        try
+        {
+            await offerLogic.DisableAsync(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

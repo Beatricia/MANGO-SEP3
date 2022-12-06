@@ -9,4 +9,5 @@ public interface ICartDao
     public Task DeleteAllCartOffersAsync(string username);
     public Task<CartOffer?> GetByIdAsync(int id);
     public Task DeleteCartOfferAsync (int id);
+    public Task DeleteAllByOfferIdAsync(int offerId);
 }

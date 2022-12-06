@@ -1,0 +1,179 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #e0e0e0;
+    padding: 200px 0 0 100px;
+    font-family: Arial, serif;
+}
+
+.review-wrapper {
+    width: 120px;
+    height: 30px;
+    position: relative;
+}
+.review-wrapper .review-title {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+    font-weight: 600;
+}
+.review-wrapper .review-extendable {
+    position: absolute;
+    height: fit-content;
+    max-height: 30px;
+    width: 100%;
+    background-color: #fafaf7;
+    border: #fafaf7 solid;
+    border-width: 5px 3px 5px 3px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: width 300ms, max-height 300ms, transform 300ms, box-shadow 300ms;
+}
+.review-wrapper:hover .review-extendable {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+    width: 400px;
+    transform: translateY(-100px) translateX(-50px);
+    box-shadow: 2px 2px 30px 2px #545454;
+}
+.review-wrapper:hover .reviews {
+    visibility: visible;
+    opacity: 1;
+    height: fit-content;
+    transition-delay: 100ms;
+    margin-top: 10px;
+}
+.review-wrapper .reviews {
+    visibility: hidden;
+    opacity: 0;
+    width: 95%;
+    height: 0;
+    transition: opacity 200ms, visibility 200ms, margin-top 200ms;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.review-wrapper .reviews .card {
+    width: 100%;
+    height: fit-content;
+    background: #fff;
+    box-shadow: 2px 2px 2px #e8e8e8;
+    border-radius: 5px;
+    transition: background-color 150ms, box-shadow 150ms, transform 150ms;
+    overflow: hidden;
+}
+.review-wrapper .reviews .card:hover {
+    box-shadow: 2px 2px 5px 1px #cbcbcb;
+    transform: translateY(-1px);
+}
+.review-wrapper .review-edit, .review-wrapper .review-create {
+    position: relative;
+}
+.review-wrapper .review-edit .submit, .review-wrapper .review-create .submit {
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    background-color: #fff;
+    bottom: 10px;
+    right: 10px;
+    font-size: 13px;
+    border: none;
+    border-radius: 3px;
+    transition: background-color 100ms;
+    cursor: pointer;
+}
+.review-wrapper .review-edit .submit:hover, .review-wrapper .review-create .submit:hover {
+    background-color: #d3d4d7;
+}
+.review-wrapper .review, .review-wrapper .review-edit {
+    padding: 7px;
+}
+.review-wrapper .review .info, .review-wrapper .review-edit .info {
+    font-size: 16px;
+    color: #4f4f4f;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+.review-wrapper .review .info .date, .review-wrapper .review-edit .info .date {
+    color: gray;
+}
+.review-wrapper .review .content {
+    text-align: justify;
+    font-size: 15px;
+}
+.review-wrapper .review-create {
+    width: 100%;
+    height: 100px;
+}
+.review-wrapper .review-create textarea {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    resize: none;
+    padding: 7px;
+    outline: none;
+}
+.review-wrapper .review-create textarea:focus {
+    box-shadow: inset 1px 1px 4px #cccccc;
+}
+.review-wrapper .review-edit .content {
+    width: 100%;
+}
+.review-wrapper .review-edit .content label, .review-wrapper .review-edit .content textarea {
+    width: 100%;
+}
+.review-wrapper .review-edit .content textarea {
+    outline: none;
+    border: none;
+    height: 100px;
+    resize: none;
+    border-radius: 5px;
+    padding: 4px;
+}
+.review-wrapper .review-edit .content textarea:focus {
+    background-color: #efefef;
+}
+.review-wrapper .review-edit .submit {
+    visibility: hidden;
+    opacity: 0;
+    bottom: 15px;
+    right: 15px;
+    transition: opacity 300ms, visibility 300ms;
+    background: transparent;
+}
+.review-wrapper .review-edit.edited .submit {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0ms;
+}
+
+.cool-hover-wheel {
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+}
+.cool-hover-wheel::-webkit-scrollbar {
+    width: 5px;
+}
+.cool-hover-wheel::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+.cool-hover-wheel::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #d9d9d9;
+}
+.cool-hover-wheel::-webkit-scrollbar-thumb:hover {
+    background: #b7b7b7;
+}
+
+/*# sourceMappingURL=form.css.map */

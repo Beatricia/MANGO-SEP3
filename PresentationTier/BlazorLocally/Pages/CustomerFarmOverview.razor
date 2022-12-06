@@ -1,11 +1,11 @@
-﻿@page "/FarmOverview/{FarmName}"
-@using global::Shared.Models
+﻿@page "/CustomerFarmOverview/{FarmName}"
 @using HttpClient.ClientInterfaces
+@using global::Shared.Models
 @using global::Shared.DTOs
 @inject IFarmService farmHttpClient;
 @inject IOfferService offerHttpClient;
 @inject NavigationManager navMgr;
-@attribute [Authorize(Roles = "farmer")] 
+@attribute [Authorize(Roles = "customer")] 
 
 <div id="shape">
     <div id="circle">
@@ -15,25 +15,9 @@
         <label id="farmName">@FarmName</label>
     </div>
 </div>
-<div id="status">
-    <h5 id="statusLabel">Status:</h5>
-    <input type="text"  id="statusText" @bind="updatedStatus" placeholder="@Farm.FarmStatus">
-</div>
-<div id="updateContainer">
-    <div class="container">
-    <div class="row">
-        <div class="col-4" id="phone">
-            <p id="phoneLabel">Phone number:</p>
-            <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm.Phone">
-        </div>
-        <div class="col-sm-2 col-sm-offset-3">
-            <AuthorizeView Roles="farmer">
-                <button id="updateButton" @onclick="updateFarm">Update</button>
-            </AuthorizeView>
-        </div>
+<div id="status"><h5 id="statusLabel">Status:</h5>
+    <label class="input">@Farm.FarmStatus</label>
     </div>
-</div>
-</div>
 
 @if (offers == null)
 {
@@ -42,14 +26,13 @@
     </p>
 }
 
-@if (offers != null)
-{
+@if(offers!=null){
     <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
         @foreach (var offer in offers)
         {
             <div class="card col-5 m-3">
                 <div class="card-header">
-                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage" class="center card-img"/>
+                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage"/>
                 </div>
                 <div class="card-body d-flex justify-content-between flex-wrap">
                     <h5 class="col-8">@offer.Name</h5>
@@ -65,30 +48,22 @@
                          DisplayButton="@false"
             ></OfferSimple>*@
         }
-    </div>
-}
-<a href="CreateOffer/@FarmName">
-    <div class="buttonContainer">
-        <button id="addButton">Add Offer</button>
-    </div>
-</a>
-<span>@msg</span>
-
+    </div>}
 @code {
     //get the farm from the previous view
-    [Parameter]
-    public string FarmName { get; set; }
-    private Farm Farm { get; set; }
-    private IEnumerable<Offer> offers { get; set; }
+    [Parameter] 
+    public string FarmName {get;set;}
+    private  Farm Farm {get;set;}
+    private string msg = "";
+    private IEnumerable<Offer> offers {get;set;}
     private string updatedStatus;
-    private string updatedPhone;
-    private string msg;
-
+    
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Farm = await farmHttpClient.GetFarmByNameAsync(FarmName);
+            Console.WriteLine($"Farm status:       {Farm.FarmStatus}");
             offers = await offerHttpClient.GetAsync(FarmName);
         }
         catch (Exception e)
@@ -97,27 +72,6 @@
             msg = e.Message;
         }
     }
-
-
-    private async Task updateFarm()
-    {
-        var dto = new FarmUpdateDto
-        {
-            FarmStatus = updatedStatus,
-            FarmPhone = updatedPhone,
-            Name = FarmName,
-        };
-
-        try
-        {
-            await farmHttpClient.UpdateAsync(dto);
-            navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            msg = e.Message;
-        }
-    }
+    
 
 }

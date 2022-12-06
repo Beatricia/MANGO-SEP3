@@ -89,7 +89,7 @@ public class OfferHttpClient : IOfferService
     /// <exception cref="Exception"></exception>
     public async Task<ICollection<Offer>> GetAsync(string farmName)
     {
-        HttpResponseMessage response = await Client.GetAsync($"offer/farmName?farmName={farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"/Offer/{farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

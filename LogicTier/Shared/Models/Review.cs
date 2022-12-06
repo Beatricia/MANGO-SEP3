@@ -6,9 +6,9 @@
 public class Review
 {
     /// <summary>
-    /// Id of the offer the review was given for
+    /// Name of the farm the review was given for
     /// </summary>
-    public int OfferId { get; set; }
+    public string FarmName { get; set; }
     /// <summary>
     /// Username of the user who gave the review
     /// </summary>

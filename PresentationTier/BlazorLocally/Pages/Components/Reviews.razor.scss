@@ -1,0 +1,236 @@
+html, body{
+  height: 100%;
+}
+
+body{
+  background-color: #e0e0e0;
+  padding: 200px 0 0 100px;
+  font-family: Arial, serif;
+}
+
+
+.review-wrapper{
+  $wrapper-height: 30px;
+
+  width: 120px;
+  height: $wrapper-height;
+
+  position: relative;
+
+  .review-title{
+    height: $wrapper-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+    font-weight: 600;
+  }
+
+  .review-extendable{
+    position: absolute;
+    height: fit-content;
+    max-height: $wrapper-height;
+    width: 100%;
+    background-color: #fafaf7;
+    border: #fafaf7 solid;
+    border-width: 5px 3px 5px 3px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    $animation-duration: 300ms;
+    transition: width $animation-duration,
+    max-height $animation-duration,
+    transform $animation-duration,
+    box-shadow $animation-duration;
+  }
+
+  &:hover{
+    .review-extendable{
+      max-height: 400px;
+      overflow-y: auto;
+      padding-bottom: 10px;
+      width: 400px;
+      transform: translateY(-100px) translateX(-50px);
+      box-shadow: 2px 2px 30px 2px #545454;
+    }
+
+    .reviews{
+      visibility: visible;
+      opacity: 1;
+      height: fit-content;
+      transition-delay: 100ms;
+      margin-top: 10px;
+    }
+  }
+
+
+
+
+  .reviews{
+    visibility: hidden;
+    opacity: 0;
+
+    width: 95%;
+    height: 0;
+    transition: opacity 200ms, visibility 200ms, margin-top 200ms;
+
+
+    margin-top: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .card{
+      width: 100%;
+      height: fit-content;
+      background: #fff;
+      box-shadow: 2px 2px 2px #e8e8e8;
+      border-radius: 5px;
+      transition: background-color 150ms, box-shadow 150ms, transform 150ms;
+      overflow: hidden;
+
+      &:hover{
+        box-shadow: 2px 2px 5px 1px #cbcbcb;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+
+
+  .review-edit, .review-create{
+    position: relative;
+
+    .submit{
+      position: absolute;
+      height: 20px;
+      width: 60px;
+      background-color: #fff;
+      bottom: 10px;
+      right: 10px;
+      font-size: 13px;
+      border: none;
+      border-radius: 3px;
+
+      transition: background-color 100ms;
+
+      cursor: pointer;
+
+      &:hover{
+        background-color: #d3d4d7;
+      }
+    }
+  }
+
+
+  .review, .review-edit{
+    padding: 7px;
+
+    .info{
+      font-size: 16px;
+      color: #4f4f4f;
+
+      display: flex;
+      gap: 5px;
+
+      margin-bottom: 8px;
+
+      .date{
+        color: gray;
+      }
+    }
+  }
+
+  .review{
+    .content{
+      text-align: justify;
+      font-size: 15px;
+    }
+  }
+
+  .review-create{
+    width: 100%;
+    height: 100px;
+
+    textarea{
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      resize: none;
+      padding: 7px;
+
+      outline: none;
+
+      &:focus{
+        box-shadow: inset 1px 1px 4px #cccccc;
+      }
+    }
+  }
+
+  .review-edit{
+    .content{
+      width: 100%;
+
+      label, textarea{
+        width: 100%;
+      }
+
+      textarea{
+        outline: none;
+        border: none;
+        height: 100px;
+        resize: none;
+        border-radius: 5px;
+        padding: 4px;
+
+        &:focus{
+          background-color: #efefef;
+        }
+      }
+    }
+
+    .submit{
+      visibility: hidden;
+      opacity: 0;
+      bottom: 15px;
+      right: 15px;
+      transition: opacity 300ms, visibility 300ms;
+      background: transparent;
+    }
+
+    &.edited{
+      .submit{
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0ms;
+      }
+    }
+  }
+}
+
+.cool-hover-wheel{
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #d9d9d9;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #b7b7b7;
+  }
+}

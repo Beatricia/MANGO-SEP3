@@ -319,14 +319,15 @@ internal static class ConverterExtensions
     {
         return new Order
         {
-            Id = order.Id,
+           // Id = order.Id,
             CollectionOption = ConvertEnumToInt(order.CollectionOption),
             FarmName = order.FarmName,
             IsDone = order.IsDone,
-            OrderOffers = { order.OrderOffers.Select(orderOffer => orderOffer.ToGrpc()) },
+           // OrderOffers = { order.OrderOffers.Select(orderOffer => orderOffer.ToGrpc()) },
             Username = order.Username
         };
     }
+    
     
     #endregion
     
@@ -370,5 +371,31 @@ internal static class ConverterExtensions
     }
     
 
+    #endregion
+    
+    #region Review
+    
+    public static Shared.Models.Review ToShared(this Review review)
+    {
+        return new Shared.Models.Review
+        {
+            FarmName = review.FarmName,
+            Date = new DateTime(review.CreatedAt),
+            WrittenBy = review.Username,
+            Content = review.ReviewText
+        };
+    }
+    
+    public static Review ToGrpc(this Shared.Models.Review review)
+    {
+        return new Review
+        {
+            FarmName = review.FarmName,
+            CreatedAt = review.Date.Ticks,
+            Username = review.WrittenBy,
+            ReviewText = review.Content
+        };
+    }
+    
     #endregion
 }

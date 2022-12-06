@@ -7,6 +7,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.Address;
 import mango.sep3.databaseaccess.protobuf.*;
 
+import mango.sep3.databaseaccess.protobuf.Void;
 import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,7 +131,7 @@ import java.util.List;
   @Override public void updateFarm(FarmUpdate request,
       StreamObserver<Farm> responseObserver)
   {
-    mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus());
+    mango.sep3.databaseaccess.Shared.Farm updatedFarm = farmDAO.updateFarm(request.getName(), request.getStatus(), request.getPhone());
 
     responseObserver.onNext(grpcConverter.convertToGrpc(updatedFarm));
     responseObserver.onCompleted();
@@ -146,6 +147,45 @@ import java.util.List;
     var usernames = orderDao.getUsersWithUncompletedOrder(orderIds);
 
     responseObserver.onNext(grpcConverter.convertToGrpcRU(usernames));
+    responseObserver.onCompleted();
+  }
+
+  @Override public void getAllFarms(Void request,
+      StreamObserver<Farms> responseObserver)
+  {
+    Collection<mango.sep3.databaseaccess.Shared.Farm> farms = farmDAO.getAllFarms();
+
+    Farms.Builder response = Farms.newBuilder();
+    Collection<Farm> protoFarms = new ArrayList<>();
+
+    for (mango.sep3.databaseaccess.Shared.Farm farm : farms)
+    {
+      Farm f = grpcConverter.convertToGrpc(farm);
+      protoFarms.add(f);
+    }
+    response.addAllFarms(protoFarms);
+
+    responseObserver.onNext(response.build());
+    responseObserver.onCompleted();
+
+  }
+
+  @Override public void getFarmsByName(Text request,
+      StreamObserver<Farms> responseObserver)
+  {
+    Collection<mango.sep3.databaseaccess.Shared.Farm> farms = farmDAO.getAllFarmsByName(request.getText());
+
+    Farms.Builder response = Farms.newBuilder();
+    Collection<Farm> protoFarms = new ArrayList<>();
+
+    for (mango.sep3.databaseaccess.Shared.Farm farm : farms)
+    {
+      Farm f = grpcConverter.convertToGrpc(farm);
+      protoFarms.add(f);
+    }
+    response.addAllFarms(protoFarms);
+
+    responseObserver.onNext(response.build());
     responseObserver.onCompleted();
   }
 }

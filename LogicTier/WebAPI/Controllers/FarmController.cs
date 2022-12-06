@@ -10,15 +10,16 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize(Roles = "farmer")]
 
 public class FarmController : LocallyController
 {
     private readonly IFarmLogic farmLogic;
+    private readonly IReviewLogic reviewLogic;
 
-    public FarmController(IFarmLogic farmLogic)
+    public FarmController(IFarmLogic farmLogic, IReviewLogic reviewLogic)
     {
         this.farmLogic = farmLogic;
+        this.reviewLogic = reviewLogic;
     }
     
     /// <summary>
@@ -105,6 +106,63 @@ public class FarmController : LocallyController
             return BadRequest(e.Message);
         }
     }
-
     
+    [HttpGet("all")]
+    [Authorize]
+    public async Task<IActionResult> GetAllFarms()
+    {
+        try
+        {
+            var created = await farmLogic.GetAllAsync();
+            return Created($"/farms", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("{nameContains}")]
+    [Authorize]
+    public async Task<IActionResult> GetAllFarmsByName([FromRoute]string nameContains)
+    {
+        try
+        {
+            var created = await farmLogic.GetAllByNameAsync(nameContains);
+            return Created($"/farms", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPost("{name:regex([[\\w\\W]]+)}/reviews")]
+    [Authorize(Roles = "customer")]
+    public async Task<IActionResult> PostReview(string name, ReviewCreationDto dto)
+    {
+        try
+        {
+            var review = await reviewLogic.CreateReview(name, LoggedInUsername!, dto);
+            return Ok(review);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpGet("{name:regex([[\\w\\W]]+)}/reviews")]
+    public async Task<IActionResult> GetReviews()
+    {
+        return Ok();
+    }
+    
+    [HttpPatch("{name:regex([[\\w\\W]]+)}/reviews/{id}")]
+    public async Task<IActionResult> UpdateReview()
+    {
+        return Ok();
+    }
 }

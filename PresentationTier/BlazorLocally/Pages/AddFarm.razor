@@ -11,7 +11,7 @@
 @inject IUserService userService;
 
 <div class="center add-farm-root">
-    <div class="title">Create Farm</div>
+    <div class="title"><h3 class="titleText">CREATE A FARM</h3></div>
     <form class="form">
         <div class="left">
             <div>
@@ -63,7 +63,11 @@
                 <div class="submit-container">
                     <input type="button" class="submit-button" value="Submit" @onclick="CreateFarm">
                 </div>
-            </div>
+                
+                <div class="successfully-added">
+                    <label>@message</label>
+                </div>
+                </div>
         </div>
     </form>
 </div>
@@ -84,6 +88,8 @@
     private ICollection<FarmIcon>? icons;
     private FarmIcon? selectedIcon;
     private string? selectedIconUrl = "";
+
+    private string? message = "";
 
     private void SelectIcon(object? obj)
     {
@@ -151,7 +157,8 @@
             FarmIconFileName = selectedIcon.FileName,
             Farmer = farmer
         };
-        
+
+        message = "The farm was successfully created";
         await farmService.CreateAsync(farmCreationDto);
 
     }

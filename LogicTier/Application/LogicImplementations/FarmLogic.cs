@@ -41,10 +41,21 @@ public class FarmLogic : IFarmLogic
             icon = farmIconDao.CreateIcon(dto.FarmIconFileName!);
 
         var address = dto.Address;
-        var coordinates = await addressDao.GetCoordinatesAsync(address);
+        double latitude;
+        double longitude;
+
+        try
+        {
+            (latitude, longitude) = await addressDao.GetCoordinatesAsync(address);
+        }
+        catch (ArgumentException e)
+        {
+            throw new ArgumentException("The address is invalid", e);
+        }
         
-        address.Latitude = coordinates.Latitude;
-        address.Longitude = coordinates.Longitude;
+        
+        address.Latitude = latitude;
+        address.Longitude = longitude;
         
         Farm farmToSend = new Farm
         {
@@ -71,7 +82,6 @@ public class FarmLogic : IFarmLogic
     {
         ICollection<Farm> farms = await farmDao.GetAllFarmsByFarmer(username);
 
-        Console.WriteLine(farms);
         if (farms == null)
         {
             throw new Exception($"The farmer has no farms");

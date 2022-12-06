@@ -2,73 +2,73 @@
 @attribute [Authorize(Roles = "farmer")] 
 
 @using global::Shared.DTOs
-@using global::Shared.Models
 @inject IOfferService httpClient
 @using HttpClient.ClientInterfaces
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 
-
-<h3>CreateOffer</h3>
+<div class="createCenter">
+<h3 class="createText">Create an offer for @FarmName.</h3>
+</div>
 <div class="form d-flex flex-wrap flex-column">
     <div style="color: red">@errorMessage</div>
-    <div class="col-6" style="padding-bottom: 2%">
+    <div class="col-6">
         <label>Product Name <span class="required">*</span></label>
         <input type="text" @bind="productName" required="required"/>
     </div>
     <!--image-->
-    <div class="col-3 d-flex flex-column justify-content-end" style="position: absolute; right: 0">
-        <div id="imgDiv">
-            <img id="image" src="Img/sample-offer.png" alt="default" class="img col-3 me-4"/>
+    <div class="col-3 d-flex justify-content-end" style="position: absolute; right: 0">
+        <div class=" d-flex flex-column">
+            <img id="image" src="Img/sample-offer.png" alt="default" width="200px" height="auto" class="img col-3 me-4"/>
+            @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
+            <InputFile OnChange="GetImage"></InputFile>
         </div>
-        @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
-        <InputFile OnChange="GetImage"></InputFile>
     </div>
-    <div class="col-6" style="padding-bottom: 2%">
-        <label>Quantity <span class="required">*</span></label>
-        <input type="text" @bind="quantity" required="required"/>
-        <div class="col-9 d-flex flex-nowrap" style="padding-top: 3%">
-            <!--dropdown menu-->
-            <div class="dropdown col-2 ms-1" style="padding-bottom: 2%">
+    <div class="col-6">
+        <label  >Quantity <span class="required">*</span></label>
+        <input class="quantityDropdown" type="text" @bind="quantity" required="required" width="40%" />
+        <!--dropdown menu-->
                 @{
-                    var list = new List<string> { "kilogram", "gram", "liter","milliliter", "piece", "bag", "box", "jar" };
+                    var list = new List<string> { "kilogram", "gram", "liter", "milliliter", "piece", "bag", "box", "jar" };
                 }
                 <select @onchange="((evenArgs) => SetUnit((string)evenArgs.Value))">
                     @foreach (var item in list)
                     {
                         <option @onclick="(() => SetUnit(item))">@item</option>
                     }
-                    </select>
-            </div>
-        </div>
+                </select>
     </div>
-    
-    <div class="col-6" style="padding-bottom: 2%">
+    <div class="col-6">
         <label>Price <span class="required">*</span></label>
         <input type="text" @bind="price" required="required"/>
     </div>
 
     <!--radio buttons for delivery option-->
-    <label class="col-6" style="padding-bottom: 2%">Delivery Option:</label>
-    <label class="container">Delivery
-      <input type="checkbox" @bind="delivery">
-      <span class="checkmark"></span>
+    <label class="col-6">Delivery Option:</label>
+    <label class="container">
+        <span class="checkmark"></span>
+        <input type="checkbox" @bind="delivery">
+        Delivery
     </label>
-    <label class="container" >Pick Your Own 
-      <input type="checkbox"  @bind="pickYO">
-      <span class="checkmark"></span>
+    
+    <label class="container" >
+        <span class="checkmark"></span>
+        <input type="checkbox"  @bind="pickYO">
+        Pick Your Own 
     </label>
-    <label class="container">Pick Up
+    
+    <label class="container">
+         <span class="checkmark"></span>
         <input type="checkbox" @bind="pickUp">
-      <span class="checkmark"></span>
+        Pick Up
     </label>
     
 <!--textarea for description-->
-    <label style="padding-top: 2%" for="textarea">Description:</label>
+    <label for="textarea">Description:</label>
     <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
 
     <!--submit button-->
-    <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
+        <button class="createButton" onclick="@Create">CREATE</button>
 </div>
 
 @code {
@@ -113,10 +113,6 @@
             {
                 return;
             }
-            CollectionOption collectionOption = delivery ? CollectionOption.Delivery : 0;
-                             collectionOption |= pickUp ? CollectionOption.PickUp : 0;
-                             collectionOption |= pickYO ? CollectionOption.PickYourOwn : 0;
-
             
             OfferCreationDto dto = new()
             {
@@ -124,11 +120,12 @@
                 Quantity = quantity,
                 Unit = unit,
                 Price = price,
-                CollectionOption = collectionOption,
+                //Delivery = delivery,
+                //PickUp = pickUp,
+                //PickYourOwn = pickYO,
                 Description = description,
                 FarmName = FarmName
             };
-            Console.WriteLine("quantity : " + dto.Quantity);
 
             try
             {

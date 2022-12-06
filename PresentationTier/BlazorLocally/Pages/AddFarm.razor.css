@@ -17,7 +17,7 @@
     --slider-thumb-color: blue;
     --slider-data-bg-color: #ffb9cb;
     --shadow-color: #b7b7b7;
-    
+
 }
 
 *{
@@ -31,10 +31,21 @@
     background: #e3e3e3;
 }
 
-.title{
-    font-size: calc(20 * var(--unit));
+.titleText{
+    font-size: x-large;
     margin-bottom: calc(10 * var(--unit));
-    font-weight: 800;
+    border-radius: 20px;
+    background: rgb(183, 191, 150);
+    padding: 15px;
+    width: 250px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 @media screen and (min-width: 1150px){
@@ -367,4 +378,8 @@ input[type='submit']{
         width: 100px;
         cursor: pointer;
     }
+}
+.successfully-added{
+    margin-top: 60px;
+    font-size: smaller;
 }

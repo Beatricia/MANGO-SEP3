@@ -52,6 +52,7 @@ service CartOfferService{
   rpc GetById(Id) returns(CartOffer);
   rpc DeleteCartOffer(Id) returns(Void);
   rpc DeleteAllByOfferId(Id) returns(Void);
+  rpc UpdateCartOffer(CartOfferUpdate) returns(Void);
 }
 
 service NotificationService{
@@ -194,6 +195,11 @@ message CartOffer{
 
 message CartOffers{
   repeated CartOffer cartOffers = 1;
+}
+
+message CartOfferUpdate{
+  int32 id = 1;
+  int32 quantity = 2;
 }
 
 message Username{

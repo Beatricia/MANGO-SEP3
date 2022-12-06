@@ -54,4 +54,11 @@ public class CartOfferDAO implements CartOfferInterface
   public void deleteAllByOfferId(Offer offerId) {
     cartRepository.deleteAllByOfferId(offerId);
   }
+
+  @Override public void updateCartOffer(int cartOfferId, int quantity)
+  {
+    CartItem cartItem = getById(cartOfferId);
+    cartItem.setQuantity(quantity);
+    cartRepository.saveAndFlush(cartItem);
+  }
 }

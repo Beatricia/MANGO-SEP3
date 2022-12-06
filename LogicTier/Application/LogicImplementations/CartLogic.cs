@@ -1,5 +1,6 @@
 ﻿using Application.DAOInterfaces;
 using Application.LogicInterfaces;
+using Shared.DTOs;
 using Shared.Models;
 
 namespace Application.LogicImplementations;
@@ -94,5 +95,10 @@ public class CartLogic : ICartLogic
         }
 
         return existing;
+    }
+
+    public async Task UpdateAsync(UpdateCartItemDto dto)
+    {
+        await cartDao.UpdateAsync(dto);
     }
 }

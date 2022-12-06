@@ -7,4 +7,9 @@ public class RegisterDto
     public bool IsFarmer { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
+    public string City { get; set; } = string.Empty;
+    public string Street { get; set; } = string.Empty;
+    public string ZIP { get; set; } = string.Empty;
+    
+    public string PhoneNumber { get; set; } = string.Empty;
 }

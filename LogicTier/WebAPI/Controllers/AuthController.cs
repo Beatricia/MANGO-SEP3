@@ -99,7 +99,7 @@ public class AuthController : ControllerBase
             config["Jwt:Audience"],
             claims, 
             null,
-            DateTime.UtcNow.AddMinutes(60));
+            DateTime.UtcNow.AddDays(10));
     
         JwtSecurityToken token = new JwtSecurityToken(header, payload);
     

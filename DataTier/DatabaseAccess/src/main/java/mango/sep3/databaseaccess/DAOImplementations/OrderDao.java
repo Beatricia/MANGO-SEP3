@@ -76,7 +76,7 @@ public class OrderDao implements OrderDaoInterface
     {
 
       Farmer farmer = farmerRepository.findById(username).orElse(null);
-      Collection<Farm> farms = farmRepository.findAllByFarmer(farmer);
+      Collection<Farm> farms = farmRepository.findAllByFarmerAndIsDisabled(farmer,false);
 
       for(Farm farm: farms)
       {

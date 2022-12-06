@@ -17,6 +17,7 @@ service OfferService{
   rpc GetOffers(Void) returns(OfferItems);
   rpc GetOfferById(Id) returns(Offer);
   rpc GetOffersByFarmName(Text) returns(OfferItems);
+  rpc DisableOfferById(Id) returns(Void);
 }
 
 service UserService{
@@ -48,6 +49,7 @@ service CartOfferService{
   rpc DeleteAllCartOffers(Username) returns(Void);
   rpc GetById(Id) returns(CartOffer);
   rpc DeleteCartOffer(Id) returns(Void);
+  rpc DeleteAllByOfferId(Id) returns(Void);
 }
 
 service NotificationService{

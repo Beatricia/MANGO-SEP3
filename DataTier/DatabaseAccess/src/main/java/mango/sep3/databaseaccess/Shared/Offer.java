@@ -41,6 +41,9 @@ public class Offer implements Serializable
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<OrderOffer> orderOffers;
 
+    @Column
+    private boolean isDisabled = false;
+
     public int getId()
     {
         return id;
@@ -139,5 +142,14 @@ public class Offer implements Serializable
     public void setCollectionOption(int collectionOption)
     {
         this.collectionOption = collectionOption;
+    }
+    public boolean getIsDisabled()
+    {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(boolean isDisabled)
+    {
+        this.isDisabled = isDisabled;
     }
 }

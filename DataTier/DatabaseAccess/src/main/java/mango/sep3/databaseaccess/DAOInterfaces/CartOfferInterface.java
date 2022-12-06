@@ -2,6 +2,7 @@ package mango.sep3.databaseaccess.DAOInterfaces;
 
 import mango.sep3.databaseaccess.Shared.CartItem;
 import mango.sep3.databaseaccess.Shared.Customer;
+import mango.sep3.databaseaccess.Shared.Offer;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -13,4 +14,5 @@ public interface CartOfferInterface
   void deleteAllCartOffers(Customer customer);
   CartItem getById(int id);
   void deleteCartOffer(int id);
+  void deleteAllByOfferId(Offer offerId);
 }

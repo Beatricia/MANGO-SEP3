@@ -37,7 +37,7 @@ public class OfferDAO implements OfferDaoInterface {
 
   @Override
   public Collection<Offer> GetOffer() {
-    return offerRepository.findAll();
+    return offerRepository.findAllByIsDisabled(false);
   }
 
   @Override public Offer getOfferById(int id)
@@ -48,6 +48,13 @@ public class OfferDAO implements OfferDaoInterface {
   @Override public Collection<Offer> getOffersByFarmName(String farmName)
   {
     Farm farm = farmRepository.findByName(farmName);
-    return offerRepository.findAllByFarm(farm);
+    return offerRepository.findAllByFarmAndIsDisabled(farm, false);
+  }
+
+  @Override
+  public void disableOfferById(int id) {
+    Offer offer = offerRepository.findById(id).orElse(null);
+    offer.setIsDisabled(true);
+    offerRepository.save(offer);
   }
 }

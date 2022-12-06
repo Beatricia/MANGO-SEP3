@@ -83,4 +83,11 @@ public class CartDaoImpl : ICartDao
         
         cartOfferServiceClient.DeleteCartOfferAsync(idBuff);
     }
+
+    public async Task DeleteAllByOfferIdAsync(int offerId)
+    {
+        var idBuff = offerId.ToGrpc();
+        
+        await cartOfferServiceClient.DeleteAllByOfferIdAsync(idBuff);
+    }
 }

@@ -9,5 +9,6 @@ import java.util.Collection;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
-  Collection<Offer>  findAllByFarm(Farm farm);
+  Collection<Offer> findAllByIsDisabled(boolean isDisabled);
+  Collection<Offer>  findAllByFarmAndIsDisabled(Farm farm, boolean isDisabled);
 }

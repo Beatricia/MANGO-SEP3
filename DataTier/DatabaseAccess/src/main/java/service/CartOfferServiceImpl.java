@@ -93,6 +93,21 @@ public class CartOfferServiceImpl extends CartOfferServiceGrpc.CartOfferServiceI
     responseObserver.onCompleted();
   }
 
+  /**
+   *sends request to delete all cart offers with the same offer id
+   *
+   * @param request id of an offer in the cart offer
+   * @param responseObserver void
+   */
+  @Override public void deleteAllByOfferId(Id request,
+      StreamObserver<Void> responseObserver) {
+    Offer offer = offerDaoInterface.getOfferById(request.getId());
+    cartOfferDAO.deleteAllByOfferId(offer);
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+  }
+
    public void getById(Id request,
       StreamObserver<CartOffer> responseObserver) {
       CartItem cartItem = cartOfferDAO.getById(request.getId());

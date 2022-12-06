@@ -26,14 +26,21 @@ public class FarmDaoImpl : IFarmDao
         return farm;
     }
 
-    
 
-    public async Task<Shared.Models.Farm> GetFarmByNameAsync(string farmName)
+
+    public async Task<Shared.Models.Farm?> GetFarmByNameAsync(string farmName)
     {
-        var name = farmName.ToGrpc();
-        Farm farmGrpc = await farmServiceClient.GetFarmAsync(name);
-        
-        return farmGrpc.ToShared(farmIconDao);
+        try
+        {
+            var name = farmName.ToGrpc();
+            Farm farmGrpc = await farmServiceClient.GetFarmAsync(name);
+
+            return farmGrpc.ToShared(farmIconDao);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public async Task UpdateFarmAsync(FarmUpdateDto dto)

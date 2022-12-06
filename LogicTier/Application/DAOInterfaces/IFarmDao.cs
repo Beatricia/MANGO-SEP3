@@ -10,7 +10,7 @@ public interface IFarmDao
     Task<Farm> GetFarmByNameAsync(string farmName);
     Task<Farm?> GetByName(string name);
 
-    Task<ICollection<Farm>> GetAllFarmsByFarmer(string username);
+    Task<ICollection<Farm?>> GetAllFarmsByFarmer(string username);
 
 
     Task UpdateFarmAsync(FarmUpdateDto dto);

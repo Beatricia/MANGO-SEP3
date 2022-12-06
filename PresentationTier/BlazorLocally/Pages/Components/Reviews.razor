@@ -12,6 +12,7 @@
             <span>Reviews</span>
         </div>
         <div class="reviews">
+            <AuthorizeView Roles="customer">
             @if (currentUserReview is not null)
             {
                 <div class="card">
@@ -40,8 +41,8 @@
                     </div>
                 </div>
             }
-            
-            @if(reviews is not null)
+</AuthorizeView>
+            @if (reviews is not null)
             {
                 @foreach (var review in reviews)
                 {
@@ -57,7 +58,7 @@
             {
                 <span>Loading...</span>
             }
-            
+
         </div>
     </div>
 </div>
@@ -80,7 +81,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // get all the reviews, set the currentUserReview if the CurrentUser already wrote a review.
+        reviews = await FarmService.GetAllReviews(FarmName);
+        currentUserReview = reviews.FirstOrDefault(r => r.WrittenBy.Equals(CurrentUser));
+        if (currentUserReview is not null)
+        {
+            reviews.Remove(currentUserReview);
+        }
     }
 
 

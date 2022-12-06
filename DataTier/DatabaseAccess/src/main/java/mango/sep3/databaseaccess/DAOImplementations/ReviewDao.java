@@ -2,8 +2,11 @@ package mango.sep3.databaseaccess.DAOImplementations;
 
 import mango.sep3.databaseaccess.DAOInterfaces.ReviewDaoInterface;
 import mango.sep3.databaseaccess.Repositories.ReviewRepository;
+import mango.sep3.databaseaccess.Shared.Farm;
 import mango.sep3.databaseaccess.Shared.Review;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
 
 @Repository
 public class ReviewDao implements ReviewDaoInterface {
@@ -22,5 +25,11 @@ public class ReviewDao implements ReviewDaoInterface {
         }
 
         return reviewRepository.save(review);
+    }
+
+    @Override public Collection<Review> getReviewsByFarmAsync(Farm farm)
+    {
+        System.out.println(reviewRepository.findAllByFarm(farm));
+        return reviewRepository.findAllByFarm(farm);
     }
 }

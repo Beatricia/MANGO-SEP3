@@ -1,6 +1,7 @@
 ﻿#shape{
     overflow: hidden;
     margin-left: 15em;
+    position: relative;
 }
 #farmImg{
     padding-top: 17px;
@@ -22,6 +23,12 @@
     height: 7em;
     overflow: hidden;
     margin-top: 45px;
+}
+
+#reviews{
+    position: absolute;
+    margin-left: 650px;
+    margin-top: -20px;
 }
 
 #farmName{
@@ -102,4 +109,8 @@
     border: none;
     background-color: #606748;;
     color: white;
+}
+
+.offers{
+    margin-top: 110px;
 }

@@ -25,6 +25,13 @@
     margin-top: 45px;
 }
 
+
+#reviews{
+    position: absolute;
+    margin-left: 650px;
+    margin-top: -20px;
+}
+
 #farmName{
     text-align: center;
     display: block;

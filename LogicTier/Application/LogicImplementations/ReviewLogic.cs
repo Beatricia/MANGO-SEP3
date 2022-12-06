@@ -32,7 +32,16 @@ public class ReviewLogic : IReviewLogic
         };
         
         return await reviewDao.CreateReviewAsync(review);
+    }
+
+    public async Task<ICollection<Review>> GetAllReviewsByFarm(string farmName)
+    {
+        var farm = await farmDao.GetFarmByNameAsync(farmName);
         
-        
+        if(farm is null)
+            throw new Exception("Farm with name " + farmName + " does not exist");
+
+        var result = await reviewDao.GetReviewsByFarmAsync(farm);
+        return result;
     }
 }

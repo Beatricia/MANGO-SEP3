@@ -17,7 +17,7 @@
  
 </div>
 <div id="status"><h5 id="statusLabel">Status:</h5>
-    <input type="text" @bind="updatedStatus" placeholder="@Farm.FarmStatus"></div>
+    <input type="text" @bind="updatedStatus" placeholder="@Farm?.FarmStatus"></div>
 <div class="buttonContainer"><button id="updateButton" @onclick="updateFarmStatus">Update</button></div>
 
 @if (offers == null)
@@ -55,10 +55,10 @@
     //get the farm from the previous view
     [Parameter] 
     public string FarmName {get;set;}
-    private  Farm Farm {get;set;}
+    private  Farm? Farm {get;set;}
     private string msg = "";
-    private IEnumerable<Offer> offers {get;set;}
-    private string updatedStatus;
+    private IEnumerable<Offer>? offers {get;set;}
+    private string? updatedStatus;
 
     protected override async Task OnInitializedAsync()
     {

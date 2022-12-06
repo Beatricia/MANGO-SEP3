@@ -14,6 +14,7 @@
     <div id="rectangle">
         <label id="farmName">@FarmName</label>
     </div>
+ 
 </div>
 <div id="status"><h5 id="statusLabel">Status:</h5>
     <input type="text" @bind="updatedStatus" placeholder="@Farm.FarmStatus"></div>
@@ -58,7 +59,7 @@
     private string msg = "";
     private IEnumerable<Offer> offers {get;set;}
     private string updatedStatus;
-    
+
     protected override async Task OnInitializedAsync()
     {
         try

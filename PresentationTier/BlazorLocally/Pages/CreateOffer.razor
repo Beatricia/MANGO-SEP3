@@ -7,8 +7,9 @@
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 
-
-<h3>CreateOffer</h3>
+<div class="createCenter">
+<h3 class="createText">Create an offer for @FarmName.</h3>
+</div>
 <div class="form d-flex flex-wrap flex-column">
     <div style="color: red">@errorMessage</div>
     <div class="col-6">
@@ -24,24 +25,19 @@
         </div>
     </div>
     <div class="col-6">
-        <label>Quantity <span class="required">*</span></label>
-        <input type="text" @bind="quantity" required="required"/>
-        <div class="col-9 d-flex flex-nowrap">
-            <!--dropdown menu-->
-            <div class="dropdown col-2 ms-1">
+        <label  >Quantity <span class="required">*</span></label>
+        <input class="quantityDropdown" type="text" @bind="quantity" required="required" width="40%" />
+        <!--dropdown menu-->
                 @{
-                    var list = new List<string> { "kilogram", "gram", "liter","milliliter", "piece", "bag", "box", "jar" };
+                    var list = new List<string> { "kilogram", "gram", "liter", "milliliter", "piece", "bag", "box", "jar" };
                 }
                 <select @onchange="((evenArgs) => SetUnit((string)evenArgs.Value))">
                     @foreach (var item in list)
                     {
                         <option @onclick="(() => SetUnit(item))">@item</option>
                     }
-                    </select>
-            </div>
-        </div>
+                </select>
     </div>
-    
     <div class="col-6">
         <label>Price <span class="required">*</span></label>
         <input type="text" @bind="price" required="required"/>
@@ -49,17 +45,22 @@
 
     <!--radio buttons for delivery option-->
     <label class="col-6">Delivery Option:</label>
-    <label class="container">Delivery
-      <input type="checkbox" @bind="delivery">
-      <span class="checkmark"></span>
+    <label class="container">
+        <span class="checkmark"></span>
+        <input type="checkbox" @bind="delivery">
+        Delivery
     </label>
-    <label class="container" >Pick Your Own 
-      <input type="checkbox"  @bind="pickYO">
-      <span class="checkmark"></span>
+    
+    <label class="container" >
+        <span class="checkmark"></span>
+        <input type="checkbox"  @bind="pickYO">
+        Pick Your Own 
     </label>
-    <label class="container">Pick Up
+    
+    <label class="container">
+         <span class="checkmark"></span>
         <input type="checkbox" @bind="pickUp">
-      <span class="checkmark"></span>
+        Pick Up
     </label>
     
 <!--textarea for description-->
@@ -67,7 +68,7 @@
     <textarea id="textarea" name="textarea" placeholder="Quality, Detailed Information ..." @bind="description"></textarea>
 
     <!--submit button-->
-    <input type="submit" value="CREATE" class="button btn-success" onclick="@Create"/>
+        <button class="createButton" onclick="@Create">CREATE</button>
 </div>
 
 @code {

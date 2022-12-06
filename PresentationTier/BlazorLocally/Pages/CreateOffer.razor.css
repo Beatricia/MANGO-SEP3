@@ -2,3 +2,32 @@
     width: 300px !important;
     height: auto;
 }
+
+.createButton{
+    color: white;
+    background-color: #606748;
+    width: 20%;
+    margin-top: 2%;
+    margin-left: 80%;
+}
+.quantityDropdown{
+    margin-right: 1%;
+}
+.createText{
+    font-size: x-large;
+    border-radius: 20px;
+    background: rgb(183, 191, 150);
+    padding: 15px;
+    width: 450px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.createCenter{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+*{
+    margin-top: 5px;
+}

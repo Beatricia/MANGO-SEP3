@@ -105,6 +105,6 @@ public class OfferLogic : IOfferLogic
         {
             throw new Exception($"Farm {dto.FarmName} does not exist!");
         }
-        
+
     }
 }

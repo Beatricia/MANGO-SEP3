@@ -142,6 +142,27 @@ public class FarmController : LocallyController
             return StatusCode(500, e.Message);
         }
     }
+    
+    /// <summary>
+    /// The method asynchronously disables a Farm object.
+    /// </summary>
+    /// <param name="farmName">Name of the farm to be disabled</param>
+    /// <returns>Returns Action result e.g. Ok if request was successfully completed</returns>
+    [HttpPatch("{farmName}/disabled")]
+    [Authorize]
+    public async Task<ActionResult> DisableAsync([FromRoute] string farmName)
+    {
+        try
+        {
+            await farmLogic.DisableAsync(farmName);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 
     [HttpPost("{name:regex([[\\w\\W]]+)}/reviews")]
     [Authorize(Roles = "customer")]

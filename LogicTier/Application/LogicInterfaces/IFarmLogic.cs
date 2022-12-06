@@ -24,4 +24,9 @@ public interface IFarmLogic
     Task UpdateFarmAsync(FarmUpdateDto dto);
     Task<ICollection<Farm>> GetAllAsync();
     Task<ICollection<Farm>> GetAllByNameAsync(string nameContains);
+    /// <summary>
+    /// Disables the farm with the given id. It also call a method to disable all its offers in the IOfferDao
+    /// </summary>
+    /// <returns></returns>
+    Task DisableAsync(string farmName);
 }

@@ -14,26 +14,11 @@
     <div id="rectangle">
         <label id="farmName">@FarmName</label>
     </div>
+ 
 </div>
-<div id="status">
-    <h5 id="statusLabel">Status:</h5>
-    <input type="text"  id="statusText" @bind="updatedStatus" placeholder="@Farm?.FarmStatus">
-</div>
-<div id="updateContainer">
-    <div class="container">
-    <div class="row">
-        <div class="col-4" id="phone">
-            <p id="phoneLabel">Phone number:</p>
-            <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm?.Phone">
-        </div>
-        <div class="col-sm-2 col-sm-offset-3">
-            <AuthorizeView Roles="farmer">
-                <button id="updateButton" @onclick="updateFarm">Update</button>
-            </AuthorizeView>
-        </div>
-    </div>
-</div>
-</div>
+<div id="status"><h5 id="statusLabel">Status:</h5>
+    <input type="text" @bind="updatedStatus" placeholder="@Farm.FarmStatus"></div>
+<div class="buttonContainer"><button id="updateButton" @onclick="updateFarmStatus">Update</button></div>
 
 @if (offers == null)
 {
@@ -42,21 +27,19 @@
     </p>
 }
 
-@if (offers != null)
-{
+@if(offers!=null){
     <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
         @foreach (var offer in offers)
         {
-            <div class="card col-5 m-3 position-relative">
+            <div class="card col-5 m-3">
                 <div class="card-header">
-                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage" class="center card-img"/>
+                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage"/>
                 </div>
                 <div class="card-body d-flex justify-content-between flex-wrap">
                     <h5 class="col-8">@offer.Name</h5>
                     <h6 class="col-4 d-flex justify-content-end">Price: @offer.Price dkk</h6>
                     <span class="col-8">@offer.Description</span>
                 </div>
-                <i @onclick="()=> DisableOffer(offer.Id)" class="fa-solid fa-square-xmark fa-2xl position-absolute" style="right: -2%; cursor: pointer"></i>
             </div>
             @*<OfferSimple Name="@offer.Name"
                          Price="@offer.Price" 
@@ -66,25 +49,16 @@
                          DisplayButton="@false"
             ></OfferSimple>*@
         }
-    </div>
-}
-<a href="CreateOffer/@FarmName">
-    <div class="buttonContainer">
-        <button id="addButton">Add Offer</button>
-    </div>
-</a>
-<span>@msg</span>
-
+    </div>}
+ <a href="CreateOffer/@FarmName"><div class="buttonContainer"><button id="addButton">Add Offer</button></div></a>
 @code {
     //get the farm from the previous view
-    [Parameter]
-    public string FarmName { get; set; }
-    
-    private Farm? Farm { get; set; }
-    private IEnumerable<Offer>? offers { get; set; }
-    private string? updatedStatus;
-    private string? updatedPhone;
-    private string? msg;
+    [Parameter] 
+    public string FarmName {get;set;}
+    private  Farm Farm {get;set;}
+    private string msg = "";
+    private IEnumerable<Offer> offers {get;set;}
+    private string updatedStatus;
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,17 +73,16 @@
             msg = e.Message;
         }
     }
+    
 
-
-    private async Task updateFarm()
+    private async Task updateFarmStatus()
     {
         var dto = new FarmUpdateDto
         {
             FarmStatus = updatedStatus,
-            FarmPhone = updatedPhone,
-            Name = FarmName,
+            Name = FarmName
         };
-
+        
         try
         {
             await farmHttpClient.UpdateAsync(dto);
@@ -120,12 +93,6 @@
             Console.WriteLine(e);
             msg = e.Message;
         }
-    }
-
-    private async Task DisableOffer(int offerId)
-    {
-        await offerHttpClient.DisableAsync(offerId);
-        await OnInitializedAsync();
     }
 
 }

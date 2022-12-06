@@ -26,4 +26,6 @@ public interface IFarmService
     /// <param name="dto"></param>
     /// <returns></returns>
     Task<Review> CreateReviewAsync(string farmName, ReviewCreationDto dto);
+    
+    Task DisableAsync(string farmName);
 }

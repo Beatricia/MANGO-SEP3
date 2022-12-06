@@ -12,6 +12,7 @@ service FarmService{
   rpc GetAllCustomersUncompletedOrder(Text) returns(RepeatedUsername);
   rpc GetAllFarms(Void) returns(Farms);
   rpc GetFarmsByName(Text) returns(Farms);
+  rpc DisableFarmByName(Text) returns(Void);
 }
 
 service OfferService{

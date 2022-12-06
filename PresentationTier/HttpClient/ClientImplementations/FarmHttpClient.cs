@@ -149,4 +149,16 @@ public class FarmHttpClient : IFarmService
         
         return review;
     }
+
+    public async Task DisableAsync(string farmName)
+    {
+        StringContent body = new StringContent("", Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await Client.PatchAsync($"/farm/{farmName}/disabled",body);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+    }
 }

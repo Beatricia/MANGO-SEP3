@@ -93,7 +93,7 @@ public class CartDaoImpl : ICartDao
         await cartOfferServiceClient.DeleteAllByOfferIdAsync(idBuff);
     }
 
-    public async Task UpdateAsync(UpdateCartItemDto dto)
+    public async Task UpdateAsync(UpdateCartOfferDto dto)
     {
         var cartOfferToUpdate = dto.ToGrpc();
         await cartOfferServiceClient.UpdateCartOfferAsync(cartOfferToUpdate);

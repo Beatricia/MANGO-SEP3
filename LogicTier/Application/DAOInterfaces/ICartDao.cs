@@ -11,5 +11,5 @@ public interface ICartDao
     public Task<CartOffer?> GetByIdAsync(int id);
     public Task DeleteCartOfferAsync (int id);
     public Task DeleteAllByOfferIdAsync(int offerId);
-    public Task UpdateAsync(UpdateCartItemDto dto);
+    Task UpdateAsync(UpdateCartOfferDto dto);
 }

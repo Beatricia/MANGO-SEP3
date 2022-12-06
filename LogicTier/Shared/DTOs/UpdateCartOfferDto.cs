@@ -1,6 +1,6 @@
 ﻿namespace Shared.DTOs;
 
-public class UpdateCartItemDto
+public class UpdateCartOfferDto
 {
     public int Id { get; set; }
     public int Quantity { get; set; }

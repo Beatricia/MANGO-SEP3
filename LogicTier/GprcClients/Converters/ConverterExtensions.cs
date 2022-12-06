@@ -143,7 +143,7 @@ internal static class ConverterExtensions
         };
     }
     
-    public static CartOfferUpdate ToGrpc(this UpdateCartItemDto message)
+    public static CartOfferUpdate ToGrpc(this UpdateCartOfferDto message)
     {
         return new CartOfferUpdate
         {

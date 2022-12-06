@@ -1,6 +1,8 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
+using Shared.DTOs;
 using Shared.Models;
 
 namespace HttpClient.ClientImplementations;
@@ -62,6 +64,18 @@ public class CartHttpClient : ICartService
 
         if (!response.IsSuccessStatusCode)
         {
+            throw new Exception(content);
+        }
+    }
+
+    public async Task UpdateCartOfferAsync(UpdateCartOfferDto dto)
+    {
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PatchAsync("/Cart", body);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
             throw new Exception(content);
         }
     }

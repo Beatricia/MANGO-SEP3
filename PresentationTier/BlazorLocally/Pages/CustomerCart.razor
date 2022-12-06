@@ -3,6 +3,8 @@
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
+@using global::Shared.DTOs
+@using Microsoft.Extensions.Primitives
 @inject ICartService cartService;
 @inject IOrderService orderService;
 
@@ -40,7 +42,9 @@
         @foreach (var cartOff in cartOffers)
         {
             <tr>
-            <td>@cartOff.Quantity</td>
+                <td>
+                    <input id="input" value="@cartOff.Quantity" type="number" min="1" @onchange="@((args)=> Update(cartOff.Id,args))"/>
+                </td>
             <td>@cartOff.Offer.Name</td>
             <td>@cartOff.CollectionOption</td>
             <td>@cartOff.Offer.FarmName</td>
@@ -92,6 +96,7 @@
     {
         await cartService.DeleteAllCartOffersAsync();
         cartOffers = null;
+        await OnInitializedAsync();
     }
 
     private async Task Order()
@@ -116,6 +121,16 @@
             Console.WriteLine(e);
             msg = e.Message;
         }
+    }
+
+    private async void Update(int id, ChangeEventArgs args)
+    {
+        var dto = new UpdateCartOfferDto();
+        dto.Id = id;
+        dto.Quantity = Int32.Parse(args.Value.ToString());
+
+        await cartService.UpdateCartOfferAsync(dto);
+        await OnInitializedAsync();
     }
 
 }

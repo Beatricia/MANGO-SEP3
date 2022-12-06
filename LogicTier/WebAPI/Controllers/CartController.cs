@@ -97,7 +97,7 @@ public class CartController : LocallyController
     }
 
     [HttpPatch]
-    public async Task<ActionResult> Update([FromBody]UpdateCartItemDto dto)
+    public async Task<ActionResult> Update([FromBody]UpdateCartOfferDto dto)
     {
         try
         {

@@ -10,5 +10,5 @@ public interface ICartLogic
     public Task DeleteAllCartOffersAsync(string username);
     public Task DeleteCartOfferAsync(int id);
     public Task<CartOffer> GetCartOfferById(int id);
-    public Task UpdateAsync(UpdateCartItemDto dto);
+    Task UpdateAsync(UpdateCartOfferDto dto);
 }

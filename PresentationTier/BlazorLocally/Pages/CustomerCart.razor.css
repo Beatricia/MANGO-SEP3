@@ -26,3 +26,11 @@ thead {
     cursor:pointer;
     border-style: solid;
 }
+
+#input{
+    width: 10%;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}

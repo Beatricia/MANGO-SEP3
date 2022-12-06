@@ -97,7 +97,7 @@ public class CartLogic : ICartLogic
         return existing;
     }
 
-    public async Task UpdateAsync(UpdateCartItemDto dto)
+    public async Task UpdateAsync(UpdateCartOfferDto dto)
     {
         await cartDao.UpdateAsync(dto);
     }

@@ -57,7 +57,6 @@ public class UserController : LocallyController
         
         try
         {
-            
             await userLogic.UpdateCustomerAsync(dto, username);
             return Ok();
         }

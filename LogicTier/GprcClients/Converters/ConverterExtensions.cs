@@ -1,5 +1,6 @@
 ﻿using Application.DAOInterfaces;
 using Google.Protobuf;
+using Shared.DTOs;
 using Shared.Models;
 
 namespace GprcClients.Converters;
@@ -140,7 +141,16 @@ internal static class ConverterExtensions
             UserName = message.Username,
             CollectionOption = collectionOption
         };
-    } 
+    }
+    
+    public static CartOfferUpdate ToGrpc(this UpdateCartItemDto message)
+    {
+        return new CartOfferUpdate
+        {
+            Id = message.Id,
+            Quantity = message.Quantity,
+        };
+    }
 
     #endregion
     

@@ -15,9 +15,20 @@
         <label id="farmName">@FarmName</label>
     </div>
 </div>
-<div id="status"><h5 id="statusLabel">Status:</h5>
-    <label class="input">@Farm.FarmStatus</label>
+<div id="status">
+    <h5 id="statusLabel">Status:</h5>
+    <label id="statusText" >@Farm.FarmStatus</label>
+</div>
+<div id="updateContainer">
+    <div class="container">
+    <div class="row">
+        <div class="col-4" id="phone">
+            <p id="phoneLabel">Phone number:</p>
+            <label id="phoneText" >@Farm.Phone</label>
+        </div>
     </div>
+    </div>
+</div>
 
 @if (offers == null)
 {
@@ -26,7 +37,8 @@
     </p>
 }
 
-@if(offers!=null){
+@if(offers != null) 
+{
     <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
         @foreach (var offer in offers)
         {
@@ -48,7 +60,10 @@
                          DisplayButton="@false"
             ></OfferSimple>*@
         }
-    </div>}
+    </div>
+}
+<span>@msg</span>
+
 @code {
     //get the farm from the previous view
     [Parameter] 
@@ -56,7 +71,6 @@
     private  Farm Farm {get;set;}
     private string msg = "";
     private IEnumerable<Offer> offers {get;set;}
-    private string updatedStatus;
     
     protected override async Task OnInitializedAsync()
     {

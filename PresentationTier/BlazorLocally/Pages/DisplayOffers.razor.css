@@ -1,0 +1,20 @@
+#filters{
+    background-color: #d5ddde;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: outset;
+}
+
+#productInput{
+    border-radius: 10px;
+    background-color: #f8f7f7;
+    border: none;
+}
+
+#searchButton{
+    border: none;
+    background-color: #f8f7f7;
+    border-radius: 5px;
+}
+

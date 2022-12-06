@@ -141,6 +141,7 @@ message Order{
   int32 collectionOption = 5;
   string username = 6;
 }
+
 message Orders{
   repeated Order orders = 1;
 }
@@ -186,6 +187,7 @@ message Void{}
 message Text{
   string text = 1;
 }
+
 message CartOffer{
   int32 id = 1;
   Offer offer = 2;

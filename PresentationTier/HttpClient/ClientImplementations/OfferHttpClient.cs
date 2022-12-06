@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HttpClient.ClientInterfaces;
@@ -50,9 +49,12 @@ public class OfferHttpClient : IOfferService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<ICollection<Offer>> GetAsync()
+    public async Task<ICollection<Offer>> GetAsync(string? username, int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)
     {
-        HttpResponseMessage response = await Client.GetAsync("/offer");
+        string query = ConstructQuery(username, distance, nameContains, delivery, pickUp, pickYo);
+        
+        
+        HttpResponseMessage response = await Client.GetAsync("/offer"+query);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -90,7 +92,7 @@ public class OfferHttpClient : IOfferService
     /// <exception cref="Exception"></exception>
     public async Task<ICollection<Offer>> GetAsync(string farmName)
     {
-        HttpResponseMessage response = await Client.GetAsync($"/Offer/{farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"offer/farmName?farmName={farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -104,22 +106,43 @@ public class OfferHttpClient : IOfferService
         })!;
         return offers;
     }
-
-    /// <summary>
-    /// Sends PATH request to a WebAPI server to set specific offer as disabled
-    /// and to delete it from all the carts it is in
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public async Task DisableAsync(int id)
+    
+    private string ConstructQuery(string? username , int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)
     {
-        StringContent body = new StringContent("", Encoding.UTF8, "application/json");
-        
-        HttpResponseMessage response = await Client.PatchAsync($"/offer/{id}",body);
-        if (!response.IsSuccessStatusCode)
+        string query = "";
+        if (!string.IsNullOrEmpty(username))
         {
-            string content = await response.Content.ReadAsStringAsync();
-            throw new Exception(content);
+            query += $"?username={username}";
         }
+        if (distance !=null && distance !=0)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"?distance={distance}";
+        }
+
+        if (!string.IsNullOrEmpty(nameContains))
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"nameContains={nameContains}";
+        }
+
+        if (!delivery)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"delivery={delivery}";
+        }
+
+        if (!pickUp)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"pickUp={pickUp}";
+        }
+        if (!pickYo)
+        {
+            query += string.IsNullOrEmpty(query) ? "?" : "&";
+            query += $"pickYo={pickYo}";
+        }
+
+        return query;
     }
 }

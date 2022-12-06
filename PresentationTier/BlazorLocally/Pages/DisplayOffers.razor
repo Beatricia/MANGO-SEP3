@@ -7,7 +7,46 @@
 @inject ICartService HttpCartClient
 
 <div style="text-align: center">
-   <h3>DisplayOffers</h3> 
+    <h3>Display Offers</h3>
+</div>
+<div id="filters">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 offset-md-1" id="distanceFilter">
+                <span>
+                    <label for="distance">Distance: </label>
+                   <span class="distance-km-label">@distance km</span>
+                    <input @bind="distance" type="range" name="distance" id="distance" class="distance-slider" min="0" max="100" step="1" data-display-value="0 km" style="--width-ratio: 2/3; --margin-right-ratio: 1/3;"
+                           onmousemove="this.setAttribute('data-display-value', this.value + ' km');this.style.setProperty('--translateX', this.value);">
+                </span>
+            </div>
+            <div class="col-3" id="nameFilter">
+                <span>
+                    <label>Product: </label><input id="productInput" type="text" placeholder=" Name" @bind="nameContains"/>
+                </span>
+            </div>
+            <div class="col-sm-1" id="deliveryFilter">
+                <span>
+                    <input type="checkbox" @bind="deliveryCheck"/><label>Delivery</label>
+                </span>
+            </div>
+            <div class="col-sm-1" id="pickUpFilter">
+                <span>
+                    <input type="checkbox" @bind="pickUpCheck"/> <label>Pick Up</label>
+                </span>
+            </div>
+            <div class="col-sm-2" id="pickYOFilter">
+                <span>
+                    <input type="checkbox"  @bind="pickYOCheck"/> <label>Pick Your Own</label>
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <button id="searchButton">
+                    <img src="Img/search.png" width="25px" id="searchImg"/>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @if (offers == null)
@@ -17,7 +56,8 @@
     </p>
 }
 
-@if(offers!=null){
+@if (offers != null)
+{
     <div class="d-flex justify-content-around flex-wrap">
         @foreach (var offer in offers)
         {
@@ -30,7 +70,8 @@
                     <h6 class="col-4 d-flex justify-content-end">@offer.Price</h6>
                     <span class="col-8">@offer.Description</span>
                 </div>
-                <button type="button" @onclick="() => OpenPopUpAddToCart(offer)"> Add
+                <button type="button" @onclick="() => OpenPopUpAddToCart(offer)">
+                    Add
                 </button>
             </div>
             @*<OfferSimple Name="@offer.Name"
@@ -39,9 +80,9 @@
                          ImageUrl="@offer.Image.AbsoluteUrl"
                          OnClick="@(() => OpenPopUpAddToCart(offer.Id))"
                          DisplayButton="@true"></OfferSimple>*@
-
         }
-    </div>}
+    </div>
+}
 
 
 @if (!string.IsNullOrEmpty(msg))
@@ -53,82 +94,85 @@
 
 @if (showAddToCartComponent)
 {
-     <div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h4 class="modal-title">Order info</h4>
-                 </div>
-            
-                 <div class="container">
-                     <div class="row" >
-                         <div class="col-6">
-                             <div class="quantity">
-                                 <div class="col-6">
-                                     <label>Quantity:<span class="required">*</span></label>
-                                     <div class="col-6 d-flex flex-nowrap">
-                                         <input type="text" @bind="quantity" required="required"/>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="col-6">
-                             <div class="delivery">
-                                 <!--radio buttons for delivery option-->
-                                 <label class="col-8" for="radioGroup">Delivery Option:<span class="required">*</span></label>
-                                 <div id="radioGroup" class="d-flex flex-column">
-                                     @if ((offer.CollectionOption & CollectionOption.Delivery) != 0)
-                                     {
-                                         <div class="col-8 d-flex flex-nowrap">
-                                             <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
-                                                    onchange="@(() => Delivery())"
-                                                    checked="@delivery"/>
-                                             <label for="delivery"> Delivery</label>
-                                         </div>
-                                     }
-                                     @if ((offer.CollectionOption & CollectionOption.PickUp) != 0)
-                                     {
-                                         <div class="col-8 d-flex flex-nowrap">
-                                             <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
-                                                    onchange="@(() => PickUp())"/>
-                                             <label for="pickUp"> Pick Up</label>
-                                         </div> 
-                                     }
-                                     @if ((offer.CollectionOption & CollectionOption.PickYourOwn) != 0)
-                                     {
-                                         <div class="col-8 d-flex flex-nowrap">
-                                             <label for="pickYO"> Pick Your Own</label>
-                                         </div> 
-                                     }
-                                 </div>
-                             </div>
-                         </div>
+    <div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Order info</h4>
+                </div>
 
-                         @if (!string.IsNullOrEmpty(msg))
-                         {
-                             <div class="errorMsg" style="padding-top: 3%">
-                                 <span>@msg</span>
-                             </div>
-                         }
-                         
-                         <div class="row" style="padding-bottom: 2%; padding-top: 3%">
-                             <div class="col-6">
-                                 <div class="buttons">
-                                     <div class="col-4"><button class="cancel" @onclick="Cancel">CANCEL</button></div>
-                                 </div>
-                             </div>
-                             <div class="col-6">
-                                 <div class="buttons">
-                                     <div class="col-"><button class="addToCartBtn" @onclick="AddToCart">ADD TO CART</button> </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
-         </div>
-    
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="quantity">
+                                <div class="col-6">
+                                    <label>Quantity:<span class="required">*</span></label>
+                                    <div class="col-6 d-flex flex-nowrap">
+                                        <input type="text" @bind="quantity" required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="delivery">
+                                <!--radio buttons for delivery option-->
+                                <label class="col-8" for="radioGroup">Delivery Option:<span class="required">*</span></label>
+                                <div id="radioGroup" class="d-flex flex-column">
+                                    @if ((offer.CollectionOption & CollectionOption.Delivery) != 0)
+                                    {
+                                        <div class="col-8 d-flex flex-nowrap">
+                                            <input type="radio" value="@delivery" id="delivery" name="deliveryOption" class="me-2"
+                                                   onchange="@(() => Delivery())"
+                                                   checked="@delivery"/>
+                                            <label for="delivery"> Delivery</label>
+                                        </div>
+                                    }
+                                    @if ((offer.CollectionOption & CollectionOption.PickUp) != 0)
+                                    {
+                                        <div class="col-8 d-flex flex-nowrap">
+                                            <input type="radio" value="@pickUp" id="pickUp" name="deliveryOption" class="me-2"
+                                                   onchange="@(() => PickUp())"/>
+                                            <label for="pickUp"> Pick Up</label>
+                                        </div>
+                                    }
+                                    @if ((offer.CollectionOption & CollectionOption.PickYourOwn) != 0)
+                                    {
+                                        <div class="col-8 d-flex flex-nowrap">
+                                            <label for="pickYO"> Pick Your Own</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(msg))
+                        {
+                            <div class="errorMsg" style="padding-top: 3%">
+                                <span>@msg</span>
+                            </div>
+                        }
+
+                        <div class="row" style="padding-bottom: 2%; padding-top: 3%">
+                            <div class="col-6">
+                                <div class="buttons">
+                                    <div class="col-4">
+                                        <button class="cancel" @onclick="Cancel">CANCEL</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="buttons">
+                                    <div class="col-">
+                                        <button class="addToCartBtn" @onclick="AddToCart">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @code {
@@ -140,18 +184,24 @@
     private Offer offer;
 
     bool showAddToCartComponent;
-    
+
+    //filtering
+    private int? distance = 0;
+    private string? nameContains;
+    private bool deliveryCheck;
+    private bool pickUpCheck;
+    private bool pickYOCheck;
+
+
     ///summary///
     /// loads all the offers
     /// summary///
     protected override async Task OnInitializedAsync()
     {
-        try 
+        try
         {
-
-    //this below will be used to get the offers from server 
-              offers = await httpOfferClient.GetAsync();
-            
+            //this below will be used to get the offers from server 
+            offers = await httpOfferClient.GetAsync(null,null, null, false, false, false);
         }
         catch (Exception e)
         {
@@ -159,7 +209,7 @@
             msg = e.Message;
         }
     }
-    
+
     private void OpenPopUpAddToCart(Offer offer)
     {
         this.offer = offer;
@@ -182,9 +232,9 @@
                 return;
             }
             CollectionOption collectionOption = delivery ? CollectionOption.Delivery : 0;
-                             collectionOption |= pickUp ? CollectionOption.PickUp : 0;
-            
-            
+            collectionOption |= pickUp ? CollectionOption.PickUp : 0;
+
+
             CartOfferDto dto = new()
             {
                 Quantity = quantity,
@@ -192,13 +242,12 @@
                 CollectionOption = collectionOption,
                 OfferId = offer.Id
             };
-            
-            
+
+
             await HttpCartClient.AddToCartAsync(dto);
             quantity = 0;
             delivery = false;
             pickUp = false;
-
         }
         catch (Exception e)
         {
@@ -219,13 +268,12 @@
         StateHasChanged();
         return Task.CompletedTask;
     }
-    
-    
+
+
     private async Task ValidateData()
     {
-        
     }
-    
+
     ///summary///
     /// sets the delivery boolean to true to simulate 'chosen from the radio'
     /// summary///

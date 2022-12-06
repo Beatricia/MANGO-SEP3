@@ -1,5 +1,6 @@
 using Application.DAOInterfaces;
 using GprcClients.Converters;
+using Shared.DTOs;
 
 namespace GprcClients.DAOImplementations;
 

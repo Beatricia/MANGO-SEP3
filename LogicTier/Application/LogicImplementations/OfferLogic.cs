@@ -14,16 +14,18 @@ public class OfferLogic : IOfferLogic
     private IOfferDao offerDao;
     private IImageDao imageDao;
     private IFarmDao farmDao;
+    private ICartDao cartDao;
 
     /// <summary>
     /// Initializing the OfferLogic with the given IOfferDao
     /// </summary>
     /// <param name="offerDao"></param>
-    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao)
+    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao, ICartDao cartDao)
     {
         this.offerDao = offerDao;
         this.imageDao = imageDao;
         this.farmDao = farmDao;
+        this.cartDao = cartDao;
     }
     
     /// <summary>
@@ -70,6 +72,28 @@ public class OfferLogic : IOfferLogic
     {
         var results = await offerDao.GetByFarmNameAsync(farmName);
         return results;
+    }
+
+    /// <summary>
+    /// Will disable the offer with the given id
+    /// </summary>
+    public async Task DisableAsync(int id)
+    {
+        //check if offer exists??? -- 
+        try
+        {
+            Offer offerToDelete = await offerDao.GetOfferByIdAsync(id);
+            await offerDao.DisableAsync(id);
+
+            await cartDao.DeleteAllByOfferIdAsync(id);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
 

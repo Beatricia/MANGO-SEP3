@@ -84,14 +84,15 @@
     }
 
 
-    Task CreateReview()
+    async Task CreateReview()
     {
         var dto = new ReviewCreationDto
         {
             ReviewText = newReviewContent
         };
         
-        return FarmService.CreateReviewAsync(FarmName, dto);
+        await FarmService.CreateReviewAsync(FarmName, dto);
+        await OnInitializedAsync();
     }
     
     

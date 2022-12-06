@@ -179,10 +179,19 @@ public class FarmController : LocallyController
         }
     }
     
-    [HttpGet("{name:regex([[\\w\\W]]+)}/reviews")]
-    public async Task<IActionResult> GetReviews()
+    [HttpGet("{farmName}/reviews")]
+    public async Task<IActionResult> GetReviews(string farmName)
     {
-        return Ok();
+        try
+        {
+            var reviews = await reviewLogic.GetAllReviewsByFarm(farmName);
+            return Ok(reviews);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpPatch("{name:regex([[\\w\\W]]+)}/reviews/{id}")]

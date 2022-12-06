@@ -13,4 +13,6 @@ public interface IReviewLogic
     /// <param name="reviewCreationDto"></param>
     /// <returns></returns>
     public Task<Review> CreateReview(string farmName, string username, ReviewCreationDto reviewCreationDto);
+
+    Task<ICollection<Review>> GetAllReviewsByFarm(string farmName);
 }

@@ -24,4 +24,6 @@ public interface IReviewDao
     /// <param name="review"></param>
     /// <returns></returns>
     Task<Review> UpdateReviewAsync(Review review);
+
+    Task<ICollection<Review>> GetReviewsByFarmAsync(Farm farm);
 }

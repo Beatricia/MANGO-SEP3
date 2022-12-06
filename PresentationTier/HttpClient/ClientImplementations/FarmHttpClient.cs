@@ -161,4 +161,27 @@ public class FarmHttpClient : IFarmService
             throw new Exception(content);
         }
     }
+
+    public async Task<ICollection<Review>> GetAllReviews(string farmName)
+    {
+        HttpResponseMessage response = await Client.GetAsync($"/Farm/{farmName}/reviews");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        ICollection<Review> reviews = JsonSerializer.Deserialize<ICollection<Review>>(content,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        return reviews;
+    }
+
+    public Task<ICollection<Review>> UpdateReview(ReviewCreationDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }

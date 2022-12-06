@@ -28,4 +28,6 @@ public interface IFarmService
     Task<Review> CreateReviewAsync(string farmName, ReviewCreationDto dto);
     
     Task DisableAsync(string farmName);
+    
+    Task<ICollection<Review>> GetAllReviews(string farmName);
 }

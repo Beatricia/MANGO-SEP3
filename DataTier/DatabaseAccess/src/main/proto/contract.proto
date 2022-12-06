@@ -64,6 +64,7 @@ service NotificationService{
 
 service ReviewService{
   rpc CreateReview(Review) returns(Review);
+  rpc GetReviewsByFarm(Farm) returns(Reviews);
 }
 
 message UserAuth{
@@ -233,4 +234,8 @@ message RepeatedNotification{
 
 message RepeatedUsername{
   repeated Text username= 1;
+}
+
+message Reviews{
+  repeated Review reviews = 1;
 }

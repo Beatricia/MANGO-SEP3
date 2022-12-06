@@ -11,7 +11,10 @@
         "paprika",
         "pumpkin",
         "salad",
-        "strawberry"];
+        "strawberry"]; 
+    // remember, image has to be in wwwroot\images\loading and with png extension
+    // and the image must be a square, having the same width and height, otherwise it might not work as it should. 
+    // Also at least 200*200 px is recommended.
 
 
     let loadingWrapper = document.querySelector('.loading-wrapper');

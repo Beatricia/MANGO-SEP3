@@ -33,4 +33,11 @@ public interface IOfferService
     /// <returns></returns>
     Task<ICollection<Offer>> GetAsync(string farmName);
 
+    /// <summary>
+    /// Disables specific offer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task DisableAsync(int id);
+
 }

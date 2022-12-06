@@ -79,14 +79,13 @@
 
     protected async Task RefreshAsync()
     {
+        notifications = null;
         try
         {
-            notifications = null;
             notifications = await NotificationService.GetNotifications();
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             errorMessage = e.Message;
         }
     }

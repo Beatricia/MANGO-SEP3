@@ -41,15 +41,23 @@
                 </div>
             }
             
-            @foreach (var review in reviews)
+            @if(reviews is not null)
             {
-                <div class="card">
-                    <div class="review">
-                        <div class="info"><span>@review.WrittenBy</span> • <span class="date">@GetReviewTimeStamp(review.Date)</span></div>
-                        <div class="content">@review.Content</div>
+                @foreach (var review in reviews)
+                {
+                    <div class="card">
+                        <div class="review">
+                            <div class="info"><span>@review.WrittenBy</span> • <span class="date">@GetReviewTimeStamp(review.Date)</span></div>
+                            <div class="content">@review.Content</div>
+                        </div>
                     </div>
-                </div>
+                }
             }
+            else
+            {
+                <span>Loading...</span>
+            }
+            
         </div>
     </div>
 </div>

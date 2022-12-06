@@ -145,7 +145,7 @@ public class OfferLogic : IOfferLogic
                 
                 Console.WriteLine("Offer: " +  offer.Name);
                 Console.WriteLine("Distance: " +  distance);
-                Console.WriteLine("----- -------------------------");
+                Console.WriteLine("-------------------------------");
 
                 if (dtoDistance ! <= distance)
                 {

@@ -10,10 +10,10 @@ body{
 
 
 .review-wrapper{
-  $wrapper-height: 60px;
+  $wrapper-height: 30px;
 
   width: 120px;
-  height: 60px;
+  height: $wrapper-height;
 
   position: relative;
 
@@ -28,7 +28,8 @@ body{
 
   .review-extendable{
     position: absolute;
-    height: 100%;
+    height: fit-content;
+    max-height: $wrapper-height;
     width: 100%;
     background-color: #fafaf7;
     border: #fafaf7 solid;
@@ -41,19 +42,19 @@ body{
 
     $animation-duration: 300ms;
     transition: width $animation-duration,
-    height $animation-duration,
-    transform $animation-duration;
-
+    max-height $animation-duration,
+    transform $animation-duration,
+    box-shadow $animation-duration;
   }
 
   &:hover{
     .review-extendable{
-      height: fit-content;
       max-height: 400px;
       overflow-y: auto;
       padding-bottom: 10px;
       width: 400px;
       transform: translateY(-100px) translateX(-50px);
+      box-shadow: 2px 2px 30px 2px #545454;
     }
 
     .reviews{

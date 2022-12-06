@@ -10,11 +10,11 @@ body {
 
 .review-wrapper {
     width: 120px;
-    height: 60px;
+    height: 30px;
     position: relative;
 }
 .review-wrapper .review-title {
-    height: 60px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,8 @@ body {
 }
 .review-wrapper .review-extendable {
     position: absolute;
-    height: 100%;
+    height: fit-content;
+    max-height: 30px;
     width: 100%;
     background-color: #fafaf7;
     border: #fafaf7 solid;
@@ -32,15 +33,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: width 300ms, height 300ms, transform 300ms;
+    transition: width 300ms, max-height 300ms, transform 300ms, box-shadow 300ms;
 }
 .review-wrapper:hover .review-extendable {
-    height: fit-content;
     max-height: 400px;
     overflow-y: auto;
     padding-bottom: 10px;
     width: 400px;
     transform: translateY(-100px) translateX(-50px);
+    box-shadow: 2px 2px 30px 2px #545454;
 }
 .review-wrapper:hover .reviews {
     visibility: visible;

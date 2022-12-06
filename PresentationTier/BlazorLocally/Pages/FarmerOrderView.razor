@@ -113,11 +113,11 @@
             {
                  foreach (var order in ordersToGet)
                  {
-                     if (order.CollectionOption.Equals("Delivery"))
+                     if (order.CollectionOption == CollectionOption.Delivery)
                      {
                          deliveryOrders.Add(order);
                      }
-                     else if(order.CollectionOption.Equals("PickUp"))
+                     else if(order.CollectionOption == CollectionOption.PickUp)
                      {
                          pickUpOrders.Add(order);
                      }

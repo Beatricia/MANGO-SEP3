@@ -11,4 +11,6 @@ public interface OfferDaoInterface
   Collection<Offer> GetOffer();
   Offer getOfferById(int id);
   Collection<Offer> getOffersByFarmName(String farmName);
+
+  void disableOfferById(int id);
 }

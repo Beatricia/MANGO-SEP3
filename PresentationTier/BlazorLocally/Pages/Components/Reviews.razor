@@ -1,0 +1,123 @@
+﻿@using BlazorLocally.Pages
+@using HttpClient.ClientInterfaces
+@using Shared.DTOs
+@using Shared.Models
+@namespace Components
+@inject IFarmService FarmService
+
+
+<div class="review-wrapper">
+    <div class="review-extendable cool-hover-wheel">
+        <div class="review-title">
+            <span>Reviews</span>
+        </div>
+        <div class="reviews">
+            @if (currentUserReview is not null)
+            {
+                <div class="card">
+                    <div class="review-edit edited">
+                        <div class="info"><span>@CurrentUser</span> • <span class="date">@GetReviewTimeStamp(currentUserReview.Date)</span></div>
+                        <div class="content">
+                            <label>
+                                <textarea class="cool-hover-wheel" placeholder="Share your opinion about the farm">
+                                    @currentUserReview.Content
+                                </textarea>
+                            </label>
+                        </div>
+                        <button class="submit">Done</button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card">
+                    <div class="review-create">
+                        <label>
+                            <textarea @bind="newReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
+                        </label>
+
+                        <button class="submit" @onclick="CreateReview">Submit</button>
+                    </div>
+                </div>
+            }
+            
+            @if(reviews is not null)
+            {
+                @foreach (var review in reviews)
+                {
+                    <div class="card">
+                        <div class="review">
+                            <div class="info"><span>@review.WrittenBy</span> • <span class="date">@GetReviewTimeStamp(review.Date)</span></div>
+                            <div class="content">@review.Content</div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <span>Loading...</span>
+            }
+            
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string CurrentUser { get; set; } = "";
+    
+    [Parameter]
+    public string FarmName { get; set; } = "";
+    
+    private Review? currentUserReview;
+
+    private ICollection<Review>? reviews;
+    
+    
+    private string newReviewContent = "";
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        // get all the reviews, set the currentUserReview if the CurrentUser already wrote a review.
+    }
+
+
+    async Task CreateReview()
+    {
+        var dto = new ReviewCreationDto
+        {
+            ReviewText = newReviewContent
+        };
+        
+        await FarmService.CreateReviewAsync(FarmName, dto);
+        await OnInitializedAsync();
+    }
+    
+    
+    static string GetReviewTimeStamp(DateTime time)
+    {
+        var now = DateTime.Now;
+        var diff = now - time;
+        
+        if(diff.TotalSeconds < 60)
+            return diff.TotalSeconds.ToString("0") + " seconds ago";
+        
+    // minutes
+        if(diff.TotalMinutes < 60)
+            return diff.TotalMinutes.ToString("0") + " minutes ago";
+        
+    // hours
+        if(diff.TotalHours < 24)
+            return diff.TotalHours.ToString("0") + " hours ago";
+        
+    // days
+        if(diff.TotalDays < 7)
+            return diff.TotalDays.ToString("0") + " days ago";
+        
+    // return date
+        return time.ToString("dd/MM/yyyy");
+    }
+
+}

@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.DTOs;
+using Shared.Models;
 
 namespace HttpClient.ClientInterfaces;
 
@@ -9,4 +10,5 @@ public interface ICartService
     public Task DeleteAllCartOffersAsync();
 
     public Task DeleteCartOfferAsync(int cartItemId);
+    public Task UpdateCartOfferAsync(UpdateCartOfferDto dto);
 }

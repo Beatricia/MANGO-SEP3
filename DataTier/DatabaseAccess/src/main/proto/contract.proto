@@ -10,6 +10,9 @@ service FarmService{
   rpc GetFarms(Farmer) returns(Farms);
   rpc UpdateFarm(FarmUpdate) returns(Farm);
   rpc GetAllCustomersUncompletedOrder(Text) returns(RepeatedUsername);
+  rpc GetAllFarms(Void) returns(Farms);
+  rpc GetFarmsByName(Text) returns(Farms);
+  rpc DisableFarmByName(Text) returns(Void);
 }
 
 service OfferService{
@@ -17,6 +20,7 @@ service OfferService{
   rpc GetOffers(Void) returns(OfferItems);
   rpc GetOfferById(Id) returns(Offer);
   rpc GetOffersByFarmName(Text) returns(OfferItems);
+  rpc DisableOfferById(Id) returns(Void);
 }
 
 service UserService{
@@ -48,12 +52,18 @@ service CartOfferService{
   rpc DeleteAllCartOffers(Username) returns(Void);
   rpc GetById(Id) returns(CartOffer);
   rpc DeleteCartOffer(Id) returns(Void);
+  rpc DeleteAllByOfferId(Id) returns(Void);
+  rpc UpdateCartOffer(CartOfferUpdate) returns(Void);
 }
 
 service NotificationService{
   rpc AddNotifications(RepeatedNotification) returns(Void);
   rpc GetNotifications(Text) returns(stream Notification);
   rpc DeleteNotification(Notification) returns(Void);
+}
+
+service ReviewService{
+  rpc CreateReview(Review) returns(Review);
 }
 
 message UserAuth{
@@ -190,6 +200,11 @@ message CartOffers{
   repeated CartOffer cartOffers = 1;
 }
 
+message CartOfferUpdate{
+  int32 id = 1;
+  int32 quantity = 2;
+}
+
 message Username{
   string username = 1;
 }
@@ -202,6 +217,13 @@ message Notification{
   int64 id = 1;
   string toUsername = 2;
   string text = 3;
+  int64 createdAt = 4;
+}
+
+message Review{
+  string farmName = 1;
+  string username = 2;
+  string reviewText = 3;
   int64 createdAt = 4;
 }
 

@@ -1,5 +1,7 @@
 ﻿using Application.DAOInterfaces;
 using GprcClients.Converters;
+using Shared.DTOs;
+
 namespace GprcClients.DAOImplementations;
 
 public class CartDaoImpl : ICartDao
@@ -82,5 +84,18 @@ public class CartDaoImpl : ICartDao
         }
         
         cartOfferServiceClient.DeleteCartOfferAsync(idBuff);
+    }
+
+    public async Task DeleteAllByOfferIdAsync(int offerId)
+    {
+        var idBuff = offerId.ToGrpc();
+        
+        await cartOfferServiceClient.DeleteAllByOfferIdAsync(idBuff);
+    }
+
+    public async Task UpdateAsync(UpdateCartOfferDto dto)
+    {
+        var cartOfferToUpdate = dto.ToGrpc();
+        await cartOfferServiceClient.UpdateCartOfferAsync(cartOfferToUpdate);
     }
 }

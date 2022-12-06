@@ -85,6 +85,55 @@ public class FarmDaoImpl : IFarmDao
         return usernamesGrpc.ToShared();
     }
 
+    public async Task<ICollection<Shared.Models.Farm>> GetAllAsync()
+    {
+        
+        //Getting the farms from the database as buffers
+        Farms farmsBuff = farmServiceClient.GetAllFarms(new Void());
+
+        ICollection<Shared.Models.Farm> list = new List<Shared.Models.Farm>();
+
+        foreach (var farm in farmsBuff.Farms_)
+        {
+            var farmShared = farm.ToShared(farmIconDao);
+            list.Add(farmShared);
+        }
+
+        return list;
+    }
+
+    public async Task<ICollection<Shared.Models.Farm>> GetAllByNameAsync(string nameContains)
+    {
+        var text = new Text
+        {
+            Text_ = nameContains
+        };   
+        
+        //Getting the farms from the database as buffers
+        Farms farmsBuff = farmServiceClient.GetFarmsByName(text);
+
+        ICollection<Shared.Models.Farm> list = new List<Shared.Models.Farm>();
+
+        foreach (var farm in farmsBuff.Farms_)
+        {
+            var farmShared = farm.ToShared(farmIconDao);
+            list.Add(farmShared);
+        }
+
+        return list;
+    }
+
+    public async Task DisableAsync(string farmName)
+    {
+        var text = new Text
+        {
+            Text_ = farmName
+        };   
+
+        await farmServiceClient.DisableFarmByNameAsync(text);
+    }
+
+
     public async Task<Shared.Models.Farm?> GetByName(string name)
     {
         var text = new Text{Text_= name};

@@ -9,7 +9,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "farmer")]
+
 public class OfferController : ControllerBase
 {
     private readonly IOfferLogic offerLogic;
@@ -28,6 +28,7 @@ public class OfferController : ControllerBase
     /// </summary>
     /// <param name="dto">A OfferCreationDto containing all information Required to create a Offer object</param>
     /// <returns>Returns the Offer object or a status code to indicate an error</returns>
+    [Authorize(Roles = "farmer")]
     [HttpPost, AllowAnonymous]
     public async Task<IActionResult> CreateAsync(OfferCreationDto dto)
     {
@@ -42,7 +43,7 @@ public class OfferController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-
+    
     [HttpPost("{id:int}/image")]
     public async Task<IActionResult> UploadImage([FromRoute] int id)
     {
@@ -88,8 +89,8 @@ public class OfferController : ControllerBase
         }
     }
     
-    [HttpGet("farmName"), AllowAnonymous]
-    public async Task<IActionResult> GetAsync([FromQuery] string farmName)
+    [HttpGet("{farmName}")]
+    public async Task<IActionResult> GetAsync([FromRoute] string farmName)
     {
         // TODO: make this a rest endpoint
         try
@@ -101,6 +102,27 @@ public class OfferController : ControllerBase
         {
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
+        }
+    }
+
+    /// <summary>
+    /// The method asynchronously disables an Offer object.
+    /// </summary>
+    /// <param name="id">An id of the offer to be disabled</param>
+    /// <returns>Returns Action result e.g. Ok if request was completed</returns>
+    [Authorize(Roles = "farmer")]
+    [HttpPatch("{id:int}"), AllowAnonymous]
+    public async Task<ActionResult> DisableAsync([FromRoute] int id)
+    {
+        try
+        {
+            await offerLogic.DisableAsync(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

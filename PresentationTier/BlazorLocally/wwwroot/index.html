@@ -9,17 +9,40 @@
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="BlazorLocally.styles.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/c50a2e72c1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/loading/loading.css">
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="loading-wrapper" style="--loading-percentage: 0">
+            <div class="loading-image">
+                <div class="gray">
+                    <img src="" alt="">
+                </div>
+                <div class="color" style="">
+                    <div class="image"></div>
+                </div>
+
+            </div>
+            <div class="loading-text">
+                <div class="title">
+                    Locally
+                </div>
+                <div class="description">
+                    Loading: <span class="loading-percentage">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script src="js/loading.js"></script>
 </body>
 
 </html>

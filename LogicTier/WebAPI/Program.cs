@@ -80,6 +80,10 @@ builder.Services.AddGrpcClient<NotificationService.NotificationServiceClient>(gr
 builder.Services.AddScoped<INotificationDao, NotificationDaoImpl>();
 builder.Services.AddScoped<INotificationLogic, NotificationLogic>();
 
+builder.Services.AddGrpcClient<ReviewService.ReviewServiceClient>(grpcOptions);
+builder.Services.AddScoped<IReviewDao, ReviewDaoImpl>();
+builder.Services.AddScoped<IReviewLogic, ReviewLogic>();
+
 builder.Services.AddTransient<IImageDao, ImageResource>();
 builder.Services.AddTransient<ImageResource>();
 builder.Services.AddTransient<IFarmIconDao, FarmIconResource>();

@@ -116,4 +116,12 @@ import java.util.Collection;
     responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
+
+  @Override
+  public void disableOfferById(Id request, StreamObserver<Void> responseObserver) {
+    offerDao.disableOfferById(request.getId());
+
+    responseObserver.onNext(Void.newBuilder().build());
+    responseObserver.onCompleted();
+  }
 }

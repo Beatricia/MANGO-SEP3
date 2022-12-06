@@ -67,7 +67,6 @@ public class OfferHttpClient : IOfferService
         })!;
         return offers;
     }
-    
 
     public async Task UploadImageAsync(IBrowserFile file, int offerId)
     {

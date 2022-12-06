@@ -82,4 +82,14 @@ public class OfferDaoImpl : IOfferDao
         }
         return list;
     }
+
+    /// <summary>
+    /// Will disable the offer with the given id
+    /// </summary>
+    public async Task DisableAsync(int id)
+    {
+        Id offerId = id.ToGrpc();
+        
+        await offerService.DisableOfferByIdAsync(offerId);
+    }
 }

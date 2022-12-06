@@ -4,8 +4,10 @@ import mango.sep3.databaseaccess.DAOInterfaces.CartOfferInterface;
 import mango.sep3.databaseaccess.Repositories.CartRepository;
 import mango.sep3.databaseaccess.Shared.CartItem;
 import mango.sep3.databaseaccess.Shared.Customer;
+import mango.sep3.databaseaccess.Shared.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -45,5 +47,18 @@ public class CartOfferDAO implements CartOfferInterface
   @Override public void deleteCartOffer(int id)
   {
     cartRepository.deleteById(id);
+  }
+
+  @Override
+  @Transactional
+  public void deleteAllByOfferId(Offer offerId) {
+    cartRepository.deleteAllByOfferId(offerId);
+  }
+
+  @Override public void updateCartOffer(int cartOfferId, int quantity)
+  {
+    CartItem cartItem = getById(cartOfferId);
+    cartItem.setQuantity(quantity);
+    cartRepository.saveAndFlush(cartItem);
   }
 }

@@ -16,38 +16,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="row-text">First Name</div>
-            <div class="row-input">
-                <input type="text" @bind="firstName">
-            </div>
-        </div>
-        <div class="row">
-            <div class="row-text">Last Name</div>
-            <div class="row-input">
-                <input type="text" @bind="lastName">
-            </div>
-        </div>
-                       
-                      
-        <div class="row">
-            <div class="row-text">Username</div>
-            <div class="row-input">
-                <input type="text" @bind="username">
-            </div>
-        </div>
-        <div class="row">
-            <div class="row-text">Password</div>
-            <div class="row-input">
-                <input type="password" @bind="password">
-            </div>
-        </div>
-        <div class="row">
-            <div class="row-text">Repeat Password</div>
-            <div class="row-input">
-                <input type="password" @bind="repeatPassword">
-            </div>
-        </div>
-        <div class="row">
             <div class="row-input user-type-choose">
                 <div class="user-type-input">
                     <input @onchange="() => isFarmer = true" type="radio" name="user-type-chooser" id="farmer-option">
@@ -57,29 +25,95 @@
                     <input @onchange="() => isFarmer = false" type="radio" name="user-type-chooser" id="customer-option">
                     <label for="customer-option"><span class="customer-text">Customer</span></label>
                 </div>
+        
+            </div>
+        </div>
+        @if (isFarmer != null)
+        {
+            <div class="row">
+                <div class="row-text">First Name</div>
+                <div class="row-input">
+                    <input type="text" @bind="firstName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="row-text">Last Name</div>
+                <div class="row-input">
+                    <input type="text" @bind="lastName">
+                </div>
+            </div>
 
+
+            <div class="row">
+                <div class="row-text">Username</div>
+                <div class="row-input">
+                    <input type="text" @bind="username">
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="row-input register-button">
-                <button @onclick="RegisterUser">Register</button>
+            <div class="row">
+                <div class="row-text">Password</div>
+                <div class="row-input">
+                    <input type="password" @bind="password">
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="row-login-link">
-                <a href="/LogIn">Log In</a>
+            <div class="row">
+                <div class="row-text">Repeat Password</div>
+                <div class="row-input">
+                    <input type="password" @bind="repeatPassword">
+                </div>
             </div>
-        </div>
+            @if (!isFarmer.Value)
+            {
+                <div class="row">
+                    <div class="row-text">City</div>
+                    <div class="row-input">
+                        <input type="text" @bind="city">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row-text">Street</div>
+                    <div class="row-input">
+                        <input type="text" @bind="street">
+                    </div>
+                    <div class="row-text">ZIP</div>
+                    <div class="row-input">
+                        <input type="text" @bind="zipCode">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row-text">Phone</div>
+                    <div class="row-input position-relative">
+                        <label class="directNumber position-absolute" style="left: -6%; top: 25%">+45</label>
+                        <input type="password" @bind="phoneNumber">
+                    </div>
+                </div>
+            }
+
+            <div class="row">
+                <div class="row-input register-button">
+                    <button @onclick="RegisterUser">Register</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row-login-link">
+                    <a href="/LogIn">Log In</a>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
 @code {
+    bool? isFarmer = null;
     string username = "";
     string firstName = "";
     string lastName = "";
     string password = "";
     string repeatPassword = "";
-    bool? isFarmer = null;
+    string city = "";
+    string street = "";
+    string zipCode = "";
+    string phoneNumber = "";
     string errorMessage = "";
 
     
@@ -94,11 +128,33 @@
 
         TrimUsername();
         
-        if (firstName == "" || lastName == "" || username == "" || password == "" || repeatPassword == "" || isFarmer == null)
+        if (isFarmer == false)
         {
+            if (city == "" || street == "" || zipCode == "" || phoneNumber == "")
+            {
+                errorMessage = "All fields must be filled";
+                return;
+            }
+            else if (zipCode.Length != 4 || !int.TryParse(zipCode, out _))
+            {
+                errorMessage = "ZIP code must be 4 digits";
+                return;
+            }
+            else if (phoneNumber.Length != 8 || !int.TryParse(phoneNumber, out _))
+            {
+                errorMessage = "Phone number must be 8 digits";
+                return;
+            }
+        }
+        if (firstName == "" || lastName == "" || username == "" || password == "" || repeatPassword == "")
+        {
+            
+                
+            
             errorMessage = "All fields are required";
             return;
         }
+        
         
         if (password != repeatPassword)
         {
@@ -108,7 +164,7 @@
 
         try
         {
-            await AuthService.RegisterAsync(firstName, lastName, username, password, isFarmer.Value);
+            await AuthService.RegisterAsync(firstName, lastName, username, password, isFarmer.Value, city, street, zipCode, phoneNumber);
             NavManager.NavigateTo("/Login");
         }
         catch (Exception e)

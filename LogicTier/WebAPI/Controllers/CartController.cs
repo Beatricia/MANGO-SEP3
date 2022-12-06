@@ -1,6 +1,7 @@
 ﻿using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DTOs;
 using Shared.Models;
 using WebAPI.Controllers.Base;
 
@@ -92,6 +93,21 @@ public class CartController : LocallyController
         {
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPatch]
+    public async Task<ActionResult> Update([FromBody]UpdateCartOfferDto dto)
+    {
+        try
+        {
+            await cartLogic.UpdateAsync(dto);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
         }
     }
 }

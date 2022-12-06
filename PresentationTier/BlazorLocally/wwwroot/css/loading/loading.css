@@ -1,0 +1,43 @@
+.loading-wrapper .loading-image .color div.image, .loading-wrapper .loading-image .color, .loading-wrapper .loading-image .gray img, .loading-wrapper .loading-image .gray, .loading-wrapper .loading-image {
+    height: 200px;
+    width: 200px;
+}
+
+.loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    --loading-percentage: 0;
+}
+.loading-wrapper .loading-image {
+    position: relative;
+    user-select: none;
+}
+.loading-wrapper .loading-image .gray, .loading-wrapper .loading-image .color {
+    position: absolute;
+}
+.loading-wrapper .loading-image .gray img {
+    filter: saturate(0);
+}
+.loading-wrapper .loading-image .color {
+    width: calc(var(--loading-percentage) * 2px);
+    overflow: hidden;
+    transition: width 50ms;
+}
+.loading-wrapper .loading-image .color div.image {
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.loading-wrapper .loading-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, serif;
+}
+.loading-wrapper .loading-text .title {
+    font-size: 50px;
+}
+
+/*# sourceMappingURL=form.css.map */

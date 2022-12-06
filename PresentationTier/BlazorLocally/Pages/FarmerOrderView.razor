@@ -7,7 +7,7 @@
 @inject IUserService userService
 
     <div class="title">
-        <h1>Orders</h1>
+        <h1 class="titleText">Orders</h1>
     </div>
     @if (orders == null)
     {
@@ -113,11 +113,11 @@
             {
                  foreach (var order in ordersToGet)
                  {
-                     if (order.CollectionOption.Equals("delivery"))
+                     if (order.CollectionOption == CollectionOption.Delivery)
                      {
                          deliveryOrders.Add(order);
                      }
-                     else if(order.CollectionOption.Equals("pickUp"))
+                     else if(order.CollectionOption == CollectionOption.PickUp)
                      {
                          pickUpOrders.Add(order);
                      }

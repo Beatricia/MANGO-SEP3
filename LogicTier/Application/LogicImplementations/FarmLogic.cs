@@ -12,13 +12,15 @@ public class FarmLogic : IFarmLogic
     private IFarmDao farmDao;
     private INotificationLogic notificationLogic;
     private IAddressDao addressDao;
+    private IOfferLogic offerLogic;
 
-    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic, IAddressDao addressDao)
+    public FarmLogic(IFarmDao farmDao, IFarmIconDao farmIconDao, INotificationLogic notificationLogic, IAddressDao addressDao, IOfferLogic offerLogic)
     {
         this.farmIconDao = farmIconDao;
         this.farmDao = farmDao;
         this.notificationLogic = notificationLogic;
         this.addressDao = addressDao;
+        this.offerLogic = offerLogic;
     }
     
     /// <summary>
@@ -39,10 +41,21 @@ public class FarmLogic : IFarmLogic
             icon = farmIconDao.CreateIcon(dto.FarmIconFileName!);
 
         var address = dto.Address;
-        var coordinates = await addressDao.GetCoordinatesAsync(address);
+        double latitude;
+        double longitude;
+
+        try
+        {
+            (latitude, longitude) = await addressDao.GetCoordinatesAsync(address);
+        }
+        catch (ArgumentException e)
+        {
+            throw new ArgumentException("The address is invalid", e);
+        }
         
-        address.Latitude = coordinates.Latitude;
-        address.Longitude = coordinates.Longitude;
+        
+        address.Latitude = latitude;
+        address.Longitude = longitude;
         
         Farm farmToSend = new Farm
         {
@@ -69,7 +82,6 @@ public class FarmLogic : IFarmLogic
     {
         ICollection<Farm> farms = await farmDao.GetAllFarmsByFarmer(username);
 
-        Console.WriteLine(farms);
         if (farms == null)
         {
             throw new Exception($"The farmer has no farms");
@@ -94,6 +106,42 @@ public class FarmLogic : IFarmLogic
             await notificationLogic.AddNotificationAsync(notification);
         }
     
+    }
+
+    public async Task<ICollection<Farm>> GetAllAsync()
+    {
+        return await farmDao.GetAllAsync();
+    }
+
+    public async Task<ICollection<Farm>> GetAllByNameAsync(string nameContains)
+    {
+        return await farmDao.GetAllByNameAsync(nameContains);
+    }
+
+    /// <summary>
+    /// Disables a farm by setting its status to disabled and also called method in offerLogic to disable all offers from that farm
+    /// </summary>
+    /// <param name="farmName">Name of the farmer to be disabled</param>
+    /// <returns></returns>
+    public async Task DisableAsync(string farmName)
+    {
+        try
+        {
+            //disables farm
+            await farmDao.DisableAsync(farmName);
+            
+            //disables all offers from that farm
+            IEnumerable<Offer> farmOffers = await offerLogic.GetByFarmNameAsync(farmName);
+            foreach (var offer in farmOffers)
+            {
+                await offerLogic.DisableAsync(offer.Id);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
 

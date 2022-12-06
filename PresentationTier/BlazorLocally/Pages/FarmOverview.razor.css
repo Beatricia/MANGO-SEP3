@@ -116,7 +116,7 @@ input[type=text] {
 #updateContainer{
     clear: both;
     float: right;
-    margin-right: 13%;
+    margin-right: 15em;
     margin-top: 15px;
 }
 

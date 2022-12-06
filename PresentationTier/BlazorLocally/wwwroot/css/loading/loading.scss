@@ -1,0 +1,64 @@
+$image-height: 200px;
+
+%image-height {
+  height: $image-height;
+  width: $image-height;
+}
+
+
+.loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  --loading-percentage: 0;
+
+
+  .loading-image {
+    @extend %image-height;
+
+
+    position: relative;
+    user-select: none;
+
+    .gray, .color {
+      position: absolute;
+    }
+
+    .gray {
+      @extend %image-height;
+
+      img {
+        @extend %image-height;
+        filter: saturate(0);
+      }
+    }
+
+    .color {
+      @extend %image-height;
+      width: calc(var(--loading-percentage) * 2px);
+      overflow: hidden;
+
+      transition: width 50ms;
+
+      div.image {
+        @extend %image-height;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+
+  .loading-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: Arial, serif;
+
+    .title{
+      font-size: 50px;
+    }
+  }
+}

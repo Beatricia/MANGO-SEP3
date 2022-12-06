@@ -10,7 +10,7 @@
 @if (farms == null)
 {
     <p>
-        <em>You don not have farms.</em>
+        <em>You do not have farms.</em>
     </p>
 }
 <div class="d-flex justify-content-around flex-wrap">
@@ -18,8 +18,9 @@
 {
     @foreach (var farm in farms)
         {
+            
+            <div class="card mb-3" style="max-width: 400px;">
             <a href="FarmOverview/@farm.Name" class="farm-link">
-                <div class="card mb-3" style="max-width: 400px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
                             <img src="@farm.FarmIcon.AbsoluteUrl" alt="farmImage"/>
@@ -30,8 +31,10 @@
                             </div>
                         </div>
                     </div>
+                    </a>
+                    <i @onclick="()=> DisableFarm(farm.Name)" class="fa-solid fa-square-xmark fa-2xl position-absolute" style="right: -2%; cursor: pointer"></i>
                 </div>
-            </a>
+            
         }
 }
 
@@ -67,6 +70,12 @@
             Console.WriteLine(e);
             msg = e.Message;
         }
+    }
+
+    private async Task DisableFarm(string farmName)
+    {
+        await farmHttpClient.DisableAsync(farmName);
+        await OnInitializedAsync();
     }
 
 }

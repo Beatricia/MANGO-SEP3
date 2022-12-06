@@ -15,4 +15,8 @@ public interface IFarmDao
 
     Task UpdateFarmAsync(FarmUpdateDto dto);
     Task<ICollection<string>> GetAllCustomersUncompletedOrder(string farmName);
+    Task<ICollection<Farm>> GetAllAsync();
+    Task<ICollection<Farm>> GetAllByNameAsync(string nameContains);
+
+    Task DisableAsync(string farmName);
 }

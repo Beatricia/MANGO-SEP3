@@ -15,19 +15,21 @@ public class OfferLogic : IOfferLogic
     private IImageDao imageDao;
     private IFarmDao farmDao;
     private IUserDao userDao;
+    private ICartDao cartDao;
 
     /// <summary>
     /// Initializing the OfferLogic with the given IOfferDao
     /// </summary>
     /// <param name="offerDao"></param>
-    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao, IUserDao userDao)
+    public OfferLogic(IOfferDao offerDao, IImageDao imageDao, IFarmDao farmDao, IUserDao userDao, ICartDao cartDao)
     {
         this.offerDao = offerDao;
         this.imageDao = imageDao;
         this.farmDao = farmDao;
         this.userDao = userDao;
+        this.cartDao = cartDao;
     }
-
+    
     /// <summary>
     /// Create asynchronously a Offer using the OfferCreationDto object. Call the CreateAsync method in gRPC client 
     /// </summary>
@@ -53,7 +55,7 @@ public class OfferLogic : IOfferLogic
         };
 
         var created = await offerDao.CreateAsync(offerToSend);
-
+        
         return created;
     }
 
@@ -97,10 +99,33 @@ public class OfferLogic : IOfferLogic
 
         return results;
     }
+
     public async Task<IEnumerable<Offer>> GetByFarmNameAsync(string farmName)
     {
         var results = await offerDao.GetByFarmNameAsync(farmName);
         return results;
+    }
+
+    /// <summary>
+    /// Will disable the offer with the given id
+    /// </summary>
+    public async Task DisableAsync(int id)
+    {
+        //check if offer exists??? -- 
+        try
+        {
+            Offer offerToDelete = await offerDao.GetOfferByIdAsync(id);
+            await offerDao.DisableAsync(id);
+
+            await cartDao.DeleteAllByOfferIdAsync(id);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
 
@@ -140,6 +165,7 @@ public class OfferLogic : IOfferLogic
     /// <exception cref="Exception"></exception>
     private async Task ValidateData(OfferCreationDto dto)
     {
+        
         if (dto.Name.Length > 100)
         {
             throw new Exception("Offer name is too long!");
@@ -154,13 +180,14 @@ public class OfferLogic : IOfferLogic
         {
             throw new Exception("Price must be bigger than 0!");
         }
-
+        
         // get farm by name from dao and check if it exists
         var farm = await farmDao.GetByName(dto.FarmName);
-
+        
         if (farm == null)
         {
             throw new Exception($"Farm {dto.FarmName} does not exist!");
         }
+        
     }
 }

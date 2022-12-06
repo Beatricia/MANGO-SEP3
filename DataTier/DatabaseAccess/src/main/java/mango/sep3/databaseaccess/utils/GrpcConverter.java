@@ -1,6 +1,7 @@
 package mango.sep3.databaseaccess.utils;
 
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.Address;
 import mango.sep3.databaseaccess.Shared.NotificationCustomer;
@@ -22,6 +23,9 @@ public class GrpcConverter {
 
     @Autowired
     private FarmDaoInterface farmDaoInterface;
+
+    @Autowired
+    private OfferDaoInterface offerDaoInterface;
 
     public GrpcConverter() {
     }
@@ -385,6 +389,32 @@ public class GrpcConverter {
                 .setText(notification.getMessage())
                 .setCreatedAt(notification.getCreatedAt())
                 .build();
+    }
+
+    // endregion
+
+    // region Review
+
+    public Review convertToGrpc(mango.sep3.databaseaccess.Shared.Review review) {
+        return Review.newBuilder()
+                .setFarmName(review.getFarm().getName())
+                .setUsername(review.getCustomer().getUsername())
+                .setCreatedAt(review.getCreatedAt())
+                .setReviewText(review.getReviewText())
+                .build();
+    }
+
+    public mango.sep3.databaseaccess.Shared.Review convertToShared(Review review) {
+        var review1 = new mango.sep3.databaseaccess.Shared.Review();
+
+        var farm = farmDaoInterface.getFarmByName(review.getFarmName());
+        review1.setFarm(farm);
+        var customer = userDaoInterface.getCustomer(review.getUsername());
+        review1.setCustomer(customer);
+        review1.setCreatedAt(review.getCreatedAt());
+        review1.setReviewText(review.getReviewText());
+
+        return review1;
     }
 
     // endregion

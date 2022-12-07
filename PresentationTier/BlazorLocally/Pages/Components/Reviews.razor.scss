@@ -14,7 +14,7 @@ body{
 
   width: 120px;
   height: $wrapper-height;
-
+  z-index: 1;
   position: relative;
 
   .review-title{

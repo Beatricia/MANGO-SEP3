@@ -30,6 +30,8 @@ AuthorizationPolicies.AddPolicies(builder.Services);
 
 var app = builder.Build();
 
+app.Services.GetRequiredService<ApiAccess>();
+
 await app.RunAsync();
 
 

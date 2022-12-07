@@ -61,8 +61,8 @@ public class FarmController : LocallyController
     {
         try
         {
-            var farm = await farmLogic.GetFarmByNameAsync(farmName);
-            return Created($"/Farms", farm);
+            var farms = await farmLogic.GetAllByNameAsync(farmName);
+            return Ok(farms);
         }
         catch (Exception e)
         {

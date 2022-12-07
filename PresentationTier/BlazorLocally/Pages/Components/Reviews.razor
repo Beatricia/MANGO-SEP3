@@ -16,7 +16,7 @@
             @if (currentUserReview is not null)
             {
                 <div class="card">
-                    <div class="review-edit @(isEdited ? "edited" : "")">
+                    <div class="review-edit edited">
                         <div class="info"><span>@CurrentUser</span> • <span class="date">@GetReviewTimeStamp(currentUserReview.Date)</span></div>
                         <div class="content">
                             <label>
@@ -34,7 +34,7 @@
                 <div class="card">
                     <div class="review-create">
                         <label>
-                            <textarea @onchange="ReviewEdited" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
+                            <textarea @bind="newReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
                         </label>
 
                         <button class="submit" @onclick="CreateReview">Submit</button>
@@ -95,19 +95,25 @@
         var reviewsTemp = await FarmService.GetAllReviews(FarmName);
         currentUserReview = reviewsTemp.FirstOrDefault(r => r.WrittenBy.Equals(CurrentUser));
         if (currentUserReview is not null)
+        {
             reviewsTemp.Remove(currentUserReview);
+            editedReviewContent = currentUserReview.Content;
+        }
+            
         
         reviews = reviewsTemp;
     }
 
-    void ReviewEdited(ChangeEventArgs e)
+    void ReviewEdited(ChangeEventArgs? e)
     {
+        if(e is null)
+            return;
+
         var value = (string?)e.Value;
         if (value is null)
             value = "";
         
         editedReviewContent = value;
-        isEdited = value != currentUserReview!.Content;
     }
 
     async Task SubmitEditedReview()

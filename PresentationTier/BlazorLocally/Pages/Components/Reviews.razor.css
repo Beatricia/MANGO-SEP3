@@ -12,6 +12,7 @@ body {
     width: 120px;
     height: 30px;
     position: relative;
+    z-index: 1;
 }
 .review-wrapper .review-title {
     height: 30px;

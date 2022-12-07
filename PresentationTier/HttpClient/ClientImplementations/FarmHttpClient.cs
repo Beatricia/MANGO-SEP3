@@ -32,6 +32,9 @@ public class FarmHttpClient : IFarmService
 
     public async Task<Farm> GetFarmByNameAsync(string farmName)
     {
+        var client = Client;
+        Console.WriteLine("Auth: " + client.DefaultRequestHeaders.Authorization);
+        
         HttpResponseMessage response = await Client.GetAsync($"/farm/{farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
@@ -116,7 +119,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<Farm>?> GetAllFarmsByNameContainsAsync(string nameContains)
     {
-        HttpResponseMessage response = await Client.GetAsync($"/Farm/{nameContains}");
+        HttpResponseMessage response = await Client.GetAsync($"/Farm?farmname={nameContains}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -152,8 +155,9 @@ public class FarmHttpClient : IFarmService
 
     public async Task<Review> EditReviewAsync(long reviewId, string farmName, UpdateReviewDto dto)
     {
-        var requestContent = JsonContent.Create(dto);
-        HttpResponseMessage response = await Client.PatchAsync(new Uri($"/farm/{farmName}/reviews/{reviewId}"), requestContent);
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await Client.PatchAsync($"/farm/{farmName}/reviews/{reviewId}", body);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -183,6 +187,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<Review>> GetAllReviews(string farmName)
     {
+        
         HttpResponseMessage response = await Client.GetAsync($"/Farm/{farmName}/reviews");
         string content = await response.Content.ReadAsStringAsync();
 
@@ -197,10 +202,5 @@ public class FarmHttpClient : IFarmService
                 PropertyNameCaseInsensitive = true
             })!;
         return reviews;
-    }
-
-    public Task<ICollection<Review>> UpdateReview(ReviewCreationDto dto)
-    {
-        throw new NotImplementedException();
     }
 }

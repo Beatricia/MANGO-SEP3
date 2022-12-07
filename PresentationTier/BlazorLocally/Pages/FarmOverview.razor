@@ -84,8 +84,8 @@
     
     private Farm Farm { get; set; }
     private IEnumerable<Offer> offers { get; set; }
-    private string updatedStatus;
-    private string updatedPhone;
+    private string? updatedStatus;
+    private string? updatedPhone;
     private string msg;
 
     protected override async Task OnInitializedAsync()
@@ -107,8 +107,8 @@
     {
         var dto = new FarmUpdateDto
         {
-            FarmStatus = updatedStatus,
-            FarmPhone = updatedPhone,
+            FarmStatus = updatedStatus ?? Farm.FarmStatus,
+            FarmPhone = updatedPhone ?? Farm.Phone,
             Name = FarmName,
         };
 

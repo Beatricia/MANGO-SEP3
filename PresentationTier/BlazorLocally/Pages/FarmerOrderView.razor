@@ -5,6 +5,8 @@
 @using HttpClient.ClientInterfaces
 @inject IOrderService orderService
 @inject IUserService userService
+@inject NavigationManager navMgr;
+
 
     <div class="title">
         <h3 class="titleText">ORDERS</h3>
@@ -170,7 +172,7 @@
     private async Task CollectOrder(int id)
     {
         await orderService.CompleteOrderAsync(id);
-        await OnInitializedAsync();
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
 

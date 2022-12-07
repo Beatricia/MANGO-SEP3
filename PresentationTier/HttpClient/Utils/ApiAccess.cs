@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using HttpClient.Utils;
 using HttpClient = System.Net.Http.HttpClient;
 
 /// <summary>
@@ -31,7 +32,7 @@ public class ApiAccess
                     BaseAddress = new Uri(BaseApiAddress)
                 };
             }
-            
+
             if(!string.IsNullOrEmpty(JWT))
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JWT);
             else
@@ -54,7 +55,7 @@ public class ApiAccess
     /// <summary>
     /// Sets up the class by getting the cookie from the localstorage
     /// </summary>
-    private async void Setup()
+    private async Task Setup()
     {
         var jwtToken = await localStorageService.GetItemAsStringAsync(CookieKey);
         

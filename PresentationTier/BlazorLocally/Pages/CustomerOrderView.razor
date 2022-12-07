@@ -5,6 +5,8 @@
 @using HttpClient.ClientInterfaces
 @inject IOrderService orderService
 @inject IFarmService farmService
+@inject NavigationManager navMgr;
+
 
     <div class="text">
         <h3 class="ordersText">Orders</h3>
@@ -150,7 +152,7 @@
     private async Task DeleteOrder(int id)
     {
         await orderService.DeleteOrderAsync(id);
-        await OnInitializedAsync();
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
 }

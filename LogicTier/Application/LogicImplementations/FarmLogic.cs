@@ -33,6 +33,11 @@ public class FarmLogic : IFarmLogic
     {
         ValidateData(dto);
 
+        var existingFarm = await farmDao.GetFarmByNameAsync(dto.Name);
+        if (existingFarm is not null)
+            throw new Exception("Farm already exists.");
+        
+
         // assign the default icon if the user didn't specify one
         FarmIcon icon;
         if (!farmIconDao.isValidIcon(dto.FarmIconFileName))

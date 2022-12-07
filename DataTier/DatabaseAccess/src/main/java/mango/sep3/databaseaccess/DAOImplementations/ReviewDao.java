@@ -52,4 +52,5 @@ public class ReviewDao implements ReviewDaoInterface {
     public Review getReviewById(long id) {
         return reviewRepository.findById(id).orElse(null);
     }
+
 }

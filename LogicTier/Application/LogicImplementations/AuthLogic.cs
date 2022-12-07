@@ -12,11 +12,13 @@ public class AuthLogic : IAuthLogic
     
     private readonly IAuthDao authDao;
     private readonly IUserDao userDao;
+    private readonly IAddressDao addressDao;
     
-    public AuthLogic(IAuthDao dao, IUserDao userDao)
+    public AuthLogic(IAuthDao dao, IUserDao userDao, IAddressDao addressDao)
     {
         authDao = dao;
         this.userDao = userDao;
+        this.addressDao = addressDao;
     }
     
     
@@ -24,6 +26,8 @@ public class AuthLogic : IAuthLogic
     {
         string username = dto.Username;
         string passwordPlain = dto.Password;
+        double longitude;
+        double latitude;
 
         User? user = await authDao.GetUserAsync(username);
         
@@ -63,6 +67,11 @@ public class AuthLogic : IAuthLogic
         else
         {
             Address address = new Address(){Street = dto.Street, City = dto.City, ZIP = dto.ZIP};
+            
+            (latitude, longitude) = await addressDao.GetCoordinatesAsync(address);
+            
+            address.Latitude = latitude;
+            address.Longitude = longitude;
             
             Customer customer = new Customer()
             {

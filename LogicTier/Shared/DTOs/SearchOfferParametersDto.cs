@@ -2,11 +2,11 @@
 
 public class SearchOfferParameterDto
 {
-    public int? Distance { get;}
-    public string? NameContains { get;}
-    public bool? Delivery { get;}
-    public bool? PickUp { get;}
-    public bool? PickYO { get;}
+    public int? Distance { get; set; }
+    public string? NameContains { get; set; }
+    public bool? Delivery { get; set; }
+    public bool? PickUp { get; set; }
+    public bool? PickYO { get; set; }
     
     public string? Username { get;} //we need it to get the user's address
 
@@ -19,4 +19,6 @@ public class SearchOfferParameterDto
         PickUp = pickUp;
         PickYO = pickYo;
     }
+    
+    public SearchOfferParameterDto(){}
 }

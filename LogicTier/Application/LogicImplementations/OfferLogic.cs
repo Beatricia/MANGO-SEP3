@@ -128,6 +128,25 @@ public class OfferLogic : IOfferLogic
         
     }
 
+    public async Task<IEnumerable<Offer>> GetRecommendedAsync(string username)
+    {
+        int[] distances = { 10, 25, 50, 70, 100 };
+        var filter = new SearchOfferParameterDto();
+
+        IEnumerable<Offer> offers = new List<Offer>();
+
+        foreach (int distance in distances)
+        {
+            filter.Distance = distance;
+            
+            offers = (await GetAsync(filter)).ToList();
+            if (offers.Count() >= 20)
+                break;
+        }
+
+        return offers.Take(20);
+    }
+
 
     private async Task<List<Offer>> GetResultsInCorrectDistance(IEnumerable<Offer> results, string? dtoUsername,
         int? dtoDistance)

@@ -12,4 +12,5 @@ public interface IOfferLogic
     Task<IEnumerable<Offer>> GetAsync(SearchOfferParameterDto dto);
     Task<IEnumerable<Offer>> GetByFarmNameAsync(string farmName);
     Task DisableAsync(int id);
+    Task<IEnumerable<Offer>> GetRecommendedAsync(string username);
 }

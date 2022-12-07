@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using Shared.Models;
+using WebAPI.Controllers.Base;
 using WebAPI.Utils;
 
 namespace WebAPI.Controllers;
@@ -10,7 +11,7 @@ namespace WebAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class OfferController : ControllerBase
+public class OfferController : LocallyController
 {
     private readonly IOfferLogic offerLogic;
     private ImageResource imageResource;
@@ -87,6 +88,14 @@ public class OfferController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
+    }
+
+    [HttpGet("recommended")]
+    [Authorize(Roles = "customer")]
+    public async Task<IActionResult> GetRecommended()
+    {
+        var recommended = await offerLogic.GetRecommendedAsync(LoggedInUsername!);
+        return Ok(recommended);
     }
     
     [HttpGet("{farmName}")]

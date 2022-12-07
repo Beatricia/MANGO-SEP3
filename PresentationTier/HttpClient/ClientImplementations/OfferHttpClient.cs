@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HttpClient.ClientInterfaces;
@@ -107,9 +108,22 @@ public class OfferHttpClient : IOfferService
         return offers;
     }
 
-    public Task DisableAsync(int id)
+    /// <summary>
+    /// Sends PATH request to a WebAPI server to set specific offer as disabled
+    /// and to delete it from all the carts it is in
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task DisableAsync(int id)
     {
-        throw new NotImplementedException();
+        StringContent body = new StringContent("", Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await Client.PatchAsync($"/offer/{id}",body);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 
     private string ConstructQuery(string? username , int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)

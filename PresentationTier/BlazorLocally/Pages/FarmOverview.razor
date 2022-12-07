@@ -51,16 +51,19 @@
     <div class="d-flex justify-content-around flex-wrap" id="ordersContainer">
         @foreach (var offer in offers)
         {
-            <div class="card col-5 m-3">
+            <div class="card col-5 m-3 position-relative">
                 <div class="card-header">
-                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage"/>
+                    <img src="@offer.Image.AbsoluteUrl" alt="offerImage" class="center card-img"/>
                 </div>
                 <div class="card-body d-flex justify-content-between flex-wrap">
                     <h5 class="col-8">@offer.Name</h5>
                     <h6 class="col-4 d-flex justify-content-end">Price: @offer.Price dkk</h6>
                     <span class="col-8">@offer.Description</span>
                 </div>
+                <i @onclick="()=> DisableOffer(offer.Id)" class="fa-solid fa-square-xmark fa-2xl position-absolute" style="right: -2%; cursor: pointer"></i>
             </div>
+            
+                        
             @*<OfferSimple Name="@offer.Name"
                          Price="@offer.Price" 
                          Description="@offer.Description" 
@@ -116,6 +119,12 @@
             Console.WriteLine(e);
             msg = e.Message;
         }
+    }
+    
+    private async Task DisableOffer(int offerId)
+    {
+        await offerHttpClient.DisableAsync(offerId);
+        await OnInitializedAsync();
     }
 
 }

@@ -8,10 +8,6 @@
     cursor: pointer;
 }
 
-.greeting{
-    font-size: 20px;
-    text-align: center;
-}
 thead {
     color: darkgray;
 }
@@ -37,4 +33,19 @@ input[type=number]::-webkit-inner-spin-button {
 
 #inputCell{
     width: 13%;
+}
+.text{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.yourShoppingCartText{
+    border-radius: 20px;
+    background: rgb(183, 191, 150);
+    padding: 15px;
+    width: 400px;
+    text-align: center;
+    vertical-align: center;
+    margin-bottom: 2%;
+    font-weight: bold;
 }

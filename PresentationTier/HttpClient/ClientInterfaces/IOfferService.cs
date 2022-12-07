@@ -40,4 +40,10 @@ public interface IOfferService
     /// <returns></returns>
     Task DisableAsync(int id);
 
+    /// <summary>
+    /// Gets the recommended offers for the currently logged in user
+    /// </summary>
+    /// <returns></returns>
+    Task<ICollection<Offer>> GetRecommendedOffers();
+
 }

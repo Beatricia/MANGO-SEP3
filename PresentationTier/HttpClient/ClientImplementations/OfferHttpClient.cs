@@ -121,8 +121,7 @@ public class OfferHttpClient : IOfferService
         }
         if (distance !=null && distance !=0)
         {
-            query += string.IsNullOrEmpty(query) ? "?" : "&";
-            query += $"?distance={distance}";
+            query += $"&distance={distance}";
         }
 
         if (!string.IsNullOrEmpty(nameContains))
@@ -131,18 +130,18 @@ public class OfferHttpClient : IOfferService
             query += $"nameContains={nameContains}";
         }
 
-        if (!delivery)
+        if (delivery)
         {
             query += string.IsNullOrEmpty(query) ? "?" : "&";
             query += $"delivery={delivery}";
         }
 
-        if (!pickUp)
+        if (pickUp)
         {
             query += string.IsNullOrEmpty(query) ? "?" : "&";
             query += $"pickUp={pickUp}";
         }
-        if (!pickYo)
+        if (pickYo)
         {
             query += string.IsNullOrEmpty(query) ? "?" : "&";
             query += $"pickYo={pickYo}";

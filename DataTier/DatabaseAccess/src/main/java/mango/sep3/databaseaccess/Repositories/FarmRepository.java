@@ -14,5 +14,5 @@ public interface FarmRepository extends JpaRepository<Farm,Long> {
   Collection<Farm> findAllByFarmerAndIsDisabled(Farmer farmer, boolean isDisabled);
 
   Collection<Farm> findAllByIsDisabled(boolean isDisabled);
-  Collection<Farm> findAllByNameContainingIgnoreCase(String nameContains);
+  Collection<Farm> findAllByNameContainingIgnoreCaseAndIsDisabled(String nameContains, boolean isDisabled);
 }

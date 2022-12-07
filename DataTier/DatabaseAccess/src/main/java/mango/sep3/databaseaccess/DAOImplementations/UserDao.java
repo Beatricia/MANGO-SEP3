@@ -5,6 +5,7 @@ import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Repositories.*;
 import mango.sep3.databaseaccess.Shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 
 import java.util.zip.ZipEntry;
@@ -53,6 +54,14 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public Customer registerCustomer(Customer customer) {
+        Address address = customer.getAddress();
+
+        if (addressRepository.exists(Example.of(address))) {
+            customer.setAddress(addressRepository.findAll(Example.of(address)).get(0));
+        }
+        else{
+            addressRepository.saveAndFlush(address);
+        }
         return customerRepository.saveAndFlush(customer);
     }
 

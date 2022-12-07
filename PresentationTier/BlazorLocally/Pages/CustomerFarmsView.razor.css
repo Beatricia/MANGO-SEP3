@@ -12,12 +12,13 @@
 }
 .yourFarmsText{
     border-radius: 20px;
-    background: #bcaaa4;
-    padding: 20px;
+    background: rgb(183, 191, 150);
+    padding: 15px;
     width: 230px;
     text-align: center;
     vertical-align: center;
-    margin-bottom: 2%;
+    margin-bottom: 1%;
+    font-weight: bold;
 }
 .text{
     width: 100%;
@@ -50,7 +51,7 @@
     width: 100%;
     display: flex;
     justify-content: right;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     flex-direction: row;
     flex-wrap: nowrap;
 }

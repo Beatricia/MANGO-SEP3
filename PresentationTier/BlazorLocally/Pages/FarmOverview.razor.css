@@ -102,12 +102,9 @@ input[type=text] {
 
 #addButton{
     border-radius: 5px;
-    margin-right: 15em;
-    margin-top: 20px;
     color: white;
     background-color: #606748;
     border-style: none;
-    padding: 10px;
 }
 
 #phone{
@@ -135,4 +132,11 @@ input[type=text] {
 #phoneText{
     margin-top: -5px;
 }
-
+.addOffer{
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}
+.addOffer:hover{
+    transition: all .2s ease-out;
+}

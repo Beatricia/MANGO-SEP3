@@ -105,6 +105,8 @@ public class OfferController : LocallyController
         try
         {
             var offers = await offerLogic.GetByFarmNameAsync(farmName);
+            Console.WriteLine($"numnber of offers: {offers.Count()}");
+            Console.WriteLine($"farm name: {farmName}");
             return Ok(offers);
         }
         catch (Exception e)

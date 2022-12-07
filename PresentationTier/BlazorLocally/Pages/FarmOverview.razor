@@ -4,6 +4,7 @@
 @using global::Shared.DTOs
 @inject IFarmService farmHttpClient;
 @inject IOfferService offerHttpClient;
+@using Components
 @inject NavigationManager navMgr;
 @attribute [Authorize(Roles = "farmer")] 
 
@@ -14,6 +15,9 @@
     <div id="rectangle">
         <label id="farmName">@FarmName</label>
     </div>
+</div>
+<div id="reviews">
+    <Reviews FarmName="@FarmName"></Reviews>
 </div>
 <div id="status">
     <h5 id="statusLabel">Status:</h5>

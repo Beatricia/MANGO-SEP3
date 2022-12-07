@@ -6,8 +6,10 @@
 @inject IFarmService farmHttpClient;
 @inject IOfferService offerHttpClient;
 @inject NavigationManager navMgr;
+@using Components
 @attribute [Authorize(Roles = "customer")] 
 
+<AuthorizeView>
 <div id="shape">
     <div id="circle">
         <img id="farmImg" src="Img/farming-circle.png" height="180" width="180">
@@ -16,6 +18,11 @@
         <label id="farmName">@FarmName</label>
     </div>
 </div>
+
+<div id="reviews">
+    <Reviews CurrentUser="@context.User.Identity.Name" FarmName="@FarmName"></Reviews>
+</div>
+
 <div id="status">
        <h5 id="statusLabel">Status:</h5>
     <label id="statusText" >@Farm?.FarmStatus</label>
@@ -30,12 +37,13 @@
     </div>
     </div>
 </div>
-@if (offers == null)
-{
-    <p>
-        <em>Loading offers...</em>
-    </p>
-}
+<div class="offers">
+    @if (offers == null)
+    {
+        <p>
+            <em>Loading offers...</em>
+        </p>
+    }
 
 @if(offers != null) 
 {
@@ -59,11 +67,12 @@
                          OnClick="@(() => {  })"
                          DisplayButton="@false"
             ></OfferSimple>*@
-        }
-    </div>
-}
-<span>@msg</span>
-
+            }
+        </div>
+    }
+    <span>@msg</span>
+</div>
+</AuthorizeView>
 @code {
     //get the farm from the previous view
     [Parameter] 

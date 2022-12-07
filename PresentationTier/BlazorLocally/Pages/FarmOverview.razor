@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-4" id="phone">
             <p id="phoneLabel">Phone number:</p>
-            <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm.Phone">
+            <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm?.Phone">
         </div>
         <div class="col-sm-2 col-sm-offset-3">
             <AuthorizeView Roles="farmer">
@@ -71,6 +71,7 @@
     //get the farm from the previous view
     [Parameter]
     public string FarmName { get; set; }
+    
     private Farm Farm { get; set; }
     private IEnumerable<Offer> offers { get; set; }
     private string updatedStatus;

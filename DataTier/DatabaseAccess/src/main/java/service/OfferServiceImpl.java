@@ -75,6 +75,11 @@ import java.util.Collection;
       Offer offerToSend = grpcConverter.convertToGrpc(offer);
       offersList.add(offerToSend);
     }
+    System.out.println("Offers::::");
+    for (var offer : offersList)
+    {
+      System.out.println("" + offer.getFarmName() +  offer.getId());
+    }
 
     OfferItems response = OfferItems.newBuilder().addAllOffers(offersList)
         .build();

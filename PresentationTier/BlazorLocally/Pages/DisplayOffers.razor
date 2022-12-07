@@ -3,6 +3,8 @@
 
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
+@using Microsoft.AspNetCore.Authorization.Infrastructure
+@using System.Security.Claims
 @inject IOfferService httpOfferClient
 @inject ICartService HttpCartClient
 
@@ -176,6 +178,9 @@
 }
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } =  null;
+    
     private IEnumerable<Offer>? offers;
     private string msg = "";
     private int quantity = 0;
@@ -186,7 +191,7 @@
     bool showAddToCartComponent;
 
     //filtering
-    private int? distance = 0;
+    private int? distance;
     private string? nameContains;
     private bool deliveryCheck;
     private bool pickUpCheck;
@@ -200,14 +205,21 @@
     {
         try
         {
-            //this below will be used to get the offers from server 
-            offers = await httpOfferClient.GetAsync(null,null, null, false, false, false);
+             //this below will be used to get the offers from server 
+            SetOffers();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             msg = e.Message;
         }
+    }
+
+    private async void SetOffers()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        //offer = await httpOfferClient.GetAsync(user.Identity.Name,distance, nameContains, deliveryCheck, pickUpCheck, pickYOCheck);
     }
 
     private void OpenPopUpAddToCart(Offer offer)

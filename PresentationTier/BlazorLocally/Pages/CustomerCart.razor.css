@@ -28,9 +28,13 @@ thead {
 }
 
 #input{
-    width: 15%;
+    width: 50px;
 }
 
 input[type=number]::-webkit-inner-spin-button {
     opacity: 1
+}
+
+#inputCell{
+    width: 13%;
 }

@@ -72,7 +72,7 @@ public class FarmDAO implements FarmDaoInterface
 
   @Override public Collection<Farm> getAllFarms()
   {
-    return farmRepository.findAll();
+    return farmRepository.findAllByIsDisabled(false);
   }
 
   @Override public Collection<Farm> getAllFarmsByName(String nameContains)

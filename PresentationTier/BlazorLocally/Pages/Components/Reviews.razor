@@ -42,8 +42,22 @@
                 </div>
             }
 </AuthorizeView>
-            @if (reviews is not null)
+            @if (reviews is null)
             {
+                <span>Loading...</span>
+            }
+            else if (reviews is { Count:0 })
+            {
+                <div class="card">
+                    <div class="review">
+                        <div class="info"><span><b>System</b></span> • <span class="date"></span></div>
+                        <div class="content">No reviews currently</div>
+                    </div>
+                </div>
+            }
+            else if(reviews is { Count: >0 })
+            {
+                
                 @foreach (var review in reviews)
                 {
                     <div class="card">
@@ -53,10 +67,6 @@
                         </div>
                     </div>
                 }
-            }
-            else
-            {
-                <span>Loading...</span>
             }
 
         </div>

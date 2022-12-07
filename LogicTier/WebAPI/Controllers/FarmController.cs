@@ -125,7 +125,7 @@ public class FarmController : LocallyController
     
     [HttpGet("{nameContains}")]
     [Authorize]
-    public async Task<IActionResult> GetAllFarmsByName([FromRoute]string nameContains)
+    public async Task<IActionResult> GetFarmByName([FromRoute]string nameContains)
     {
         try
         {

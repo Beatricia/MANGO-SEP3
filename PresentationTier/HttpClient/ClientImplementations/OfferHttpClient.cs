@@ -126,41 +126,48 @@ public class OfferHttpClient : IOfferService
         }
     }
 
+    public async Task<ICollection<Offer>> GetRecommendedOffers()
+    {
+        HttpResponseMessage response = await Client.GetAsync($"offer/recommended");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        ICollection<Offer> offers = JsonSerializer.Deserialize<ICollection<Offer>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return offers;
+    }
+
     private string ConstructQuery(string? username , int? distance, string? nameContains, bool delivery, bool pickUp, bool pickYo)
     {
-        string query = "";
+        var list = new List<string>();
+        
         if (!string.IsNullOrEmpty(username))
-        {
-            query += $"?username={username}";
-        }
+            list.Add($"username={username}");
+        
         if (distance !=null && distance !=0)
-        {
-            query += $"&distance={distance}";
-        }
-
+            list.Add($"distance={distance}");
+        
         if (!string.IsNullOrEmpty(nameContains))
-        {
-            query += string.IsNullOrEmpty(query) ? "?" : "&";
-            query += $"nameContains={nameContains}";
-        }
-
+            list.Add($"nameContains={nameContains}");
+        
         if (delivery)
-        {
-            query += string.IsNullOrEmpty(query) ? "?" : "&";
-            query += $"delivery={delivery}";
-        }
+            list.Add($"delivery={delivery}");
 
         if (pickUp)
-        {
-            query += string.IsNullOrEmpty(query) ? "?" : "&";
-            query += $"pickUp={pickUp}";
-        }
+            list.Add($"pickUp={pickUp}");
+        
         if (pickYo)
-        {
-            query += string.IsNullOrEmpty(query) ? "?" : "&";
-            query += $"pickYo={pickYo}";
-        }
+            list.Add($"pickYo={pickYo}");
 
-        return query;
+        if (!list.Any())
+            return "";
+
+        return "?" + string.Join("&", list);
     }
 }

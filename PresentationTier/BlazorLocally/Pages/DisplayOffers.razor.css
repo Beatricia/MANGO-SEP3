@@ -6,6 +6,19 @@
     border: outset;
 }
 
+.recommended-title{
+    margin-left: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.recommended-offers{
+    margin-top: 10px;
+    border-radius: 10px;
+    border: red 1px dashed;
+    padding: 10px 0 10px 0;
+}
+
 #productInput{
     border-radius: 10px;
     background-color: #f8f7f7;

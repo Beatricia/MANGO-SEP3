@@ -1,15 +1,15 @@
 ﻿@page "/"
 @using System.Security.Claims
 @using Components
+@inject NavigationManager NavManager
 
-<PageTitle>Index</PageTitle>
-<AuthorizeView>
-    <NotAuthorized>
-        <h1>Hello There!</h1>
-    </NotAuthorized>
+<AuthorizeView Roles="customer">
     <Authorized>
-        <h1>Hello @context.User.Identity.Name!</h1>
-        Welcome, MANGO! Keep going!
-        Btw. Simon is the BEST! (And Uafa also)
+       @{ NavManager.NavigateTo("/DisplayOffers");}
+    </Authorized>
+</AuthorizeView>
+<AuthorizeView Roles="farmer">
+    <Authorized>
+        @{ NavManager.NavigateTo("/DisplayFarms");};
     </Authorized>
 </AuthorizeView>

@@ -6,9 +6,10 @@
 @inject IOrderService orderService
 @inject IFarmService farmService
 
-    <div class="title">
-        <h1>Orders</h1>
-    </div>
+    <div class="text">
+        <h3 class="ordersText">Orders</h3>
+    </div> 
+
     @if (orders == null)
     {
         <span>You don't have any orders yet.</span>

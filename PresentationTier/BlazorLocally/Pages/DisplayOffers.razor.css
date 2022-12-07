@@ -17,4 +17,19 @@
     background-color: #f8f7f7;
     border-radius: 5px;
 }
+.displayOffersText{
+    border-radius: 20px;
+    background: rgb(183, 191, 150);
+    padding: 15px;
+    width: 230px;
+    text-align: center;
+    vertical-align: center;
+    margin-bottom: 2%;
+    font-weight: bold;
+}
+.text{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 

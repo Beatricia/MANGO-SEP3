@@ -41,7 +41,7 @@ public class Offer implements Serializable
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<OrderOffer> orderOffers;
 
-    @Column
+    @Column(name = "is_disabled")
     private boolean isDisabled = false;
 
     public int getId()

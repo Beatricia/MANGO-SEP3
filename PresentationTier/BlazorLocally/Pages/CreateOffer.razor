@@ -2,6 +2,7 @@
 @attribute [Authorize(Roles = "farmer")] 
 
 @using global::Shared.DTOs
+@using global::Shared.Models
 @inject IOfferService httpClient
 @using HttpClient.ClientInterfaces
 @inject IJSRuntime JSRuntime
@@ -114,15 +115,18 @@
                 return;
             }
             
+            CollectionOption collectionOption = delivery ? CollectionOption.Delivery : 0;
+            collectionOption |= pickUp ? CollectionOption.PickUp : 0;
+            collectionOption |= pickYO ? CollectionOption.PickYourOwn : 0;
+
+            
             OfferCreationDto dto = new()
             {
                 Name = productName,
                 Quantity = quantity,
                 Unit = unit,
                 Price = price,
-                //Delivery = delivery,
-                //PickUp = pickUp,
-                //PickYourOwn = pickYO,
+                CollectionOption = collectionOption,
                 Description = description,
                 FarmName = FarmName
             };

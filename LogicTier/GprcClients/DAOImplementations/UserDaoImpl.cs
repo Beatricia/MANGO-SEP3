@@ -122,7 +122,9 @@ public class UserDaoImpl : IUserDao
             {
                 Street = customer.Address.Street,
                 City = customer.Address.City,
-                Zip = customer.Address.ZIP
+                Zip = customer.Address.ZIP,
+                Latitude = customer.Address.Latitude,
+                Longitude = customer.Address.Longitude,
             }
         };
     }
@@ -147,7 +149,9 @@ public class UserDaoImpl : IUserDao
         {
             City = customerAddress.City,
             Street = customerAddress.Street,
-            ZIP = customerAddress.Zip
+            ZIP = customerAddress.Zip,
+            Latitude = customerAddress.Latitude,
+            Longitude = customerAddress.Longitude,
         };
         return address;
     }

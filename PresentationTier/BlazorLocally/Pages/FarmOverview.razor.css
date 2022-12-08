@@ -102,9 +102,10 @@ input[type=text] {
 
 #addButton{
     border-radius: 5px;
-    color: white;
-    background-color: #606748;
+    color: black;
+    background-color: #ABBC85;
     border-style: none;
+    padding: 10px 25px
 }
 
 #phone{

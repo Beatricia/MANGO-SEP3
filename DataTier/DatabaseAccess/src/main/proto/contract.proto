@@ -69,6 +69,21 @@ service ReviewService{
   rpc GetReviewById(Id64) returns(Review);
 }
 
+service AdminService{
+  rpc GetReports(Void) returns(Reports);
+}
+
+message Report{
+  int64 id = 1;
+  Offer offerId = 2;
+  string reason = 3;
+}
+
+message Reports{
+  repeated Report reports = 1;
+}
+
+
 message UserAuth{
   string username = 1;
   string hash = 2;

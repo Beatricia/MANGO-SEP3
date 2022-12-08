@@ -1,4 +1,6 @@
 ﻿@page "/FarmOverview/{FarmName}"
+@attribute [Authorize(Roles = "farmer")] 
+
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @using global::Shared.DTOs
@@ -6,7 +8,7 @@
 @inject IOfferService offerHttpClient;
 @using Components
 @inject NavigationManager navMgr;
-@attribute [Authorize(Roles = "farmer")] 
+
 
 <div id="shape">
     <div id="circle">

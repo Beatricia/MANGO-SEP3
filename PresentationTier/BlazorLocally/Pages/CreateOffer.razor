@@ -6,6 +6,7 @@
 @inject IOfferService httpClient
 @using HttpClient.ClientInterfaces
 @inject IJSRuntime JSRuntime
+@inject NavigationManager navMgr;
 @implements IAsyncDisposable
 
 <div class="createCenter">
@@ -151,6 +152,8 @@
             description = "";
             displayDropdown = "none";
             
+            navMgr.NavigateTo("/FarmOverview/" + FarmName, forceLoad: true);
+
         }
         catch (Exception e)
         {

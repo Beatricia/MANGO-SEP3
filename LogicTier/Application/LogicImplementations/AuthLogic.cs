@@ -40,15 +40,8 @@ public class AuthLogic : IAuthLogic
         if (passwordPlain.Length < 8)
             throw new Exception("Password must be at least 8 characters");
 
-        string saltString = CreateSalt();
-        string hashPass = HashPassword(passwordPlain, saltString);
 
-        var authUser = new UserAuth
-        {
-            Username = username,
-            HashPassword = hashPass,
-            Salt = saltString
-        };
+        var authUser = CreateUserAuth(dto.Username, dto.Password);
         
         _ = await authDao.RegisterAsync(authUser);
 
@@ -88,6 +81,19 @@ public class AuthLogic : IAuthLogic
         }
     }
 
+    public async Task RegisterAdminAsync(string pass)
+    {
+        var authUser = AuthLogic.CreateUserAuth("admin", pass);
+        await authDao.RegisterAsync(authUser);
+        await userDao.RegisterAdmin();
+    }
+
+    public async Task<bool> IsAdminRegistered()
+    {
+        var adminUser = await authDao.GetAuthUserAsync("admin");
+        return adminUser is not null;
+    }
+
     /// <summary>
     /// Check if user exists, checks if password is correct -> logs user in
     /// </summary>
@@ -124,9 +130,34 @@ public class AuthLogic : IAuthLogic
         {
             user.Role??= "farmer";
         }
-        
+
+        user ??= await userDao.GetAdmin(username);
+        if (user != null)
+        {
+            user.Role??= "admin";
+        }
+
+
+        if (user == null)
+        {
+            throw new Exception("Could not find user");
+        }
 
         return user;
+    }
+
+
+    private static UserAuth CreateUserAuth(string username, string pass)
+    {
+        string saltString = CreateSalt();
+        string hashPass = HashPassword(pass, saltString);
+
+        return new UserAuth
+        {
+            Username = username,
+            HashPassword = hashPass,
+            Salt = saltString
+        };
     }
 
     /// <summary>

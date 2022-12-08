@@ -1,5 +1,6 @@
 using Application.DAOInterfaces;
 using Shared.DTOs;
+using Shared.Models;
 
 namespace GprcClients.DAOImplementations;
 
@@ -43,7 +44,21 @@ public class UserDaoImpl : IUserDao
             return null;
         }
     }
+    public async Task<Shared.Models.User?> GetAdmin(string username)
+    {
+        var text = new Text
+            { Text_ = username };
 
+        try
+        {
+            Admin admin = await client.GetAdminAsync(text);
+            return ConvertFromGrpc(admin);
+        }
+        catch
+        {
+            return null;
+        }
+    }
     public async Task<Shared.Models.Customer> RegisterCustomer(Shared.Models.Customer customer)
     {
         try
@@ -71,6 +86,12 @@ public class UserDaoImpl : IUserDao
         {
             return null;
         }
+    }
+
+    public async Task<Shared.Models.Admin> RegisterAdmin()
+    {
+        var grpcAdmin = await client.RegisterAdminAsync(new Void());
+        return ConvertFromGrpc(grpcAdmin);
     }
 
     public async Task UpdateCustomerAsync(CustomerUpdateDto dto,string username)
@@ -109,6 +130,8 @@ public class UserDaoImpl : IUserDao
             throw;
         }
     }
+
+
 
     private global::Customer ConvertToGrpc(Shared.Models.Customer customer)
     {
@@ -176,5 +199,16 @@ public class UserDaoImpl : IUserDao
             LastName = farmer.Lastname,
         };
         return farmerToReturn;
+    }
+
+    private Shared.Models.Admin ConvertFromGrpc(Admin admin)
+    {
+        var adminToReturn = new Shared.Models.Admin
+        {
+            Username = admin.Username,
+            FirstName = "",
+            LastName = ""
+        };
+        return adminToReturn;
     }
 }

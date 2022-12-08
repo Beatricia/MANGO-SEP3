@@ -3,6 +3,7 @@ package service;
 import mango.sep3.databaseaccess.DAOInterfaces.AdminDaoInterface;
 import mango.sep3.databaseaccess.Shared.Report;
 import mango.sep3.databaseaccess.protobuf.AdminServiceGrpc;
+import mango.sep3.databaseaccess.protobuf.ReportServiceGrpc;
 import mango.sep3.databaseaccess.protobuf.Reports;
 import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
@@ -12,12 +13,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @GRpcService
-public class AdminServiceImpl extends AdminServiceGrpc.AdminServiceImplBase
+public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
 {
   @Autowired private AdminDaoInterface adminDaoInterface;
   @Autowired private GrpcConverter grpcConverter;
 
-  public AdminServiceImpl(){
+  public ReportServiceImpl(){
 
   }
 

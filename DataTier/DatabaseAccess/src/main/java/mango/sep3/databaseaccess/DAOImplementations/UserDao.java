@@ -28,6 +28,8 @@ public class UserDao implements UserDaoInterface {
     private FarmerRepository farmerRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
     public UserDao()
     { }
@@ -90,6 +92,18 @@ public class UserDao implements UserDaoInterface {
     @Override
     public Farmer getFarmer(String username) {
         return farmerRepository.findById(username).orElse(null);
+    }
+
+    @Override public Admin getAdmin(String username)
+    {
+        return adminRepository.findById(username).orElse(null);
+    }
+
+    @Override public Admin registerAdmin()
+    {
+        var admin = new Admin();
+        admin.setUsername("admin");
+        return adminRepository.save(admin);
     }
 
     @Override public void updateCustomer(String username, String phone,

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public class AdminDAO implements AdminDaoInterface
+public class ReportDAO implements AdminDaoInterface
 {
   @Autowired
   private AdminRepository adminRepository;
@@ -18,7 +18,7 @@ public class AdminDAO implements AdminDaoInterface
   @Autowired
   private ReportRepository reportRepository;
 
-  public AdminDAO(){}
+  public ReportDAO(){}
 
   @Override public Collection<Report> GetReports()
   {

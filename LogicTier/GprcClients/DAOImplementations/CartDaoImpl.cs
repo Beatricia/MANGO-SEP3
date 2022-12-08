@@ -40,7 +40,7 @@ public class CartDaoImpl : ICartDao
         ICollection<Shared.Models.CartOffer> list = new List<Shared.Models.CartOffer>();
 
         foreach (var cartOffer in cartOffers.CartOffers_)
-        {
+        { 
             if (cartOffer is null)
                 continue;
             

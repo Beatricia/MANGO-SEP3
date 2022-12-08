@@ -69,12 +69,21 @@
                     </NavLink>
                 </div>
             </AuthorizeView>
-            <AuthorizeView Roles="customer, farmer">
+            <AuthorizeView Roles="customer, farmer, admin">
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Logout">
                         <img src="Img/logout.png" width="20" height="20" alt="">Logout
                     </NavLink>
                 </div>
+            </AuthorizeView>
+            
+            
+            <AuthorizeView Roles="admin">
+                 <div class="nav-item px-3">
+                     <NavLink class="nav-link" href="AdminReportedOffers">
+                         <span class="oi oi-list-rich" aria-hidden="true"></span>Reported Offers
+                     </NavLink>
+                 </div>
             </AuthorizeView>
         </div>
 

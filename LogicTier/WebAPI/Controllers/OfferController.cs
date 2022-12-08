@@ -1,4 +1,5 @@
-﻿using Application.LogicInterfaces;
+﻿using Application.LogicImplementations;
+using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
@@ -122,7 +123,7 @@ public class OfferController : LocallyController
     /// <param name="id">An id of the offer to be disabled</param>
     /// <returns>Returns Action result e.g. Ok if request was completed</returns>
     [Authorize(Roles = "farmer")]
-    [HttpPatch("{id:int}"), AllowAnonymous]
+    [HttpPatch("{id:int}")]
     public async Task<ActionResult> DisableAsync([FromRoute] int id)
     {
         try
@@ -136,4 +137,5 @@ public class OfferController : LocallyController
             throw;
         }
     }
+
 }

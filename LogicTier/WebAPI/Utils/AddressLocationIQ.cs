@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using System.Web;
 using Application.DAOInterfaces;
 
@@ -29,6 +30,11 @@ public class AddressLocationIQ : IAddressDao
 
         if (!result.IsSuccessStatusCode)
         {
+            if(result.StatusCode == HttpStatusCode.Unauthorized)
+                throw new Exception("Internal exception: LocationIQ API key is invalid");
+
+            Console.WriteLine($"LocationIQ API returned status code {result.StatusCode}");
+            Console.WriteLine("Content: " + await result.Content.ReadAsStringAsync());
             throw new ArgumentException("Could not get coordinates, error " + result.StatusCode);
         }
         

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using Shared.Models;
 
@@ -30,5 +31,15 @@ public class ReportHttpClient : IReportService
                 PropertyNameCaseInsensitive = true
             })!;
         return reports;
+    }
+
+    public async Task IgnoreReportAsync(long id)
+    {
+        HttpResponseMessage response = await client.DeleteAsync($"/Report/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 }

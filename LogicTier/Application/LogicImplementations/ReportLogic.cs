@@ -17,4 +17,9 @@ public class ReportLogic : IReportLogic
     {
         return reportDao.GetAllReports();
     }
+
+    public async Task DeleteReportAsync(long id)
+    {
+        await reportDao.DeleteReportAsync(id);
+    }
 }

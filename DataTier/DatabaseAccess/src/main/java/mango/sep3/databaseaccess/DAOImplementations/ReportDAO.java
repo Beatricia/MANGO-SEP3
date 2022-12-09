@@ -20,8 +20,13 @@ public class ReportDAO implements AdminDaoInterface
 
   public ReportDAO(){}
 
-  @Override public Collection<Report> GetReports()
+  @Override public Collection<Report> getReports()
   {
     return reportRepository.findAll();
+  }
+
+  @Override public void deleteReport(long id)
+  {
+    reportRepository.deleteById(id);
   }
 }

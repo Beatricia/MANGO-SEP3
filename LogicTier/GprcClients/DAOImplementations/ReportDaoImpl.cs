@@ -31,4 +31,17 @@ public class ReportDaoImpl : IReportDao
         }
         return list;
     }
+
+    public async Task DeleteReportAsync(long id)
+    {
+        try
+        {
+            await client.DeleteReportAsync(id.ToGrpc());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

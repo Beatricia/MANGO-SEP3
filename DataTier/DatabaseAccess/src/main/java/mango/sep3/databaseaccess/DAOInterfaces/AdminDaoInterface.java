@@ -6,5 +6,6 @@ import java.util.Collection;
 
 public interface AdminDaoInterface
 {
-  Collection<Report> GetReports();
+  Collection<Report> getReports();
+  void deleteReport(long id);
 }

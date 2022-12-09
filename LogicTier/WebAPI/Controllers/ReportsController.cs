@@ -32,4 +32,20 @@ public class ReportController : LocallyController
         }
     }
 
+    [Authorize(Roles = "admin")]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteAsync([FromRoute] long id)
+    {
+        try
+        {
+            await reportLogic.DeleteReportAsync(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@
 
 @inject IOfferService httpOfferClient
 @inject IReportService httpReportClient
+@inject NavigationManager navMgr;
 @using HttpClient.ClientInterfaces
 @using global::Shared.Models
 
@@ -42,7 +43,7 @@
 
             <div class="buttons">
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="ignoreButton" @onclick="IgnoreReport">Ignore</button>
+                    <button type="button" class="ignoreButton" @onclick="()=>IgnoreReport(report.Id)">Ignore</button>
                     <button type="button" class="notifyButton" @onclick="NotifyFarmer">Notify</button>
                     <button type="button" class="deleteButton" @onclick="DeleteReport">Delete</button>
                     </div>
@@ -69,9 +70,10 @@
         }
     }
 
-    private void IgnoreReport()
+    private async void IgnoreReport(long id)
     {
-        throw new NotImplementedException();
+        await httpReportClient.IgnoreReportAsync(id);
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
     private void NotifyFarmer()

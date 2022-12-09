@@ -84,6 +84,10 @@ builder.Services.AddGrpcClient<ReviewService.ReviewServiceClient>(grpcOptions);
 builder.Services.AddScoped<IReviewDao, ReviewDaoImpl>();
 builder.Services.AddScoped<IReviewLogic, ReviewLogic>();
 
+builder.Services.AddGrpcClient<ReportService.ReportServiceClient>(grpcOptions);
+builder.Services.AddScoped<IReportDao, ReportDaoImpl>();
+builder.Services.AddScoped<IReportLogic, ReportLogic>();
+
 builder.Services.AddTransient<IImageDao, ImageResource>();
 builder.Services.AddTransient<ImageResource>();
 builder.Services.AddTransient<IFarmIconDao, FarmIconResource>();
@@ -139,5 +143,29 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials());
+
+
+// checks if the admin is in the system, if not, then asks for an admin password
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+var scope = scopeFactory.CreateScope();
+
+var userAuthService = scope.ServiceProvider.GetRequiredService<IAuthLogic>();
+var isAdminRegistered = await userAuthService.IsAdminRegistered();
+if (!isAdminRegistered)
+{
+    Console.Write("Admin is not registered. Please enter a password for the admin: ");
+    string? adminPass = null;
+    do
+    {
+        adminPass = Console.ReadLine();
+
+        if (adminPass is null)
+        {
+            Console.Write("Unexpected error: password is null. Please re-enter your password: ");
+        }
+    } while (adminPass is null);
+
+    await userAuthService.RegisterAdminAsync(adminPass);
+}
 
 app.Run();

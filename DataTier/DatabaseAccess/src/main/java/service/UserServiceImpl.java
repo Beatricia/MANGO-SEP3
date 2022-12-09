@@ -121,6 +121,22 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override public void getAdmin(Text request,
+        StreamObserver<Admin> responseObserver){
+        mango.sep3.databaseaccess.Shared.Admin admin = userDao.getAdmin(request.getText());
+
+        if(admin == null){
+            responseObserver.onError(new Exception("Admin not found"));
+            return;
+        }
+
+        Admin adminResponse = converter.convertToGrpc(admin);
+
+        responseObserver.onNext(adminResponse);
+        responseObserver.onCompleted();
+    }
+
+
     @Override public void updateCustomer(CustomerUpdate request,
         StreamObserver<Void> responseObserver)
     {
@@ -132,4 +148,11 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override public void registerAdmin(Void request,
+        StreamObserver<Admin> responseObserver)
+    {
+        var admin = userDao.registerAdmin();
+        responseObserver.onNext(converter.convertToGrpc(admin));
+        responseObserver.onCompleted();
+    }
 }

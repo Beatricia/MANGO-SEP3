@@ -20,6 +20,10 @@ public static class AuthorizationPolicies
                 
                 options.AddPolicy("FarmerOrCustomer", a =>
                     a.RequireAuthenticatedUser().RequireRole("farmer", "customer"));
+                
+                options.AddPolicy("MustBeAdmin",a =>
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "admin"));
+                
     /*
             options.AddPolicy("SecurityLevel2OrAbove", a =>
                 a.RequireAuthenticatedUser().RequireAssertion(context =>

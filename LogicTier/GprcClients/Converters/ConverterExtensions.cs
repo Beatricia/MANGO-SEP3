@@ -415,4 +415,16 @@ internal static class ConverterExtensions
     }
     
     #endregion
+    
+    #region Report
+    public static Shared.Models.Report ToShared(this Report report, IImageDao imageDao)
+    {
+        return new Shared.Models.Report()
+        {
+            Id = report.Id,
+            Offer = report.Offer.ToShared(imageDao),
+            Reason = report.Reason
+        };
+    }
+    #endregion
 }

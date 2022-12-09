@@ -1,0 +1,87 @@
+﻿@page "/AdminReportedOffers"
+@attribute [Authorize(Roles = "admin")]
+
+@inject IOfferService httpOfferClient
+@inject IReportService httpReportClient
+@using HttpClient.ClientInterfaces
+@using global::Shared.Models
+
+<div class="reportedCenter">
+    <h3 class="reportedText">REPORTED OFFERS</h3>
+</div>
+
+
+@if (reports == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+
+@if(reports != null){
+<div class="d-flex justify-content-around flex-wrap">
+    @foreach (var report in reports!)
+    {
+        <div id="bigCard" class="col-4">
+            <div class="d-flex justify-content-center">
+                <div class="reasonText">
+                    <span>Reason: @report.Reason</span>
+                </div>
+            </div>
+            <!--THE INNER CARD-->
+            <div class="card col-12 ">
+                <div class="card-header">
+                    <img src="@report.Offer.Image.AbsoluteUrl" alt="offerImage" width="100%" height="auto"/>
+                </div>
+                <div class="card-body d-flex justify-content-between flex-wrap">
+                    <h5 class="col-8">@report.Offer.Name</h5>
+                    <h6 class="col-4 d-flex justify-content-end">@report.Offer.Price DKK</h6>
+                    <span class="col-8">@report.Offer.Description</span>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="ignoreButton" @onclick="IgnoreReport">Ignore</button>
+                    <button type="button" class="notifyButton" @onclick="NotifyFarmer">Notify</button>
+                    <button type="button" class="deleteButton" @onclick="DeleteReport">Delete</button>
+                    </div>
+            </div>
+        </div>
+    }
+</div>
+}
+
+@code {
+    private IEnumerable<Report>? reports;
+    private string msg = "";
+    
+    protected override async Task OnInitializedAsync()
+    { 
+        try
+        {
+        reports = await httpReportClient.GetAllReports();
+        }
+        catch (Exception e)
+        {
+        Console.WriteLine(e);
+        msg = e.Message;
+        }
+    }
+
+    private void IgnoreReport()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void NotifyFarmer()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void DeleteReport()
+    {
+        throw new NotImplementedException();
+    }
+
+}

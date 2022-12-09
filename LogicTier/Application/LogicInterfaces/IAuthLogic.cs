@@ -22,4 +22,16 @@ public interface IAuthLogic
     /// <returns></returns>
     Task<User> LoginAsync(LoginDto dto);
     
+    /// <summary>
+    /// Registers the admin in the system
+    /// </summary>
+    /// <returns></returns>
+    Task RegisterAdminAsync(string pass);
+
+    /// <summary>
+    /// Gets if the admin is registered
+    /// </summary>
+    /// <returns></returns>
+    Task<bool> IsAdminRegistered();
+
 }

@@ -27,7 +27,7 @@ img {
 }
 
 .card {
-    background: #d7ccc8;
+    background: #d7ccc8; 
     transition: all .2s ease-in-out;
 }
 

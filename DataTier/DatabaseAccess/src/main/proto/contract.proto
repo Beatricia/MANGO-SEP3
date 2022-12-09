@@ -34,6 +34,9 @@ service UserService{
   rpc GetFarmer(Text) returns(Farmer);
   rpc UpdateCustomer(CustomerUpdate) returns(Void);
 
+  rpc GetAdmin(Text) returns(Admin);
+  rpc RegisterAdmin(Void) returns(Admin);
+
 }
 
 service OrderService{
@@ -69,6 +72,21 @@ service ReviewService{
   rpc GetReviewById(Id64) returns(Review);
 }
 
+service ReportService{
+  rpc GetReports(Void) returns(Reports);
+}
+
+message Report{
+  int64 id = 1;
+  Offer offer = 2;
+  string reason = 3;
+}
+
+message Reports{
+  repeated Report reports = 1;
+}
+
+
 message UserAuth{
   string username = 1;
   string hash = 2;
@@ -79,6 +97,10 @@ message User{
   string username = 1;
   string firstname = 2;
   string lastname = 3;
+}
+
+message Admin{
+  string username = 1;
 }
 
 message Farm{

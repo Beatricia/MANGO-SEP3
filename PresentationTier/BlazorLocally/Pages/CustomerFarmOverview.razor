@@ -1,4 +1,6 @@
 ﻿@page "/CustomerFarmOverview/{FarmName}"
+@attribute [Authorize(Roles = "customer")] 
+
 @using HttpClient.ClientInterfaces
 @using Components
 @using global::Shared.Models
@@ -7,7 +9,7 @@
 @inject IOfferService offerHttpClient;
 @inject NavigationManager navMgr;
 @using Components
-@attribute [Authorize(Roles = "customer")] 
+
 
 <AuthorizeView>
 <div id="shape">

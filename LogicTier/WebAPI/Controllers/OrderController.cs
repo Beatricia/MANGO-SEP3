@@ -43,7 +43,7 @@ public class OrderController : LocallyController
         {
             var created = await orderLogic.GetAllOrders(username);
             
-            return Created($"/orders", created);
+            return Ok(created);
         }
         catch (Exception e)
         {

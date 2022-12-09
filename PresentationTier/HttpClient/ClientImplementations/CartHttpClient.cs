@@ -31,7 +31,6 @@ public class CartHttpClient : ICartService
     {
         HttpResponseMessage response = await client.GetAsync("/Cart");
         string content = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(content);
 
         if (!response.IsSuccessStatusCode)
         {

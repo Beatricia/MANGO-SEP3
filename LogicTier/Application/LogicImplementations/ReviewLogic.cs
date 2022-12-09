@@ -18,6 +18,8 @@ public class ReviewLogic : IReviewLogic
     
     public async Task<Review> CreateReviewAsync(string farmName, string username, ReviewCreationDto reviewCreationDto)
     {
+        ValidateReviewText(reviewCreationDto.ReviewText);
+        
         var farm = await farmDao.GetFarmByNameAsync(farmName);
         
         if(farm is null)
@@ -47,6 +49,9 @@ public class ReviewLogic : IReviewLogic
 
     public async Task<Review> EditReviewAsync(UpdateReviewDto review)
     {
+        ValidateReviewText(review.UpdatedReview);
+        
+        
         var reviewToEdit = await reviewDao.GetReviewByIdAsync(review.Id);
         
         if(reviewToEdit.WrittenBy != review.Username)
@@ -54,5 +59,11 @@ public class ReviewLogic : IReviewLogic
         
         reviewToEdit.Content = review.UpdatedReview;
         return await reviewDao.UpdateReviewAsync(reviewToEdit);
+    }
+
+    private void ValidateReviewText(string text)
+    {
+        if(text is {Length: 0})
+            throw new Exception("Review text cannot be empty");
     }
 }

@@ -2,6 +2,8 @@
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @inject IFarmService farmHttpClient;
+@inject IJSRuntime JsRuntime
+
 
 <div class="text">
     <h3 class="yourFarmsText">YOUR FARMS</h3>
@@ -39,7 +41,7 @@
 }
 
 <a href="/AddFarm" class="addFarm">
-    <div class="card mb-2" style="max-width: 200px;">
+    <div class="card mb-2" style="max-width: 200px; background-color:#ABBC85;">
         <div class="row no-gutters">
             <div class="col-md-4">
                 <img src="Img/plus.png" alt="addFarmImage"/>
@@ -74,8 +76,14 @@
 
     private async Task DisableFarm(string farmName)
     {
-        await farmHttpClient.DisableAsync(farmName);
-        await OnInitializedAsync();
+        bool confirmed = await JsRuntime.InvokeAsync<bool>
+            ("confirm", $"Are you sure you want to delete {farmName} farm??");
+        if (confirmed)
+        {
+          await farmHttpClient.DisableAsync(farmName);
+          await OnInitializedAsync();
+        }
+        
     }
 
 }

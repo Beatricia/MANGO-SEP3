@@ -1,0 +1,50 @@
+.reportedCenter{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.reportedText{
+    font-size: x-large;
+    border-radius: 20px;
+    background: rgb(183, 191, 150);
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+#bigCard{
+    border-style: outset;
+}
+.buttons{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.reasonText{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.ignoreButton{
+    border-radius: 15px;
+    background-color: #ABBC85;
+    margin-right: 20px;
+    width: 20%;
+}
+.notifyButton{ 
+    border-radius: 15px;
+    background-color: #FBB36B;
+    width: 20%;
+}
+.deleteButton{
+    border-radius: 15px;
+    background-color: #E15B64;
+    margin-left: 20px;
+    width: 20%;
+}
+.reasonText{
+    border-radius: 15px;
+    padding: 15px;
+    width: inherit;
+    text-align: center;
+    font-size: 30px;
+}

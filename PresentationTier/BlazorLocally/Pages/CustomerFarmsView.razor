@@ -1,4 +1,6 @@
 ﻿@page "/CustomerFarmsView"
+@attribute [Authorize(Roles = "customer")] 
+
 @using HttpClient.ClientInterfaces
 @using global::Shared.Models
 @using System.Runtime.CompilerServices

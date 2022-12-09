@@ -40,4 +40,8 @@ public class ServerConfig {
     @Bean public ReviewServiceImpl getReviewServiceImpl(){
         return new ReviewServiceImpl();
     }
+
+    @Bean public ReportServiceImpl getReportServiceImpl(){
+        return new ReportServiceImpl();
+    }
 }

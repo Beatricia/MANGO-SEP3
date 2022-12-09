@@ -34,10 +34,6 @@ public class ReviewDaoImpl : IReviewDao
     public async Task<ICollection<Shared.Models.Review>> GetReviewsByFarmAsync(Shared.Models.Farm farm)
     {
         Reviews grpcReviews =await  client.GetReviewsByFarmAsync(farm.ToGrpc());
-        if (grpcReviews == null)
-        {
-            Console.WriteLine("null");
-        }
         ICollection<Shared.Models.Review> list = new List<Shared.Models.Review>();
 
             foreach (var review in grpcReviews.Reviews_)
@@ -50,8 +46,6 @@ public class ReviewDaoImpl : IReviewDao
                 Shared.Models.Review reviewToSend = review.ToShared();
                 list.Add(reviewToSend);
             }
-
-            Console.WriteLine("The list: "+list);
             return list;
     }
 

@@ -425,7 +425,7 @@ public class GrpcConverter {
     public Report convertToGrpc(mango.sep3.databaseaccess.Shared.Report report){
         return Report.newBuilder()
             .setId(report.getId())
-            .setOfferId(convertToGrpc(report.getOffer()))
+            .setOffer(convertToGrpc(report.getOffer()))
             .setReason(report.getReason())
             .build();
     }
@@ -434,11 +434,27 @@ public class GrpcConverter {
         var report1 = new mango.sep3.databaseaccess.Shared.Report();
 
         report1.setId(report.getId());
-        var offer = offerDaoInterface.getOfferById(report.getOfferId().getId());
+        var offer = offerDaoInterface.getOfferById(report.getOffer().getId());
         report1.setOffer(offer);
         report1.setReason(report.getReason());
 
         return report1;
     }
+
+    public Admin convertToGrpc(mango.sep3.databaseaccess.Shared.Admin admin){
+        return Admin.newBuilder()
+            .setUsername(admin.getUsername())
+            .build();
+    }
+
+    public mango.sep3.databaseaccess.Shared.Admin convertToShared(Admin admin){
+        var admin1 = new mango.sep3.databaseaccess.Shared.Admin();
+
+        admin1.setUsername(admin.getUsername());
+
+        return admin1;
+    }
+
+
     // endregion
 }

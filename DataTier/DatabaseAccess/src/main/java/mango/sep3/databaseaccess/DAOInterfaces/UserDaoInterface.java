@@ -1,9 +1,6 @@
 package mango.sep3.databaseaccess.DAOInterfaces;
 
-import mango.sep3.databaseaccess.Shared.Customer;
-import mango.sep3.databaseaccess.Shared.Farmer;
-import mango.sep3.databaseaccess.Shared.User;
-import mango.sep3.databaseaccess.Shared.UserAuth;
+import mango.sep3.databaseaccess.Shared.*;
 
 /**
  * Data access object accessing user related data.
@@ -66,6 +63,8 @@ public interface UserDaoInterface {
      * @return The farmer.
      */
     Farmer getFarmer(String username);
-
+    Admin getAdmin(String username);
+    Admin registerAdmin();
     void updateCustomer(String username, String phone, String city, String street, String zip, double latitude, double longitude);
+
 }

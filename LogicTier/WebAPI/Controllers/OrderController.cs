@@ -7,8 +7,7 @@ using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+[ApiController] [Route("[controller]")]
 //[Authorize]
 public class OrderController : LocallyController
 {
@@ -43,7 +42,7 @@ public class OrderController : LocallyController
         {
             var created = await orderLogic.GetAllOrders(username);
             
-            return Created($"/orders", created);
+            return Ok(created);
         }
         catch (Exception e)
         {

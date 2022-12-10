@@ -1,7 +1,7 @@
 package service;
 
 import io.grpc.stub.StreamObserver;
-import mango.sep3.databaseaccess.DAOInterfaces.AdminDaoInterface;
+import mango.sep3.databaseaccess.DAOInterfaces.ReportDaoInterface;
 import mango.sep3.databaseaccess.Shared.Report;
 import mango.sep3.databaseaccess.protobuf.*;
 import mango.sep3.databaseaccess.protobuf.Void;
@@ -15,7 +15,7 @@ import java.util.Collection;
 @GRpcService
 public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
 {
-  @Autowired private AdminDaoInterface adminDaoInterface;
+  @Autowired private ReportDaoInterface adminDaoInterface;
   @Autowired private GrpcConverter grpcConverter;
 
   public ReportServiceImpl(){
@@ -51,4 +51,8 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
     responseObserver.onCompleted();
   }
 
+    @Override
+    public void createReport(mango.sep3.databaseaccess.protobuf.Report request, StreamObserver<mango.sep3.databaseaccess.protobuf.Report> responseObserver) {
+        var sharedReport = grpcConverter.convertToShared(request);
+    }
 }

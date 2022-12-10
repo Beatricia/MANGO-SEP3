@@ -75,6 +75,7 @@ service ReviewService{
 service ReportService{
   rpc GetReports(Void) returns(Reports);
   rpc DeleteReport(Id64) returns(Void);
+  rpc CreateReport(Report) returns(Report);
 }
 
 message Report{

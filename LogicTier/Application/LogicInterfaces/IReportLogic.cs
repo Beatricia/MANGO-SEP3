@@ -6,4 +6,5 @@ public interface IReportLogic
 {
     Task<ICollection<Report>> GetAllReports();
     Task DeleteReportAsync(long id);
+    Task ReportOfferAsync(int offerId);
 }

@@ -22,4 +22,9 @@ public class ReportLogic : IReportLogic
     {
         await reportDao.DeleteReportAsync(id);
     }
+
+    public Task ReportOfferAsync(int offerId)
+    {
+        throw new NotImplementedException();
+    }
 }

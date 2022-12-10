@@ -4,6 +4,7 @@ namespace Application.DAOInterfaces;
 
 public interface IReportDao
 {
-    Task<ICollection<Report>> GetAllReports();
+    Task<ICollection<Report>> GetAllReportsAsync();
     Task DeleteReportAsync(long id);
+    Task<Report> CreateReportAsync(Report report);
 }

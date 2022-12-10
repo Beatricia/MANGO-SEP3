@@ -426,5 +426,15 @@ internal static class ConverterExtensions
             Reason = report.Reason
         };
     }
+    
+    public static Report ToGrpc(this Shared.Models.Report report)
+    {
+        return new Report()
+        {
+            Id = report.Id,
+            Offer = report.Offer.ToGrpc(),
+            Reason = report.Reason
+        };
+    }
     #endregion
 }

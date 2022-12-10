@@ -14,7 +14,7 @@ public class ReportDaoImpl : IReportDao
         this.imageDao = imageDao;
     }
     
-    public async Task<ICollection<Shared.Models.Report>> GetAllReports()
+    public async Task<ICollection<Shared.Models.Report>> GetAllReportsAsync()
     {
         Reports grpcReports = await client.GetReportsAsync(new Void());
         ICollection<Shared.Models.Report> list = new List<Shared.Models.Report>();
@@ -43,5 +43,11 @@ public class ReportDaoImpl : IReportDao
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public async Task<Shared.Models.Report> CreateReportAsync(Shared.Models.Report report)
+    {
+        var grpcReport = await client.CreateReportAsync(report.ToGrpc());
+        return grpcReport.ToShared(imageDao);
     }
 }

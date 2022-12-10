@@ -15,7 +15,7 @@ import java.util.Collection;
 @GRpcService
 public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
 {
-  @Autowired private ReportDaoInterface adminDaoInterface;
+  @Autowired private ReportDaoInterface reportDao;
   @Autowired private GrpcConverter grpcConverter;
 
   public ReportServiceImpl(){
@@ -26,7 +26,7 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
   public void getReports(mango.sep3.databaseaccess.protobuf.Void request,
       io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Reports> responseObserver) {
 
-   Collection<Report> reportsShared = adminDaoInterface.getReports();
+   Collection<Report> reportsShared = reportDao.getReports();
 
    Collection<mango.sep3.databaseaccess.protobuf.Report> reportsProto = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
   @Override public void deleteReport(Id64 request,
       StreamObserver<Void> responseObserver)
   {
-    adminDaoInterface.deleteReport(request.getId());
+    reportDao.deleteReport(request.getId());
     Void response = Void.newBuilder().build();
     responseObserver.onNext(response);
     responseObserver.onCompleted();
@@ -54,5 +54,10 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
     @Override
     public void createReport(mango.sep3.databaseaccess.protobuf.Report request, StreamObserver<mango.sep3.databaseaccess.protobuf.Report> responseObserver) {
         var sharedReport = grpcConverter.convertToShared(request);
+        var savedReport = reportDao.createReport(sharedReport);
+        var response = grpcConverter.convertToGrpc(savedReport);
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 }

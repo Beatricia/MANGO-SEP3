@@ -29,4 +29,9 @@ public class ReportDAO implements ReportDaoInterface
   {
     reportRepository.deleteById(id);
   }
+
+  @Override
+  public Report createReport(Report report) {
+    return reportRepository.save(report);
+  }
 }

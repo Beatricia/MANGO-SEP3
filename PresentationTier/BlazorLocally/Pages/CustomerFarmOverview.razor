@@ -21,24 +21,27 @@
     </div>
 </div>
 
-<div id="reviews">
-    <Reviews CurrentUser="@context.User.Identity.Name" FarmName="@FarmName"></Reviews>
-</div>
-
-<div id="status">
-       <h5 id="statusLabel">Status:</h5>
-    <label id="statusText" >@Farm?.FarmStatus</label>
-    </div>
-<div id="updateContainer">
     <div class="container">
-    <div class="row">
-        <div class="col-4" id="phone">
-            <p id="phoneLabel">Phone number:</p>
-            <label id="phoneText" >@Farm?.Phone</label>
+        <div class="row">
+            <div class="col-4" id="reviews" style="display: flex; justify-content: center">
+                <Reviews CurrentUser="@context.User.Identity.Name" FarmName="@FarmName"></Reviews>
+            </div>
+            
+            <div class="col-4" id="status">
+                <h5 id="statusLabel">Status:</h5>
+                <label id="statusText" >@Farm?.FarmStatus</label>
+            </div>
+            
+            <div class="col-4" id="updateContainer">
+                    <div id="phone">
+                        <p id="phoneLabel">Phone number: @Farm?.Phone </p>
+                        <p id="addressLabel">@Farm?.Address</p>
+                    </div>
+                </div>
         </div>
     </div>
-    </div>
-</div>
+    
+
 <div class="offers">
     @if (offers == null)
     {
@@ -58,8 +61,9 @@
                 </div>
                 <div class="card-body d-flex justify-content-between flex-wrap">
                     <h5 class="col-8">@offer.Name</h5>
-                    <h6 class="col-4 d-flex justify-content-end">Price: @offer.Price dkk</h6>
+                <h6 class="col-4 d-flex justify-content-end">Price: @offer.Price dkk </h6>
                     <span class="col-8">@offer.Description</span>
+                    <h6 class="col-4 d-flex justify-content-end">Unit: @offer.Unit</h6>
                 </div>
             </div>
             @*<OfferSimple Name="@offer.Name"

@@ -54,7 +54,7 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Reviews> responseObserver) {
         try{
             var farm = farmDao.getFarmByName(request.getName());
-            var reviews = reviewDao.getReviewsByFarmAsync(farm);
+            var reviews = reviewDao.getReviewsByFarm(farm);
             Reviews.Builder response = Reviews.newBuilder();
 
             Collection<Review> protoReviews = new ArrayList<>();

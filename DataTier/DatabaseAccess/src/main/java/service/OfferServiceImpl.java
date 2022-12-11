@@ -47,7 +47,7 @@ import java.util.Collection;
     var farm = farmDao.getFarmByName(request.getFarmName());
     offer.setFarm(farm);
 
-    mango.sep3.databaseaccess.Shared.Offer offerFromDatabase = offerDao.CreateOffer(
+    mango.sep3.databaseaccess.Shared.Offer offerFromDatabase = offerDao.createOffer(
         offer);
 
     Offer response = grpcConverter.convertToGrpc(offerFromDatabase);
@@ -66,7 +66,7 @@ import java.util.Collection;
       StreamObserver<OfferItems> responseObserver)
   {
 
-    Collection<mango.sep3.databaseaccess.Shared.Offer> offers = offerDao.GetOffer();
+    Collection<mango.sep3.databaseaccess.Shared.Offer> offers = offerDao.getOffer();
 
     Collection<Offer> offersList = new ArrayList<>();
 

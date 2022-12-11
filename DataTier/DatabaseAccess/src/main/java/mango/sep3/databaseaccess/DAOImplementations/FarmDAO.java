@@ -25,14 +25,9 @@ public class FarmDAO implements FarmDaoInterface
   @Autowired
   private OrderRepository orderRepository;
 
-  /**
-   *
-   * @param
-   */
   @Autowired
   public FarmDAO()
   {
-    this.farmRepository = farmRepository;
   }
   @Override public Farm createFarm(Farm farm)
   {

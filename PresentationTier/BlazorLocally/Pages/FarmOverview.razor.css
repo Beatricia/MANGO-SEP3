@@ -26,11 +26,6 @@
 }
 
 
-#reviews{
-    position: absolute;
-    margin-left: 650px;
-    margin-top: -20px;
-}
 
 #farmName{
     text-align: center;
@@ -40,15 +35,23 @@
     font-size: xxx-large;
 }
 
+#reviews{
+    background-color: #606748;
+    border-radius: 10px;
+    width: 25em;
+    height: 5em;
+    align-items: center;
+    margin-right: 15px;
+    margin-left: 45px;
+}
+
 #status{
     background-color: #606748;
     border-radius: 10px;
     width: 25em;
     height: 5em;
     overflow: hidden;
-    margin-top: -20px;
     float: right;
-    margin-right: 13%;
     clear: both;
 }
 input[type=text] {
@@ -61,7 +64,12 @@ input[type=text] {
     color: white;
 }
 #statusText{
-    padding: 12px 12px
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #606748;;
+    color: white;
 }
 
 ::placeholder {
@@ -92,8 +100,7 @@ input[type=text] {
     border-radius: 5px;
     color: white;
     background-color: #606748;
-    border-style: none;
-    padding: 8px;
+    border-style: solid;
 }
 
 #ordersContainer{
@@ -110,9 +117,9 @@ input[type=text] {
 
 #phone{
     background-color: #606748;
-    border-radius: 5px;
-    width: 12em;
-    height: 3em;
+    border-radius: 10px;
+    width: 25em;
+    height: 5em;
     overflow: hidden;
     text-align: center;
     color: white;
@@ -121,17 +128,20 @@ input[type=text] {
 #updateContainer{
     clear: both;
     float: right;
-    margin-right: 15em;
-    margin-top: 15px;
 }
 
-#phoneLabel {
+#phoneLabel,  #addressLabel {
     padding: 0;
     margin: 0;
 }
 
+#phoneLabel{
+    margin-left: 3px;
+}
+
 #phoneText{
-    margin-top: -5px;
+    margin-top: -10px;
+    margin-left: 100px;
 }
 .addOffer{
     position: fixed;
@@ -140,4 +150,11 @@ input[type=text] {
 }
 .addOffer:hover{
     transition: all .2s ease-out;
+}
+.container{
+    margin-top: 10px;
+}
+
+.offers{
+    margin-top: 25px;
 }

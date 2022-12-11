@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public class CartOfferDAO implements CartOfferInterface
 {
-  private CartRepository cartRepository;
+  private final CartRepository cartRepository;
 
   @Autowired
   public CartOfferDAO(CartRepository cartRepository){
@@ -23,7 +23,7 @@ public class CartOfferDAO implements CartOfferInterface
   }
 
   @Override public void createCartOffer(CartItem cartItem){
-    cartItem = cartRepository.saveAndFlush(cartItem);
+    cartRepository.saveAndFlush(cartItem);
   }
 
   @Override public Collection<CartItem> getAllCartOffers(Customer customer){

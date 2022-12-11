@@ -2,7 +2,6 @@ package service;
 
 import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.NotificationDaoInterface;
-import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Shared.NotificationCustomer;
 import mango.sep3.databaseaccess.Shared.NotificationFarmer;
 import mango.sep3.databaseaccess.protobuf.*;
@@ -18,13 +17,7 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
 
     @Autowired
     private NotificationDaoInterface notificationDao;
-
-    @Autowired
-    private UserDaoInterface userDao;
-
     @Autowired private GrpcConverter grpcConverter;
-
-
 
     @Override
     public void getNotifications(Text request, StreamObserver<Notification> responseObserver) {

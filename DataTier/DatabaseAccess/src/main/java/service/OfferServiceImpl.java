@@ -21,7 +21,7 @@ import java.util.Collection;
 {
   @Autowired private OfferDaoInterface offerDao;
 
-  @Autowired private FarmDaoInterface farmDaoInterface;
+  @Autowired private FarmDaoInterface farmDao;
 
   @Autowired private GrpcConverter grpcConverter;
 
@@ -44,7 +44,7 @@ import java.util.Collection;
     mango.sep3.databaseaccess.Shared.Offer offer = grpcConverter.convertToShared(
         request);
 
-    var farm = farmDaoInterface.getFarmByName(request.getFarmName());
+    var farm = farmDao.getFarmByName(request.getFarmName());
     offer.setFarm(farm);
 
     mango.sep3.databaseaccess.Shared.Offer offerFromDatabase = offerDao.CreateOffer(

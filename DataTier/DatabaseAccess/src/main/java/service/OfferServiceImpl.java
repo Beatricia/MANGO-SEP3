@@ -70,6 +70,12 @@ import java.util.Collection;
 
     Collection<Offer> offersList = new ArrayList<>();
 
+    for ( var offer:offers )
+    {
+      Offer offerToSend = grpcConverter.convertToGrpc(offer);
+      offersList.add(offerToSend);
+    }
+
     OfferItems response = OfferItems.newBuilder().addAllOffers(offersList)
         .build();
 

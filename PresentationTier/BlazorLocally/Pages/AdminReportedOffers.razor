@@ -44,7 +44,7 @@
             <div class="buttons">
                 <div class="d-flex justify-content-center">
                     <button type="button" class="ignoreButton" @onclick="()=>IgnoreReport(report.Id)">Ignore</button>
-                    <button type="button" class="notifyButton" @onclick="NotifyFarmer">Notify</button>
+                    <button type="button" class="notifyButton" @onclick="()=>NotifyFarmer(report.Id)">Notify</button>
                     <button type="button" class="deleteButton" @onclick="DeleteReport">Delete</button>
                     </div>
             </div>
@@ -76,9 +76,10 @@
         navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
-    private void NotifyFarmer()
+    private async void NotifyFarmer(long id)
     {
-        throw new NotImplementedException();
+        await httpReportClient.NotifyFarmerAsync(id);
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
     private void DeleteReport()

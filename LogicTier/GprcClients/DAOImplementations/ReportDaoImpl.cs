@@ -50,4 +50,10 @@ public class ReportDaoImpl : IReportDao
         var grpcReport = await client.CreateReportAsync(report.ToGrpc());
         return grpcReport.ToShared(imageDao);
     }
+
+    public async Task<Shared.Models.Report> GetReportById(long id)
+    {
+        var grpcReport = await client.GetReportByIdAsync(id.ToGrpc());
+        return grpcReport.ToShared(imageDao);
+    }
 }

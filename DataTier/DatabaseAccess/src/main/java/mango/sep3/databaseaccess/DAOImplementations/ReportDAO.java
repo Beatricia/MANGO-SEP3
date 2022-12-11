@@ -34,4 +34,9 @@ public class ReportDAO implements ReportDaoInterface
   public Report createReport(Report report) {
     return reportRepository.save(report);
   }
+
+  @Override public Report getReportById(long id)
+  {
+    return reportRepository.findById(id).orElse(null);
+  }
 }

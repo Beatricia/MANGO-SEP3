@@ -6,4 +6,6 @@ public interface IReportService
 {
     public Task<ICollection<Report>> GetAllReports();
     Task IgnoreReportAsync(long id);
+
+    Task NotifyFarmerAsync(long id);
 }

@@ -9,11 +9,15 @@ public class ReportLogic : IReportLogic
 {
     private IReportDao reportDao;
     private IOfferDao offerDao;
+    private IFarmDao farmDao;
+    private INotificationLogic notificationLogic;
 
-    public ReportLogic(IReportDao reportDao, IOfferDao offerDao)
+    public ReportLogic(IReportDao reportDao, IOfferDao offerDao, IFarmDao farmDao,INotificationLogic notificationLogic)
     {
         this.reportDao = reportDao;
         this.offerDao = offerDao;
+        this.farmDao = farmDao;
+        this.notificationLogic = notificationLogic;
     }
     
     public Task<ICollection<Report>> GetAllReports()
@@ -41,5 +45,21 @@ public class ReportLogic : IReportLogic
         };
 
         return await reportDao.CreateReportAsync(report);
+    }
+
+    public async Task NotifyFarmerAsync(long id)
+    {
+        var report =  await reportDao.GetReportById(id);
+        var farm = await farmDao.GetFarmByNameAsync(report.Offer.FarmName);
+        var farmerUsername = farm.Farmer.Username;
+
+        var notification = new NotificationCreationDto
+        {
+            Username = farmerUsername,
+            Text =
+                $"Your offer has been reported because of {report.Reason}. Consider deleting the offer and checking the Locally Post Rules!",
+        };
+        await notificationLogic.AddNotificationAsync(notification);
+        await DeleteReportAsync(id);
     }
 }

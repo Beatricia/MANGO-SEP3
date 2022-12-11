@@ -47,5 +47,21 @@ public class ReportController : LocallyController
             return StatusCode(500, e.Message);
         }
     }
+    
+    [Authorize(Roles = "admin")]
+    [HttpPost("{id}")]
+    public async Task<ActionResult> PostAsync([FromRoute] long id)
+    {
+        try
+        {
+            await reportLogic.NotifyFarmerAsync(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 
 }

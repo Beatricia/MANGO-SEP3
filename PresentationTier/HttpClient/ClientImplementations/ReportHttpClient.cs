@@ -42,4 +42,14 @@ public class ReportHttpClient : IReportService
             throw new Exception(content);
         }
     }
+
+    public async Task NotifyFarmerAsync(long id)
+    {
+        HttpResponseMessage response = await client.PostAsync($"/Report/{id}", null);
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+    }
 }

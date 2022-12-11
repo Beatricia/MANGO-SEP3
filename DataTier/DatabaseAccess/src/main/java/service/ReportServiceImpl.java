@@ -60,4 +60,13 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+  @Override public void getReportById(Id64 request,
+      StreamObserver<mango.sep3.databaseaccess.protobuf.Report> responseObserver)
+  {
+    var sharedReport = reportDao.getReportById(request.getId());
+    var response = grpcConverter.convertToGrpc(sharedReport);
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
 }

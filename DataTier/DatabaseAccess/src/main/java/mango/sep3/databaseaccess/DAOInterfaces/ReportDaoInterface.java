@@ -9,4 +9,5 @@ public interface ReportDaoInterface
   Collection<Report> getReports();
   void deleteReport(long id);
   Report createReport(Report report);
+  Report getReportById(long id);
 }

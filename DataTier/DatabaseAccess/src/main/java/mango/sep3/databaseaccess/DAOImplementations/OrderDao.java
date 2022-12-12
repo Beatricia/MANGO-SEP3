@@ -15,12 +15,12 @@ import java.util.List;
 @Repository
 public class OrderDao implements OrderDaoInterface
 {
-  private OrderRepository orderRepository;
-  private OrderOfferRepository orderOfferRepository;
-  private CustomerRepository customerRepository;
-  private CartRepository cartRepository;
-  private FarmerRepository farmerRepository;
-  private  FarmRepository farmRepository;
+  private final OrderRepository orderRepository;
+  private final OrderOfferRepository orderOfferRepository;
+  private final CustomerRepository customerRepository;
+  private final CartRepository cartRepository;
+  private final FarmerRepository farmerRepository;
+  private final FarmRepository farmRepository;
 
   @Autowired
   public OrderDao(OrderRepository orderRepository, OrderOfferRepository orderOfferRepository,
@@ -89,9 +89,6 @@ public class OrderDao implements OrderDaoInterface
 
     }
 
-
-    //ToDo find better way to get only not done orders
-
     Collection<Order> notDoneOrders = new ArrayList<>();
     for (Order order:orders)
     {
@@ -112,8 +109,11 @@ public class OrderDao implements OrderDaoInterface
   @Override public void completeOrder(int id)
   {
     Order order = orderRepository.findById(id).orElse(null);
-    order.setDone(true);
-    orderRepository.saveAndFlush(order);
+    if (order != null)
+    {
+      order.setDone(true);
+      orderRepository.saveAndFlush(order);
+    }
   }
 
   @Override public Collection<String> getUsersWithUncompletedOrder(Collection<Order> orders)

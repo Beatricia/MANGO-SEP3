@@ -10,6 +10,16 @@
 @inject IOfferService httpOfferClient
 @inject ICartService HttpCartClient
 
+
+<div class="offers">
+    @if (offers == null)
+    {
+        <p>
+            <em>Loading offers...</em>
+        </p>
+    }
+</div>
+
 <div class="text">
     <h3 class="displayOffersText">Display Offers</h3>
 </div>
@@ -84,6 +94,7 @@
                             <h5 class="col-8">@offer.Name</h5>
                             <h6 class="col-4 d-flex justify-content-end">@offer.Price DKK</h6>
                             <span class="col-8">@offer.Description</span>
+                            <h6 class="col-4 d-flex justify-content-end">Unit: @offer.Unit</h6>
                         </div>
                         <button type="button" @onclick="() => OpenPopUpAddToCart(offer)">
                             Add

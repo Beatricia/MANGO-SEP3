@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface ReviewDaoInterface {
     Review saveReview(Review review);
-    Collection<Review> getReviewsByFarmAsync(Farm farm);
+    Collection<Review> getReviewsByFarm(Farm farm);
 
     Review editReview(Review review);
     Review getReviewById(long id);

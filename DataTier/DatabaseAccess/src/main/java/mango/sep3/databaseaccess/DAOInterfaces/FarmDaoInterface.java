@@ -5,7 +5,6 @@ import mango.sep3.databaseaccess.Shared.Farmer;
 import mango.sep3.databaseaccess.Shared.Order;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface FarmDaoInterface
 {

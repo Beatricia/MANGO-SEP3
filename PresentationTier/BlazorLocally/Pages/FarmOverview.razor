@@ -18,27 +18,40 @@
         <label id="farmName">@FarmName</label>
     </div>
 </div>
-<div id="reviews">
-    <Reviews FarmName="@FarmName"></Reviews>
-</div>
-<div id="status">
-    <h5 id="statusLabel">Status:</h5>
-    <input type="text"  id="statusText" @bind="updatedStatus" placeholder="@Farm?.FarmStatus">
-</div>
-<div id="updateContainer">
-    <div class="container">
+
+<div class="container">
     <div class="row">
-        <div class="col-4" id="phone">
-            <p id="phoneLabel">Phone number:</p>
-            <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm?.Phone">
+        <div class="col-4" id="reviews" style="display: flex; justify-content: center">
+            <Reviews FarmName="@FarmName"></Reviews>
         </div>
-        <div class="col-sm-2 col-sm-offset-3">
+            
+        <div class="col-4" id="status">
+            <h5 id="statusLabel">Status:</h5>
+             <input type="text"  id="statusText" @bind="updatedStatus" placeholder="@Farm?.FarmStatus">
+        </div>
+
+        <div class="col-4" id="updateContainer">
+            <div id="phone">
+                <p id="phoneLabel">Phone number:</p>
+                <div class="row">
+                    <div class="col-5">
+                        <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm?.Phone"></div>
+                    <p id="addressLabel">@Farm?.Address</p>
+                </div>
+                </div>
+        </div>
+    </div>
+    <div class="row"> 
+        <div class="col-4" id="errorMessageContainer">
+             <label>@msg</label>
+        </div>
+        <div class="col-2 d-flex justify-content-end" id="updateButtonContainer">
             <AuthorizeView Roles="farmer">
                 <button id="updateButton" @onclick="updateFarm">Update</button>
             </AuthorizeView>
         </div>
+      
     </div>
-</div>
 </div>
 
 @if (offers == null)
@@ -61,6 +74,7 @@
                     <h5 class="col-8">@offer.Name</h5>
                     <h6 class="col-4 d-flex justify-content-end">Price: @offer.Price dkk</h6>
                     <span class="col-8">@offer.Description</span>
+                    <h6 class="col-4 d-flex justify-content-end">Unit: @offer.Unit</h6>
                 </div>
                 <i @onclick="()=> DisableOffer(offer.Id)" class="fa-solid fa-square-xmark fa-2xl position-absolute" style="right: -2%; cursor: pointer"></i>
             </div>
@@ -98,9 +112,9 @@
 
     private async Task updateFarm()
     {
-        if (updatedPhone.Length != 8 ||  !int.TryParse(updatedPhone, out _))
+        if (updatedPhone?.Length != 8 ||  !int.TryParse(updatedPhone, out _))
         {
-            msg = "Phone number must be 8 digits";
+            msg = "Phone number must be 8 digits. Ex: 12345678";
             return;
         }
         

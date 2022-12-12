@@ -4,7 +4,6 @@ import io.grpc.stub.StreamObserver;
 import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
-import mango.sep3.databaseaccess.Shared.Address;
 import mango.sep3.databaseaccess.protobuf.*;
 
 import mango.sep3.databaseaccess.protobuf.Void;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @GRpcService public class FarmServiceImpl
     extends FarmServiceGrpc.FarmServiceImplBase

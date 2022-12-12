@@ -7,8 +7,8 @@ import java.util.Collection;
 
 public interface OfferDaoInterface
 {
-  Offer CreateOffer(Offer offer);
-  Collection<Offer> GetOffer();
+  Offer createOffer(Offer offer);
+  Collection<Offer> getOffer();
   Offer getOfferById(int id);
   Collection<Offer> getOffersByFarmName(String farmName);
 

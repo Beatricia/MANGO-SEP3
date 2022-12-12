@@ -8,13 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
-import mango.sep3.databaseaccess.DAOInterfaces.OfferDaoInterface;
-
 import mango.sep3.databaseaccess.Repositories.OfferRepository;
 import mango.sep3.databaseaccess.Shared.Offer;
-import org.springframework.stereotype.Repository;
-
-import java.util.Collection;
 
 @Repository
 public class OfferDAO implements OfferDaoInterface {
@@ -29,14 +24,14 @@ public class OfferDAO implements OfferDaoInterface {
 
 
   @Override
-    public Offer CreateOffer(Offer offer) {
+    public Offer createOffer(Offer offer) {
         offer.setFarm(farmRepository.findByName(offer.getFarm().getName()));
         offer = offerRepository.save(offer);
         return offer;
     }
 
   @Override
-  public Collection<Offer> GetOffer() {
+  public Collection<Offer> getOffer() {
     return offerRepository.findAllByIsDisabledFalse();
   }
 
@@ -54,7 +49,11 @@ public class OfferDAO implements OfferDaoInterface {
   @Override
   public void disableOfferById(int id) {
     Offer offer = offerRepository.findById(id).orElse(null);
-    offer.setIsDisabled(true);
-    offerRepository.save(offer);
+    if (offer != null)
+    {
+      offer.setIsDisabled(true);
+      offerRepository.save(offer);
+    }
+
   }
 }

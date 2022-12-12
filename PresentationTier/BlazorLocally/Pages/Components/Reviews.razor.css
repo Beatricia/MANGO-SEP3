@@ -3,32 +3,32 @@ html, body {
 }
 
 body {
-    background-color: #e0e0e0;
+    background-color: #606748;
     padding: 200px 0 0 100px;
     font-family: Arial, serif;
 }
 
 .review-wrapper {
     width: 120px;
-    height: 30px;
+    height: 50px;
     position: relative;
     z-index: 1;
 }
 .review-wrapper .review-title {
-    height: 30px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 23px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
 }
 .review-wrapper .review-extendable {
     position: absolute;
     height: fit-content;
-    max-height: 30px;
+    max-height: 50px;
     width: 100%;
-    background-color: #fafaf7;
-    border: #fafaf7 solid;
+    background-color: #606748;
     border-width: 5px 3px 5px 3px;
     border-radius: 10px;
     display: flex;
@@ -41,7 +41,7 @@ body {
     overflow-y: auto;
     padding-bottom: 10px;
     width: 400px;
-    transform: translateY(-100px) translateX(-50px);
+    retransform: translateY(-100px) translateX(-50px);
     box-shadow: 2px 2px 30px 2px #545454;
 }
 .review-wrapper:hover .reviews {

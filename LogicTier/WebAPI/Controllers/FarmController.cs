@@ -30,7 +30,7 @@ public class FarmController : LocallyController
     /// <param name="dto">A FarmCreationDto containing all information Required to create a Farm object</param>
     /// <returns>Returns the farm object or a status code to indicate an error</returns>
     [HttpPost, Authorize(Roles = "farmer")]
-    public async Task<IActionResult> CreateAsync(FarmCreationDto dto)
+    public async Task<IActionResult> CreateAsync([FromBody]FarmCreationDto dto)
     {
         try
         {
@@ -72,7 +72,7 @@ public class FarmController : LocallyController
     }
     
         
-
+    //change me to something more appropriate
     [HttpGet("me")]
     [Authorize(Roles = "farmer")]
     public async Task<IActionResult> GetAllFarmsByFarmer()
@@ -86,17 +86,15 @@ public class FarmController : LocallyController
         {
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
-        }
+        } 
     }
     
     
     [HttpPatch]
     public async Task<ActionResult> UpdateAsync([FromBody]FarmUpdateDto dto)
     {
-        string username = LoggedInUsername;
         try
         {
-            
             await farmLogic.UpdateFarmAsync(dto);
             return Ok();
         }
@@ -166,7 +164,7 @@ public class FarmController : LocallyController
 
     [HttpPost("{name:regex([[\\w\\W]]+)}/reviews")]
     [Authorize(Roles = "customer")]
-    public async Task<IActionResult> PostReview(string name, ReviewCreationDto dto)
+    public async Task<IActionResult> PostReview([FromRoute]string name, [FromBody]ReviewCreationDto dto)
     {
         try
         {

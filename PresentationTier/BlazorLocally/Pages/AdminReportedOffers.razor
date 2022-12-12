@@ -1,8 +1,8 @@
 ﻿@page "/AdminReportedOffers"
 @attribute [Authorize(Roles = "admin")]
 
-@inject IOfferService httpOfferClient
 @inject IReportService httpReportClient
+@inject IOfferService offerHttpClient;
 @using HttpClient.ClientInterfaces
 @using global::Shared.Models
 
@@ -44,7 +44,7 @@
                 <div class="d-flex justify-content-center">
                     <button type="button" class="ignoreButton" @onclick="IgnoreReport">Ignore</button>
                     <button type="button" class="notifyButton" @onclick="NotifyFarmer">Notify</button>
-                    <button type="button" class="deleteButton" @onclick="DeleteReport">Delete</button>
+                    <button type="button" class="deleteButton" @onclick="()=> DisableOffer(report.Offer.Id)">Delete</button>
                     </div>
             </div>
         </div>
@@ -79,9 +79,10 @@
         throw new NotImplementedException();
     }
 
-    private void DeleteReport()
+    private async Task DisableOffer(int offerId)
     {
-        throw new NotImplementedException();
+        await offerHttpClient.DisableAsync(offerId);
+        await OnInitializedAsync();
     }
 
 }

@@ -18,10 +18,12 @@ public class FarmHttpClient : IFarmService
     }
 
 
-
+    //send dto as body?
     public async Task CreateAsync(FarmCreationDto dto)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/farm", dto);
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/farm", body);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -71,7 +73,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<Farm>?> GetAllFarmsByFarmerAsync()
     {
-        HttpResponseMessage response = await Client.GetAsync($"/Farm/me");
+        HttpResponseMessage response = await Client.GetAsync($"/farm/me"); //change /me to something more appropriate
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -101,7 +103,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<Farm>?> GetAllFarmsAsync()
     {
-        HttpResponseMessage response = await Client.GetAsync($"/Farm/all");
+        HttpResponseMessage response = await Client.GetAsync($"/farm/all");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -119,7 +121,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<Farm>?> GetAllFarmsByNameContainsAsync(string nameContains)
     {
-        HttpResponseMessage response = await Client.GetAsync($"/Farm?farmname={nameContains}");
+        HttpResponseMessage response = await Client.GetAsync($"/farm/{nameContains}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -137,7 +139,9 @@ public class FarmHttpClient : IFarmService
 
     public async Task<Review> CreateReviewAsync(string farmName, ReviewCreationDto dto)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"/farm/{farmName}/reviews", dto);
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await Client.PostAsJsonAsync($"/farm/{farmName}/reviews", body);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

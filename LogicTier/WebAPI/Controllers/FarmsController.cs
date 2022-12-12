@@ -55,9 +55,9 @@ public class FarmsController : LocallyController
         return Ok(farmLogic.GetAllIcons());
     }
     
-    [HttpGet("{farmName}")]
+    [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAsync([FromRoute]string farmName)
+    public async Task<IActionResult> GetAsync([FromQuery]string farmName)
     {
         try
         {
@@ -121,9 +121,9 @@ public class FarmsController : LocallyController
         }
     }
 
-    [HttpGet]
+    [HttpGet("{nameContains}")]
     [Authorize]
-    public async Task<IActionResult> GetFarmByName([FromQuery]string nameContains)
+    public async Task<IActionResult> GetFarmByName([FromRoute]string nameContains)
     {
         try
         {

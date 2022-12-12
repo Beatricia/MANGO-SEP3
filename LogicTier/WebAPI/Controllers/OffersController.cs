@@ -47,7 +47,7 @@ public class OffersController : LocallyController
     }
     
     [HttpPost("{id:int}/image")]
-    public async Task<IActionResult> UploadImage([FromQuery] int id)
+    public async Task<IActionResult> UploadImage([FromRoute] int id)
     {
         if (!Request.HasFormContentType)
             return BadRequest("Not a form content type");

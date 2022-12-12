@@ -20,33 +20,39 @@
 </div>
 
 <div class="container">
-        <div class="row">
-            <div class="col-4" id="reviews" style="display: flex; justify-content: center">
-                   <Reviews FarmName="@FarmName"></Reviews>
-            </div>
+    <div class="row">
+        <div class="col-4" id="reviews" style="display: flex; justify-content: center">
+            <Reviews FarmName="@FarmName"></Reviews>
+        </div>
             
-            <div class="col-4" id="status">
-                <h5 id="statusLabel">Status:</h5>
-                <label id="statusText" >@Farm?.FarmStatus</label>
-            </div>
-            
-            <div class="col-4" id="updateContainer">
-                <div id="phone">
-                    <p id="phoneLabel">Phone number:</p>
-                    <div class="row">
-                    <div class="col-4">
-                    <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm?.Phone"></div>
-                    <div class="col-8">
-                           <AuthorizeView Roles="farmer">
-                           <button id="updateButton" @onclick="updateFarm">Update Phone</button>
-                           </AuthorizeView>
-                    </div></div>
+        <div class="col-4" id="status">
+            <h5 id="statusLabel">Status:</h5>
+             <input type="text"  id="statusText" @bind="updatedStatus" placeholder="@Farm?.FarmStatus">
+        </div>
+
+        <div class="col-4" id="updateContainer">
+            <div id="phone">
+                <p id="phoneLabel">Phone number:</p>
+                <div class="row">
+                    <div class="col-5">
+                        <input id="phoneText" type="text" @bind="updatedPhone"  placeholder="@Farm?.Phone"></div>
                     <p id="addressLabel">@Farm?.Address</p>
                 </div>
-
-            </div>
+                </div>
         </div>
     </div>
+    <div class="row"> 
+        <div class="col-4" id="errorMessageContainer">
+             <label>@msg</label>
+        </div>
+        <div class="col-2 d-flex justify-content-end" id="updateButtonContainer">
+            <AuthorizeView Roles="farmer">
+                <button id="updateButton" @onclick="updateFarm">Update</button>
+            </AuthorizeView>
+        </div>
+      
+    </div>
+</div>
 
 @if (offers == null)
 {
@@ -106,9 +112,9 @@
 
     private async Task updateFarm()
     {
-        if (updatedPhone.Length != 8 ||  !int.TryParse(updatedPhone, out _))
+        if (updatedPhone?.Length != 8 ||  !int.TryParse(updatedPhone, out _))
         {
-            msg = "Phone number must be 8 digits";
+            msg = "Phone number must be 8 digits. Ex: 12345678";
             return;
         }
         

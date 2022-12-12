@@ -1,6 +1,7 @@
 ﻿#shape{
     overflow: hidden;
-    margin-left: 13%;
+    margin-left: 10em;
+    position: relative;
 }
 #farmImg{
     padding-top: 17px;
@@ -38,17 +39,17 @@
 #reviews{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;
     align-items: center;
     margin-right: 15px;
-    margin-left: 45px;
+    margin-left: 90px;
 }
 
 #status{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;
     overflow: hidden;
     float: right;
@@ -118,7 +119,7 @@ input[type=text] {
 #phone{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;
     overflow: hidden;
     text-align: center;
@@ -156,5 +157,13 @@ input[type=text] {
 }
 
 .offers{
-    margin-top: 25px;
+    margin-top: 50px;
+}
+
+#updateButtonContainer{
+    margin-top: 15px;
+}
+#errorMessageContainer{
+    margin-top: 15px;
+    margin-left: 400px;
 }

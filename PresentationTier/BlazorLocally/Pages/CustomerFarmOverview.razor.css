@@ -1,6 +1,6 @@
 ﻿#shape{
     overflow: hidden;
-    margin-left: 15em;
+    margin-left: 10em;
     position: relative;
 }
 #farmImg{
@@ -36,7 +36,7 @@
 #status{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;
     overflow: hidden;
     float: right;
@@ -46,11 +46,11 @@
 #reviews{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;    
     align-items: center;
     margin-right: 15px;
-    margin-left: 45px;
+    margin-left: 90px;
 }
 
 #statusText {
@@ -85,7 +85,7 @@
 #phone{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;
     overflow: hidden;
     text-align: center;

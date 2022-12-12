@@ -52,11 +52,8 @@ public class OrderLogic : IOrderLogic
             {
                 Order orderToSend = new Order
                 {
-                    //---> we don't really need to assign CartOffers since we use the username to get them in the db
-                    //CartOffers = deliveryOffers,
                     IsDone = false,
                     FarmName = order.FarmName,
-                    //CollectionOption = "delivery",
                     CollectionOption = CollectionOption.Delivery,
                     Username = username
                 };
@@ -67,10 +64,8 @@ public class OrderLogic : IOrderLogic
             {
                 Order orderToSend = new Order
                 {
-                    //CartOffers = pickUpOffers,
                     IsDone = false,
                     FarmName = order.FarmName,
-                    //CollectionOption = "pickUp",
                     CollectionOption = CollectionOption.PickUp,
                     Username = username
                 };
@@ -78,10 +73,6 @@ public class OrderLogic : IOrderLogic
             }
         }
 
-        foreach (var order in ordersToSend)
-        {
-            Console.WriteLine(order.CollectionOption);
-        }
         await orderDao.CreateOrdersAsync(ordersToSend);
     }
 

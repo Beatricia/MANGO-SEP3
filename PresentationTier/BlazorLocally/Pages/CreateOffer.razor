@@ -23,7 +23,7 @@
         <div class=" d-flex flex-column">
             <img id="image" src="Img/sample-offer.png" alt="default" width="200px" height="auto" class="img col-3 me-4"/>
             @*<input type="file" id="offerImg" accept="image/png, image/jpeg, image/jpg" class="col-3 me-4"/>*@
-            <InputFile OnChange="GetImage"></InputFile>
+            <InputFile OnChange="GetImage" AdditionalAttributes="FileUploadAttributes"></InputFile>
         </div>
     </div>
     <div class="col-6">
@@ -92,6 +92,10 @@
     private string? blobUri;
     private Lazy<IJSObjectReference> ExampleModule = new();
 
+    private Dictionary<string, object> FileUploadAttributes = new()
+    {
+        ["accept"] = ".jpg,.jpeg,.png"
+    };
 
     private async Task GetImage(InputFileChangeEventArgs args)
     {

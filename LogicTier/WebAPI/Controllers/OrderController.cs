@@ -7,8 +7,7 @@ using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+[ApiController] [Route("[controller]")]
 //[Authorize]
 public class OrderController : LocallyController
 {

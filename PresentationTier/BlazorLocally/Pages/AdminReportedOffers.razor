@@ -1,8 +1,9 @@
 ﻿@page "/AdminReportedOffers"
 @attribute [Authorize(Roles = "admin")]
 
+@inject IOfferService httpOfferClient
 @inject IReportService httpReportClient
-@inject IOfferService offerHttpClient;
+@inject NavigationManager navMgr;
 @using HttpClient.ClientInterfaces
 @using global::Shared.Models
 
@@ -42,8 +43,8 @@
 
             <div class="buttons">
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="ignoreButton" @onclick="IgnoreReport">Ignore</button>
-                    <button type="button" class="notifyButton" @onclick="NotifyFarmer">Notify</button>
+                    <button type="button" class="ignoreButton" @onclick="()=>IgnoreReport(report.Id)">Ignore</button>
+                    <button type="button" class="notifyButton" @onclick="()=>NotifyFarmer(report.Id)">Notify</button>
                     <button type="button" class="deleteButton" @onclick="()=> DisableOffer(report.Offer.Id)">Delete</button>
                     </div>
             </div>
@@ -69,14 +70,16 @@
         }
     }
 
-    private void IgnoreReport()
+    private async void IgnoreReport(long id)
     {
-        throw new NotImplementedException();
+        await httpReportClient.IgnoreReportAsync(id);
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
-    private void NotifyFarmer()
+    private async void NotifyFarmer(long id)
     {
-        throw new NotImplementedException();
+        await httpReportClient.NotifyFarmerAsync(id);
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
     private async Task DisableOffer(int offerId)

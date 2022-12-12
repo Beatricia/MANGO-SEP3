@@ -11,37 +11,41 @@
         <div class="review-title">
             <span>Reviews</span>
         </div>
+        @if (errorMessage is {Length:>0})
+        {
+            <span style="color:red;">@errorMessage</span>
+        }
         <div class="reviews">
             <AuthorizeView Roles="customer">
-            @if (currentUserReview is not null)
-            {
-                <div class="card">
-                    <div class="review-edit edited">
-                        <div class="info"><span>@CurrentUser</span> • <span class="date">@GetReviewTimeStamp(currentUserReview.Date)</span></div>
-                        <div class="content">
-                            <label>
-                                <textarea @bind="editedReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm">
+                @if (currentUserReview is not null)
+                {
+                    <div class="card">
+                        <div class="review-edit edited">
+                            <div class="info"><span>@CurrentUser</span> • <span class="date">@GetReviewTimeStamp(currentUserReview.Date)</span></div>
+                            <div class="content">
+                                <label>
+                                    <textarea @bind="editedReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm">
                                     @currentUserReview.Content
                                 </textarea>
-                            </label>
+                                </label>
+                            </div>
+                            <button class="submit" @onclick="SubmitEditedReview">Done</button>
                         </div>
-                        <button class="submit" @onclick="SubmitEditedReview">Done</button>
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="card">
-                    <div class="review-create">
-                        <label>
-                            <textarea @bind="newReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
-                        </label>
+                }
+                else
+                {
+                    <div class="card">
+                        <div class="review-create">
+                            <label>
+                                <textarea @bind="newReviewContent" class="cool-hover-wheel" placeholder="Share your opinion about the farm"></textarea>
+                            </label>
 
-                        <button class="submit" @onclick="CreateReview">Submit</button>
+                            <button class="submit" @onclick="CreateReview">Submit</button>
+                        </div>
                     </div>
-                </div>
-            }
-</AuthorizeView>
+                }
+            </AuthorizeView>
             @if (reviews is null)
             {
                 <span>Loading...</span>
@@ -55,9 +59,9 @@
                     </div>
                 </div>
             }
-            else if(reviews is { Count: >0 })
+            else if (reviews is { Count: >0 })
             {
-                
+
                 @foreach (var review in reviews)
                 {
                     <div class="card">
@@ -84,7 +88,8 @@
     private Review? currentUserReview;
 
     private ICollection<Review>? reviews;
-    
+
+    private string errorMessage = "";
     
     private string newReviewContent = "";
     private string editedReviewContent = "";
@@ -123,12 +128,20 @@
             throw new Exception("Unexpected error");
         }
 
-        await FarmService.EditReviewAsync(review.Id, review.FarmName, new UpdateReviewDto
+        try
         {
-            Username = review.WrittenBy,
-            UpdatedReview = editedReviewContent,
-            Id = review.Id
-        });
+            await FarmService.EditReviewAsync(review.Id, review.FarmName, new UpdateReviewDto
+            {
+                Username = review.WrittenBy,
+                UpdatedReview = editedReviewContent,
+                Id = review.Id
+            });
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+        
     }
 
     async Task CreateReview()
@@ -137,9 +150,17 @@
         {
             ReviewText = newReviewContent
         };
-        
-        await FarmService.CreateReviewAsync(FarmName, dto);
-        await OnInitializedAsync();
+
+        try
+        {
+            await FarmService.CreateReviewAsync(FarmName, dto);
+            await OnInitializedAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error message: " + e.Message);
+            errorMessage = e.Message;
+        }
     }
     
     

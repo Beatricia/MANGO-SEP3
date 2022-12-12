@@ -1,10 +1,10 @@
 package service;
 
-import mango.sep3.databaseaccess.DAOInterfaces.AdminDaoInterface;
+import io.grpc.stub.StreamObserver;
+import mango.sep3.databaseaccess.DAOInterfaces.ReportDaoInterface;
 import mango.sep3.databaseaccess.Shared.Report;
-//import mango.sep3.databaseaccess.protobuf.AdminServiceGrpc;
-import mango.sep3.databaseaccess.protobuf.ReportServiceGrpc;
-import mango.sep3.databaseaccess.protobuf.Reports;
+import mango.sep3.databaseaccess.protobuf.*;
+import mango.sep3.databaseaccess.protobuf.Void;
 import mango.sep3.databaseaccess.utils.GrpcConverter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Collection;
 @GRpcService
 public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
 {
-  @Autowired private AdminDaoInterface adminDaoInterface;
+  @Autowired private ReportDaoInterface reportDao;
   @Autowired private GrpcConverter grpcConverter;
 
   public ReportServiceImpl(){
@@ -26,7 +26,7 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
   public void getReports(mango.sep3.databaseaccess.protobuf.Void request,
       io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Reports> responseObserver) {
 
-   Collection<Report> reportsShared = adminDaoInterface.GetReports();
+   Collection<Report> reportsShared = reportDao.getReports();
 
    Collection<mango.sep3.databaseaccess.protobuf.Report> reportsProto = new ArrayList<>();
 
@@ -42,4 +42,31 @@ public class ReportServiceImpl extends ReportServiceGrpc.ReportServiceImplBase
    responseObserver.onCompleted();
   }
 
+  @Override public void deleteReport(Id64 request,
+      StreamObserver<Void> responseObserver)
+  {
+    reportDao.deleteReport(request.getId());
+    Void response = Void.newBuilder().build();
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
+
+    @Override
+    public void createReport(mango.sep3.databaseaccess.protobuf.Report request, StreamObserver<mango.sep3.databaseaccess.protobuf.Report> responseObserver) {
+        var sharedReport = grpcConverter.convertToShared(request);
+        var savedReport = reportDao.createReport(sharedReport);
+        var response = grpcConverter.convertToGrpc(savedReport);
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+  @Override public void getReportById(Id64 request,
+      StreamObserver<mango.sep3.databaseaccess.protobuf.Report> responseObserver)
+  {
+    var sharedReport = reportDao.getReportById(request.getId());
+    var response = grpcConverter.convertToGrpc(sharedReport);
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
 }

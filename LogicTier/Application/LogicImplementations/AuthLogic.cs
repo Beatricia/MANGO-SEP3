@@ -145,8 +145,13 @@ public class AuthLogic : IAuthLogic
 
         return user;
     }
-
-
+    
+    /// <summary>
+    /// Creates a new user auth with a random generated salt and a hashed password from the generated salt.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="pass"></param>
+    /// <returns></returns>
     private static UserAuth CreateUserAuth(string username, string pass)
     {
         string saltString = CreateSalt();
@@ -161,7 +166,7 @@ public class AuthLogic : IAuthLogic
     }
 
     /// <summary>
-    /// Create salt for password
+    /// Creates a random salt
     /// </summary>
     /// <returns></returns>
     private static string CreateSalt()

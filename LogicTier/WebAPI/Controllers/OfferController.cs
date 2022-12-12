@@ -32,7 +32,7 @@ public class OfferController : LocallyController
     /// <returns>Returns the Offer object or a status code to indicate an error</returns>
     [Authorize(Roles = "farmer")]
     [HttpPost, AllowAnonymous]
-    public async Task<IActionResult> CreateAsync(OfferCreationDto dto)
+    public async Task<IActionResult> CreateAsync([FromBody]OfferCreationDto dto)
     {
         try
         {

@@ -18,7 +18,9 @@ public class CartHttpClient : ICartService
     
     public async Task AddToCartAsync(CartOfferDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/Cart", dto);
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PostAsJsonAsync("/cart", body);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -29,7 +31,7 @@ public class CartHttpClient : ICartService
 
     public async Task<ICollection<CartOffer>> GetAllCartItemsAsync()
     {
-        HttpResponseMessage response = await client.GetAsync("/Cart");
+        HttpResponseMessage response = await client.GetAsync("/cart");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -47,7 +49,7 @@ public class CartHttpClient : ICartService
 
     public async Task DeleteAllCartOffersAsync()
     {
-        HttpResponseMessage response = await client.DeleteAsync($"/Cart");
+        HttpResponseMessage response = await client.DeleteAsync($"/cart");
         string content = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
@@ -58,7 +60,7 @@ public class CartHttpClient : ICartService
 
     public async Task DeleteCartOfferAsync(int cartItemId)
     {
-        HttpResponseMessage response = await client.DeleteAsync($"/Cart/{cartItemId}");
+        HttpResponseMessage response = await client.DeleteAsync($"/cart/{cartItemId}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -71,7 +73,7 @@ public class CartHttpClient : ICartService
     {
         string dtoAsJson = JsonSerializer.Serialize(dto);
         StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await client.PatchAsync("/Cart", body);
+        HttpResponseMessage response = await client.PatchAsync("/cart", body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

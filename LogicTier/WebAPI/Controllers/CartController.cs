@@ -20,7 +20,7 @@ public class CartController : LocallyController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(CartOfferDto dto)
+    public async Task<IActionResult> CreateAsync([FromBody]CartOfferDto dto)
     {
         try
         {

@@ -72,15 +72,6 @@
                 </div>
                 <i @onclick="()=> DisableOffer(offer.Id)" class="fa-solid fa-square-xmark fa-2xl position-absolute" style="right: -2%; cursor: pointer"></i>
             </div>
-            
-                        
-            @*<OfferSimple Name="@offer.Name"
-                         Price="@offer.Price" 
-                         Description="@offer.Description" 
-                         ImageUrl="@offer.Image.AbsoluteUrl"
-                         OnClick="@(() => {  })"
-                         DisplayButton="@false"
-            ></OfferSimple>*@
         }
     </div>}
 <div class="addOffer">
@@ -115,6 +106,12 @@
 
     private async Task updateFarm()
     {
+        if (updatedPhone.Length != 8 ||  !int.TryParse(updatedPhone, out _))
+        {
+            msg = "Phone number must be 8 digits";
+            return;
+        }
+        
         var dto = new FarmUpdateDto
         {
             FarmStatus = updatedStatus ?? Farm.FarmStatus,

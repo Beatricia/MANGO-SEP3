@@ -20,16 +20,16 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
     private GrpcConverter grpcConverter;
 
     @Autowired
-    private ReviewDaoInterface reviewDaoInterface;
+    private ReviewDaoInterface reviewDao;
     @Autowired
-    private FarmDaoInterface farmDaoInterface;
+    private FarmDaoInterface farmDao;
 
 
     @Override
     public void createReview(Review request, StreamObserver<Review> responseObserver) {
         var sharedReview = grpcConverter.convertToShared(request);
         try{
-            var savedReview = reviewDaoInterface.saveReview(sharedReview);
+            var savedReview = reviewDao.saveReview(sharedReview);
             var savedGrpcReview = grpcConverter.convertToGrpc(savedReview);
             responseObserver.onNext(savedGrpcReview);
             responseObserver.onCompleted();
@@ -42,7 +42,7 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
     @Override
     public void editReview(Review request, StreamObserver<Review> responseObserver) {
         var sharedReview = grpcConverter.convertToShared(request);
-        var saved = reviewDaoInterface.editReview(sharedReview);
+        var saved = reviewDao.editReview(sharedReview);
 
         var savedGrpcReview = grpcConverter.convertToGrpc(saved);
         responseObserver.onNext(savedGrpcReview);
@@ -53,8 +53,8 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
     public void getReviewsByFarm(mango.sep3.databaseaccess.protobuf.Farm request,
         io.grpc.stub.StreamObserver<mango.sep3.databaseaccess.protobuf.Reviews> responseObserver) {
         try{
-            var farm = farmDaoInterface.getFarmByName(request.getName());
-            var reviews = reviewDaoInterface.getReviewsByFarmAsync(farm);
+            var farm = farmDao.getFarmByName(request.getName());
+            var reviews = reviewDao.getReviewsByFarm(farm);
             Reviews.Builder response = Reviews.newBuilder();
 
             Collection<Review> protoReviews = new ArrayList<>();
@@ -75,7 +75,7 @@ public class ReviewServiceImpl extends ReviewServiceGrpc.ReviewServiceImplBase {
 
     @Override
     public void getReviewById(Id64 request, StreamObserver<Review> responseObserver) {
-        var review = reviewDaoInterface.getReviewById(request.getId());
+        var review = reviewDao.getReviewById(request.getId());
         var savedGrpcReview = grpcConverter.convertToGrpc(review);
         responseObserver.onNext(savedGrpcReview);
         responseObserver.onCompleted();

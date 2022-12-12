@@ -1,14 +1,11 @@
 package mango.sep3.databaseaccess.DAOImplementations;
 
-import io.grpc.internal.DnsNameResolver;
 import mango.sep3.databaseaccess.DAOInterfaces.UserDaoInterface;
 import mango.sep3.databaseaccess.Repositories.*;
 import mango.sep3.databaseaccess.Shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
-
-import java.util.zip.ZipEntry;
 
 /**
  * Data access object accessing user related data.
@@ -65,11 +62,6 @@ public class UserDao implements UserDaoInterface {
             addressRepository.saveAndFlush(address);
         }
         return customerRepository.saveAndFlush(customer);
-    }
-
-    @Override
-    public User loginUser(UserAuth userAuth) {
-        return userRepository.findById(userAuth.getUsername()).orElse(null);
     }
 
     @Override

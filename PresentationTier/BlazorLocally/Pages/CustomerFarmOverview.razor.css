@@ -1,6 +1,6 @@
 ﻿#shape{
     overflow: hidden;
-    margin-left: 15em;
+    margin-left: 10em;
     position: relative;
 }
 #farmImg{
@@ -15,6 +15,9 @@
     border-radius: 50%;
     float:left;
     margin-right: -25px;
+    
+    overflow: hidden;
+    padding: 5px;
 }
 
 #rectangle{
@@ -23,12 +26,6 @@
     height: 7em;
     overflow: hidden;
     margin-top: 45px;
-}
-
-#reviews{
-    position: absolute;
-    margin-left: 650px;
-    margin-top: -20px;
 }
 
 #farmName{
@@ -42,17 +39,25 @@
 #status{
     background-color: #606748;
     border-radius: 10px;
-    width: 25em;
+    width: 20em;
     height: 5em;
     overflow: hidden;
-    margin-top: -20px;
     float: right;
-    margin-right: 10em;
     clear: both;
 }
+
+#reviews{
+    background-color: #606748;
+    border-radius: 10px;
+    width: 20em;
+    height: 5em;    
+    align-items: center;
+    margin-right: 15px;
+    margin-left: 90px;
+}
+
 #statusText {
     width: 100%;
-    padding: 12px 12px;
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
@@ -82,9 +87,9 @@
 
 #phone{
     background-color: #606748;
-    border-radius: 5px;
-    width: 12em;
-    height: 3em;
+    border-radius: 10px;
+    width: 20em;
+    height: 5em;
     overflow: hidden;
     text-align: center;
     color: white;
@@ -93,28 +98,18 @@
 #updateContainer{
     clear: both;
     float: right;
-    margin-right: 10em;
-    margin-top: 15px;
 }
 
-#phoneLabel {
+#phoneLabel, #addressLabel {
     padding: 0;
-    margin: 0;
-}
-
-#phoneText{
-    margin-top: -5px;
-    width: 100%;
-    box-sizing: border-box;
-    border: none;
-    background-color: #606748;;
-    color: white;
+    margin-top: 10px;
 }
 
 .offers{
-    margin-top: 110px;
+    margin-top: 25px;
 }
 
-.offers{
-    margin-top: 110px;
+.container{
+    margin-top: 10px;
 }
+

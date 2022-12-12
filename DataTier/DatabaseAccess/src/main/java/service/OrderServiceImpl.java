@@ -1,8 +1,6 @@
 package service;
 
-import com.google.common.collect.Sets;
 import io.grpc.stub.StreamObserver;
-import mango.sep3.databaseaccess.DAOInterfaces.FarmDaoInterface;
 import mango.sep3.databaseaccess.DAOInterfaces.OrderDaoInterface;
 import mango.sep3.databaseaccess.protobuf.OrderServiceGrpc;
 import mango.sep3.databaseaccess.protobuf.*;
@@ -18,7 +16,6 @@ import java.util.*;
 public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 {
   @Autowired private OrderDaoInterface orderDao;
-  @Autowired private FarmDaoInterface farmDaoInterface;
 
   @Autowired private GrpcConverter grpcConverter;
 
@@ -28,8 +25,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 
   /**
    * Creates an order in the database
-   * @param request
-   * @param responseObserver
    */
 
   @Override public void createOrderOffers(OrderOffers request,

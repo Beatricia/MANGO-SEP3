@@ -27,7 +27,7 @@ public class ReviewDao implements ReviewDaoInterface {
         return reviewRepository.save(review);
     }
 
-    @Override public Collection<Review> getReviewsByFarmAsync(Farm farm)
+    @Override public Collection<Review> getReviewsByFarm(Farm farm)
     {
         System.out.println(reviewRepository.findAllByFarm(farm));
         return reviewRepository.findAllByFarm(farm);

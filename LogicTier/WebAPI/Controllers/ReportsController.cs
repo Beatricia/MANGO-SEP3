@@ -8,11 +8,11 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ReportController : LocallyController
+public class ReportsController : LocallyController
 {
     private readonly IReportLogic reportLogic;
 
-    public ReportController(IReportLogic reportLogic)
+    public ReportsController(IReportLogic reportLogic)
     {
         this.reportLogic = reportLogic;
     }

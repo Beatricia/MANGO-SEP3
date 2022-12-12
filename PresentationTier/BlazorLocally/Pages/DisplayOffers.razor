@@ -4,10 +4,21 @@
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @using Microsoft.AspNetCore.Authorization.Infrastructure
+@using Components
 @using System.Security.Claims
 @using Blazorise
 @inject IOfferService httpOfferClient
 @inject ICartService HttpCartClient
+
+
+<div class="offers">
+    @if (offers == null)
+    {
+        <p>
+            <em>Loading offers...</em>
+        </p>
+    }
+</div>
 
 <div class="text">
     <h3 class="displayOffersText">Display Offers</h3>
@@ -73,6 +84,9 @@
                 @foreach (var offer in recommendedOffers)
                 {
                     <div class="card col-5 m-3">
+                        <div class="report-button" @onclick="() => ToggleReport(offer.Id)">
+                            Report
+                        </div>
                         <div class="card-header">
                             <img src="@offer.Image.AbsoluteUrl" alt="offerImage" width="100%" height="auto"/>
                         </div>
@@ -80,6 +94,7 @@
                             <h5 class="col-8">@offer.Name</h5>
                             <h6 class="col-4 d-flex justify-content-end">@offer.Price DKK</h6>
                             <span class="col-8">@offer.Description</span>
+                            <h6 class="col-4 d-flex justify-content-end">Unit: @offer.Unit</h6>
                         </div>
                         <button type="button" @onclick="() => OpenPopUpAddToCart(offer)">
                             Add
@@ -98,6 +113,9 @@
         @foreach (var offer in offers)
         {
             <div class="card col-5 m-3">
+                <div class="report-button" @onclick="() => ToggleReport(offer.Id)">
+                   Report
+                </div>
                 <div class="card-header">
                     <img src="@offer.Image.AbsoluteUrl" alt="offerImage" width="100%" height="auto"/>
                 </div>
@@ -205,6 +223,20 @@
     </div>
 }
 
+@if (offerIdToReport is { } offerId)
+{
+    Action cancelReport = () => offerIdToReport = null;
+    
+    <div class="report-window" @onclick="() => cancelReport()">
+        <div @onclick:stopPropagation>
+            <Reporting
+                        OfferId="offerId"
+                        OnCancel="() => cancelReport()"
+                        OnReport="() => cancelReport()"></Reporting>
+        </div>
+    </div>
+}
+
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } =  null;
@@ -229,6 +261,8 @@
 
     private bool isFiltered = false;
 
+    private int? offerIdToReport;
+    
     ///summary///
     /// loads all the offers
     /// summary///
@@ -365,8 +399,9 @@
     {
         pickYOCheck = !pickYOCheck;
     }
-    
-    
 
-
+    private void ToggleReport(int offerId)
+    {
+        offerIdToReport = offerId;
+    }
 }

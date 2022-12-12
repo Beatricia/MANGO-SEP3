@@ -1,0 +1,149 @@
+html, body{
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background-color: wheat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.report-wrapper{
+  height: fit-content;
+  width: 600px;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #727272;
+}
+
+.report-inner{
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.report-title{
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.report-options{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .report-option{
+
+    --checkbox-color: white;
+
+    input{display: none}
+
+    label{
+      cursor: pointer;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+    }
+
+    // basic formatting of the checkbox
+    .checkbox{
+      $input-size: 25px;
+      width: $input-size;
+      height: $input-size;
+      border-radius: 7px;
+      background-color: var(--checkbox-color);
+      cursor: pointer;
+      box-shadow: 1px 1px 3px #8d8d8d;
+
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        transition: transform 300ms;
+        transform: rotate(360deg);
+        background: var(--checkbox-color);
+
+        visibility: hidden;
+      }
+
+      &::before{
+        height: 2px;
+        width: 30%;
+      }
+      &::after{
+        height: 2px;
+        width: 60%;
+      }
+    }
+
+    .option-description{
+      font-size: 20px;
+    }
+
+
+
+    // on hover
+    label:hover {
+      .checkbox {
+        background: #cecece;
+      }
+
+      .option-description {
+        text-decoration: underline;
+      }
+    }
+
+    // when the checkbox is checked
+    input:checked + label .checkbox{
+      position: relative;
+
+      --tick-color: green;
+
+      &::before, &::after {
+        visibility: visible;
+      }
+
+      &::before{
+        background: var(--tick-color) !important;
+        transform: translate(3px, 15px) rotate(45deg);
+      }
+
+      &::after{
+        background: var(--tick-color) !important;
+        transform: translate(6.3px, 12px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.report-button-wrapper{
+  display: flex;
+  gap: 20px;
+}
+
+.report-button{
+  cursor: pointer;
+  background: black;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  height: 40px;
+  width: 200px;
+  transition: transform 200ms;
+
+  &:hover{
+    transform: scale(1.05);
+  }
+}

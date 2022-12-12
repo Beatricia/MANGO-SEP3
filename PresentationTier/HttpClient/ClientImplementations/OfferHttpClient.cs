@@ -29,9 +29,7 @@ public class OfferHttpClient : IOfferService
     /// <exception cref="Exception"></exception>
     public async Task<Offer?> CreateAsync(OfferCreationDto dto)
     {
-        string dtoAsJson = JsonSerializer.Serialize(dto);
-        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/offers", body);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/offers", dto);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {

@@ -18,9 +18,7 @@ public class CartHttpClient : ICartService
     
     public async Task AddToCartAsync(CartOfferDto dto)
     {
-        string dtoAsJson = JsonSerializer.Serialize(dto);
-        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await client.PostAsJsonAsync("/carts", body);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/carts", dto);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

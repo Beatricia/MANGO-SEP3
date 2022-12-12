@@ -21,9 +21,7 @@ public class FarmHttpClient : IFarmService
     
     public async Task CreateAsync(FarmCreationDto dto)
     {
-        //string dtoAsJson = JsonSerializer.Serialize(dto);
-        //StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/farms", dto); // if you uncomment the above and put 'body' instead of 'dto' the call will not reach the controller idk why.
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/farms", dto);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -139,9 +137,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<Review> CreateReviewAsync(string farmName, ReviewCreationDto dto)
     {
-        string dtoAsJson = JsonSerializer.Serialize(dto);
-        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"/farms/{farmName}/reviews", body);
+        HttpResponseMessage response = await Client.PostAsJsonAsync($"/farms/{farmName}/reviews", dto);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

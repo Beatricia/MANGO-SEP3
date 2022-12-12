@@ -192,7 +192,7 @@ public class FarmHttpClient : IFarmService
     public async Task<ICollection<Review>> GetAllReviews(string farmName)
     {
         
-        HttpResponseMessage response = await Client.GetAsync($"/Farm/{farmName}/reviews");
+        HttpResponseMessage response = await Client.GetAsync($"/farm/{farmName}/reviews");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

@@ -16,7 +16,7 @@ public class ReportHttpClient : IReportService
     
     public async Task<ICollection<Report>> GetAllReports()
     {
-        HttpResponseMessage response = await client.GetAsync("/Report"); 
+        HttpResponseMessage response = await client.GetAsync("/report"); 
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

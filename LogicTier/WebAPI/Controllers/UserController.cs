@@ -18,8 +18,8 @@ public class UserController : LocallyController
     }
 
     //TODO authorized
-    [HttpGet("customer")]
-    public async Task<IActionResult> GetCustomerAsync([FromQuery] string username)
+    [HttpGet("customer/{username}")]
+    public async Task<IActionResult> GetCustomerAsync([FromRoute] string username)
     {
         Console.WriteLine(username);
         try
@@ -34,8 +34,8 @@ public class UserController : LocallyController
         }
     }
     
-    [HttpGet("farmer")]
-    public async Task<IActionResult> GetFarmerAsync([FromQuery] string username)
+    [HttpGet("farmer/{username}")]
+    public async Task<IActionResult> GetFarmerAsync([FromRoute] string username)
     {
         try
         {

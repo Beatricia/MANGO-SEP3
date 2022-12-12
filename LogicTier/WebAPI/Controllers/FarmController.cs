@@ -178,7 +178,7 @@ public class FarmController : LocallyController
     }
     
     [HttpGet("{farmName}/reviews")]
-    public async Task<IActionResult> GetReviews(string farmName)
+    public async Task<IActionResult> GetReviews([FromRoute]string farmName)
     {
         try
         {

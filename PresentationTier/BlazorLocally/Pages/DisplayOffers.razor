@@ -102,6 +102,9 @@
         @foreach (var offer in offers)
         {
             <div class="card col-5 m-3">
+                <div class="report-button" @onclick="() => ToggleReport(offer.Id)">
+                   Report
+                </div>
                 <div class="card-header">
                     <img src="@offer.Image.AbsoluteUrl" alt="offerImage" width="100%" height="auto"/>
                 </div>

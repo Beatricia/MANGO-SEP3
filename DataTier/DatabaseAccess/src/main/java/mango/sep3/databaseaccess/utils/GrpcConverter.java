@@ -427,6 +427,7 @@ public class GrpcConverter {
             .setId(report.getId())
             .setOffer(convertToGrpc(report.getOffer()))
             .setReason(report.getReason())
+            .setCustomer(convertToGrpc(report.getCustomer()))
             .build();
     }
 
@@ -437,6 +438,9 @@ public class GrpcConverter {
         var offer = offerDaoInterface.getOfferById(report.getOffer().getId());
         report1.setOffer(offer);
         report1.setReason(report.getReason());
+
+        var customer = userDaoInterface.getCustomer(report.getCustomer().getUsername());
+        report1.setCustomer(customer);
 
         return report1;
     }

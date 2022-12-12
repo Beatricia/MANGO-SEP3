@@ -1,5 +1,6 @@
 ﻿using Application.DAOInterfaces;
 using GprcClients.Converters;
+using Grpc.Core;
 
 namespace GprcClients.DAOImplementations;
 
@@ -55,5 +56,18 @@ public class ReportDaoImpl : IReportDao
     {
         var grpcReport = await client.GetReportByIdAsync(id.ToGrpc());
         return grpcReport.ToShared(imageDao);
+    }
+
+    public async Task<ICollection<Shared.Models.Report>> GetReportsByOfferIdAsync(int offerId)
+    {
+        var grpcReports = client.GetReportsByOfferId(offerId.ToGrpc());
+        ICollection<Shared.Models.Report> list = new List<Shared.Models.Report>();
+        while (await grpcReports.ResponseStream.MoveNext())
+        {
+            var report = grpcReports.ResponseStream.Current.ToShared(imageDao);
+            list.Add(report);
+        }
+
+        return list;
     }
 }

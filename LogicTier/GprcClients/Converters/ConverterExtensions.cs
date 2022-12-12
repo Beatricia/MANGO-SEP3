@@ -423,7 +423,8 @@ internal static class ConverterExtensions
         {
             Id = report.Id,
             Offer = report.Offer.ToShared(imageDao),
-            Reason = report.Reason
+            Reason = report.Reason,
+            Customer = report.Customer.ToShared(),
         };
     }
     
@@ -433,7 +434,8 @@ internal static class ConverterExtensions
         {
             Id = report.Id,
             Offer = report.Offer.ToGrpc(),
-            Reason = report.Reason
+            Reason = report.Reason,
+            Customer = report.Customer?.ToGrpc(),
         };
     }
     #endregion

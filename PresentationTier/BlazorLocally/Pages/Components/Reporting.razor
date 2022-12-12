@@ -1,0 +1,101 @@
+﻿@using Shared.DTOs
+@using HttpClient.ClientInterfaces
+@namespace Components
+@inject IReportService ReportService
+
+<div class="report-wrapper">
+<div class="report-inner">
+    <div class="report-title">
+        Why do you want to report this Offer?
+    </div>
+    <div class="report-options">
+        @foreach (var option in options)
+        {
+            var id = Guid.NewGuid();
+            
+            <div class="report-option">
+                <input id="@id" type="checkbox" @onchange="args => OnCheckboxChange(args, option)">
+                <label for="@id">
+                    <div class="checkbox"></div>
+                    <div class="option-description">@option</div>
+                </label>
+            </div>
+        }
+    </div>
+    @if(errorMessage is {Length: > 0})
+    {
+        <div style="color: #8d0000" class="error">@errorMessage</div>
+    }
+    <div class="report-button-wrapper">
+        <button class="report-button" @onclick="Cancel">Cancel</button>
+        <button class="report-button" @onclick="Report">Report</button>
+    </div>
+</div>
+</div>
+
+@code {
+    [Parameter]
+    public int OfferId { get; set; }
+    
+    [Parameter]
+    public EventCallback OnReport { get; set; }
+    
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+
+    private string errorMessage = "";
+    private List<string> options = new()
+    {
+        "It is a SCAM",
+        "It is RACIST",
+        "It contains HARSH LANGUAGE", 
+        "It contains INAPPROPRIATE CONTENT",
+        "Agata Posted This (Other)"
+    };
+    
+    private HashSet<string> selectedOptions = new();
+
+    private async Task Report()
+    {
+        if(selectedOptions.Count == 0)
+        {
+            errorMessage = "You must select at least one option";
+            return;
+        }
+        
+        
+        errorMessage = "";
+        var reportCreationDto = new ReportCreationDto
+        {
+            OfferId = OfferId,
+            Reason = string.Join(", ", selectedOptions)
+        };
+
+        try
+        {
+            await ReportService.ReportOfferAsync(reportCreationDto);
+            await OnReport.InvokeAsync();
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+
+    private void OnCheckboxChange(ChangeEventArgs args, string optionText)
+    {
+        if(args.Value is not bool b)
+            return;
+
+        if (b)
+            selectedOptions.Add(optionText);
+        else selectedOptions.Remove(optionText);
+    }
+
+    private async Task Cancel()
+    {
+        await OnCancel.InvokeAsync();
+    }
+
+}

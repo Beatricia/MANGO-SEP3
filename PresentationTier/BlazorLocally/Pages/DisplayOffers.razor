@@ -4,6 +4,7 @@
 @using global::Shared.Models
 @using HttpClient.ClientInterfaces
 @using Microsoft.AspNetCore.Authorization.Infrastructure
+@using Components
 @using System.Security.Claims
 @using Blazorise
 @inject IOfferService httpOfferClient
@@ -73,6 +74,9 @@
                 @foreach (var offer in recommendedOffers)
                 {
                     <div class="card col-5 m-3">
+                        <div class="report-button" @onclick="() => ToggleReport(offer.Id)">
+                            Report
+                        </div>
                         <div class="card-header">
                             <img src="@offer.Image.AbsoluteUrl" alt="offerImage" width="100%" height="auto"/>
                         </div>
@@ -205,6 +209,20 @@
     </div>
 }
 
+@if (offerIdToReport is { } offerId)
+{
+    Action cancelReport = () => offerIdToReport = null;
+    
+    <div class="report-window" @onclick="() => cancelReport()">
+        <div @onclick:stopPropagation>
+            <Reporting
+                        OfferId="offerId"
+                        OnCancel="() => cancelReport()"
+                        OnReport="() => cancelReport()"></Reporting>
+        </div>
+    </div>
+}
+
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } =  null;
@@ -229,6 +247,8 @@
 
     private bool isFiltered = false;
 
+    private int? offerIdToReport;
+    
     ///summary///
     /// loads all the offers
     /// summary///
@@ -365,8 +385,9 @@
     {
         pickYOCheck = !pickYOCheck;
     }
-    
-    
 
-
+    private void ToggleReport(int offerId)
+    {
+        offerIdToReport = offerId;
+    }
 }

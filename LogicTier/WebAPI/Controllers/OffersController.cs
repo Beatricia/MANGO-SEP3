@@ -122,7 +122,7 @@ public class OffersController : LocallyController
     /// </summary>
     /// <param name="id">An id of the offer to be disabled</param>
     /// <returns>Returns Action result e.g. Ok if request was completed</returns>
-    [Authorize(Roles = "farmer")]
+    [Authorize(Roles = "farmer, admin")]
     [HttpPatch("{id:int}")]
 
     public async Task<ActionResult> DisableAsync([FromRoute] int id)

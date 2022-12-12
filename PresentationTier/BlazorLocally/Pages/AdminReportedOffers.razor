@@ -45,7 +45,7 @@
                 <div class="d-flex justify-content-center">
                     <button type="button" class="ignoreButton" @onclick="()=>IgnoreReport(report.Id)">Ignore</button>
                     <button type="button" class="notifyButton" @onclick="()=>NotifyFarmer(report.Id)">Notify</button>
-                    <button type="button" class="deleteButton" @onclick="DeleteReport">Delete</button>
+                    <button type="button" class="deleteButton" @onclick="()=> DisableOffer(report.Offer.Id)">Delete</button>
                     </div>
             </div>
         </div>
@@ -82,9 +82,10 @@
         navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
-    private void DeleteReport()
+    private async Task DisableOffer(int offerId)
     {
-        throw new NotImplementedException();
+        await httpOfferClient.DisableAsync(offerId);
+        await OnInitializedAsync();
     }
 
 }

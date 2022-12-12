@@ -9,11 +9,11 @@ namespace WebAPI.Controllers;
 
 [ApiController] [Route("[controller]")]
 //[Authorize]
-public class OrderController : LocallyController
+public class OrdersController : LocallyController
 {
     private readonly IOrderLogic orderLogic;
 
-    public OrderController(IOrderLogic orderLogic)
+    public OrdersController(IOrderLogic orderLogic)
     {
         this.orderLogic = orderLogic;
     }

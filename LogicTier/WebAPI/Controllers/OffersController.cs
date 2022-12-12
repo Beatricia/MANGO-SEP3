@@ -12,12 +12,12 @@ namespace WebAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class OfferController : LocallyController
+public class OffersController : LocallyController
 {
     private readonly IOfferLogic offerLogic;
     private ImageResource imageResource;
 
-    public OfferController(IOfferLogic offerLogic, ImageResource resource)
+    public OffersController(IOfferLogic offerLogic, ImageResource resource)
     {
         this.offerLogic = offerLogic;
         imageResource = resource;

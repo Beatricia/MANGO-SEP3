@@ -31,7 +31,7 @@ public class OfferHttpClient : IOfferService
     {
         string dtoAsJson = JsonSerializer.Serialize(dto);
         StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/offer", body);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/offers", body);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -57,7 +57,7 @@ public class OfferHttpClient : IOfferService
         string query = ConstructQuery(username, distance, nameContains, delivery, pickUp, pickYo);
         
         
-        HttpResponseMessage response = await Client.GetAsync("/offer"+query);
+        HttpResponseMessage response = await Client.GetAsync("/offers"+query);
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -81,7 +81,7 @@ public class OfferHttpClient : IOfferService
         imageContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
         imageContent.Add(new StreamContent(reader, Convert.ToInt32(file.Size)), "image", file.Name);
         
-        HttpResponseMessage response = await Client.PostAsync($"/offer/{offerId}/image", imageContent);
+        HttpResponseMessage response = await Client.PostAsync($"/offers/{offerId}/image", imageContent);
 
         if (!response.IsSuccessStatusCode)
             throw new Exception("Failed to upload image.");
@@ -95,7 +95,7 @@ public class OfferHttpClient : IOfferService
     /// <exception cref="Exception"></exception>
     public async Task<ICollection<Offer>> GetAsync(string farmName)
     {
-        HttpResponseMessage response = await Client.GetAsync($"offer/{farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"offers/{farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -120,7 +120,7 @@ public class OfferHttpClient : IOfferService
     {
         StringContent body = new StringContent("", Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PatchAsync($"/offer/{id}",body);
+        HttpResponseMessage response = await Client.PatchAsync($"/offers/{id}",body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -130,7 +130,7 @@ public class OfferHttpClient : IOfferService
 
     public async Task<ICollection<Offer>> GetRecommendedOffers()
     {
-        HttpResponseMessage response = await Client.GetAsync($"offer/recommended");
+        HttpResponseMessage response = await Client.GetAsync($"offers/recommended");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

@@ -11,12 +11,12 @@ namespace WebAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class FarmController : LocallyController
+public class FarmsController : LocallyController
 {
     private readonly IFarmLogic farmLogic;
     private readonly IReviewLogic reviewLogic;
 
-    public FarmController(IFarmLogic farmLogic, IReviewLogic reviewLogic)
+    public FarmsController(IFarmLogic farmLogic, IReviewLogic reviewLogic)
     {
         this.farmLogic = farmLogic;
         this.reviewLogic = reviewLogic;
@@ -73,7 +73,7 @@ public class FarmController : LocallyController
     
         
     //change me to something more appropriate
-    [HttpGet("me")]
+    [HttpGet("myFarms")]
     [Authorize(Roles = "farmer")]
     public async Task<IActionResult> GetAllFarmsByFarmer()
     {

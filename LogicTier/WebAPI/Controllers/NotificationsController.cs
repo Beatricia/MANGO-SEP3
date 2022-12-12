@@ -9,11 +9,11 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class NotificationController : LocallyController
+public class NotificationsController : LocallyController
 {
     private INotificationLogic dao;
 
-    public NotificationController(INotificationLogic dao)
+    public NotificationsController(INotificationLogic dao)
     {
         this.dao = dao;
     }

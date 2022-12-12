@@ -18,7 +18,7 @@ public class UserHttpClient : IUserService
 
     public async Task<Farmer> GetFarmer(string username)
     {
-        HttpResponseMessage response = await Client.GetAsync($"/users/farmer?username={username}");
+        HttpResponseMessage response = await Client.GetAsync($"/users/farmer/{username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -35,7 +35,7 @@ public class UserHttpClient : IUserService
     public async Task<Customer> GetCustomer(string username)
     {
         Console.WriteLine(username);
-        HttpResponseMessage response = await Client.GetAsync($"/users/customer?username={username}");
+        HttpResponseMessage response = await Client.GetAsync($"/users/customer/{username}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {

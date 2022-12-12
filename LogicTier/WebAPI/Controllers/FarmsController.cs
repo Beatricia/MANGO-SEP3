@@ -55,9 +55,9 @@ public class FarmsController : LocallyController
         return Ok(farmLogic.GetAllIcons());
     }
     
-    [HttpGet]
+    [HttpGet("{farmName}")]
     [Authorize]
-    public async Task<IActionResult> GetAsync([FromQuery]string farmName)
+    public async Task<IActionResult> GetAsync([FromRoute]string farmName)
     {
         try
         {
@@ -120,8 +120,8 @@ public class FarmsController : LocallyController
             return StatusCode(500, e.Message);
         }
     }
-    
-    [HttpGet("{nameContains}")]
+
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetFarmByName([FromQuery]string nameContains)
     {
@@ -146,9 +146,9 @@ public class FarmsController : LocallyController
     /// </summary>
     /// <param name="farmName">Name of the farm to be disabled</param>
     /// <returns>Returns Action result e.g. Ok if request was successfully completed</returns>
-    [HttpPatch("{farmName}/disabled")]
+    [HttpPatch("{farmName}")]
     [Authorize]
-    public async Task<ActionResult> DisableAsync([FromQuery] string farmName)
+    public async Task<ActionResult> DisableAsync([FromRoute] string farmName)
     {
         try
         {
@@ -178,7 +178,7 @@ public class FarmsController : LocallyController
     }
     
     [HttpGet("{farmName}/reviews")]
-    public async Task<IActionResult> GetReviews([FromQuery]string farmName)
+    public async Task<IActionResult> GetReviews([FromRoute]string farmName)
     {
         try
         {
@@ -194,7 +194,7 @@ public class FarmsController : LocallyController
     
     [HttpPatch("{name:regex([[\\w\\W]]+)}/reviews/{id:long}")]
     [Authorize(Roles = "customer")]
-    public async Task<IActionResult> UpdateReview([FromQuery] long id, [FromBody] UpdateReviewDto review)
+    public async Task<IActionResult> UpdateReview([FromRoute] long id, [FromBody] UpdateReviewDto review)
     {
         review.Username = LoggedInUsername!;
         review.Id = id;

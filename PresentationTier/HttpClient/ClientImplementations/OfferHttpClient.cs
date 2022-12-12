@@ -79,7 +79,7 @@ public class OfferHttpClient : IOfferService
         imageContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
         imageContent.Add(new StreamContent(reader, Convert.ToInt32(file.Size)), "image", file.Name);
         
-        HttpResponseMessage response = await Client.PostAsync($"/offers?id={offerId}/image", imageContent);
+        HttpResponseMessage response = await Client.PostAsync($"/offers/{offerId}/image", imageContent);
 
         if (!response.IsSuccessStatusCode)
             throw new Exception("Failed to upload image.");
@@ -93,7 +93,7 @@ public class OfferHttpClient : IOfferService
     /// <exception cref="Exception"></exception>
     public async Task<ICollection<Offer>> GetAsync(string farmName)
     {
-        HttpResponseMessage response = await Client.GetAsync($"offers?farmname={farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"offers/{farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -118,7 +118,7 @@ public class OfferHttpClient : IOfferService
     {
         StringContent body = new StringContent("", Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PatchAsync($"/offers?id={id}",body);
+        HttpResponseMessage response = await Client.PatchAsync($"/offers/{id}",body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

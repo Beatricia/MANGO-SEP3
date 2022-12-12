@@ -100,7 +100,7 @@ public class OffersController : LocallyController
     }
     
     [HttpGet("{farmName}")]
-    public async Task<IActionResult> GetAsync([FromQuery] string farmName)
+    public async Task<IActionResult> GetAsync([FromRoute] string farmName)
     {
         // TODO: make this a rest endpoint
         try
@@ -124,7 +124,8 @@ public class OffersController : LocallyController
     /// <returns>Returns Action result e.g. Ok if request was completed</returns>
     [Authorize(Roles = "farmer")]
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult> DisableAsync([FromQuery] int id)
+
+    public async Task<ActionResult> DisableAsync([FromRoute] int id)
     {
         try
         {

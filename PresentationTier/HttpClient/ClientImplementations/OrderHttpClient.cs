@@ -48,7 +48,7 @@ public class OrderHttpClient : IOrderService
     {
         StringContent body = new StringContent("", Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PatchAsync($"/orders?id={id}",body);
+        HttpResponseMessage response = await Client.PatchAsync($"/orders/{id}",body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ public class OrderHttpClient : IOrderService
     public async Task DeleteOrderAsync(int id)
     {
         Console.WriteLine("Delete order with id (http): " + id);
-        HttpResponseMessage response = await Client.DeleteAsync($"orders?id={id}");
+        HttpResponseMessage response = await Client.DeleteAsync($"orders/{id}");
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

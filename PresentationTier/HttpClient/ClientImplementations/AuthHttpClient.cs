@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 using HttpClient.ClientInterfaces;
 using HttpClient.Utils;
@@ -34,8 +35,11 @@ public class AuthHttpClient : IAuthService
             Password = password
         };
         
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/auth/login", dto);
+        
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/auth/login", body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -73,8 +77,11 @@ public class AuthHttpClient : IAuthService
             PhoneNumber = "+45" + phoneNumber
         };
         
+        string dtoAsJson = JsonSerializer.Serialize(dto);
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/auth/register", dto);
+        
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/auth/register", body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

@@ -52,7 +52,7 @@ public class OrdersController : LocallyController
     }
 
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult> CompleteOrder([FromRoute] int id)
+    public async Task<ActionResult> CompleteOrder([FromQuery] int id)
     {
         try
         {
@@ -67,7 +67,7 @@ public class OrdersController : LocallyController
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+    public async Task<IActionResult> DeleteAsync([FromQuery] int id)
     {
         string username = LoggedInUsername;
         try

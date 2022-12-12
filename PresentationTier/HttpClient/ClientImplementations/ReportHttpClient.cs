@@ -35,7 +35,7 @@ public class ReportHttpClient : IReportService
 
     public async Task IgnoreReportAsync(long id)
     {
-        HttpResponseMessage response = await client.DeleteAsync($"/Report/{id}");
+        HttpResponseMessage response = await client.DeleteAsync($"/Report?id={id}");
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -45,7 +45,7 @@ public class ReportHttpClient : IReportService
 
     public async Task NotifyFarmerAsync(long id)
     {
-        HttpResponseMessage response = await client.PostAsync($"/Report/{id}", null);
+        HttpResponseMessage response = await client.PostAsync($"/Report?id={id}", null);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

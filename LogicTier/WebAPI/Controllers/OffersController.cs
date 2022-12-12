@@ -47,7 +47,7 @@ public class OffersController : LocallyController
     }
     
     [HttpPost("{id:int}/image")]
-    public async Task<IActionResult> UploadImage([FromRoute] int id)
+    public async Task<IActionResult> UploadImage([FromQuery] int id)
     {
         if (!Request.HasFormContentType)
             return BadRequest("Not a form content type");
@@ -100,7 +100,7 @@ public class OffersController : LocallyController
     }
     
     [HttpGet("{farmName}")]
-    public async Task<IActionResult> GetAsync([FromRoute] string farmName)
+    public async Task<IActionResult> GetAsync([FromQuery] string farmName)
     {
         // TODO: make this a rest endpoint
         try
@@ -124,7 +124,7 @@ public class OffersController : LocallyController
     /// <returns>Returns Action result e.g. Ok if request was completed</returns>
     [Authorize(Roles = "farmer")]
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult> DisableAsync([FromRoute] int id)
+    public async Task<ActionResult> DisableAsync([FromQuery] int id)
     {
         try
         {

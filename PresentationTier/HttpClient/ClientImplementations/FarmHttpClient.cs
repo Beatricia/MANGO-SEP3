@@ -18,12 +18,12 @@ public class FarmHttpClient : IFarmService
     }
 
 
-    //send dto as body?
+    
     public async Task CreateAsync(FarmCreationDto dto)
     {
-        string dtoAsJson = JsonSerializer.Serialize(dto);
-        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsJsonAsync("/farms", body);
+        //string dtoAsJson = JsonSerializer.Serialize(dto);
+        //StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await Client.PostAsJsonAsync("/farms", dto); // if you uncomment the above and put 'body' instead of 'dto' the call will not reach the controller idk why.
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -37,7 +37,7 @@ public class FarmHttpClient : IFarmService
         var client = Client;
         Console.WriteLine("Auth: " + client.DefaultRequestHeaders.Authorization);
         
-        HttpResponseMessage response = await Client.GetAsync($"/farms/{farmName}");
+        HttpResponseMessage response = await Client.GetAsync($"/farms?farmname={farmName}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -121,7 +121,7 @@ public class FarmHttpClient : IFarmService
 
     public async Task<ICollection<Farm>?> GetAllFarmsByNameContainsAsync(string nameContains)
     {
-        HttpResponseMessage response = await Client.GetAsync($"/farms/{nameContains}");
+        HttpResponseMessage response = await Client.GetAsync($"/farms?farmname={nameContains}");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -161,7 +161,7 @@ public class FarmHttpClient : IFarmService
     {
         string dtoAsJson = JsonSerializer.Serialize(dto);
         StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PatchAsync($"/farms/{farmName}/reviews/{reviewId}", body);
+        HttpResponseMessage response = await Client.PatchAsync($"/farms?farmname={farmName}/reviews?id={reviewId}", body);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -181,7 +181,7 @@ public class FarmHttpClient : IFarmService
     {
         StringContent body = new StringContent("", Encoding.UTF8, "application/json");
         
-        HttpResponseMessage response = await Client.PatchAsync($"/farms/{farmName}/disabled",body);
+        HttpResponseMessage response = await Client.PatchAsync($"/farms?farmname={farmName}/disabled",body);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -192,7 +192,7 @@ public class FarmHttpClient : IFarmService
     public async Task<ICollection<Review>> GetAllReviews(string farmName)
     {
         
-        HttpResponseMessage response = await Client.GetAsync($"/farms/{farmName}/reviews");
+        HttpResponseMessage response = await Client.GetAsync($"/farms?farmname={farmName}/reviews");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
     /// <param name="dto">user login data</param>
     /// <returns></returns>
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginDto dto)
+    public async Task<IActionResult> Login([FromBody]LoginDto dto)
     {
         try
         {
@@ -57,7 +57,7 @@ public class AuthController : ControllerBase
     /// <param name="dto">user registration data</param>
     /// <returns></returns>
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterDto dto)
+    public async Task<IActionResult> Register([FromBody]RegisterDto dto)
     {
         try
         {

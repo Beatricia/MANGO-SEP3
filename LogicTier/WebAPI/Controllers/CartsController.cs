@@ -67,7 +67,7 @@ public class CartsController : LocallyController
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult> DeleteCartOfferAsync([FromRoute] int id)
+    public async Task<ActionResult> DeleteCartOfferAsync([FromQuery] int id)
     {
         try
         {

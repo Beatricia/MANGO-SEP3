@@ -14,6 +14,8 @@
     border-radius: 50%;
     float:left;
     margin-right: -25px;
+    overflow: hidden;
+    padding: 5px;
 }
 
 #rectangle{

@@ -19,7 +19,7 @@ public class NotificationHttpClient : INotificationService
     
     public async Task<ICollection<Notification>> GetNotifications()
     {
-        var text = await Client.GetStringAsync("notification");
+        var text = await Client.GetStringAsync("notifications");
         
         var notifications = JsonSerializer.Deserialize<ICollection<Notification>>(text, new JsonSerializerOptions()
         {
@@ -38,7 +38,7 @@ public class NotificationHttpClient : INotificationService
         {
             Content = JsonContent.Create(notification),
             Method = HttpMethod.Delete,
-            RequestUri = new Uri("notification", UriKind.Relative)
+            RequestUri = new Uri("notifications", UriKind.Relative)
         };
         return Client.SendAsync(request);
     }

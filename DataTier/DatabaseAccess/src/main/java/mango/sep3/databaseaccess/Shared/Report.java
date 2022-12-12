@@ -13,10 +13,14 @@ public class Report
 
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "offerId")
-  private Offer offerId;
+  private Offer offer;
 
   @Column(name = "reason")
   private String reason;
+
+  @JoinColumn
+  @ManyToOne(cascade = CascadeType.MERGE)
+  private Customer customer;
 
   public Report(){};
 
@@ -32,12 +36,12 @@ public class Report
 
   public Offer getOffer()
   {
-    return offerId;
+    return offer;
   }
 
   public void setOffer(Offer offer)
   {
-    this.offerId = offer;
+    this.offer = offer;
   }
 
   public String getReason()
@@ -48,5 +52,13 @@ public class Report
   public void setReason(String reason)
   {
     this.reason = reason;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 }

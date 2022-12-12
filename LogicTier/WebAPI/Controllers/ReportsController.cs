@@ -1,17 +1,18 @@
 ﻿using Application.LogicInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DTOs;
 using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ReportController : LocallyController
+public class ReportsController : LocallyController
 {
     private readonly IReportLogic reportLogic;
 
-    public ReportController(IReportLogic reportLogic)
+    public ReportsController(IReportLogic reportLogic)
     {
         this.reportLogic = reportLogic;
     }
@@ -29,6 +30,23 @@ public class ReportController : LocallyController
         {
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
+        }
+    }
+
+    [Authorize(Roles = "customer")]
+    [HttpPost]
+    public async Task<IActionResult> CreateReportAsync([FromBody] ReportCreationDto dto)
+    {
+        dto.ReportedByCustomerUsername = LoggedInUsername!;
+        try
+        {
+            var report = await reportLogic.ReportOfferAsync(dto);
+            return Created("", report);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
         }
     }
 

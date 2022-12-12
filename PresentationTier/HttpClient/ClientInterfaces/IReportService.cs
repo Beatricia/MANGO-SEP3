@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.DTOs;
+using Shared.Models;
 
 namespace HttpClient.ClientInterfaces;
 
@@ -8,4 +9,5 @@ public interface IReportService
     Task IgnoreReportAsync(long id);
 
     Task NotifyFarmerAsync(long id);
+    Task ReportOfferAsync(ReportCreationDto dto);
 }

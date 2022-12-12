@@ -26,8 +26,6 @@ public class AuthLogic : IAuthLogic
     {
         string username = dto.Username;
         string passwordPlain = dto.Password;
-        double longitude;
-        double latitude;
 
         User? user = await authDao.GetUserAsync(username);
         
@@ -61,7 +59,7 @@ public class AuthLogic : IAuthLogic
         {
             Address address = new Address(){Street = dto.Street, City = dto.City, ZIP = dto.ZIP};
             
-            (latitude, longitude) = await addressDao.GetCoordinatesAsync(address);
+            (double latitude, double longitude) = await addressDao.GetCoordinatesAsync(address);
             
             address.Latitude = latitude;
             address.Longitude = longitude;

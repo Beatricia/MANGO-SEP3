@@ -8,11 +8,11 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController : LocallyController
+public class UsersController : LocallyController
 {
     private IUserLogic userLogic;
 
-    public UserController(IUserLogic userLogic)
+    public UsersController(IUserLogic userLogic)
     {
         this.userLogic = userLogic;
     }

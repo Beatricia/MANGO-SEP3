@@ -8,4 +8,5 @@ public interface IReportDao
     Task DeleteReportAsync(long id);
     Task<Report> CreateReportAsync(Report report);
     Task<Report> GetReportById(long id);
+    Task<ICollection<Report>> GetReportsByOfferIdAsync(int offerId);
 }

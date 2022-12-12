@@ -77,12 +77,14 @@ service ReportService{
   rpc DeleteReport(Id64) returns(Void);
   rpc CreateReport(Report) returns(Report);
   rpc GetReportById(Id64) returns(Report);
+  rpc GetReportsByOfferId(Id) returns(stream Report);
 }
 
 message Report{
   int64 id = 1;
-  Offer offer = 2;
-  string reason = 3;
+  Customer customer = 2;
+  Offer offer = 3;
+  string reason = 4;
 }
 
 message Reports{

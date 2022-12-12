@@ -10,11 +10,11 @@ namespace WebAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize(Roles = "customer")]
-public class CartController : LocallyController
+public class CartsController : LocallyController
 {
     private readonly ICartLogic cartLogic;
 
-    public CartController(ICartLogic cartLogic)
+    public CartsController(ICartLogic cartLogic)
     {
         this.cartLogic = cartLogic;
     }

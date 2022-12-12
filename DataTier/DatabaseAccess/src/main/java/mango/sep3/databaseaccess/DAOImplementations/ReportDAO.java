@@ -35,4 +35,9 @@ public class ReportDAO implements ReportDaoInterface
   {
     return reportRepository.findById(id).orElse(null);
   }
+
+  @Override
+  public Collection<Report> getReportsByOfferId(int offerId) {
+    return reportRepository.getReportsByOfferId(offerId);
+  }
 }

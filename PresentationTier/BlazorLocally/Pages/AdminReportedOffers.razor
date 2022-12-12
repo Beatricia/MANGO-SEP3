@@ -84,7 +84,7 @@
 
     private async Task DisableOffer(int offerId)
     {
-        await offerHttpClient.DisableAsync(offerId);
+        await httpOfferClient.DisableAsync(offerId);
         await OnInitializedAsync();
     }
 

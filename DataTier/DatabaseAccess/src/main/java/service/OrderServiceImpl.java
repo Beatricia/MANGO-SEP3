@@ -40,25 +40,6 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase
 
   }
 
-  //TODO check if we actually need this method
-  @Override public void getOrderOffers(Text request,
-      StreamObserver<OrderOffers> responseObserver)
-  {
-
-    /*Collection<mango.sep3.databaseaccess.Shared.OrderOffer> orderOffers = orderDao.getOrderOffers(
-        request.getText());
-
-    if (orderOffers == null)
-    {
-      responseObserver.onError(new Exception("No Order Offers found"));
-      return;
-    }
-
-    OrderOffers orderOffersResponse = convertOrderOffersToGrpc(orderOffers);
-
-    responseObserver.onNext(orderOffersResponse);
-    responseObserver.onCompleted();*/
-  }
 
   @Override public void completeOrder(Id request,
       StreamObserver<Void> responseObserver)

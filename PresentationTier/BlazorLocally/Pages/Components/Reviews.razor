@@ -13,7 +13,7 @@
         </div>
         @if (errorMessage is {Length:>0})
         {
-            <span style="color:red;">@errorMessage</span>
+            <span class="error-message" style="color:red;">@errorMessage</span>
         }
         <div class="reviews">
             <AuthorizeView Roles="customer">
@@ -119,10 +119,13 @@
             value = "";
         
         editedReviewContent = value;
+        errorMessage = "";
     }
 
     async Task SubmitEditedReview()
     {
+
+        errorMessage = "";
         if(currentUserReview is not { } review)
         {
             throw new Exception("Unexpected error");

@@ -166,7 +166,7 @@
     private async Task DeleteOrder(int id)
     {
         await orderService.DeleteOrderAsync(id);
-        await OnInitializedAsync();
+        navMgr.NavigateTo(navMgr.Uri, forceLoad: true);
     }
 
     private async Task CollectOrder(int id)

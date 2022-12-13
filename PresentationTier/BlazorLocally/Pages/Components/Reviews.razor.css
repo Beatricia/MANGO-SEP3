@@ -36,12 +36,20 @@ body {
     align-items: center;
     transition: width 300ms, max-height 300ms, transform 300ms, box-shadow 300ms;
 }
+
+.error-message{
+    display: none;
+}
+.review-wrapper:hover .error-message{
+    display: block;
+}
+
 .review-wrapper:hover .review-extendable {
     max-height: 400px;
     overflow-y: auto;
     padding-bottom: 10px;
     width: 400px;
-    retransform: translateY(-100px) translateX(-50px);
+    transform: translateY(-100px);
     box-shadow: 2px 2px 30px 2px #545454;
 }
 .review-wrapper:hover .reviews {

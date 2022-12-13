@@ -37,6 +37,7 @@ public class FarmLogic : IFarmLogic
         if (existingFarm is not null)
             throw new Exception("Farm already exists.");
         
+        
 
         // assign the default icon if the user didn't specify one
         FarmIcon icon;
@@ -169,7 +170,7 @@ public class FarmLogic : IFarmLogic
             throw new Exception("Farm name is too long!");
         }
 
-        if (phone.Length < 8)
+        if (phone.Length != 8)
         {
             throw new Exception("Invalid phone number!");
         }

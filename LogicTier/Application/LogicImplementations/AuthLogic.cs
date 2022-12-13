@@ -29,16 +29,19 @@ public class AuthLogic : IAuthLogic
 
         User? user = await authDao.GetUserAsync(username);
         
+        // check if username is not more than 100 characters
+        if (username.Length > 100)
+            throw new ArgumentException("Username is too long");
+        
+        // check if password length at least 8 character
+        if (passwordPlain.Length < 8)
+            throw new Exception("Password must be at least 8 characters");
+        
         // if user exists
         if (user != null)
             throw new Exception("Username already exists");
         
         
-        // check if password length at least 8 character
-        if (passwordPlain.Length < 8)
-            throw new Exception("Password must be at least 8 characters");
-
-
         var authUser = CreateUserAuth(dto.Username, dto.Password);
         
         _ = await authDao.RegisterAsync(authUser);

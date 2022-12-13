@@ -196,12 +196,9 @@
         else zipClasses = "";
 
         phone = phone.Replace(" ", "");
-        /*if (!Regex.IsMatch(phone, "[+]?\\d{6,15}"))
-        {
-            phoneClasses = "error-field";
-            errorMessage = "Invalid phone number. Please use a valid format, for example +45012345678";
-        }
-        else phoneClasses = "";*/
+        
+        if(city is null or {Length: 0})
+            errorMessage = "City is required";
 
 
         if (errorMessage is not null)

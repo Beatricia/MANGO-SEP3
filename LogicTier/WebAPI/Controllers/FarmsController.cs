@@ -198,7 +198,15 @@ public class FarmsController : LocallyController
     {
         review.Username = LoggedInUsername!;
         review.Id = id;
-        var reviewEdited = await reviewLogic.EditReviewAsync(review);
-        return Ok(reviewEdited);
+        try
+        {
+            var reviewEdited = await reviewLogic.EditReviewAsync(review);
+            return Ok(reviewEdited);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+        
     }
 }

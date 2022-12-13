@@ -20,7 +20,6 @@
         <div class="detail-row">
             <label class="required">Phone:</label>
             <div class="phone">
-                <label class="directNumber">+45</label>
                 <input class="phoneLabel" @bind="phone" type="text" placeholder="@phone">
             </div>
         </div>
@@ -46,7 +45,7 @@
         }
         
         <div class="button">
-            <button @onclick="UpdateDeatils">UPDATE</button>
+            <button @onclick="UpdateDetails">UPDATE</button>
         </div>
         
 
@@ -89,7 +88,7 @@
         }
     }
 
-    private async void UpdateDeatils()
+    private async void UpdateDetails()
     {
         CustomerUpdateDto dto = new();
         if (!IsDigitsOnly(zip))
@@ -107,9 +106,9 @@
             msg = "Phone number is too long";
             return;
         }
-        if ( phone.Length <8 )
+        if ( phone.Length != 8 )
         {
-            msg = "Phone number is too short";
+            msg = "Phone number is must be 8 digits";
             return;
         }
         if (!IsDigitsOnly(phone))

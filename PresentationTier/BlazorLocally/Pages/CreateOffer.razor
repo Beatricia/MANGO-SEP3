@@ -214,6 +214,11 @@
             errorMessage = "At least one delivery option must be selected";
             return true;
         }
+        if (!(file.Name.EndsWith(".jpg") || file.Name.EndsWith(".jpeg") || file.Name.EndsWith(".png")))
+        {
+            errorMessage = "File must be an image";
+            return true;
+        }
         return false;
     }
 

@@ -13,3 +13,13 @@
         @{ NavManager.NavigateTo("/DisplayFarms");};
     </Authorized>
 </AuthorizeView> 
+<AuthorizeView Roles="admin">
+    <Authorized>
+        @{ NavManager.NavigateTo("/AdminReportedOffers");};
+    </Authorized>
+</AuthorizeView> 
+<AuthorizeView>
+    <NotAuthorized>
+        @{ NavManager.NavigateTo("/Login");}
+    </NotAuthorized>
+</AuthorizeView>

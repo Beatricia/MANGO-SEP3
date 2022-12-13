@@ -73,7 +73,7 @@ public class ReportLogic : IReportLogic
         {
             Username = farmerUsername,
             Text =
-                $"Your offer has been reported because of {report.Reason}. Consider deleting the offer and checking the Locally Post Rules!",
+                $"Your offer [ {report.Offer.FarmName} / {report.Offer.Name} ] has been reported because of '{report.Reason}'. Consider deleting the offer and checking the Locally Post Rules!",
         };
         await notificationLogic.AddNotificationAsync(notification);
         await DeleteReportAsync(id);

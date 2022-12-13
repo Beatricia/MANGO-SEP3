@@ -39,7 +39,7 @@ public class ReportHttpClient : IReportService
 
     public async Task IgnoreReportAsync(long id)
     {
-        HttpResponseMessage response = await client.DeleteAsync($"{Endpoint}?id={id}");
+        HttpResponseMessage response = await client.DeleteAsync($"{Endpoint}/{id}");
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
@@ -49,7 +49,7 @@ public class ReportHttpClient : IReportService
 
     public async Task NotifyFarmerAsync(long id)
     {
-        HttpResponseMessage response = await client.PostAsync($"{Endpoint}?id={id}", null);
+        HttpResponseMessage response = await client.PostAsync($"{Endpoint}/{id}", null);
         if (!response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();

@@ -51,8 +51,8 @@ public class ReportsController : LocallyController
     }
 
     [Authorize(Roles = "admin")]
-    [HttpDelete]
-    public async Task<ActionResult> DeleteAsync([FromQuery] long id)
+    [HttpDelete("{id:long}")]
+    public async Task<ActionResult> DeleteAsync([FromRoute] long id)
     {
         try
         {
@@ -67,8 +67,8 @@ public class ReportsController : LocallyController
     }
     
     [Authorize(Roles = "admin")]
-    [HttpPost("/{id}")]
-    public async Task<ActionResult> PostAsync([FromQuery] long id)
+    [HttpPost("{id:long}")]
+    public async Task<ActionResult> PostAsync([FromRoute] long id)
     {
         try
         {

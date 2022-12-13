@@ -55,8 +55,6 @@ public class OffersController : LocallyController
         if (Request.Form.Files.Count == 0)
             return BadRequest("No files in form");
 
-        // TODO: check if the current user owns this offer
-
 
         string folder = "wwwroot/images/offers";
         Directory.CreateDirectory(folder);
@@ -102,7 +100,6 @@ public class OffersController : LocallyController
     [HttpGet("{farmName}")]
     public async Task<IActionResult> GetAsync([FromRoute] string farmName)
     {
-        // TODO: make this a rest endpoint
         try
         {
             var offers = await offerLogic.GetByFarmNameAsync(farmName);

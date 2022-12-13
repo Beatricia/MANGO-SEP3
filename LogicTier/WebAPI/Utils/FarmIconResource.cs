@@ -8,8 +8,6 @@ namespace WebAPI.Utils;
 /// </summary>
 public class FarmIconResource : IFarmIconDao
 {
-    // TODO: mention the source of the icons in the docs somewhere: https://www.flaticon.com/free-icons/farm
-    
     // this is the path to the folder where the icons are stored
     private const string BaseFolder = "wwwroot/images/farmicons/";
     

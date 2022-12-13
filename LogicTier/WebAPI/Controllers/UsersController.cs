@@ -17,11 +17,10 @@ public class UsersController : LocallyController
         this.userLogic = userLogic;
     }
 
-    //TODO authorized
+    [Authorize]
     [HttpGet("customer/{username}")]
     public async Task<IActionResult> GetCustomerAsync([FromRoute] string username)
     {
-        Console.WriteLine(username);
         try
         {
             var returned = await userLogic.GetCustomer(username);
@@ -49,7 +48,7 @@ public class UsersController : LocallyController
         }
     }
     
-    //TODO authorized
+    [Authorize]
     [HttpPatch("customer")]
     public async Task<ActionResult> UpdateAsync([FromBody]CustomerUpdateDto dto)
     {

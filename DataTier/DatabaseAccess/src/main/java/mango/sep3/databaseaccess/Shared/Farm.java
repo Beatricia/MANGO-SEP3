@@ -68,8 +68,6 @@ public class Farm implements Serializable
         this.offers = offers;
     }
 
-    //TODO add Farmer reference (nut sure if it should be a new Farmer table or just from the User)
-
 
     public Farm(String name){
         this.name = name;

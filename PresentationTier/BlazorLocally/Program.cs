@@ -34,6 +34,3 @@ var app = builder.Build();
 app.Services.GetRequiredService<ApiAccess>();
 
 await app.RunAsync();
-
-
-// TODO: https://www.youtube.com/watch?v=iedIu9H982Q

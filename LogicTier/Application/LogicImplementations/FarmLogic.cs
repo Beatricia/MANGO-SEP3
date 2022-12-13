@@ -156,7 +156,6 @@ public class FarmLogic : IFarmLogic
 
     private void ValidateData(FarmCreationDto dto)
     {
-        //todo should we check this in here or with the rest of the check from the db fx. city...
         string name = dto.Name;
         string phone = dto.Phone;
 
